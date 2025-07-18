@@ -1,24 +1,22 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
 import Tags from "../../components/ui/Tags.astro";
-import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { formatDate } from "../../utils";
 
 import "../../styles/global.css";
 
-const { slug } = Astro.params;
-
-if(slug === undefined) {
-  throw new Error('Slug is required');
+export async function getStaticPaths() {
+  const allBlogArticles = await getCollection('blog');
+  
+  return allBlogArticles.map(article => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
 }
 
-const entry = await getEntry('blog', slug);
-
-if(entry === undefined) {
-  return Astro.redirect('/404');
-}
-
-const { Content } = await entry.render();
+const { article } = Astro.props;
+const { Content } = await article.render();
 ---
 
 <MainLayout title="Welcome to My site">
@@ -33,10 +31,10 @@ const { Content } = await entry.render();
                     </svg>
                     <span class="ml-1 font-bold text-lg">All Articles</span>
                   </a>
-                  <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">{entry.data.title}</h2>
-                  <h3 class="text-lg mb-2">Written by {entry.data.author} on {formatDate(entry.data.pubDate)}</h3>
-                  <Tags tags={entry.data.tags} />
-                  <img src={'/blog/' + entry.data.image} alt="Article Image" class="w-full h-auto rounded-xl my-6" />
+                  <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900">{article.data.title}</h2>
+                  <h3 class="text-lg mb-2">Written by {article.data.author} on {formatDate(article.data.pubDate)}</h3>
+                  <Tags tags={article.data.tags} />
+                  <img src={'/blog/' + article.data.image} alt="Article Image" class="w-full h-auto rounded-xl my-6" />
                   <div class="content">
                     <Content/>
                   </div>

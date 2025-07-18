@@ -5,11 +5,17 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from "astro:content";
 import { capitalize } from "../../../utils";
 
-const { tag } = Astro.params;
-
-if(tag === undefined) {
-  throw new Error('Tag is required');
+export async function getStaticPaths() {
+  const allBlogArticles = await getCollection('blog');
+  const tags = [...new Set(allBlogArticles.flatMap(article => article.data.tags))];
+  
+  return tags.map(tag => ({
+    params: { tag },
+    props: { tag }
+  }));
 }
+
+const { tag } = Astro.props;
 
 const allBlogArticles: CollectionEntry<'blog'>[] = (await getCollection('blog'))
   .sort((a:CollectionEntry<'blog'>, b:CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
