@@ -1,0 +1,33 @@
+---
+import Section from "./Section.astro";
+---
+
+<Section id="fraud-warning">
+  <div class="my-8">
+    <div class="bg-yellow-50 border-2 border-red-500 rounded-lg p-6 shadow-lg">
+      <div class="flex items-start space-x-4">
+        <!-- Warning Icon -->
+        <div class="flex-shrink-0">
+          <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Warning Content -->
+        <div class="flex-1">
+          <h3 class="text-xl font-bold text-red-600 mb-3">【重要声明】警惕冒名诈骗！</h3>
+          <p class="text-red-700 leading-relaxed">
+            Spark 本人及团队<span class="font-bold">【绝对不会】</span>主动私信你、邀请你加入任何投资教学群组(如Telegram/WhatsApp)、或要求你转账进行投资。
+          </p>
+          <div class="mt-4">
+            <a href="/fraud-prevention" class="text-red-600 underline hover:text-red-800 font-medium transition-colors duration-200">
+              点击此处查看所有官方认证渠道 →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>

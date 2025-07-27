@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import Card from "../ui/Card.astro";
+import Section from "./Section.astro";
+import SectionTitle from "../ui/SectionTitle.astro";
+
+const platforms = [
+  {
+    name: "Facebook",
+    description: "关注我的Facebook页面，获取最新的理财资讯、防诈骗提醒和投资建议。定期分享实用的金融知识和市场分析。",
+    link: "https://www.facebook.com/sparkliang",
+    icon: "📘",
+    color: "bg-blue-600"
+  },
+  {
+    name: "Instagram",
+    description: "在Instagram上关注我的日常分享，包括理财小贴士、生活感悟和实时市场动态。图文并茂的内容让你轻松学习理财。",
+    link: "https://www.instagram.com/spark_liang/",
+    icon: "📷",
+    color: "bg-pink-500"
+  },
+  {
+    name: "YouTube",
+    description: "订阅我的YouTube频道，观看详细的理财教学视频、市场分析和防诈骗指南。深度内容帮助你建立正确的投资观念。",
+    link: "https://www.youtube.com/@Mr18SparkLiang",
+    icon: "📺",
+    color: "bg-red-600"
+  }
+];
+
+import larrow from "../../assets/icon3.svg";
+---
+
+<Section id="official-accounts">
+  <SectionTitle
+    sectionTitle="官方内容平台"
+    description="关注我的官方社交媒体平台，获取最新理财资讯、防诈骗提醒和投资建议"
+  />
+  <div class="flex flex-col lg:flex-row justify-between rounded-[45px] p-1 gap-4">
+    {
+      platforms.map((platform) => (
+        <Card>
+          <div class="flex p-[60px] h-full bg-primary text-white rounded-[45px] m-[1px] hover:bg-accent transition-all duration-300">
+            <div class="flex flex-col gap-5 w-full">
+              <div class="flex items-center gap-4 mb-4">
+                <div class={`w-16 h-16 ${platform.color} rounded-full flex items-center justify-center text-2xl`}>
+                  {platform.icon}
+                </div>
+                <h3 class="text-2xl font-bold">{platform.name}</h3>
+              </div>
+              <p class="text-lg leading-relaxed flex-grow">{platform.description}</p>
+              <a href={platform.link} target="_blank" rel="noopener noreferrer" class="flex items-center gap-[15px] mt-auto">
+                <span class="text-accent font-medium">立即关注</span>
+                <picture>
+                  <Image src={larrow} alt="Arrow pointing up right" />
+                </picture>
+              </a>
+            </div>
+          </div>
+        </Card>
+      ))
+    }
+  </div>
+</Section>

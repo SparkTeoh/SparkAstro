@@ -1,0 +1,267 @@
+---
+// 商业合作表单组件
+---
+
+<form class="space-y-6" action="#" method="POST">
+  <!-- 合作类型选择 -->
+  <div>
+    <label class="block text-primary font-medium mb-3">合作类型 *</label>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="flex items-center">
+        <input
+          type="radio"
+          id="course_collab"
+          name="collaboration_type"
+          value="course_collaboration"
+          class="business-radio"
+          checked
+        />
+        <label for="course_collab" class="ml-3 text-primary">课程合作</label>
+      </div>
+      <div class="flex items-center">
+        <input
+          type="radio"
+          id="brand_collab"
+          name="collaboration_type"
+          value="brand_collaboration"
+          class="business-radio"
+        />
+        <label for="brand_collab" class="ml-3 text-primary">品牌合作</label>
+      </div>
+      <div class="flex items-center">
+        <input
+          type="radio"
+          id="investment_collab"
+          name="collaboration_type"
+          value="investment_collaboration"
+          class="business-radio"
+        />
+        <label for="investment_collab" class="ml-3 text-primary">投资教育</label>
+      </div>
+      <div class="flex items-center">
+        <input
+          type="radio"
+          id="media_collab"
+          name="collaboration_type"
+          value="media_collaboration"
+          class="business-radio"
+        />
+        <label for="media_collab" class="ml-3 text-primary">媒体合作</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 公司/机构名称 -->
+  <div>
+    <label for="company_name" class="block text-primary font-medium mb-2">公司/机构名称 *</label>
+    <input
+      type="text"
+      id="company_name"
+      name="company_name"
+      placeholder="请输入您的公司或机构名称"
+      required
+      class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all"
+    />
+  </div>
+
+  <!-- 联系人信息 -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label for="contact_name" class="block text-primary font-medium mb-2">联系人姓名 *</label>
+      <input
+        type="text"
+        id="contact_name"
+        name="contact_name"
+        placeholder="姓名"
+        required
+        class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all"
+      />
+    </div>
+    <div>
+      <label for="position" class="block text-primary font-medium mb-2">职位</label>
+      <input
+        type="text"
+        id="position"
+        name="position"
+        placeholder="职位/头衔"
+        class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all"
+      />
+    </div>
+  </div>
+
+  <!-- 联系方式 -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label for="email" class="block text-primary font-medium mb-2">邮箱地址 *</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all"
+      />
+    </div>
+    <div>
+      <label for="phone" class="block text-primary font-medium mb-2">联系电话</label>
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        placeholder="+86 138 0000 0000"
+        class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all"
+      />
+    </div>
+  </div>
+
+  <!-- 合作预算 -->
+  <div>
+    <label for="budget" class="block text-primary font-medium mb-2">合作预算范围</label>
+    <select
+      id="budget"
+      name="budget"
+      class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all bg-white"
+    >
+      <option value="">请选择预算范围</option>
+      <option value="under_10k">1万以下</option>
+      <option value="10k_50k">1-5万</option>
+      <option value="50k_100k">5-10万</option>
+      <option value="100k_500k">10-50万</option>
+      <option value="over_500k">50万以上</option>
+      <option value="discuss">面议</option>
+    </select>
+  </div>
+
+  <!-- 项目详情 -->
+  <div>
+    <label for="project_details" class="block text-primary font-medium mb-2">项目详情 *</label>
+    <textarea
+      id="project_details"
+      name="project_details"
+      rows="4"
+      placeholder="请详细描述您的合作需求、项目背景、期望达成的目标等..."
+      required
+      class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all resize-vertical"
+    ></textarea>
+  </div>
+
+  <!-- 时间要求 -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label for="start_date" class="block text-primary font-medium mb-2">期望开始时间</label>
+      <input
+        type="date"
+        id="start_date"
+        name="start_date"
+        class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all"
+      />
+    </div>
+    <div>
+      <label for="duration" class="block text-primary font-medium mb-2">项目周期</label>
+      <select
+        id="duration"
+        name="duration"
+        class="w-full px-4 py-3 border border-primary rounded-xl text-primary outline-none focus:border-accent focus:ring-2 focus:ring-accent focus:ring-opacity-20 transition-all bg-white"
+      >
+        <option value="">请选择项目周期</option>
+        <option value="1_month">1个月</option>
+        <option value="3_months">3个月</option>
+        <option value="6_months">6个月</option>
+        <option value="1_year">1年</option>
+        <option value="long_term">长期合作</option>
+        <option value="other">其他</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 提交按钮 -->
+  <div class="pt-4">
+    <button
+      type="submit"
+      class="w-full px-8 py-4 bg-primary hover:bg-accent text-white font-bold rounded-xl transition-all duration-300 hover:shadow-lg transform hover:scale-105"
+    >
+      提交合作申请
+    </button>
+    <p class="text-sm text-gray-500 mt-3 text-center">
+      我们会在24小时内回复您的合作申请
+    </p>
+  </div>
+</form>
+
+<style>
+  .business-radio {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+
+  .business-radio:hover {
+    border-color: var(--accent);
+  }
+
+  .business-radio:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  .business-radio:checked::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
+<script>
+  function businessFormSetup() {
+    const form = document.querySelector('form');
+    const collaborationInputs = document.querySelectorAll('input[name="collaboration_type"]');
+    const projectDetails = document.getElementById('project_details') as HTMLTextAreaElement;
+
+         // 根据合作类型自动填充项目详情的提示文本
+     collaborationInputs.forEach(input => {
+       input.addEventListener('change', function(e) {
+         const target = e.target as HTMLInputElement;
+         const placeholderTexts: Record<string, string> = {
+           course_collaboration: '请描述您的课程合作需求，如：联合开发理财课程、客座讲师邀请、课程推广合作等...',
+           brand_collaboration: '请描述您的品牌合作需求，如：产品推广、品牌代言、联合营销活动等...',
+           investment_collaboration: '请描述您的投资教育需求，如：企业内训、投资讲座、理财咨询服务等...',
+           media_collaboration: '请描述您的媒体合作需求，如：访谈邀请、内容创作、媒体推广等...'
+         };
+         
+         if (target.checked && projectDetails) {
+           projectDetails.placeholder = placeholderTexts[target.value] || projectDetails.placeholder;
+         }
+       });
+     });
+
+    // 表单提交处理
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // 这里可以添加表单验证和提交逻辑
+        const formData = new FormData(form);
+        console.log('表单数据:', Object.fromEntries(formData.entries()));
+        
+        // 显示成功消息（实际项目中应该发送到服务器）
+        alert('感谢您的合作申请！我们会尽快与您联系。');
+      });
+    }
+  }
+
+  businessFormSetup();
+  document.addEventListener('astro:after-swap', businessFormSetup);
+</script> 

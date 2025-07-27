@@ -2,18 +2,18 @@
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 
 const menuitems = [
-  { href: '/about', label: 'About us' },
-  { href: '/#services', label: 'Services' },
-  { href: '/#cases', label: 'Use Cases' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/articles', label: 'Blog'},
+  { href: '/', label: '首页' },
+  { href: '/fraud-prevention', label: '防诈骗中心' },
+  { href: '/partners', label: '官方合作伙伴' },
+  { href: '/about', label: '关于 Spark' },
+  { href: '/content', label: '内容中心' },
+  { href: '/contact', label: '联系我们' },
+  { href: '/fraud-detection', label: '诈骗检测工具' }
 ];
-
-const navButton = { href: 'https://github.com/manulthanura/Positivus', label: 'Request a quote' };
 ---
 
 <div class="mt-20">
-  <nav class="w-full top-0 left-0 z-50 fixed bg-white">
+  <nav class="w-full top-0 left-0 z-50 fixed bg-background">
     <header class="flex flex-col lg:flex-row justify-between items-center my-5 px-6 md:px-32">
       <Astronav>
         <div class="flex w-full lg:w-auto items-center justify-between">
@@ -47,26 +47,9 @@ const navButton = { href: 'https://github.com/manulthanura/Positivus', label: 'R
                 </a>
               </li>
             ))}
-            <div class="lg:hidden flex items-center justify-center mt-3 gap-4">
-              <a 
-                class="mobile-nav-link px-9 py-5 rounded-2xl border border-zinc-900 bg-white hover:bg-black text-black hover:text-white inline-flex" 
-                href={navButton.href}
-                data-close-menu="true"
-              >
-                <h2 class="text-center text-xl font-normal leading-7">{navButton.label}</h2>
-              </a>
-            </div>
           </ul>
         </nav>
       </Astronav>
-
-      <div>
-        <div class="hidden lg:flex items-center gap-4">
-          <a class="px-9 py-5 rounded-2xl border border-zinc-900 bg-white hover:bg-black text-black hover:text-white inline-flex" href={navButton.href}>
-            <h2 class="text-center text-xl font-normal leading-7">{navButton.label}</h2>
-          </a>
-        </div>
-      </div>
     </header>
   </nav>
 </div>

@@ -29,11 +29,14 @@
   }
 
   :root {
-    --green: #b9ff66;
+    --green: #FFAB40;
     --black: rgb(0, 0, 0);
-    --dark: #191a23;
-    --gray: #f3f3f3;
+    --dark: #1A237E;
+    --gray: #F0F4F8;
     --white: #ffffff;
+    --primary: #1A237E;
+    --background: #F0F4F8;
+    --accent: #FFAB40;
   }
 
   /* @layer base {
@@ -101,38 +104,42 @@
 
   @layer components {
     .btn-primary {
-      @apply bg-dark text-white rounded-lg px-[35px] py-5 transition-all duration-200;
+      @apply bg-primary text-white rounded-lg px-[35px] py-5 transition-all duration-200;
     }
     .btn-primary:hover {
-      @apply bg-green text-black transform scale-105;
+      @apply bg-accent text-white transform scale-105;
     }
 
     .btn-secondary {
-      @apply bg-transparent text-black px-[35px] py-5 rounded-lg border border-solid border-black transition-all duration-200;
+      @apply bg-transparent text-primary px-[35px] py-5 rounded-lg border border-solid border-primary transition-all duration-200;
     }
     .btn-secondary:hover {
-      @apply bg-black text-white border-green transform scale-105;
+      @apply bg-primary text-white border-accent transform scale-105;
     }
 
     .btn-tertiary {
-      @apply bg-green text-black rounded-lg px-[35px] py-5 transition-all duration-200;
+      @apply bg-accent text-white rounded-lg px-[35px] py-5 transition-all duration-200;
     }
     .btn-tertiary:hover {
-      @apply bg-white text-black transform scale-105;
+      @apply bg-primary text-white transform scale-105;
     }
 
     .greenhead {
-      @apply bg-green text-black rounded-[7px] px-[7px];
+      @apply bg-accent text-white rounded-[7px] px-[7px];
     }
 
     .whitehead {
-      @apply bg-white text-black rounded-[7px] px-[7px];
+      @apply bg-white text-primary rounded-[7px] px-[7px];
     }
 
     .blackhead {
-      @apply bg-black text-white rounded-[7px] px-[7px];
+      @apply bg-primary text-white rounded-[7px] px-[7px];
     }
   }
+}
+
+body {
+  background-color: #F0F4F8;
 }
 
 /* custom scrollbar */
@@ -141,15 +148,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #F0F4F8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000000;
+  background: #1A237E;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #FFAB40;
 }
 
 /* markdown style */

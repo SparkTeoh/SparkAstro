@@ -1,0 +1,170 @@
+---
+import Section from "./Section.astro";
+import OfficialAccount from "./OfficialAccount.astro";
+---
+
+<Section>
+  <div class="py-20">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6">官方渠道认证 & 防诈骗声明</h1>
+      <p class="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
+        保护好你的财产安全，是学习理财的第一步。请仔细阅读以下信息，辨别真伪。
+      </p>
+    </div>
+
+    <!-- Three "Absolutely Not" Principles -->
+    <div class="bg-gray-50 rounded-2xl p-12 max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-red-600 text-center mb-12">我的三大"绝对不会"</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Principle 1: No Private Messages -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+              <path d="M6 12h12v2H6z" fill="white"/>
+              <path d="M6 9h12v2H6z" fill="white"/>
+              <path d="M6 6h12v2H6z" fill="white"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-red-600 mb-4">绝不主动私信</h3>
+          <p class="text-gray-700 leading-relaxed">
+            我和我的团队绝不会在任何平台主动私信你，推荐股票、虚拟货币或任何投资产品。
+          </p>
+        </div>
+
+        <!-- Principle 2: No Asking for Money -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-red-600 mb-4">绝不索要金钱</h3>
+          <p class="text-gray-700 leading-relaxed">
+            我绝不会要求你将资金转入任何个人银行账户或加密钱包进行"代客操盘"或"项目投资"。
+          </p>
+        </div>
+
+        <!-- Principle 3: No Investment Groups -->
+        <div class="text-center">
+          <div class="w-20 h-20 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01 1l-1.7 2.26V15h-1.5v-6h1.5v1.5l1.7-2.26c.47-.63 1.21-1 2.01-1h1.54c.8 0 1.54.37 2.01 1L21.5 15H19v6h1z"/>
+              <path d="M12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5z"/>
+              <path d="M5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2 16v-7H9V9c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v6.5h1.5V22h2z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-red-600 mb-4">绝无投资群组</h3>
+          <p class="text-gray-700 leading-relaxed">
+            我<span class="font-bold">【没有任何】</span>需要付费或免费加入的Telegram, WhatsApp, LINE等投资教学或"带单"群组。所有声称由我创建的群组都是诈骗。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to Identify and Respond to Fraud -->
+    <div class="mt-16 bg-white rounded-2xl shadow-lg p-12 max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-primary text-center mb-12">如何识别与应对诈骗</h2>
+      
+      <div class="grid lg:grid-cols-2 gap-12">
+        <!-- How to Identify Fraud -->
+        <div>
+          <h3 class="text-2xl font-bold text-red-600 mb-6">如何识别诈骗</h3>
+          
+          <div class="space-y-6">
+            <div class="bg-red-50 rounded-lg p-6 border-l-4 border-red-500">
+              <h4 class="text-lg font-bold text-red-700 mb-3">检查用户名</h4>
+              <p class="text-gray-700">
+                骗子通常会用相似但有细微差别（如多一个点、下划线）的用户名。
+              </p>
+            </div>
+            
+            <div class="bg-red-50 rounded-lg p-6 border-l-4 border-red-500">
+              <h4 class="text-lg font-bold text-red-700 mb-3">警惕"保证回报"</h4>
+              <p class="text-gray-700">
+                任何承诺"稳赚不赔"、"高额回报"的都是诈骗。
+              </p>
+            </div>
+            
+            <div class="bg-red-50 rounded-lg p-6 border-l-4 border-red-500">
+              <h4 class="text-lg font-bold text-red-700 mb-3">注意私信内容</h4>
+              <p class="text-gray-700">
+                骗子开场白通常很热情，然后迅速切入投资话题。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- What to Do When You Find Fraud -->
+        <div>
+          <h3 class="text-2xl font-bold text-red-600 mb-6">发现诈骗怎么办？</h3>
+          
+          <div class="space-y-6">
+            <div class="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+              <h4 class="text-lg font-bold text-blue-700 mb-3">不要互动</h4>
+              <p class="text-gray-700">
+                不要回复，不要点击任何链接。
+              </p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+              <h4 class="text-lg font-bold text-blue-700 mb-3">截图存证</h4>
+              <p class="text-gray-700">
+                将对话或假冒页面截图。
+              </p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+              <h4 class="text-lg font-bold text-blue-700 mb-3">立即举报</h4>
+              <p class="text-gray-700">
+                在对应的社交平台（FB, IG, YT）上举报该假冒账号。
+              </p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
+              <h4 class="text-lg font-bold text-blue-700 mb-3">通知我们（可选）</h4>
+              <p class="text-gray-700">
+                发送举报邮件
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blue Checkmark Notice -->
+      <div class="mt-12 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-8 border-2 border-blue-200">
+        <div class="text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-500 rounded-full mb-4">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-blue-700 mb-4">认准蓝勾勾</h3>
+          <p class="text-blue-800 leading-relaxed max-w-3xl mx-auto">
+            真正的Spark Liang账号都有官方认证的蓝勾勾标识。请务必检查账号是否经过平台认证，这是识别真伪的重要标志。
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</Section>
+
+<!-- Official Accounts Section -->
+<OfficialAccount />
+
+<!-- Warning Notice Section -->
+<Section>
+  <div class="py-8">
+    <div class="bg-red-50 border-2 border-red-200 rounded-xl p-8">
+      <div class="text-center">
+        <h3 class="text-2xl font-bold text-red-600 mb-4">⚠️ 重要提醒</h3>
+        <p class="text-red-700 leading-relaxed max-w-3xl mx-auto">
+          如果你收到任何声称来自Spark Liang的私信、投资邀请或要求转账的信息，请立即举报并删除。真正的Spark Liang只会通过上述官方渠道与大家交流，绝不会主动私信或要求转账。
+        </p>
+      </div>
+    </div>
+  </div>
+</Section> 

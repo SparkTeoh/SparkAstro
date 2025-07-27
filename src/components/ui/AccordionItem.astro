@@ -10,7 +10,7 @@ const { index, title, description } = Astro.props;
 
 <div
   id="accordion__item"
-  class="accordion__item group h-[160px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[45px] border border-dark shadow-[0px_5px_0px_#191a23]"
+  class="accordion__item group h-[160px] bg-background overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[45px] border border-primary shadow-[0px_5px_0px_#1A237E]"
 >
   <button
     class="accordion__toggle w-full h-[160px] flex items-center justify-between p-[60px] cursor-pointer"
@@ -18,12 +18,12 @@ const { index, title, description } = Astro.props;
     aria-expanded="false"
     aria-controls={`${title} accordion__item menu content`}
   >
-    <div class="flex items-center gap-[25px]">
+    <div class="flex items-center gap-[25px] text-primary">
       <span class="hidden sm:block sm:text-6xl">0{index}</span>
       {title}
     </div>
     <div
-      class="bg-gray w-[58px] h-[58px] flex justify-center items-center rounded-full border border-dark"
+      class="bg-background w-[58px] h-[58px] flex justify-center items-center rounded-full border border-primary"
     >
       <div
         class="accordion__icon h-10 w-10 transition-transform duration-300 flex justify-center items-center relative"
@@ -37,8 +37,8 @@ const { index, title, description } = Astro.props;
     aria-labelledby={`${title} accordion__item menu button `}
     class="accordion__content px-[60px]"
   >
-    <div class="w-full h-[2px] bg-black"></div>
-    <p class="prose mb-4 mt-1 max-w-full pt-5 pb-[60px] transition-[height]">
+    <div class="w-full h-[2px] bg-primary"></div>
+    <p class="prose mb-4 mt-1 max-w-full pt-5 pb-[60px] transition-[height] text-primary">
       {description}
     </p>
   </div>
@@ -48,7 +48,7 @@ const { index, title, description } = Astro.props;
   .accordion__icon::after {
     content: "";
     position: absolute;
-    background-color: black;
+    background-color: #1A237E;
     transition: opacity 0.3s ease;
   }
 
@@ -68,6 +68,24 @@ const { index, title, description } = Astro.props;
 
   .accordion__icon.collapsed::after {
     opacity: 0;
+  }
+
+  /* 当accordion展开时（有bg-accent类），改变文字颜色 */
+  .accordion__item.bg-accent .accordion__toggle {
+    color: #1A237E;
+  }
+
+  .accordion__item.bg-accent .accordion__content p {
+    color: #1A237E;
+  }
+
+  .accordion__item.bg-accent .accordion__icon::before,
+  .accordion__item.bg-accent .accordion__icon::after {
+    background-color: #1A237E;
+  }
+
+  .accordion__item.bg-accent .accordion__content div {
+    background-color: #1A237E;
   }
 </style>
 <script>
@@ -97,7 +115,8 @@ const { index, title, description } = Astro.props;
 
               if (otherAccordionToggle && otherAccordionIcon) {
                 otherAccordionItem.classList.remove("active");
-                otherAccordionItem.classList.remove("bg-green");
+                otherAccordionItem.classList.remove("bg-accent");
+                otherAccordionItem.classList.add("bg-background");
                 otherAccordionToggle.setAttribute("aria-expanded", "false");
                 otherAccordionItem.style.height = "160px";
                 otherAccordionIcon.classList.remove("rotate-180");
@@ -113,7 +132,8 @@ const { index, title, description } = Astro.props;
 
             // Set height according to content
             accordionItem.style.height = accordionItem.scrollHeight + "px";
-            accordionItem.classList.add("bg-green");
+            accordionItem.classList.remove("bg-background");
+            accordionItem.classList.add("bg-accent");
             accordionIcon.classList.add("rotate-180");
             accordionIcon.classList.add("collapsed");
           } else {
@@ -124,7 +144,8 @@ const { index, title, description } = Astro.props;
             // height is 60, because the toggle's height is 60, the content is hidden
             accordionItem.style.height = "160px";
             accordionIcon.classList.remove("rotate-180");
-            accordionItem.classList.remove("bg-green");
+            accordionItem.classList.remove("bg-accent");
+            accordionItem.classList.add("bg-background");
             accordionIcon.classList.remove("collapsed");
           }
 
@@ -147,7 +168,8 @@ const { index, title, description } = Astro.props;
           !accordionItem.contains(event.target as Node)
         ) {
           accordionItem.classList.remove("active");
-          accordionItem.classList.remove("bg-green");
+          accordionItem.classList.remove("bg-accent");
+          accordionItem.classList.add("bg-background");
           accordionToggle.setAttribute("aria-expanded", "false");
 
           // Reset height. Overflow gets hidden
