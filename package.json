@@ -7,7 +7,9 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "create-blog": "node scripts/create-blog.js",
+    "create-blog-interactive": "node scripts/create-blog-interactive.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

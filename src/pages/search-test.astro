@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import videoData from "../data/videoData.json";
+
+// 获取搜索参数
+const searchQuery = Astro.url.searchParams.get('search') || 'OGSM';
+
+// 获取所有 Markdown 文章
+const markdownArticles = await getCollection('blog');
+
+// 处理 Markdown 文章数据
+const allArticles = markdownArticles.map(article => ({
+  ...article,
+  title: article.data.title,
+  summary: article.data.summary,
+  author: article.data.author,
+  pubDate: article.data.pubDate,
+  tags: article.data.tags,
+  type: article.data.type,
+  featured: article.data.featured || false,
+  link: `/content/${article.slug}`,
+  contentType: 'markdown',
+  isExternal: false,
+  description: article.data.summary
+}));
+
+// 处理视频数据
+const allVideos = videoData.featuredVideos.map(video => ({
+  ...video,
+  type: 'Video',
+  contentType: 'youtube',
+  pubDate: video.publishDate,
+  author: 'Spark Liang',
+  featured: false,
+  link: `https://www.youtube.com/watch?v=${video.videoId}`,
+  isExternal: true,
+  summary: video.description
+}));
+
+// 合并所有内容
+const allContent = [...allArticles, ...allVideos];
+
+// 搜索过滤
+const filteredContent = allContent.filter(item => {
+  const query = searchQuery.toLowerCase();
+  const titleMatch = item.title.toLowerCase().includes(query);
+  const summaryMatch = item.summary && item.summary.toLowerCase().includes(query);
+  const descriptionMatch = item.description && item.description.toLowerCase().includes(query);
+  const tagMatch = item.tags && item.tags.some((tag: string) => tag.toLowerCase().includes(query));
+  
+  return titleMatch || summaryMatch || descriptionMatch || tagMatch;
+});
+---
+
+<html>
+<head>
+  <title>搜索测试</title>
+</head>
+<body>
+  <h1>🔍 搜索测试</h1>
+  
+  <h2>搜索参数</h2>
+  <p>查询词: <strong>{searchQuery}</strong></p>
+  <p>完整 URL: <code>{Astro.url.toString()}</code></p>
+  
+  <h2>📊 数据统计</h2>
+  <ul>
+    <li>总内容数量: {allContent.length}</li>
+    <li>文章数量: {allArticles.length}</li>
+    <li>视频数量: {allVideos.length}</li>
+    <li>搜索结果数量: {filteredContent.length}</li>
+  </ul>
+  
+  <h2>📋 所有内容</h2>
+  <ul>
+    {allContent.map((item, index) => (
+      <li>
+        <strong>{index + 1}. {item.title}</strong><br/>
+        类型: {item.contentType} | 标签: {item.tags?.join(', ') || '无'}
+      </li>
+    ))}
+  </ul>
+  
+  <h2>🎯 搜索结果</h2>
+  {filteredContent.length > 0 ? (
+    <ul>
+      {filteredContent.map((item, index) => (
+        <li>
+          <strong>{index + 1}. {item.title}</strong><br/>
+          类型: {item.contentType} | 标签: {item.tags?.join(', ') || '无'}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>❌ 没有找到匹配的内容</p>
+  )}
+  
+  <h2>🔧 测试链接</h2>
+  <ul>
+    <li><a href="/search-test?search=OGSM">测试 OGSM 搜索</a></li>
+    <li><a href="/search-test?search=投资">测试 投资 搜索</a></li>
+    <li><a href="/search-test?search=理财">测试 理财 搜索</a></li>
+    <li><a href="/blog?search=OGSM">博客页面 OGSM 搜索</a></li>
+  </ul>
+</body>
+</html> 

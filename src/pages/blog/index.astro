@@ -1,0 +1,296 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import Card from "../../components/ui/Card.astro";
+import videoData from "../../data/videoData.json";
+import { getCollection } from 'astro:content';
+
+// 获取搜索参数
+const searchQuery = Astro.url.searchParams.get('search') || '';
+const pageParam = Astro.url.searchParams.get('page');
+const page = pageParam ? parseInt(pageParam) : 1;
+const itemsPerPage = 6; // 减少每页显示数量，确保有分页
+
+// 调试 URL 参数
+console.log('🌐 URL 参数调试:');
+console.log('   完整 URL:', Astro.url.toString());
+console.log('   原始 page 参数:', pageParam);
+console.log('   解析后的 page:', page);
+console.log('   搜索参数:', searchQuery);
+
+
+
+// 获取所有 Markdown 文章
+const markdownArticles = await getCollection('blog');
+
+// 处理 Markdown 文章数据
+const allArticles = markdownArticles.map(article => ({
+  ...article,
+  isMarkdown: true,
+  title: article.data.title,
+  summary: article.data.summary,
+  author: article.data.author,
+  pubDate: article.data.pubDate,
+  tags: article.data.tags,
+  type: article.data.type,
+  featured: article.data.featured || false,
+  link: `/content/${article.slug}`,
+  contentType: 'markdown',
+  isExternal: false,
+  description: article.data.summary
+})).sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf());
+
+
+
+// 处理视频数据，添加类型标识
+const allVideos = videoData.featuredVideos.map(video => ({
+  ...video,
+  type: 'Video',
+  contentType: 'youtube',
+  pubDate: video.publishDate,
+  author: 'Spark Liang',
+  featured: false,
+  link: `https://www.youtube.com/watch?v=${video.videoId}`,
+  isExternal: true,
+  summary: video.description
+}));
+
+// 合并所有内容（文章和视频）
+const allContent = [...allArticles, ...allVideos].sort((a, b) => {
+  // 按日期排序，最新的在前面
+  const dateA = a.pubDate ? new Date(a.pubDate).valueOf() : 0;
+  const dateB = b.pubDate ? new Date(b.pubDate).valueOf() : 0;
+  return dateB - dateA;
+});
+
+// 搜索过滤
+let filteredContent;
+if (searchQuery && searchQuery.trim() !== '') {
+  filteredContent = allContent.filter(item => {
+    const query = searchQuery.toLowerCase().trim();
+    const titleMatch = item.title.toLowerCase().includes(query);
+    const summaryMatch = item.summary && item.summary.toLowerCase().includes(query);
+    const descriptionMatch = item.description && item.description.toLowerCase().includes(query);
+    const tagMatch = item.tags && item.tags.some((tag: string) => tag.toLowerCase().includes(query));
+    
+    return titleMatch || summaryMatch || descriptionMatch || tagMatch;
+  });
+} else {
+  filteredContent = allContent;
+}
+
+// 分页
+const totalPages = Math.ceil(filteredContent.length / itemsPerPage);
+const startIndex = (page - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const paginatedContent = filteredContent.slice(startIndex, endIndex);
+
+// 调试分页信息
+console.log('📄 分页调试信息:');
+console.log('   总内容数量:', filteredContent.length);
+console.log('   每页显示数量:', itemsPerPage);
+console.log('   总页数:', totalPages);
+console.log('   当前页:', page);
+console.log('   起始索引:', startIndex);
+console.log('   结束索引:', endIndex);
+console.log('   当前页内容数量:', paginatedContent.length);
+console.log('   当前页内容:', paginatedContent.map(item => item.title));
+console.log('   所有内容标题:', allContent.map(item => item.title));
+console.log('   过滤后内容标题:', filteredContent.map(item => item.title));
+
+// 获取所有标签用于筛选
+const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
+
+
+---
+
+<MainLayout title="博客中心 - Spark官方网站">
+	<main class="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
+		<!-- 页面标题和搜索区域 -->
+		<section class="py-12 px-4 mx-auto max-w-screen-xl">
+			<div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+				<h1 class="mb-4 text-4xl lg:text-5xl tracking-tight font-extrabold text-primary">📚 博客中心</h1>
+				<p class="font-light sm:text-xl text-dark">探索我们的精选文章和视频，获取深度见解和实用知识</p>
+			</div>
+
+			<!-- 搜索和筛选区域 -->
+			<div class="mb-8">
+				<form method="GET" action="/blog" class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+					<div class="flex-1 relative">
+						<input 
+							type="text" 
+							name="search" 
+							value={searchQuery}
+							placeholder="搜索文章、视频标题、内容或标签..." 
+							class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent focus:border-transparent"
+						>
+						<svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+						</svg>
+					</div>
+					<button type="submit" class="px-6 py-3 bg-accent hover:bg-accent/90 text-white font-medium rounded-xl transition-colors duration-200">
+						搜索
+					</button>
+					{searchQuery && (
+						<a href="/blog" class="px-6 py-3 bg-gray-200 hover:bg-gray-300 text-dark font-medium rounded-xl transition-colors duration-200">
+							清除
+						</a>
+					)}
+				</form>
+			</div>
+
+			<!-- 搜索结果统计 -->
+			{searchQuery && (
+				<div class="text-center mb-6">
+					<div class="bg-accent/10 border border-accent/20 rounded-xl p-4 mb-4">
+						<p class="text-dark">
+							🔍 搜索 "<span class="font-bold text-accent">{searchQuery}</span>" 
+							找到 <span class="font-bold text-accent">{filteredContent.length}</span> 个结果
+							{filteredContent.length !== allContent.length && (
+								<span class="text-gray-500">（共 {allContent.length} 个内容）</span>
+							)}
+						</p>
+						{filteredContent.length === 0 && (
+							<p class="text-gray-500 mt-2">
+								没有找到相关内容，请尝试其他关键词
+							</p>
+						)}
+					</div>
+				</div>
+			)}
+
+			<!-- 标签筛选 -->
+			<div class="mb-8">
+				<div class="flex flex-wrap gap-2 justify-center">
+					{allTags.slice(0, 10).map((tag: string) => (
+						<a 
+							href={`/blog?search=${encodeURIComponent(tag)}`}
+							class="px-3 py-1 bg-white hover:bg-accent hover:text-white text-dark text-sm font-medium rounded-full border border-gray-200 transition-colors duration-200"
+						>
+							{tag}
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- 内容网格 -->
+		<section class="px-4 mx-auto max-w-screen-xl pb-12">
+			{filteredContent.length > 0 ? (
+				<div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+					{paginatedContent.map(item => (
+						<Card isUnderline={true}>
+							<article class="p-6 bg-white rounded-[45px] hover:shadow-lg transition-all duration-300 hover:scale-105">
+								<div class="flex items-center justify-between mb-4">
+									<span class={`text-white text-xs font-medium px-3 py-1 rounded-full ${
+										item.contentType === 'youtube' 
+											? 'bg-red-600' 
+											: 'bg-accent'
+									}`}>
+										{item.type} • {item.contentType === 'youtube' ? 'YouTube' : item.contentType === 'markdown' ? 'Markdown' : '交互式'}
+									</span>
+									{item.featured && (
+										<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+											推荐
+										</span>
+									)}
+								</div>
+								
+								<h3 class="mb-3 text-xl font-bold tracking-tight text-primary hover:text-accent transition-colors">
+									<a href={item.link} target={item.isExternal ? "_blank" : undefined} rel={item.isExternal ? "noopener noreferrer" : undefined}>{item.title}</a>
+								</h3>
+								
+								<p class="mb-4 text-dark line-clamp-3">{item.summary || item.description}</p>
+								
+								<div class="flex flex-wrap gap-2 mb-4">
+									{(item.tags || []).slice(0, 3).map((tag: string) => (
+										<span class="bg-gray text-primary text-xs font-medium px-2 py-1 rounded">
+											{tag}
+										</span>
+									))}
+								</div>
+								
+								<div class="flex items-center justify-between">
+									<div class="flex items-center space-x-3">
+										<div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+											<span class="text-dark text-sm font-bold">{item.author.charAt(0)}</span>
+										</div>
+										<div class="text-sm">
+											<p class="text-primary font-medium">{item.author}</p>
+											<p class="text-dark">{new Date(item.pubDate).toLocaleDateString('zh-CN')}</p>
+										</div>
+									</div>
+									<a href={item.link} target={item.isExternal ? "_blank" : undefined} rel={item.isExternal ? "noopener noreferrer" : undefined} class="inline-flex items-center font-medium text-primary hover:text-accent transition-colors">
+										{item.contentType === 'youtube' ? '观看视频' : '阅读全文'}
+										<svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+											<path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+										</svg>
+									</a>
+								</div>
+							</article>
+						</Card>
+					))}
+				</div>
+			) : (
+				<div class="text-center py-12">
+					<div class="mb-4">
+						<svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+						</svg>
+					</div>
+					<h3 class="text-lg font-medium text-gray-900 mb-2">没有找到相关内容</h3>
+					<p class="text-gray-500 mb-4">尝试使用不同的关键词搜索，或者浏览所有内容</p>
+					<a href="/blog" class="inline-flex items-center px-4 py-2 bg-accent hover:bg-accent/90 text-white font-medium rounded-lg transition-colors duration-200">
+						查看所有内容
+					</a>
+				</div>
+			)}
+
+			<!-- 分页导航 -->
+			<div class="mt-12 flex justify-center">
+				<div class="bg-white rounded-lg p-4 shadow-md">
+					<p class="text-sm text-gray-600 mb-2 text-center">
+						第 {page} 页，共 {totalPages} 页（{filteredContent.length} 个内容）
+					</p>
+					{totalPages > 1 && (
+						<nav class="flex items-center space-x-2">
+							{page > 1 && (
+								<a 
+									href={`/blog?page=${page - 1}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
+									class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+								>
+									上一页
+								</a>
+							)}
+							
+							{Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+								const pageNum = i + 1;
+								return (
+									<a 
+										href={`/blog?page=${pageNum}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
+										class={`px-3 py-2 text-sm font-medium rounded-lg ${
+											pageNum === page 
+												? 'bg-accent text-white' 
+												: 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50'
+										}`}
+									>
+										{pageNum}
+									</a>
+								);
+							})}
+							
+							{page < totalPages && (
+								<a 
+									href={`/blog?page=${page + 1}${searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''}`}
+									class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+								>
+									下一页
+								</a>
+							)}
+						</nav>
+					)}
+				</div>
+			</div>
+		</section>
+	</main>
+
+</MainLayout> 

@@ -1,20 +1,43 @@
 ---
 import MainLayout from "../../layouts/MainLayout.astro";
-import ArticleCard from "../../components/ui/ArticleCard.astro";
 import VideoCard from "../../components/ui/VideoCard.astro";
-import SearchForm from "../../components/ui/SearchForm.astro";
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from "astro:content";
+import Card from "../../components/ui/Card.astro";
 import videoData from "../../data/videoData.json";
+import astroBlogData from "../../data/astroBlogData.json";
+import { getCollection } from 'astro:content';
 
 const currentPage: number | null = +Astro.url.searchParams.get('page')! || 1;
 
-const allBlogArticles: CollectionEntry<'blog'>[] = (await getCollection('blog'))
-  .sort((a:CollectionEntry<'blog'>, b:CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+// 获取 .astro 博客文章
+const astroBlogs = astroBlogData
+  .sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf());
+
+// 获取内容集合中的 Markdown 文章
+const markdownArticles = await getCollection('blog');
+
+// 合并所有文章并按日期排序
+const allArticles = [
+  ...astroBlogs.map(blog => ({
+    ...blog,
+    isMarkdown: false,
+    link: `/blog/${blog.slug}`
+  })),
+  ...markdownArticles.map(article => ({
+    ...article,
+    isMarkdown: true,
+    title: article.data.title,
+    summary: article.data.summary,
+    author: article.data.author,
+    pubDate: article.data.pubDate,
+    tags: article.data.tags,
+    type: article.data.type,
+    featured: false,
+    link: `/content/${article.slug}`
+  }))
+].sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf());
 
 // 从JSON文件中获取视频数据，只显示前4个视频
 const featuredVideos = videoData.featuredVideos.slice(0, 4);
-
 ---
 
 <MainLayout title="内容中心 - Spark官方网站">
@@ -23,7 +46,7 @@ const featuredVideos = videoData.featuredVideos.slice(0, 4);
         <section class="py-12 px-4 mx-auto max-w-screen-xl lg:py-20 lg:px-3 bg-background">
             <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
                 <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-primary">📺 Spark理财视频</h2>
-                <p class="font-light sm:text-xl text-gray-700">通过视频学习理财知识，获取最新的投资见解和市场分析</p>
+                <p class="font-light sm:text-xl text-dark">通过视频学习理财知识，获取最新的投资见解和市场分析</p>
                 <div class="mt-6">
                     <a 
                         href="https://www.youtube.com/@Mr18SparkLiang/videos" 
@@ -53,20 +76,81 @@ const featuredVideos = videoData.featuredVideos.slice(0, 4);
             </div>
         </section>
 
-        <!-- 博客文章部分 -->
-        <section class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3">
-            <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-                <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-primary">📖 理财文章</h2>
-                <p class="font-light sm:text-xl text-gray-700">深度分析和实用指南，帮助您做出明智的财务决策</p>
-            </div> 
-            <br>
-            <SearchForm />
-            <br>
-            <div class="grid gap-8 lg:grid-cols-2">
-                {allBlogArticles.map(article => (
-                    <ArticleCard article={article} />
-                ))}
-            </div>  
-        </section>
+        			<!-- 特色交互文章部分（包含 Astro 和 Markdown 文章） -->
+			{allArticles.length > 0 && (
+				<section class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-3 bg-gradient-to-br from-purple-50 to-blue-50">
+					<div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+						<h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-primary">✨ 特色交互文章</h2>
+						<p class="font-light sm:text-xl text-dark">体验全新的交互式阅读，深度学习和实践相结合</p>
+						<div class="mt-6">
+							<a 
+								href="/blog" 
+								class="inline-flex items-center px-6 py-3 bg-accent hover:bg-accent/90 text-white font-medium rounded-xl transition-colors duration-200"
+							>
+								<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+								</svg>
+								查看所有文章
+							</a>
+						</div>
+					</div>
+                
+                <div class="grid gap-8 lg:grid-cols-2">
+                    {allArticles.map(article => (
+                        <Card isUnderline={true}>
+                            <article class="p-6 bg-white rounded-[45px] hover:shadow-lg transition-shadow duration-300">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class={`text-white text-xs font-medium px-3 py-1 rounded-full ${
+                                        article.isMarkdown 
+                                            ? 'bg-gradient-to-r from-green-500 to-blue-500' 
+                                            : 'bg-gradient-to-r from-purple-500 to-blue-500'
+                                    }`}>
+                                        {article.type} • {article.isMarkdown ? 'Markdown' : '交互式'}
+                                    </span>
+                                    {article.featured && (
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                            推荐
+                                        </span>
+                                    )}
+                                </div>
+                                
+                                <h3 class="mb-3 text-xl font-bold tracking-tight text-primary hover:text-accent transition-colors">
+                                    <a href={article.link}>{article.title}</a>
+                                </h3>
+                                
+                                <p class="mb-4 text-dark line-clamp-3">{article.summary}</p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    {article.tags.slice(0, 3).map(tag => (
+                                        <span class="bg-gray text-primary text-xs font-medium px-2 py-1 rounded">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+                                            <span class="text-dark text-sm font-bold">{article.author.charAt(0)}</span>
+                                        </div>
+                                        <div class="text-sm">
+                                            <p class="text-primary font-medium">{article.author}</p>
+                                            <p class="text-dark">{new Date(article.pubDate).toLocaleDateString('zh-CN')}</p>
+                                        </div>
+                                    </div>
+                                    <a href={article.link} class="inline-flex items-center font-medium text-primary hover:text-accent transition-colors">
+                                        阅读全文
+                                        <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </article>
+                        </Card>
+                    ))}
+                </div>
+            </section>
+        )}
+
 	</main>
 </MainLayout>

@@ -1,4 +1,6 @@
 import { defineCollection, z } from 'astro:content';
+
+// 定义博客集合的 schema
 const blogCollection = defineCollection({
   type: 'content',
   schema: z.object({
@@ -9,10 +11,11 @@ const blogCollection = defineCollection({
     image: z.string(),
     tags: z.array(z.string()),
     summary: z.string(),
-    type: z.enum(['Article', 'Tutorial']),
-  }),
+    type: z.string(),
+    featured: z.boolean().optional().default(false)
+  })
 });
 
 export const collections = {
-  blog: blogCollection,
+  'blog': blogCollection
 };

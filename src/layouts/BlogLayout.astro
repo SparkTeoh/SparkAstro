@@ -1,0 +1,120 @@
+---
+import MainLayout from "./MainLayout.astro";
+import Tags from "../components/ui/Tags.astro";
+import Card from "../components/ui/Card.astro";
+import SectionTitle from "../components/ui/SectionTitle.astro";
+import { formatDate } from "../utils";
+
+export interface Props {
+  title: string;
+  pubDate: Date;
+  author: string;
+  authImage: string;
+  image: string;
+  tags: string[];
+  summary: string;
+  type: string;
+}
+
+const { title, pubDate, author, authImage, image, tags, summary, type } = Astro.props;
+---
+
+<MainLayout title={`${title} - Spark官方网站`}>
+  <main class="space-y-8 mb-8 pt-4">
+    <!-- 博客头部区域 -->
+    <section class="bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div class="gap-4 items-center py-4 px-4 mx-auto max-w-screen-xl">
+        <div class="text-center mb-4">
+          <a href="/content" class="inline-flex items-center font-medium text-primary hover:text-accent my-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path>
+            </svg>
+            <span class="ml-1 font-bold text-lg">返回内容中心</span>
+          </a>
+          
+          <div class="max-w-4xl mx-auto">
+            <span class="inline-block bg-accent text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+              {type}
+            </span>
+            <h1 class="mb-4 text-3xl md:text-4xl tracking-tight font-extrabold text-primary leading-tight">
+              {title}
+            </h1>
+            <p class="text-lg text-dark mb-4 leading-relaxed">
+              {summary}
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 text-dark mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center">
+                  <span class="text-dark text-sm font-bold">{author.charAt(0)}</span>
+                </div>
+                <span class="font-medium">{author}</span>
+              </div>
+              <span class="hidden sm:block">•</span>
+              <span>{formatDate(pubDate)}</span>
+            </div>
+            
+            <Tags tags={tags} />
+          </div>
+        </div>
+        
+
+      </div>
+    </section>
+
+    <!-- 博客内容区域 -->
+    <section class="bg-white py-4">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="prose prose-lg max-w-none">
+          <slot />
+        </div>
+      </div>
+    </section>
+  </main>
+</MainLayout>
+
+<style>
+  .prose {
+    @apply text-dark leading-relaxed;
+  }
+  
+  .prose h2 {
+    @apply text-3xl font-bold text-primary mt-12 mb-6;
+  }
+  
+  .prose h3 {
+    @apply text-2xl font-semibold text-primary mt-8 mb-4;
+  }
+  
+  .prose h4 {
+    @apply text-xl font-semibold text-primary mt-6 mb-3;
+  }
+  
+  .prose p {
+    @apply mb-6 text-lg;
+  }
+  
+  .prose ul, .prose ol {
+    @apply mb-6 space-y-2;
+  }
+  
+  .prose li {
+    @apply text-lg;
+  }
+  
+  .prose blockquote {
+    @apply border-l-4 border-accent pl-6 italic text-dark my-8;
+  }
+  
+  .prose code {
+    @apply bg-gray px-2 py-1 rounded text-sm font-mono;
+  }
+  
+  .prose pre {
+    @apply bg-dark text-white p-6 rounded-lg overflow-x-auto my-8;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+</style>

@@ -1,0 +1,306 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import SectionTitle from '../../components/ui/SectionTitle.astro';
+import Card from '../../components/ui/Card.astro';
+
+// 博客数据，统一管理所有元数据
+const blogData = {
+  title: "复盘+: 把经验转化为能力",
+  pubDate: new Date(),
+  author: "邱昭良",
+  authImage: "/blog/image1.png",
+  image: "image1.png",
+  tags: ["管理学", "复盘", "学习", "能力提升"],
+  summary: "深入解读邱昭良的管理学著作《复盘+》，探讨如何将经验转化为个人与团队的能力，涵盖复盘的认知、操作与持续应用。",
+  type: "书籍解读"
+};
+
+// 页面描述信息
+const pageDescription = {
+  author: "作者：邱昭良 | 管理学博士，高级经济师",
+  recommendation: "20余位教授、企业家、大学校长联袂推荐"
+};
+
+// 用于循环渲染的数据，使代码更简洁
+const features = {
+  intro: [
+    { icon: '🧠', title: '创新学习法', text: '基于中国智慧，梳理了复盘的学习机理，提出创新的"U型学习法"' },
+    { icon: '⚠️', title: '避开陷阱', text: '整理出复盘的25个"坑"及其对策建议，指导你把复盘真正做到位' },
+    { icon: '👥', title: '引导技能', text: '明确复盘引导师的核心任务、工作流程、角色与能力要求' },
+    { icon: '🏢', title: '企业应用', text: '对如何在企业内应用和推广复盘，给出了具体的策略、行动步骤' }
+  ],
+  types: [
+    { icon: '👤', title: '个人复盘', text: '个人对亲身经历的活动/事件及参与的项目进行结构化自我反思' },
+    { icon: '👥', title: '团队复盘', text: '单个或多个团队进行的活动/事件，增进彼此了解与配合' },
+    { icon: '📋', title: '项目复盘', text: '单个或多个团队执行的较长期或大型项目的复盘' },
+    { icon: '🏆', title: '经营与战略复盘', text: '在事业部、业务单元或整个公司层面的经营战略复盘' }
+  ],
+  tools: [
+    { icon: '❓', title: '提问', text: '引导师最主要的工作方式，通过开放性和封闭性问题引导讨论' },
+    { icon: '🗣️', title: '说话棒', text: '持有说话棒的人是唯一可以发言的人，确保有序讨论' },
+    { icon: '☕', title: '世界咖啡汇谈', text: '营造安全和谐氛围，敞开心扉进行深度对话和交流' },
+    { icon: '💡', title: '头脑风暴法', text: '在短暂时间内获得大量构想的集体讨论法' },
+    { icon: '📝', title: '团队列名法', text: '更加结构化的头脑风暴，独立思考后轮流发言' },
+    { icon: '🐟', title: '鱼骨图', text: '对问题产生原因进行可视化分析的方法' },
+    { icon: '❓', title: '五个为什么', text: '简单实用找到差异根因的方法，层层追问' },
+    { icon: '🧭', title: '思考的罗盘™', text: '列出利益相关者，换位思考，探究因果关系' }
+  ],
+  cases: [
+    { icon: '🇺🇸', title: '美军AAR', text: '通过行动后反思打造执行力与领导力，提升组织智商' },
+    { icon: '💻', title: '联想控股', text: '将复盘作为基本工作方法，嵌入经营与管理体系' },
+    { icon: '🛢️', title: '英国石油公司', text: '建立完整的"做前学、做中学、做后学"学习体系' },
+    { icon: '🌐', title: '谷歌、阿里等', text: '积极利用复盘推进快速迭代与创新' }
+  ]
+};
+---
+
+<BlogLayout {...blogData}>
+  <!-- 1. 页面主标题 -->
+  <header class="text-center py-16 bg-gray rounded-[45px]">
+    <h1 class="text-5xl font-bold text-accent mb-4">复盘+</h1>
+    <p class="text-2xl text-primary mb-6">把经验转化为能力</p>
+    <div class="text-accent space-y-1">
+      <p>{pageDescription.author}</p>
+      <p>{pageDescription.recommendation}</p>
+    </div>
+  </header>
+
+  <!-- 2. 页面内导航 -->
+  <nav class="bg-background/80 backdrop-blur-md sticky top-4 z-50 py-3 my-12 rounded-full border border-primary/20 max-w-2xl mx-auto">
+    <ul class="flex justify-center items-center flex-wrap gap-x-6 gap-y-2 px-4">
+      <li><a href="#introduction" class="text-primary hover:text-accent transition-colors">简介</a></li>
+      <li><a href="#contents" class="text-primary hover:text-accent transition-colors">目录</a></li>
+      <li><a href="#part1" class="text-primary hover:text-accent transition-colors">认知</a></li>
+      <li><a href="#part2" class="text-primary hover:text-accent transition-colors">操作</a></li>
+      <li><a href="#part3" class="text-primary hover:text-accent transition-colors">应用</a></li>
+      <li><a href="#tools" class="text-primary hover:text-accent transition-colors">工具</a></li>
+    </ul>
+  </nav>
+
+  <main class="space-y-24">
+    <!-- 3. 书籍简介 -->
+    <section id="introduction" class="scroll-mt-24">
+      <SectionTitle sectionTitle="书籍简介" description="源于中国、全球通用的管理智慧。VUCA时代个人与团队敏捷成长、知识萃取与快速创新的实操指南。" />
+      <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {features.intro.map(feature => (
+          <div class="p-6 text-center bg-gray rounded-[45px] h-full border border-primary/20 transition-all hover:border-accent hover:shadow-lg">
+            <div class="text-4xl mb-4">{feature.icon}</div>
+            <h3 class="text-lg font-bold text-accent">{feature.title}</h3>
+            <p class="text-dark mt-2 text-sm leading-relaxed">{feature.text}</p>
+          </div>
+        ))}
+      </div>
+      <Card isUnderline={true}>
+        <div class="p-8 mt-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4">复盘关键词</h3>
+            <div class="space-y-4">
+                <p><strong class="text-primary">亲身经历：</strong><span class="text-dark">成人学习的主要方法就是复盘，因为自己过去经历的事件是成人获取信息、对信息进行加工与处理的主要途径。</span></p>
+                <p><strong class="text-primary">过去：</strong><span class="text-dark">成年人最主要的学习来源仍是过去的经验，而复盘就是从自己过去的经验中进行学习的结构化方法。</span></p>
+                <p><strong class="text-primary">学习：</strong><span class="text-dark">实践是检验真理的唯一标准，只有落实到行动上，让自己的行动更有效，才是学习的出发点和落脚点。</span></p>
+            </div>
+        </div>
+      </Card>
+    </section>
+
+    <!-- 4. 目录结构 -->
+    <section id="contents" class="scroll-mt-24">
+       <SectionTitle sectionTitle="目录结构" description="全书分为认知、操作、应用三大篇章，层层递进，系统讲解复盘的道与术。" />
+       <div class="mt-12 p-8 bg-gray rounded-[45px]">
+         <h3 class="text-2xl font-bold text-accent text-center mb-8">全书架构</h3>
+         <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-6 bg-background rounded-[45px] border border-primary">
+                <h4 class="text-lg font-bold text-accent mb-2">篇Ⅰ 认知复盘："知"</h4>
+                <ul class="list-disc list-inside text-dark space-y-1">
+                  <li>第1章 认识复盘</li>
+                  <li>第2章 复盘之道</li>
+                </ul>
+                <p class="text-dark mt-4 text-sm">明确复盘的内涵与本质，知晓什么是复盘，应该如何复盘</p>
+            </div>
+            <div class="p-6 bg-background rounded-[45px] border border-primary">
+                <h4 class="text-lg font-bold text-accent mb-2">篇Ⅱ 复盘操作："行"</h4>
+                <ul class="list-disc list-inside text-dark space-y-1">
+                  <li>第3章 个人复盘</li>
+                  <li>第4章 团队复盘</li>
+                  <li>第5章 项目复盘</li>
+                  <li>第6章 经营与战略复盘</li>
+                </ul>
+                <p class="text-dark mt-4 text-sm">对四类复盘操作手法进行详细解读</p>
+            </div>
+            <div class="p-6 bg-background rounded-[45px] border border-primary">
+                <h4 class="text-lg font-bold text-accent mb-2">篇Ⅲ 持续应用："积"</h4>
+                <ul class="list-disc list-inside text-dark space-y-1">
+                  <li>第7章 做好复盘</li>
+                  <li>第8章 推广复盘</li>
+                  <li>第9章 超越复盘</li>
+                </ul>
+                <p class="text-dark mt-4 text-sm">坚持复盘，形成习惯，并扩大复盘的影响</p>
+            </div>
+         </div>
+       </div>
+    </section>
+
+    <!-- 5. 认知复盘 -->
+    <section id="part1" class="scroll-mt-24">
+      <SectionTitle sectionTitle='篇Ⅰ 认知复盘："知"' description="明确复盘的定义、内涵与学习机理，为有效实践奠定基础。" />
+      <div class="mt-12 space-y-8">
+        <Card isUnderline={false}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent">复盘的定义</h3>
+            <p class="text-dark mt-4">原是围棋术语，把对弈过程还原并且进行讨论、分析的过程。用在企业管理中，复盘指的是从过去的经验、实际工作中进行学习，帮助管理者有效地总结经验、提升能力。</p>
+          </div>
+        </Card>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="p-6 bg-gray rounded-[45px] border-l-4 border-accent"><h4 class="text-lg font-bold text-primary">以学习为导向</h4><p class="text-dark mt-2">遵循特定逻辑与步骤，回顾事件、行为及结果，得出经验教训，转化为应用。</p></div>
+          <div class="p-6 bg-gray rounded-[45px] border-l-4 border-accent"><h4 class="text-lg font-bold text-primary">结构化流程</h4><p class="text-dark mt-2">不追究、不批评、不表扬，还原事实，分析差异、反思自我，学习经验与教训。</p></div>
+          <div class="p-6 bg-gray rounded-[45px] border-l-4 border-accent"><h4 class="text-lg font-bold text-primary">团队协作</h4><p class="text-dark mt-2">多人、多部门协同，集体深度会谈，超出个人局限，激发新观点。</p></div>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.types.map(feature => (
+            <div class="p-6 text-center bg-gray rounded-[45px] h-full border border-primary/20 transition-all hover:border-accent hover:shadow-lg">
+              <div class="text-4xl mb-4">{feature.icon}</div>
+              <h3 class="text-lg font-bold text-accent">{feature.title}</h3>
+              <p class="text-dark mt-2 text-sm leading-relaxed">{feature.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 复盘操作 -->
+    <section id="part2" class="scroll-mt-24">
+      <SectionTitle sectionTitle='篇Ⅱ 复盘操作："行"' description="掌握个人、团队、项目到战略层面的四类复盘实操方法。" />
+       <div class="mt-12 space-y-8">
+        <div class="p-6 text-center bg-accent rounded-[45px] text-dark font-bold text-lg">将军不是教出来的，而是打出来的。复盘是个人学习与能力提升最有效的方式与途径之一。</div>
+        <Card isUnderline={true}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4">团队复盘的四个步骤</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">1</div><h4 class="font-bold text-primary">回顾、评估</h4><p class="text-dark text-sm mt-1">回顾目的与目标、策略与计划，核实、评估结果</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">2</div><h4 class="font-bold text-primary">反思、分析</h4><p class="text-dark text-sm mt-1">对亮点与不足进行根本原因分析，深入反思</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">3</div><h4 class="font-bold text-primary">萃取、提炼</h4><p class="text-dark text-sm mt-1">举一反三，找出经验与教训</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">4</div><h4 class="font-bold text-primary">转化、应用</h4><p class="text-dark text-sm mt-1">将提炼的经验、教训应用于后续工作中</p></div>
+            </div>
+          </div>
+        </Card>
+        <Card isUnderline={false}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4">团队复盘引导的"三阶九步法™"</h3>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+              <div class="p-4 bg-background rounded-[45px] border border-primary"><h4 class="font-bold text-primary mb-2">精心准备</h4><ul class="text-dark text-sm space-y-1"><li>策划团队复盘方案</li><li>组织团队复盘会议</li><li>提前准备</li></ul></div>
+              <div class="p-4 bg-background rounded-[45px] border border-primary"><h4 class="font-bold text-primary mb-2">有效引导</h4><ul class="text-dark text-sm space-y-1"><li>开场</li><li>顺序研讨，深入挖掘</li><li>收尾</li></ul></div>
+              <div class="p-4 bg-background rounded-[45px] border border-primary"><h4 class="font-bold text-primary mb-2">推进到位</h4><ul class="text-dark text-sm space-y-1"><li>整理并分享复盘结果</li><li>跟进实施，推动"落地"</li><li>评估与改善</li></ul></div>
+            </div>
+          </div>
+        </Card>
+       </div>
+    </section>
+    
+    <!-- 7. 持续应用 -->
+    <section id="part3" class="scroll-mt-24">
+      <SectionTitle sectionTitle='篇Ⅲ 持续应用："积"' description="如何避开常见误区，并在组织内有效推广复盘文化。" />
+       <div class="mt-12 space-y-8">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4 text-center">联想：复盘的五个误区与七个关键成功要素</h3>
+            <div class="grid md:grid-cols-2 gap-8 mt-6">
+              <div class="p-6 bg-background rounded-[45px] border border-primary"><h4 class="font-bold text-primary mb-2 text-center">常见误区</h4><ol class="list-decimal list-inside text-dark space-y-1"><li>为了证明自己对</li><li>流于形式，走过场</li><li>追究责任，开批斗会</li><li>推卸责任，归罪于外</li><li>快速下结论</li></ol></div>
+              <div class="p-6 bg-background rounded-[45px] border border-primary"><h4 class="font-bold text-primary mb-2 text-center">关键成功要素</h4><ol class="list-decimal list-inside text-dark space-y-1"><li>开放心态</li><li>坦诚表达</li><li>实事求是</li><li>集思广益</li><li>反思自我</li><li>刨根问底</li><li>重在改进</li></ol></div>
+            </div>
+          </div>
+        </Card>
+        <div class="p-6 text-center bg-accent rounded-[45px] text-dark font-bold text-lg">复盘的25个"坑"及对策建议</div>
+         <Card isUnderline={false}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4">推广复盘的六个阶段</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">1</div><h4 class="font-bold text-primary">松土</h4><p class="text-dark text-sm mt-1">明确复盘的意义、价值与确保其成功的关键要素</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">2</div><h4 class="font-bold text-primary">赋能</h4><p class="text-dark text-sm mt-1">培养各级管理者成为"复盘引导师"</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">3</div><h4 class="font-bold text-primary">试点</h4><p class="text-dark text-sm mt-1">选择小团队或具体事件、活动进行复盘</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">4</div><h4 class="font-bold text-primary">及时总结</h4><p class="text-dark text-sm mt-1">每次做完复盘后，及时对这次复盘进行复盘</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">5</div><h4 class="font-bold text-primary">逐步推广</h4><p class="text-dark text-sm mt-1">循序渐进地，由易到难，逐渐扩大复盘应用范围</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">6</div><h4 class="font-bold text-primary">评估优化</h4><p class="text-dark text-sm mt-1">进行更全面的阶段性总结，沉淀标准操作规程</p></div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 8. 工具方法 -->
+    <section id="tools" class="scroll-mt-24">
+      <SectionTitle sectionTitle="工具方法" description="掌握复盘画布、引导技巧及企业最佳实践，让复盘真正落地生根。" />
+      <div class="mt-12 space-y-8">
+        <Card isUnderline={true}>
+           <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4">复盘画布™</h3>
+             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">1</div><h4 class="font-bold text-primary">回顾目标</h4><p class="text-dark text-sm mt-1">初衷、目标/关键结果</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">2</div><h4 class="font-bold text-primary">评估结果</h4><p class="text-dark text-sm mt-1">亮点、不足</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">3</div><h4 class="font-bold text-primary">分析原因</h4><p class="text-dark text-sm mt-1">成功关键因素、失败根本原因</p></div>
+              <div class="text-center p-4"><div class="mx-auto w-10 h-10 flex items-center justify-center bg-accent text-dark rounded-full font-bold mb-2">4</div><h4 class="font-bold text-primary">总结经验</h4><p class="text-dark text-sm mt-1">关键发现、行动计划</p></div>
+            </div>
+          </div>
+        </Card>
+        <Card isUnderline={false}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4 text-center">常用引导方法与工具</h3>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {features.tools.map(feature => (
+                <div class="p-4 text-center bg-background rounded-[45px] border border-primary/20">
+                  <div class="text-4xl mb-2 text-accent">{feature.icon}</div>
+                  <h4 class="font-bold text-primary">{feature.title}</h4>
+                  <p class="text-dark mt-1 text-sm">{feature.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
+        <Card isUnderline={false}>
+          <div class="p-8 bg-gray rounded-[45px]">
+            <h3 class="text-xl font-bold text-accent mb-4 text-center">企业最佳实践案例</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {features.cases.map(feature => (
+                <div class="p-4 text-center bg-background rounded-[45px] border border-primary/20">
+                  <div class="text-4xl mb-2 text-accent">{feature.icon}</div>
+                  <h4 class="font-bold text-primary">{feature.title}</h4>
+                  <p class="text-dark mt-1 text-sm">{feature.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 9. 核心理念 -->
+    <section class="scroll-mt-24">
+        <SectionTitle sectionTitle="核心理念" description="对失败复盘，才能避免重复犯错；对成功复盘，才能不断复制成功。" />
+        <div class="mt-12 p-6 text-center bg-accent rounded-[45px] text-dark font-bold text-lg">
+            "复盘是重要的，但仅靠复盘是不够的。世界上从来不存在一味'万能药'，想指望一种方法包打天下，都是幼稚可笑的。"
+        </div>
+    </section>
+
+  </main>
+  
+  <!-- 10. 页脚 -->
+  <footer class="text-center mt-24 py-8 bg-gray rounded-[45px]">
+    <p class="text-dark">© {new Date().getFullYear()} 《复盘+：把经验转化为能力》 - 邱昭良 著</p>
+    <p class="text-primary mt-2">进步最快的路径就是读书，读好书！</p>
+  </footer>
+
+  <!-- 11. 交互脚本 -->
+  <script>
+    // 为页面内导航提供平滑滚动效果
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e: Event) => {
+            e.preventDefault();
+            const targetEl = document.querySelector((anchor as HTMLAnchorElement).getAttribute('href') || '');
+            if (targetEl) {
+                targetEl.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+  </script>
+</BlogLayout>
