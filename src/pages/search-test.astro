@@ -18,7 +18,7 @@ const allArticles = markdownArticles.map(article => ({
   tags: article.data.tags,
   type: article.data.type,
   featured: article.data.featured || false,
-  link: `/content/${article.slug}`,
+  link: `/blog/${article.slug}`,
   contentType: 'markdown',
   isExternal: false,
   description: article.data.summary
@@ -100,7 +100,7 @@ const filteredContent = allContent.filter(item => {
     <li><a href="/search-test?search=OGSM">测试 OGSM 搜索</a></li>
     <li><a href="/search-test?search=投资">测试 投资 搜索</a></li>
     <li><a href="/search-test?search=理财">测试 理财 搜索</a></li>
-    <li><a href="/blog?search=OGSM">博客页面 OGSM 搜索</a></li>
+    <li><a href="/blog?search=OGSM">内容中心 OGSM 搜索</a></li>
   </ul>
 </body>
 </html> 

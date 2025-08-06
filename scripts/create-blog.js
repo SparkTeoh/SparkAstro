@@ -16,7 +16,7 @@ function question(prompt) {
 }
 
 async function createBlogPost() {
-  console.log('📝 创建新的博客文章\n');
+  console.log('📝 创建新的内容文章\n');
 
   // 获取用户输入
   const title = await question('文章标题: ');
@@ -82,10 +82,10 @@ ${summary}
     fs.writeFileSync(filePath, frontmatter, 'utf8');
     console.log(`\n✅ 文章创建成功！`);
     console.log(`📁 文件路径: ${filePath}`);
-    console.log(`🔗 访问链接: http://localhost:4321/content/${slug}`);
+    console.log(`🔗 访问链接: http://localhost:4321/blog/${slug}`);
     console.log(`\n💡 提示:`);
     console.log(`   - 编辑文件: ${filePath}`);
-    console.log(`   - 文章会自动出现在博客页面`);
+    console.log(`   - 文章会自动出现在内容中心`);
     console.log(`   - 无需手动更新任何 JSON 文件`);
   } catch (error) {
     console.error('❌ 创建文件失败:', error.message);

@@ -94,7 +94,7 @@ p { font-size: 1rem; line-height: 1.6; }
 <nav class="breadcrumb">
   <a href="/">首页</a>
   <span class="separator">/</span>
-  <a href="/blog">博客</a>
+  <a href="/blog">内容中心</a>
   <span class="separator">/</span>
   <span class="current">当前页面</span>
 </nav>

@@ -1,11 +1,11 @@
-// 博客管理工具
-// 用于创建新的 .astro 博客文章
+// 内容管理工具
+// 用于创建新的 .astro 内容文章
 
 import fs from 'fs';
 import path from 'path';
 
 /**
- * 创建新的 .astro 博客文章
+ * 创建新的 .astro 内容文章
  * @param {Object} blogData - 博客数据
  * @param {string} blogData.slug - 文章 slug
  * @param {string} blogData.title - 文章标题
@@ -97,7 +97,7 @@ const blogData = {
   // 写入文件
   fs.writeFileSync(filePath, astroContent, 'utf8');
   
-  console.log(`✅ 博客文章已创建: ${filePath}`);
+      console.log(`✅ 内容文章已创建: ${filePath}`);
   
   return {
     filePath,
@@ -117,7 +117,7 @@ const blogData = {
 }
 
 /**
- * 更新博客数据文件
+ * 更新内容数据文件
  * @param {Object} newBlogData - 新的博客数据
  */
 export function updateBlogDataFile(newBlogData) {
@@ -139,11 +139,11 @@ export function updateBlogDataFile(newBlogData) {
   // 写入文件
   fs.writeFileSync(dataFilePath, JSON.stringify(existingData, null, 2), 'utf8');
   
-  console.log('✅ 博客数据文件已更新');
+      console.log('✅ 内容数据文件已更新');
 }
 
 /**
- * 快速创建博客文章的便捷函数
+ * 快速创建内容文章的便捷函数
  * @param {string} slug - 文章 slug
  * @param {string} title - 文章标题
  * @param {string} author - 作者
@@ -161,7 +161,7 @@ export function quickCreateBlog(slug, title, author, summary, tags, type = 'Arti
   // 更新数据文件
   updateBlogDataFile(result.blogData);
   
-  console.log(`🎉 博客文章 "${title}" 创建完成！`);
+      console.log(`🎉 内容文章 "${title}" 创建完成！`);
   console.log(`📝 文件位置: ${result.filePath}`);
   console.log(`🔗 访问地址: /blog/${slug}`);
   

@@ -227,7 +227,7 @@ describe('Blog Page', () => {
     const response = await fetch('/blog');
     const html = await response.text();
     
-    expect(html).toContain('博客中心');
+    expect(html).toContain('内容中心');
     expect(html).toContain('文章标题');
   });
 });

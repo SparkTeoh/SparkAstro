@@ -15,7 +15,7 @@ function question(prompt) {
 }
 
 async function createBlogInteractive() {
-  console.log('🎉 欢迎使用博客创建工具！\n');
+  console.log('🎉 欢迎使用内容创建工具！\n');
   
   try {
     // 获取用户输入
