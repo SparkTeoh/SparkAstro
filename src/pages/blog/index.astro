@@ -10,36 +10,35 @@ const pageParam = Astro.url.searchParams.get('page');
 const page = pageParam ? parseInt(pageParam) : 1;
 const itemsPerPage = 12; // 初始加载12篇文章
 
-// 调试 URL 参数
-console.log('🌐 URL 参数调试:');
-console.log('   完整 URL:', Astro.url.toString());
-console.log('   原始 page 参数:', pageParam);
-console.log('   解析后的 page:', page);
-console.log('   搜索参数:', searchQuery);
-
-
-
 // 获取所有 Markdown 文章
 const markdownArticles = await getCollection('blog');
 
+// 获取所有 Astro 文章
+const astroArticles = await Astro.glob('./*.astro');
+
 // 处理 Markdown 文章数据
-const allArticles = markdownArticles.map(article => ({
-  ...article,
+const allMarkdownArticles = markdownArticles.map(article => ({
+  ...article.data,
   isMarkdown: true,
-  title: article.data.title,
-  summary: article.data.summary,
-  author: article.data.author,
-  pubDate: article.data.pubDate,
-  tags: article.data.tags,
-  type: article.data.type,
-  featured: article.data.featured || false,
   link: `/blog/${article.slug}`,
   contentType: 'markdown',
   isExternal: false,
   description: article.data.summary
-})).sort((a, b) => new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf());
+}));
 
-
+// 处理 Astro 文章数据
+const allAstroArticles = astroArticles.map(article => {
+  const blogData = article.blogData || {};
+  const slug = article.file.split('/').pop().replace('.astro', '');
+  return {
+    ...blogData,
+    isMarkdown: false,
+    link: `/blog/${slug}`,
+    contentType: 'astro',
+    isExternal: false,
+    description: blogData.summary
+  };
+});
 
 // 处理视频数据，添加类型标识
 const allVideos = videoData.featuredVideos.map(video => ({
@@ -55,7 +54,7 @@ const allVideos = videoData.featuredVideos.map(video => ({
 }));
 
 // 合并所有内容（文章和视频）
-const allContent = [...allArticles, ...allVideos].sort((a, b) => {
+const allContent = [...allMarkdownArticles, ...allAstroArticles, ...allVideos].sort((a, b) => {
   // 按日期排序，最新的在前面
   const dateA = a.pubDate ? new Date(a.pubDate).valueOf() : 0;
   const dateB = b.pubDate ? new Date(b.pubDate).valueOf() : 0;
@@ -84,18 +83,7 @@ const startIndex = (page - 1) * itemsPerPage;
 const endIndex = startIndex + itemsPerPage;
 const paginatedContent = filteredContent.slice(startIndex, endIndex);
 
-// 调试分页信息
-console.log('📄 分页调试信息:');
-console.log('   总内容数量:', filteredContent.length);
-console.log('   每页显示数量:', itemsPerPage);
-console.log('   总页数:', totalPages);
-console.log('   当前页:', page);
-console.log('   起始索引:', startIndex);
-console.log('   结束索引:', endIndex);
-console.log('   当前页内容数量:', paginatedContent.length);
-console.log('   当前页内容:', paginatedContent.map(item => item.title));
-console.log('   所有内容标题:', allContent.map(item => item.title));
-console.log('   过滤后内容标题:', filteredContent.map(item => item.title));
+
 
 // 获取所有标签用于筛选
 const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
@@ -182,12 +170,12 @@ const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
 							<article class="p-6 bg-white rounded-[45px] hover:shadow-lg transition-all duration-300 hover:scale-105">
 								<div class="flex items-center justify-between mb-4">
 									<span class={`text-white text-xs font-medium px-3 py-1 rounded-full ${
-										item.contentType === 'youtube' 
-											? 'bg-red-600' 
-											: 'bg-accent'
-									}`}>
-										{item.type} • {item.contentType === 'youtube' ? 'YouTube' : item.contentType === 'markdown' ? 'Markdown' : '交互式'}
-									</span>
+						item.contentType === 'youtube' 
+							? 'bg-red-600' 
+							: 'bg-accent'
+					}`}>
+						{item.type} • {item.contentType === 'youtube' ? 'YouTube' : item.contentType === 'markdown' ? 'Markdown' : 'Astro'}
+					</span>
 									{item.featured && (
 										<span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
 											推荐
@@ -258,14 +246,17 @@ const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
 
 </MainLayout> 
 
-<script is:inline define:vars={{ totalPages, initialPage: page }}>
+<script define:vars={{ totalPages, initialPage: page }}>
 	document.addEventListener('DOMContentLoaded', () => {
 	  const loadMoreButton = document.getElementById('load-more');
 	  const contentGrid = document.getElementById('content-grid');
 	  let currentPage = initialPage;
 
 	  if (currentPage >= totalPages) {
-		if (loadMoreButton) loadMoreButton.style.display = 'none';
+		if (loadMoreButton) {
+		  const container = document.getElementById('load-more-container');
+		  if(container) container.style.display = 'none';
+		}
 	  }
 
 	  if (loadMoreButton) {
@@ -277,46 +268,63 @@ const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
 		  loadMoreButton.disabled = true;
 
 		  try {
-			const response = await fetch(`/api/posts.json?page=${currentPage}`);
+			const response = await fetch(`/api/posts?page=${currentPage}`);
 			const data = await response.json();
 
 			data.posts.forEach(item => {
-			  const card = document.createElement('div');
-			  card.innerHTML = `
-				<article class="p-6 bg-white rounded-[45px] hover:shadow-lg transition-all duration-300 hover:scale-105">
-					<div class="flex items-center justify-between mb-4">
-						<span class="text-white text-xs font-medium px-3 py-1 rounded-full ${item.type === 'Video' ? 'bg-red-600' : 'bg-accent'}">
-							${item.type} • ${item.type === 'Video' ? 'YouTube' : 'Markdown'}
-						</span>
+			  const cardContainer = document.createElement('div');
+			  // We need to use a structure that is compatible with the Card.astro component
+			  // The Card component will wrap the article, so we create the article here.
+			  const article = document.createElement('article');
+			  article.className = 'p-6 bg-white rounded-[45px] hover:shadow-lg transition-all duration-300 hover:scale-105';
+			  
+			  const isVideo = item.contentType === 'youtube';
+			  const target = item.isExternal ? '_blank' : '_self';
+			  const rel = item.isExternal ? 'noopener noreferrer' : undefined;
+
+			  article.innerHTML = `
+				<div class="flex items-center justify-between mb-4">
+				  <span class="text-white text-xs font-medium px-3 py-1 rounded-full ${isVideo ? 'bg-red-600' : 'bg-accent'}">
+					${item.type} • ${isVideo ? 'YouTube' : 'Markdown'}
+				  </span>
+				</div>
+				<h3 class="mb-3 text-xl font-bold tracking-tight text-primary hover:text-accent transition-colors">
+				  <a href="${item.url}" target="${target}" ${rel ? `rel="${rel}"` : ''}>${item.title}</a>
+				</h3>
+				<p class="mb-4 text-dark line-clamp-3">${item.description || item.summary}</p>
+				<div class="flex flex-wrap gap-2 mb-4">
+				  ${(item.tags || []).slice(0, 3).map(tag => `<span class="bg-gray text-primary text-xs font-medium px-2 py-1 rounded">${tag}</span>`).join('')}
+				</div>
+				<div class="flex items-center justify-between">
+				  <div class="flex items-center space-x-3">
+					<div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+					  <span class="text-dark text-sm font-bold">${item.author.charAt(0)}</span>
 					</div>
-					<h3 class="mb-3 text-xl font-bold tracking-tight text-primary hover:text-accent transition-colors">
-						<a href="${item.url}" target="${item.url.startsWith('http') ? '_blank' : '_self'}">${item.title}</a>
-					</h3>
-					<p class="mb-4 text-dark line-clamp-3">${item.description}</p>
-					<div class="flex items-center justify-between">
-						<div class="flex items-center space-x-3">
-							<div class="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
-								<span class="text-dark text-sm font-bold">${item.author.charAt(0)}</span>
-							</div>
-							<div class="text-sm">
-								<p class="text-primary font-medium">${item.author}</p>
-								<p class="text-dark">${new Date(item.pubDate).toLocaleDateString('zh-CN')}</p>
-							</div>
-						</div>
-						<a href="${item.url}" target="${item.url.startsWith('http') ? '_blank' : '_self'}" class="inline-flex items-center font-medium text-primary hover:text-accent transition-colors">
-							${item.type === 'Video' ? '观看视频' : '阅读全文'}
-							<svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-						</a>
+					<div class="text-sm">
+					  <p class="text-primary font-medium">${item.author}</p>
+					  <p class="text-dark">${new Date(item.pubDate).toLocaleDateString('zh-CN')}</p>
 					</div>
-				</article>
+				  </div>
+				  <a href="${item.url}" target="${target}" ${rel ? `rel="${rel}"` : ''} class="inline-flex items-center font-medium text-primary hover:text-accent transition-colors">
+					${isVideo ? '观看视频' : '阅读全文'}
+					<svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+				  </a>
+				</div>
 			  `;
-			  contentGrid.appendChild(card.firstElementChild);
+			  
+			  // The Card component adds a wrapper, so we append the article to the grid.
+			  // To maintain the structure, we should ideally wrap it in a similar way the Card component does.
+			  // For now, let's just append the article and see if it works visually.
+			  // A better approach would be to have a template for the card and clone it.
+			  cardContainer.appendChild(article);
+			  contentGrid.appendChild(cardContainer);
 			});
 
 			if (currentPage >= data.totalPages) {
-			  loadMoreButton.style.display = 'none';
+			  const container = document.getElementById('load-more-container');
+			  if(container) container.style.display = 'none';
 			} else {
-			  loadMoreButton.textContent = '查看更多';
+			  loadMoreButton.textContent = '加载更多';
 			  loadMoreButton.disabled = false;
 			}
 		  } catch (error) {

@@ -3,12 +3,12 @@ import { defineCollection, z } from 'astro:content';
 // 定义博客集合的 schema
 const blogCollection = defineCollection({
   type: 'content',
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     pubDate: z.date(),
     author: z.string(),
-    authImage: z.string(),
-    image: z.string(),
+    authImage: image(),
+    image: image(),
     tags: z.array(z.string()),
     summary: z.string(),
     type: z.string(),

@@ -1,0 +1,311 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import Card from "../../components/ui/Card.astro";
+import SectionTitle from "../../components/ui/SectionTitle.astro";
+import ServiceCard from "../../components/ui/ServiceCard.astro";
+import TeamCard from "../../components/ui/TeamCard.astro";
+import AccordionItem from "../../components/ui/AccordionItem.astro";
+
+// 导入图片资源
+import icon1 from "../../assets/icon1.svg";
+import icon2 from "../../assets/icon2.svg";
+import icon3 from "../../assets/icon3.svg";
+import teamPic1 from "../../assets/team/t1.png";
+import teamPic2 from "../../assets/team/t2.png";
+
+export const blogData = {
+  title: "交互式网页设计完整指南",
+  pubDate: new Date("2024-01-20"),
+  author: "Spark Design Team",
+  authImage: "/blog/image1.png",
+  image: "image1.png",
+  tags: ["设计", "UI/UX", "交互"],
+  summary: "深入探讨现代网页设计的交互原则，使用实际案例和可交互的组件展示最佳实践。",
+  type: "Tutorial"
+};
+
+// 设计原则数据
+const designPrinciples = [
+  {
+    index: 1,
+    titleTop: "用户体验",
+    titleBottom: "优先原则",
+    img: icon1,
+    alt: "用户体验图标",
+    link: "#ux-principles"
+  },
+  {
+    index: 2,
+    titleTop: "响应式",
+    titleBottom: "设计理念",
+    img: icon2,
+    alt: "响应式设计图标",
+    link: "#responsive-design"
+  },
+  {
+    index: 3,
+    titleTop: "交互动效",
+    titleBottom: "设计规范",
+    img: icon3,
+    alt: "交互动效图标",
+    link: "#interaction-design"
+  }
+];
+
+// 专家团队数据
+const experts = [
+  {
+    pic: teamPic1,
+    name: "张设计师",
+    role: "UI/UX 设计专家",
+    description: "拥有10年网页设计经验，专注于用户体验优化和交互设计创新。",
+    link: "https://linkedin.com/in/zhang-designer"
+  },
+  {
+    pic: teamPic2,
+    name: "李开发者",
+    role: "前端开发工程师",
+    description: "精通现代前端技术栈，擅长将设计理念转化为高质量的交互体验。",
+    link: "https://linkedin.com/in/li-developer"
+  }
+];
+
+// FAQ 数据
+const faqContent = [
+  {
+    index: 1,
+    title: "什么是交互式设计？",
+    description: "交互式设计是指创建用户与数字产品之间有意义连接的设计过程。它关注用户如何与界面元素互动，以及这些互动如何影响用户体验。"
+  },
+  {
+    index: 2,
+    title: "如何提升网站的交互性？",
+    description: "可以通过添加动画效果、响应式反馈、微交互、个性化内容等方式来提升网站的交互性。关键是要确保这些交互元素能够增强而不是干扰用户体验。"
+  },
+  {
+    index: 3,
+    title: "响应式设计的重要性？",
+    description: "响应式设计确保网站在不同设备和屏幕尺寸上都能提供良好的用户体验。随着移动设备使用的增加，响应式设计已成为现代网页设计的必备要素。"
+  },
+  {
+    index: 4,
+    title: "如何测试交互设计效果？",
+    description: "可以通过用户测试、A/B测试、热力图分析、用户反馈收集等方法来测试交互设计的效果。重要的是要基于真实用户数据来优化设计。"
+  }
+];
+---
+
+<BlogLayout {...blogData}>
+  <!-- 文章引言 -->
+  <div class="mb-12">
+    <p class="text-xl leading-relaxed text-dark font-light">
+      在当今数字化时代，网页设计不再仅仅是静态的视觉呈现，而是需要创造引人入胜的交互体验。
+      本指南将带你深入了解现代交互式网页设计的核心原则和实践方法。
+    </p>
+  </div>
+
+  <!-- 设计原则部分 -->
+  <div class="my-16">
+    <SectionTitle 
+      sectionTitle="核心设计原则" 
+      description="掌握这些基本原则，让你的网页设计更加出色和用户友好"
+    />
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+      {designPrinciples.map((principle) => (
+        <ServiceCard {...principle} />
+      ))}
+    </div>
+  </div>
+
+  <!-- 详细内容部分 -->
+  <div class="space-y-12">
+    <h2 id="ux-principles">用户体验优先原则</h2>
+    
+    <Card isUnderline={true}>
+      <div class="p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-[45px]">
+        <h3 class="text-2xl font-bold text-primary mb-4">🎯 核心要点</h3>
+        <ul class="space-y-3 text-lg">
+          <li class="flex items-start gap-3">
+            <span class="text-accent font-bold">•</span>
+            <span>始终以用户需求为设计出发点</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-accent font-bold">•</span>
+            <span>保持界面简洁直观，减少认知负担</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-accent font-bold">•</span>
+            <span>提供清晰的视觉层次和导航结构</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-accent font-bold">•</span>
+            <span>确保快速的页面加载和响应速度</span>
+          </li>
+        </ul>
+      </div>
+    </Card>
+
+    <p>
+      用户体验设计的核心在于理解用户的真实需求和行为模式。通过用户研究、原型测试和数据分析，
+      我们可以创造出真正符合用户期望的交互体验。
+    </p>
+
+    <h2 id="responsive-design">响应式设计理念</h2>
+    
+    <p>
+      响应式设计不仅仅是技术实现，更是一种设计思维方式。它要求我们在设计初期就考虑到
+      不同设备和使用场景的需求。
+    </p>
+
+    <!-- 代码示例 -->
+    <Card isUnderline={true}>
+      <div class="bg-slate-800 text-white p-6 rounded-[45px] border border-slate-600">
+        <h4 class="text-white text-lg font-semibold mb-4">💻 CSS 响应式示例</h4>
+        <pre class="text-emerald-300 text-sm overflow-x-auto bg-slate-900 p-4 rounded-lg font-mono leading-relaxed"><code>/* 移动优先的响应式设计 */
+.container &#123;
+  width: 100%;
+  padding: 1rem;
+&#125;
+
+@media (min-width: 768px) &#123;
+  .container &#123;
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 2rem;
+  &#125;
+&#125;
+
+@media (min-width: 1024px) &#123;
+  .container &#123;
+    max-width: 1024px;
+    padding: 3rem;
+  &#125;
+&#125;</code></pre>
+      </div>
+    </Card>
+
+    <h2 id="interaction-design">交互动效设计规范</h2>
+    
+    <p>
+      优秀的交互动效能够提升用户体验，但过度的动画效果可能会适得其反。
+      关键是要找到功能性和美观性之间的平衡点。
+    </p>
+
+    <!-- 交互示例 -->
+    <div class="grid md:grid-cols-2 gap-8 my-12">
+      <Card isUnderline={true}>
+        <div class="p-6 bg-background rounded-[45px] hover:bg-gray transition-colors duration-300 cursor-pointer border border-accent">
+          <h4 class="text-primary font-bold text-lg mb-3">✅ 良好的交互</h4>
+          <ul class="text-primary space-y-2">
+            <li>• 微妙的悬停效果</li>
+            <li>• 平滑的页面过渡</li>
+            <li>• 及时的反馈提示</li>
+            <li>• 符合用户预期的动画</li>
+          </ul>
+        </div>
+      </Card>
+      
+      <Card isUnderline={true}>
+        <div class="p-6 bg-gray rounded-[45px] border border-primary">
+          <h4 class="text-primary font-bold text-lg mb-3">❌ 避免的交互</h4>
+          <ul class="text-dark space-y-2">
+            <li>• 过度复杂的动画</li>
+            <li>• 无意义的装饰效果</li>
+            <li>• 影响性能的动效</li>
+            <li>• 干扰用户操作的元素</li>
+          </ul>
+        </div>
+      </Card>
+    </div>
+  </div>
+
+  <!-- 专家观点部分 -->
+  <div class="my-16">
+    <SectionTitle 
+      sectionTitle="专家观点" 
+      description="听听行业专家对交互式设计的见解和建议"
+    />
+    
+    <div class="grid md:grid-cols-2 gap-8 mt-12">
+      {experts.map((expert) => (
+        <TeamCard {...expert} />
+      ))}
+    </div>
+  </div>
+
+  <!-- 常见问题部分 -->
+  <div class="my-16">
+    <SectionTitle 
+      sectionTitle="常见问题解答" 
+      description="关于交互式网页设计的常见疑问和专业解答"
+    />
+    
+    <div class="mt-12 space-y-4">
+      {faqContent.map((item) => (
+        <AccordionItem
+          index={item.index}
+          title={item.title}
+          description={item.description}
+        />
+      ))}
+    </div>
+  </div>
+
+  <!-- 总结部分 -->
+  <div class="my-16">
+    <Card isUnderline={true}>
+      <div class="p-8 bg-gradient-to-r from-background to-gray rounded-[45px] text-center border border-accent">
+        <h3 class="text-3xl font-bold text-primary mb-6">🎉 总结</h3>
+        <p class="text-lg text-dark mb-6 leading-relaxed">
+          交互式网页设计是一个不断演进的领域，需要我们持续学习和实践。
+          通过掌握核心原则、关注用户体验、合理运用技术手段，
+          我们可以创造出既美观又实用的数字体验。
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button class="bg-accent text-white px-8 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors">
+            开始实践
+          </button>
+          <button class="border-2 border-accent text-accent px-8 py-3 rounded-full font-semibold hover:bg-accent hover:text-white transition-colors">
+            了解更多
+          </button>
+        </div>
+      </div>
+    </Card>
+  </div>
+
+</BlogLayout>
+
+<script>
+  const handleAnchorClick = function(this: HTMLAnchorElement, e: MouseEvent) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    if (!href) return;
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  const handleButtonClick = function(this: HTMLButtonElement) {
+    this.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      this.style.transform = 'scale(1)';
+    }, 150);
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', handleAnchorClick as (this: HTMLAnchorElement, ev: Event) => any);
+    });
+
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', handleButtonClick as (this: HTMLButtonElement, ev: Event) => any);
+    });
+
+    console.log('交互式博客文章已加载！');
+  });
+</script>

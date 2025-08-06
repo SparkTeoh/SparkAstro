@@ -2,7 +2,7 @@
 title: "Astro 组件开发最佳实践"
 pubDate: 2024-01-18
 author: "Tech Team"
-authImage: "/blog/image4.png"
+authImage: "./image4.png"
 image: "image4.png"
 tags: ["Astro", "开发", "组件"]
 summary: "学习如何创建可重用、高性能的 Astro 组件，提升开发效率和代码质量。"
@@ -276,4 +276,4 @@ Astro 组件开发的最佳实践包括：
 4. **测试覆盖** - 单元测试和集成测试
 5. **部署优化** - 构建优化和缓存策略
 
-通过遵循这些最佳实践，可以创建高性能、可维护的 Astro 应用。 
+通过遵循这些最佳实践，可以创建高性能、可维护的 Astro 应用。
