@@ -1,8 +1,7 @@
 ---
 import MainLayout from "./MainLayout.astro";
 import Tags from "../components/ui/Tags.astro";
-import Card from "../components/ui/Card.astro";
-import SectionTitle from "../components/ui/SectionTitle.astro";
+
 import { formatDate } from "../utils";
 
 export interface Props {
@@ -16,7 +15,7 @@ export interface Props {
   type: string;
 }
 
-const { title, pubDate, author, authImage, image, tags, summary, type } = Astro.props;
+const { title, pubDate, author, tags, summary, type } = Astro.props;
 ---
 
 <MainLayout title={`${title} - Spark官方网站`}>

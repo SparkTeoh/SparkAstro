@@ -258,7 +258,7 @@ const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
 
 </MainLayout> 
 
-<script define:vars={{ totalPages, initialPage: page }}>
+<script is:inline define:vars={{ totalPages, initialPage: page }}>
 	document.addEventListener('DOMContentLoaded', () => {
 	  const loadMoreButton = document.getElementById('load-more');
 	  const contentGrid = document.getElementById('content-grid');
