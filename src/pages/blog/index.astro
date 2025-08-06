@@ -13,9 +13,6 @@ const itemsPerPage = 12; // 初始加载12篇文章
 // 获取所有 Markdown 文章
 const markdownArticles = await getCollection('blog');
 
-// 获取所有 Astro 文章
-const astroArticles = await Astro.glob('./*.astro');
-
 // 处理 Markdown 文章数据
 const allMarkdownArticles = markdownArticles.map(article => ({
   ...article.data,
@@ -25,20 +22,6 @@ const allMarkdownArticles = markdownArticles.map(article => ({
   isExternal: false,
   description: article.data.summary
 }));
-
-// 处理 Astro 文章数据
-const allAstroArticles = astroArticles.map(article => {
-  const blogData = article.blogData || {};
-  const slug = article.file.split('/').pop().replace('.astro', '');
-  return {
-    ...blogData,
-    isMarkdown: false,
-    link: `/blog/${slug}`,
-    contentType: 'astro',
-    isExternal: false,
-    description: blogData.summary
-  };
-});
 
 // 处理视频数据，添加类型标识
 const allVideos = videoData.featuredVideos.map(video => ({
@@ -54,7 +37,7 @@ const allVideos = videoData.featuredVideos.map(video => ({
 }));
 
 // 合并所有内容（文章和视频）
-const allContent = [...allMarkdownArticles, ...allAstroArticles, ...allVideos].sort((a, b) => {
+const allContent = [...allMarkdownArticles, ...allVideos].sort((a, b) => {
   // 按日期排序，最新的在前面
   const dateA = a.pubDate ? new Date(a.pubDate).valueOf() : 0;
   const dateB = b.pubDate ? new Date(b.pubDate).valueOf() : 0;
@@ -246,7 +229,7 @@ const allTags = [...new Set(allContent.flatMap(item => item.tags || []))];
 
 </MainLayout> 
 
-<script define:vars={{ totalPages, initialPage: page }}>
+<script is:inline define:vars={{ totalPages, initialPage: page }}>
 	document.addEventListener('DOMContentLoaded', () => {
 	  const loadMoreButton = document.getElementById('load-more');
 	  const contentGrid = document.getElementById('content-grid');
