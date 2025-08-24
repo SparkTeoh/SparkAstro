@@ -7,7 +7,7 @@ import Card from "../ui/Card.astro";
 import { getImage } from "astro:assets";
 
 const { article } = Astro.props;
-const image = await getImage({src: article.data.authImage, width: 28, height: 28});
+const image = article.data.authImage ? await getImage({src: article.data.authImage, width: 28, height: 28}) : null;
 
 interface Props {
   article: CollectionEntry<'blog'>;
@@ -26,7 +26,13 @@ interface Props {
   <p class="mb-5 font-light text-gray-500" style="white-space: pre-line">{article.data.summary}</p>
   <div class="flex justify-between items-center">
       <div class="flex items-center space-x-4">
-        <img class="w-7 h-7 rounded-full" src={image.src} alt={article.data.author + " cover"} />
+        {image ? (
+          <img class="w-7 h-7 rounded-full" src={image.src} alt={article.data.author + " cover"} />
+        ) : (
+          <div class="w-7 h-7 rounded-full bg-accent flex items-center justify-center">
+            <span class="text-white text-sm font-bold">{article.data.author.charAt(0)}</span>
+          </div>
+        )}
         <span class="font-medium">
             {article.data.author}
         </span>
