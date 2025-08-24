@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户体验与成功经理 - MMC Financial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* MMC Financial Brand Colors */
+            --primary: #12413F;
+            --primary-light: #1a5552;
+            --primary-dark: #0d302e;
+            --secondary: #BDAF94;
+            --secondary-light: #d4c8b0;
+            --secondary-dark: #a09174;
+            --white: #FFFFFF;
+            --light-gray: #f8f8f8;
+            --gray: #6b7280;
+            --dark: #1f2937;
+            
+            /* Functional Colors */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --accent: #BDAF94;
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #12413F 0%, #0d302e 100%);
+            --gradient-secondary: linear-gradient(135deg, #BDAF94 0%, #a09174 100%);
+            --gradient-mixed: linear-gradient(135deg, #12413F 0%, #1a5552 50%, #BDAF94 100%);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 4px rgba(18, 65, 63, 0.08);
+            --shadow-md: 0 4px 6px rgba(18, 65, 63, 0.1);
+            --shadow-lg: 0 10px 15px rgba(18, 65, 63, 0.12);
+            --shadow-xl: 0 20px 25px rgba(18, 65, 63, 0.15);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", "微软雅黑", sans-serif;
+            background: linear-gradient(135deg, #12413F 0%, #1a5552 50%, #0d302e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--dark);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(189, 175, 148, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(189, 175, 148, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(189, 175, 148, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(18, 65, 63, 0.2);
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-secondary);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(189, 175, 148, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(189, 175, 148, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: fadeInScale 1s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            font-weight: 300;
+            animation: fadeInScale 1s ease-out 0.2s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        .company-badge {
+            display: inline-block;
+            background: rgba(189, 175, 148, 0.2);
+            color: var(--secondary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            animation: fadeInScale 1s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .content {
+            padding: 40px;
+            background: var(--white);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+        .section:nth-child(5) { animation-delay: 0.5s; }
+        .section:nth-child(6) { animation-delay: 0.6s; }
+        .section:nth-child(7) { animation-delay: 0.7s; }
+        .section:nth-child(8) { animation-delay: 0.8s; }
+        .section:nth-child(9) { animation-delay: 0.9s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .section:hover h2::after {
+            width: 100%;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary), var(--primary), var(--secondary), transparent);
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '◆';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--white);
+            color: var(--secondary);
+            padding: 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, var(--light-gray), white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(189, 175, 148, 0.2);
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-secondary);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--secondary);
+        }
+
+        .info-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .requirements-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            padding-left: 40px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .requirements-list li:hover {
+            background: linear-gradient(135deg, white, rgba(189, 175, 148, 0.05));
+            transform: translateX(5px);
+            border-color: var(--secondary);
+        }
+
+        .requirements-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: linear-gradient(90deg, rgba(189, 175, 148, 0.05), transparent);
+            transform: scale(1.01);
+        }
+
+        .importance-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .importance-5 { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .importance-4 { background: var(--gradient-secondary); color: var(--primary); }
+        .importance-3 { background: var(--gradient-primary); }
+
+        .percentage-bar {
+            background: rgba(189, 175, 148, 0.2);
+            height: 28px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            min-width: 150px;
+            border: 1px solid rgba(189, 175, 148, 0.3);
+        }
+
+        .percentage-fill {
+            height: 100%;
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: width 1s ease-out;
+            animation: fillBar 1.5s ease-out;
+            min-width: fit-content;
+            box-shadow: inset 0 2px 4px rgba(18, 65, 63, 0.1);
+        }
+
+        @keyframes fillBar {
+            from { width: 0; }
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 4px;
+            background: var(--gradient-secondary);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+            border: 1px solid transparent;
+        }
+
+        .tag:hover {
+            transform: scale(1.1) rotate(-2deg);
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        /* 绩效激励体系样式 */
+        .intro-card {
+            background: linear-gradient(135deg, rgba(189, 175, 148, 0.1), white);
+            border-left: 4px solid var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(18, 65, 63, 0.05);
+        }
+
+        .intro-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .formula-box {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .formula-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(189, 175, 148, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .flow-chart {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, white, rgba(189, 175, 148, 0.05));
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(18, 65, 63, 0.1);
+            flex-wrap: wrap;
+            gap: 20px;
+            border: 1px solid rgba(189, 175, 148, 0.2);
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            position: relative;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(189, 175, 148, 0.3);
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary);
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--secondary);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-secondary);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .points-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--gradient-secondary);
+            color: var(--primary);
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .bonus-tier {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            color: var(--dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(189, 175, 148, 0.1), white);
+            border: 2px solid var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .example-box h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .calculation-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .highlight {
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(18, 65, 63, 0.1);
+            border-top: 3px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .kpi-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .kpi-label {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .multiplier {
+            font-size: 1.2rem;
+            color: var(--secondary-dark);
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: rgba(189, 175, 148, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-chart {
+                flex-direction: column;
+            }
+            
+            .flow-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                bottom: -15px;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            table {
+                font-size: 0.85rem;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>客户体验与成功经理</h1>
+            <div class="subtitle">Customer Experience & Success Manager</div>
+            <div class="company-badge">MMC FINANCIAL</div>
+        </div>
+        
+        <div class="content">
+            <!-- 基本信息 -->
+            <div class="section">
+                <h2>📋 基本信息</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">岗位名称</div>
+                        <div class="info-value">客户体验与成功经理</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">工作性质</div>
+                        <div class="info-value">全职</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">上级岗位</div>
+                        <div class="info-value">运营总监</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">所属部门</div>
+                        <div class="info-value">客户成功与培训运营部</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">下级岗位</div>
+                        <div class="info-value">
+                            <span class="tag">客户成功专员</span>
+                            <span class="tag">培训项目专员</span>
+                            <span class="tag">课程助教</span>
+                            <span class="tag">活动执行专员</span>
+                            <span class="tag">音视频技术专员</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 资质要求 -->
+            <div class="section">
+                <h2>🎯 资质要求</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">经验要求</div>
+                        <ul class="requirements-list">
+                            <li>3-5年客户成功/培训运营/活动运营经验，服务B2B客户优先</li>
+                            <li>独立负责从售后交接到课程落地的端到端项目管理经验</li>
+                            <li>有酒店/会场对接、供应商管理及AV技术协调经验</li>
+                            <li>有带教/管理助教或服务团队的经历</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">知识技能</div>
+                        <ul class="requirements-list">
+                            <li>客户成功方法论与客户旅程设计</li>
+                            <li>成人学习与培训项目运营知识</li>
+                            <li>活动与会务管理、酒店与餐饮基本规范</li>
+                            <li>CRM/营销自动化与数据分析基础</li>
+                            <li>中英双语沟通能力佳</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 素质要求 -->
+            <div class="section">
+                <h2>👤 素质要求</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">学历要求</div>
+                        <div class="info-value">本科及以上优先（教育学、酒店/会展、市场/传播等相关专业更佳）</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">性格特质</div>
+                        <div class="info-value">
+                            <span class="tag">以客户为中心</span>
+                            <span class="tag">同理心强</span>
+                            <span class="tag">执行力强</span>
+                            <span class="tag">抗压能力强</span>
+                            <span class="tag">细致耐心</span>
+                            <span class="tag">结果导向</span>
+                            <span class="tag">数据思维</span>
+                            <span class="tag">应变能力强</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工作职责 -->
+            <div class="section">
+                <h2>💼 工作职责及时间分配</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 10%">重要性</th>
+                                <th style="width: 40%">工作职责</th>
+                                <th style="width: 30%">衡量指标/KPI</th>
+                                <th style="width: 20%">时间占比</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="importance-badge importance-4">4</span></td>
+                                <td>售后交接与项目立项</td>
+                                <td>交接完成时效、一次交接准确率</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 100%">18%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-4">4</span></td>
+                                <td>学习支持与助教管理</td>
+                                <td>作业完成率、助教出勤与合格率</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 56%">10%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-4">4</span></td>
+                                <td>Upsell推进</td>
+                                <td>Upsell转化率、机会金额、二次成交数</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 56%">10%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-3">3</span></td>
+                                <td>口碑与案例沉淀</td>
+                                <td>Testimonial数量与质量、案例复用率</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 33%">6%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-4">4</span></td>
+                                <td>课后跟进与落地辅导</td>
+                                <td>课后触达率、转介绍率、复购率</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 44%">8%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-3">3</span></td>
+                                <td>数据监控与SOP优化</td>
+                                <td>关键指标达成度、问题复发率、流程更新频次</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 22%">4%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 分隔线 -->
+            <div class="divider"></div>
+
+            <!-- 激励体系概述 -->
+            <div class="section">
+                <h2>📊 绩效激励体系</h2>
+                <div class="intro-card">
+                    <h3>核心理念：积分制 × KPI系数 = 最终奖金</h3>
+                    <p>我们采用<strong>积分制度</strong>结合<strong>KPI考核</strong>的双重激励机制，让您的每一份努力都能得到相应的回报。</p>
+                    <p style="margin-top: 10px;">通过完成不同的工作项目获得积分，积分可兑换奖金，最终奖金还会根据您的KPI表现获得额外加成。</p>
+                </div>
+
+                <div class="formula-box">
+                    💰 最终奖金 = 积分兑换奖金 × (KPI得分 ÷ 70)
+                </div>
+            </div>
+
+            <!-- 运作流程 -->
+            <div class="section">
+                <h2>🔄 激励体系运作流程</h2>
+                <div class="flow-chart">
+                    <div class="flow-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">完成工作项目</div>
+                        <div class="step-desc">按照职责完成各项任务</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">获得积分</div>
+                        <div class="step-desc">根据完成情况累积积分</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">积分兑换</div>
+                        <div class="step-desc">将积分兑换为基础奖金</div>
+                    </div>
+                    <div class="flow-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">KPI加成</div>
+                        <div class="step-desc">根据KPI得分获得倍数加成</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 积分项目明细 -->
+            <div class="section">
+                <h2>💎 积分项目明细</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">项目类别</th>
+                            <th style="width: 30%">分数制度</th>
+                            <th style="width: 30%">说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(189, 175, 148, 0.1);">
+                            <td colspan="3"><strong>培训运营类</strong></td>
+                        </tr>
+                        <tr>
+                            <td>新生培训</td>
+                            <td><span class="points-badge">10分/人</span></td>
+                            <td>每培训一位新生获得10分</td>
+                        </tr>
+                        <tr>
+                            <td>复习生培训</td>
+                            <td><span class="points-badge">3分/人</span></td>
+                            <td>每培训一位复习生获得3分</td>
+                        </tr>
+                        <tr>
+                            <td>Testimonial收集</td>
+                            <td><span class="points-badge">2分/个</span></td>
+                            <td>收集普通学员见证</td>
+                        </tr>
+                        <tr>
+                            <td>很好的Testimonial</td>
+                            <td><span class="points-badge">10分/个</span></td>
+                            <td>高质量视频见证或深度案例</td>
+                        </tr>
+                        <tr style="background: rgba(189, 175, 148, 0.1);">
+                            <td colspan="3"><strong>线上运营类</strong></td>
+                        </tr>
+                        <tr>
+                            <td>线上新生培训</td>
+                            <td><span class="points-badge">4分/人</span></td>
+                            <td>线上培训新生每人4分</td>
+                        </tr>
+                        <tr>
+                            <td>线上复习生培训</td>
+                            <td><span class="points-badge">1分/人</span></td>
+                            <td>线上培训复习生每人1分</td>
+                        </tr>
+                        <tr style="background: rgba(189, 175, 148, 0.1);">
+                            <td colspan="3"><strong>销售支持类</strong></td>
+                        </tr>
+                        <tr>
+                            <td>会销课程</td>
+                            <td><span class="points-badge">10分/人</span></td>
+                            <td>会销课程每位参与者10分</td>
+                        </tr>
+                        <tr>
+                            <td>会销咨询</td>
+                            <td><span class="points-badge">50分/人</span></td>
+                            <td>会销咨询转化每人50分</td>
+                        </tr>
+                        <tr>
+                            <td>拿到名单-成交</td>
+                            <td><span class="points-badge">10分/个</span></td>
+                            <td>独立开发并成交客户</td>
+                        </tr>
+                        <tr>
+                            <td>联合名单-成交</td>
+                            <td><span class="points-badge">5分/个</span></td>
+                            <td>协助销售成交客户</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 积分兑换规则 -->
+            <div class="section">
+                <h2>💰 积分兑换奖金规则</h2>
+                <div class="bonus-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>积分区间</th>
+                                <th>对应分数</th>
+                                <th>基础奖金 (RM)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>第一档</td>
+                                <td>250分</td>
+                                <td>RM 300</td>
+                            </tr>
+                            <tr>
+                                <td>第二档</td>
+                                <td>300分</td>
+                                <td>RM 600</td>
+                            </tr>
+                            <tr>
+                                <td>第三档</td>
+                                <td>350分</td>
+                                <td>RM 1,000</td>
+                            </tr>
+                            <tr>
+                                <td>第四档</td>
+                                <td>400分</td>
+                                <td>RM 1,400</td>
+                            </tr>
+                            <tr>
+                                <td>第五档</td>
+                                <td>450分</td>
+                                <td>RM 2,000</td>
+                            </tr>
+                            <tr>
+                                <td>第六档</td>
+                                <td>500分</td>
+                                <td>RM 2,600</td>
+                            </tr>
+                            <tr>
+                                <td>第七档</td>
+                                <td>550分</td>
+                                <td>RM 3,200</td>
+                            </tr>
+                            <tr>
+                                <td>第八档</td>
+                                <td>500分</td>
+                                <td>RM 3,800</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <p>📌 <strong>重要说明：</strong></p>
+                    <p>• 积分采用阶梯式计算，达到相应分数即可获得对应奖金</p>
+                    <p>• 奖金为额外绩效奖励，不包含底薪</p>
+                </div>
+            </div>
+
+            <!-- KPI考核体系 -->
+            <div class="section">
+                <h2>📈 KPI考核与倍数加成</h2>
+                <div class="kpi-grid">
+                    <div class="kpi-card" style="border-top-color: #dc2626;">
+                        <div class="kpi-label">低于标准</div>
+                        <div class="kpi-score" style="color: #dc2626;">35分</div>
+                        <div class="kpi-label">倍数：<span class="multiplier" style="color: #dc2626;">0.5x</span></div>
+                        <div style="color: #dc2626; font-size: 0.85rem; margin-top: 10px;">⚠️ 奖金减半</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">基准KPI</div>
+                        <div class="kpi-score">70分</div>
+                        <div class="kpi-label">倍数：<span class="multiplier">1.0x</span></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">良好表现</div>
+                        <div class="kpi-score">84分</div>
+                        <div class="kpi-label">倍数：<span class="multiplier">1.2x</span></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">优秀表现</div>
+                        <div class="kpi-score">91分</div>
+                        <div class="kpi-label">倍数：<span class="multiplier">1.3x</span></div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-label">卓越表现</div>
+                        <div class="kpi-score">105分</div>
+                        <div class="kpi-label">倍数：<span class="multiplier">1.5x</span></div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 25px; background: #fef2f2; border-left-color: #dc2626;">
+                    <p>⚠️ <strong>特别提醒：</strong></p>
+                    <p>• KPI低于70分时，奖金会按比例减少</p>
+                    <p>• 例如：35分KPI（70分的50%）= 0.5倍奖金（奖金砍半）</p>
+                    <p>• KPI不仅影响奖金倍数，持续低分可能影响岗位评估</p>
+                </div>
+
+                <div class="intro-card" style="margin-top: 25px;">
+                    <h3>KPI考核维度（基于工作职责）</h3>
+                    <ul style="margin-left: 20px;">
+                        <li>交接完成时效 & 准确率</li>
+                        <li>Onboarding完成率 & 响应SLA</li>
+                        <li>成本控制率 & 履约无差错率</li>
+                        <li>NPS满意度 & 课堂管理</li>
+                        <li>Upsell转化率 & 二次成交</li>
+                        <li>课后触达率 & 转介绍率</li>
+                        <li>关键指标达成度 & 流程优化</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 计算示例 -->
+            <div class="section">
+                <h2>🧮 实际计算示例</h2>
+                <div class="example-box">
+                    <h4>💡 案例：月度绩效计算</h4>
+                    
+                    <div class="calculation-step">
+                        <strong>步骤 1：统计月度积分</strong><br>
+                        完成新生培训 10场 = 100分<br>
+                        完成线上培训 8场 = 32分<br>
+                        收集优质Testimonial 2个 = 20分<br>
+                        其他项目积分 = 249分<br>
+                        <strong>月度总积分 = <span class="highlight">401分</span></strong>
+                    </div>
+                    
+                    <div class="calculation-step">
+                        <strong>步骤 2：积分兑换基础奖金</strong><br>
+                        401分对应第四档<br>
+                        <strong>基础奖金 = <span class="highlight">RM 1,400</span></strong>
+                    </div>
+                    
+                    <div class="calculation-step">
+                        <strong>步骤 3：计算KPI倍数</strong><br>
+                        本月KPI得分 = 84分<br>
+                        KPI倍数 = 84 ÷ 70 = <span class="highlight">1.2</span>
+                    </div>
+                    
+                    <div class="calculation-step">
+                        <strong>步骤 4：计算最终奖金</strong><br>
+                        最终奖金 = RM 1,400 × 1.2<br>
+                        <strong style="font-size: 1.2rem; color: #12413F;">= RM 1,680</strong>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top: 25px;">
+                    <p>💰 <strong>收入构成：</strong></p>
+                    <p>• 基本底薪：固定薪资</p>
+                    <p>• 绩效奖金：RM 1,680（本例）</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>percentage-bar">
+                                        <div class="percentage-fill" style="width: 33%">6%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-5">5</span></td>
+                                <td>学员Onboarding与沟通</td>
+                                <td>Onboarding完成率、消息触达率、响应SLA</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 67%">12%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-4">4</span></td>
+                                <td>课程排期与酒店/会场对接</td>
+                                <td>成本控制率、履约无差错率、延期率</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 56%">10%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-4">4</span></td>
+                                <td>现场布置与AV技术保障</td>
+                                <td>开场准点率、设备故障率、临场修复时长</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 56%">10%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-3">3</span></td>
+                                <td>课前彩排与流程演练</td>
+                                <td>彩排完成率、问题闭环率</td>
+                                <td>
+                                    <div class="percentage-bar">
+                                        <div class="percentage-fill" style="width: 33%">6%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="importance-badge importance-5">5</span></td>
+                                <td>课堂运营与学员体验管理</td>
+                                <td>NPS/满意度、课堂秩序事件数、缺勤率</td>
+                                <td>
+                                    <div class="
