@@ -1,4 +1,4 @@
-import videoData from '../../data/videoData.json';
+import videoData from '../../content/blog/videoData.json';
 
 
 export async function GET({ url }) {
@@ -6,7 +6,7 @@ export async function GET({ url }) {
   const itemsPerPage = 12;
 
   // 获取并处理 Markdown 文章
-  const mdPostImports = import.meta.glob('/src/content/blog/**/*.{md,mdx}');
+  const mdPostImports = import.meta.glob('/src/content/blog/MDFile/*.{md,mdx}');
   const mdPosts = await Promise.all(
     Object.values(mdPostImports).map(importer => importer())
   );
@@ -30,7 +30,7 @@ export async function GET({ url }) {
   }));
 
   // 处理 Astro 文章
-  const astroPostImports = import.meta.glob('/src/pages/blog/*.astro');
+  const astroPostImports = import.meta.glob('/src/content/blog/AstroFile/*.astro');
   const astroPosts = await Promise.all(
     Object.entries(astroPostImports)
       .filter(([path, _]) => !path.endsWith('index.astro'))

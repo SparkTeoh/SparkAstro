@@ -1,0 +1,13 @@
+{
+  "featuredVideos": [
+    {
+      "title": "YouTube 视频示范",
+      "description": "这是一个 YouTube 视频数据的示范，展示如何在 videoData.json 中正确配置视频信息。视频内容将自动显示在博客页面中。",
+      "videoId": "dQw4w9WgXcQ",
+      "duration": "10:30",
+      "publishDate": "2025-01-20",
+      "views": "1.2万次观看",
+      "tags": ["示范", "YouTube", "教程"]
+    }
+  ]
+} 

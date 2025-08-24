@@ -1,0 +1,153 @@
+---
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import SectionTitle from '../../../components/ui/SectionTitle.astro';
+import Card from '../../../components/ui/Card.astro';
+import image1 from '../images/image1.png';
+
+// 博客数据 - 这是必需的元数据
+const blogData = {
+  title: "Astro Lasted文章",
+  pubDate: new Date('2025-01-20'),
+  author: "Spark Liang",
+  authImage: "../images/image1.png",
+  image: "../images/image1.png",
+  tags: ["示范", "Astro", "博客", "最佳实践"],
+  summary: "这是一个 Astro 文件的最佳示范，展示如何创建完整的博客页面，包含交互功能和响应式设计。",
+  type: "技术文章",
+  featured: true
+};
+---
+
+<BlogLayout {...blogData}>
+  <!-- 主要内容 -->
+  <main class="space-y-16">
+    <!-- 介绍部分 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="简介" 
+        description="欢迎查看 Astro 博客文件的最佳示范！" 
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <h3 class="text-2xl font-bold text-primary mb-4">🌟 什么是 Astro 博客文件？</h3>
+            
+            <!-- 图片展示区域 -->
+            <div class="mb-6 flex justify-center">
+              <div class="relative group">
+                <img 
+                  src={image1.src} 
+                  alt="Astro 示范图片 - 展示 Astro 框架的强大功能" 
+                  class="w-full max-w-md rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            </div>
+            
+            <p class="text-dark leading-relaxed mb-6">
+              Astro 博客文件是使用 Astro 框架创建的完整博客页面，它结合了静态生成的优势和动态交互的能力。
+              这种文件格式非常适合创建内容丰富、交互性强的博客文章。
+            </p>
+            <div class="bg-accent/10 border border-accent/20 rounded-xl p-6">
+              <h4 class="text-lg font-semibold text-accent mb-3">💡 关键特点</h4>
+              <ul class="space-y-2 text-dark">
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>完全的组件化架构</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>内置交互功能和动画效果</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>响应式设计和无障碍支持</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>SEO 优化和性能优秀</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 修复说明部分 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="修复说明" 
+        description="详细介绍问题修复过程和解决方案" 
+      />
+      <div class="mt-12 grid gap-8 md:grid-cols-2">
+        <Card isUnderline={true}>
+          <div class="p-6 bg-background rounded-[45px] h-full">
+            <h3 class="text-xl font-bold text-primary mb-4">🔧 问题修复</h3>
+            
+            <!-- 添加小尺寸图片展示 -->
+            <div class="mb-4 flex justify-center">
+              <img 
+                src={image1.src} 
+                alt="修复前后对比示意图" 
+                class="w-24 h-24 rounded-lg object-cover border-2 border-accent/20"
+              />
+            </div>
+            
+            <p class="text-dark mb-4">
+              原来的文件缺少正确的布局和结构，导致页面显示异常。现在已经添加了：
+            </p>
+            <ul class="space-y-2 text-dark text-sm">
+              <li>• BlogLayout 布局组件</li>
+              <li>• 正确的 blogData 对象</li>
+              <li>• 统一的样式系统</li>
+              <li>• 响应式设计</li>
+              <li>• 图片正确引用和显示</li>
+            </ul>
+          </div>
+        </Card>
+
+        <Card isUnderline={true}>
+          <div class="p-6 bg-background rounded-[45px] h-full">
+            <h3 class="text-xl font-bold text-primary mb-4">✅ 解决方案</h3>
+            <p class="text-dark mb-4">
+              通过使用正确的 Astro 文件结构，确保页面能够正常显示和导航：
+            </p>
+            <ul class="space-y-2 text-dark text-sm">
+              <li>• 完整的页面 HTML 结构</li>
+              <li>• 统一的导航和布局</li>
+              <li>• 正确的样式应用</li>
+              <li>• SEO 和性能优化</li>
+            </ul>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 总结部分 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="总结" 
+        description="关键要点和使用建议" 
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <h3 class="text-2xl font-bold text-primary mb-6 text-center">🎯 完成状态</h3>
+            <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+              <p class="text-dark text-center mb-4">
+                🎉 现在这个 "Astro 示范文章" 已经使用了正确的布局结构，
+                能够在博客列表中正常显示，并且可以正常访问。
+              </p>
+              <p class="text-dark text-center">
+                ✅ 图片显示功能已修复完成！<br>
+                ✅ 页面布局结构已优化！<br>
+                ✅ 样式和导航已统一！
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+  </main>
+</BlogLayout>

@@ -1,0 +1,299 @@
+---
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import SectionTitle from '../../../components/ui/SectionTitle.astro';
+import Card from '../../../components/ui/Card.astro';
+
+// 博客数据 - 这是必需的元数据
+const blogData = {
+  title: "Astro Testing 文章",
+  pubDate: new Date('2025-01-20'),
+  author: "Spark Liang",
+  authImage: "/blog/image2.png",
+  image: "/blog/image2.png",
+  tags: ["示范", "Astro", "博客", "最佳实践"],
+  summary: "这是一个 Astro 文件的最佳示范，展示如何创建完整的博客页面，包含交互功能和响应式设计。",
+  type: "技术文章",
+  featured: true
+};
+
+// 页面内容数据
+const contentSections = [
+  { id: "intro", title: "简介", description: "了解 Astro 博客文件的基本结构" },
+  { id: "structure", title: "文件结构", description: "深入了解 blogData 对象和组件使用" },
+  { id: "features", title: "功能特点", description: "探索交互功能和最佳实践" },
+  { id: "conclusion", title: "总结", description: "关键要点和后续步骤" }
+];
+
+const features = [
+  {
+    icon: '📝',
+    title: 'blogData 对象',
+    description: '使用统一的 blogData 对象管理所有博客元数据，确保数据一致性和可维护性。'
+  },
+  {
+    icon: '🎨',
+    title: '响应式设计',
+    description: '采用 Tailwind CSS 响应式类，确保在所有设备上都有良好的显示效果。'
+  },
+  {
+    icon: '🚀',
+    title: '交互功能',
+    description: '包含平滑滚动、悬停效果等用户体验增强功能。'
+  }
+];
+---
+
+<BlogLayout {...blogData}>
+  <!-- 页面导航 -->
+  <nav class="bg-background/80 backdrop-blur-md sticky top-4 z-50 py-3 my-12 rounded-full border border-primary/20 max-w-2xl mx-auto">
+    <ul class="flex justify-center items-center flex-wrap gap-x-6 gap-y-2 px-4">
+      {contentSections.map(section => (
+        <li>
+          <a href={`#${section.id}`} class="text-primary hover:text-accent transition-colors">
+            {section.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <!-- 主要内容 -->
+  <main class="space-y-24">
+    <!-- 简介部分 -->
+    <section id="intro" class="scroll-mt-24">
+      <SectionTitle 
+        sectionTitle="简介" 
+        description="欢迎查看 Astro 博客文件的最佳示范！" 
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <h3 class="text-2xl font-bold text-primary mb-4">🌟 什么是 Astro 博客文件？</h3>
+            <p class="text-dark leading-relaxed mb-6">
+              Astro 博客文件是使用 Astro 框架创建的完整博客页面，它结合了静态生成的优势和动态交互的能力。
+              这种文件格式非常适合创建内容丰富、交互性强的博客文章。
+            </p>
+            <div class="bg-accent/10 border border-accent/20 rounded-xl p-6">
+              <h4 class="text-lg font-semibold text-accent mb-3">💡 关键特点</h4>
+              <ul class="space-y-2 text-dark">
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>完全的组件化架构</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>内置交互功能和动画效果</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>响应式设计和无障碍支持</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-accent">•</span>
+                  <span>SEO 优化和性能优秀</span>
+                </li>
+              </ul>
+              
+              <!-- 添加图片示例 -->
+              <div class="mt-6">
+                <h5 class="text-md font-semibold text-primary mb-3">🖼️ 图片展示示例</h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="text-center">
+                    <img src="/blog/image4.png" alt="示例图片 4" class="w-full h-32 object-cover rounded-lg mb-2" />
+                    <p class="text-sm text-gray-600">图片 4 - 设计示例</p>
+                  </div>
+                  <div class="text-center">
+                    <img src="/blog/image5.png" alt="示例图片 5" class="w-full h-32 object-cover rounded-lg mb-2" />
+                    <p class="text-sm text-gray-600">图片 5 - 功能展示</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 文件结构部分 -->
+    <section id="structure" class="scroll-mt-24">
+      <SectionTitle 
+        sectionTitle="文件结构" 
+        description="了解 Astro 博客文件的核心组成部分" 
+      />
+      <div class="mt-12 grid gap-8 md:grid-cols-2">
+        <Card isUnderline={true}>
+          <div class="p-6 bg-background rounded-[45px] h-full">
+            <h3 class="text-xl font-bold text-primary mb-4">📋 blogData 对象</h3>
+            <p class="text-dark mb-4">
+              每个 Astro 博客文件都必须包含一个 blogData 对象，用于定义博客的元数据：
+            </p>
+            <div class="bg-slate-800 text-white p-4 rounded-lg font-mono text-sm">
+              <pre>const blogData = &#123;
+  title: "文章标题",
+  pubDate: new Date(),
+  author: "作者名",
+  authImage: "头像路径",
+  image: "封面图片路径",
+  tags: ["标签数组"],
+  summary: "文章摘要",
+  type: "文章类型",
+  featured: true/false
+&#125;;</pre>
+            </div>
+          </div>
+        </Card>
+
+        <Card isUnderline={true}>
+          <div class="p-6 bg-background rounded-[45px] h-full">
+            <h3 class="text-xl font-bold text-primary mb-4">🏗️ 布局结构</h3>
+            <p class="text-dark mb-4">
+              使用 BlogLayout 组件和展开运算符传递数据：
+            </p>
+            <div class="bg-slate-800 text-white p-4 rounded-lg font-mono text-sm">
+              <pre>&lt;BlogLayout &#123;...blogData&#125;&gt;
+  &lt;!-- 页面内容 --&gt;
+&lt;/BlogLayout&gt;</pre>
+            </div>
+            <p class="text-dark mt-4 text-sm">
+              这种方式确保了代码的简洁性和可维护性。
+            </p>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 功能特点部分 -->
+    <section id="features" class="scroll-mt-24">
+      <SectionTitle 
+        sectionTitle="功能特点" 
+        description="探索 Astro 博客文件的强大功能" 
+      />
+      <div class="mt-12">
+        <div class="grid gap-8 md:grid-cols-3">
+          {features.map(feature => (
+            <Card isUnderline={true}>
+              <div class="p-6 bg-background rounded-[45px] h-full text-center hover:transform hover:scale-105 transition-all duration-300">
+                <div class="text-4xl mb-4">{feature.icon}</div>
+                <h3 class="text-lg font-bold text-accent mb-3">{feature.title}</h3>
+                <p class="text-dark text-sm leading-relaxed">{feature.description}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        <div class="mt-12">
+          <Card isUnderline={true}>
+            <div class="p-8 bg-background rounded-[45px]">
+              <h3 class="text-2xl font-bold text-primary mb-6 text-center">🎯 使用指南</h3>
+              <div class="grid gap-6 md:grid-cols-2">
+                <div>
+                  <h4 class="text-lg font-semibold text-accent mb-3">✅ 最佳实践</h4>
+                  <ul class="space-y-2 text-dark text-sm">
+                    <li>• 使用统一的 blogData 对象</li>
+                    <li>• 遵循响应式设计原则</li>
+                    <li>• 添加页面内导航</li>
+                    <li>• 使用语义化的 HTML 结构</li>
+                    <li>• 包含交互功能增强用户体验</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="text-lg font-semibold text-accent mb-3">⚠️ 注意事项</h4>
+                  <ul class="space-y-2 text-dark text-sm">
+                    <li>• 确保图片路径正确</li>
+                    <li>• 保持组件导入路径的一致性</li>
+                    <li>• 测试在不同设备上的显示效果</li>
+                    <li>• 优化页面加载性能</li>
+                    <li>• 确保内容的可访问性</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </section>
+
+    <!-- 总结部分 -->
+    <section id="conclusion" class="scroll-mt-24">
+      <SectionTitle 
+        sectionTitle="总结" 
+        description="掌握 Astro 博客文件的关键要点" 
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-gradient-to-r from-accent/5 to-primary/5 rounded-[45px] border border-accent/20">
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-primary mb-4">🎊 恭喜！</h3>
+              <p class="text-dark leading-relaxed">
+                通过这个示范文件，你已经了解了如何创建优秀的 Astro 博客文章。
+                现在你可以开始创建自己的内容了！
+              </p>
+            </div>
+            
+            <div class="grid gap-6 md:grid-cols-2">
+              <div class="text-center">
+                <div class="text-3xl mb-3">📚</div>
+                <h4 class="font-semibold text-primary mb-2">学到的内容</h4>
+                <p class="text-dark text-sm">blogData 对象、组件使用、响应式设计</p>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl mb-3">🚀</div>
+                <h4 class="font-semibold text-primary mb-2">下一步</h4>
+                <p class="text-dark text-sm">开始创建你自己的 Astro 博客文章</p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+  </main>
+</BlogLayout>
+
+<script>
+  // 平滑滚动功能
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(anchor.getAttribute('href') as string);
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // 悬停效果增强
+  document.querySelectorAll('.hover\\:transform').forEach(element => {
+    element.addEventListener('mouseenter', () => {
+      (element as HTMLElement).style.transform = 'scale(1.05)';
+    });
+    
+    element.addEventListener('mouseleave', () => {
+      (element as HTMLElement).style.transform = 'scale(1)';
+    });
+  });
+</script>
+
+<style>
+  /* 自定义样式 */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* 滚动行为优化 */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* 焦点样式 */
+  a:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+</style>

@@ -1,0 +1,45 @@
+---
+import fs from 'fs';
+import path from 'path';
+
+// 在 Astro v5 中，动态路由需要明确声明 prerender
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const astroFilesPath = path.join(process.cwd(), 'src/content/blog/AstroFile');
+  
+  if (!fs.existsSync(astroFilesPath)) {
+    return [];
+  }
+  
+  const astroFiles = fs.readdirSync(astroFilesPath)
+    .filter(file => file.endsWith('.astro'))
+    .map(file => ({
+      params: { slug: file.replace('.astro', '') }
+    }));
+  
+  return astroFiles;
+}
+
+const { slug } = Astro.params;
+const astroFilePath = path.join(process.cwd(), 'src/content/blog/AstroFile', `${slug}.astro`);
+
+// 检查文件是否存在
+if (!fs.existsSync(astroFilePath)) {
+  console.error('Astro file not found:', astroFilePath);
+  return Astro.redirect('/blog');
+}
+
+// 动态导入 Astro 组件
+let AstroComponent;
+try {
+  // 使用相对路径进行动态导入
+  const module = await import(`../../content/blog/AstroFile/${slug}.astro`);
+  AstroComponent = module.default;
+} catch (error) {
+  console.error('Failed to import Astro component:', error);
+  return Astro.redirect('/blog');
+}
+---
+
+<AstroComponent />

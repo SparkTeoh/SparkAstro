@@ -45,8 +45,6 @@ async function createBlogPost() {
 title: "${title}"
 pubDate: ${pubDate}
 author: "${author}"
-authImage: "/blog/image1.png"
-image: "image1.png"
 tags: ${JSON.stringify(tags)}
 summary: "${summary}"
 type: "${type}"
@@ -67,8 +65,13 @@ ${summary}
 `;
 
   // 创建文件路径
-  const contentDir = path.join(__dirname, '..', 'src', 'content', 'blog');
+  const contentDir = path.join(__dirname, '..', 'src', 'content', 'blog', 'MDFile');
   const filePath = path.join(contentDir, `${slug}.md`);
+
+  // 确保MDFile目录存在
+  if (!fs.existsSync(contentDir)) {
+    fs.mkdirSync(contentDir, { recursive: true });
+  }
 
   // 检查文件是否已存在
   if (fs.existsSync(filePath)) {

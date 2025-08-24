@@ -34,7 +34,7 @@ const blogData = {
   pubDate: new Date("${pubDate}"),
   author: "${author}",
   authImage: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png",
-  image: "image1.png", // 请更换为实际图片
+  image: "../images/image1.png", // 请更换为实际图片
   tags: ${JSON.stringify(tags)},
   summary: "${summary}",
   type: "${type}"
@@ -92,7 +92,7 @@ const blogData = {
 </script>`;
 
   // 文件路径
-  const filePath = path.join(process.cwd(), 'src', 'pages', 'blog', `${slug}.astro`);
+  const filePath = path.join(process.cwd(), 'src', 'content', 'blog', 'AstroFile', `${slug}.astro`);
   
   // 写入文件
   fs.writeFileSync(filePath, astroContent, 'utf8');
@@ -107,7 +107,7 @@ const blogData = {
       pubDate,
       author,
       authImage: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png",
-      image: "image1.png",
+      image: "../images/image1.png",
       tags,
       summary,
       type,

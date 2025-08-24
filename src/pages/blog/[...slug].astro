@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+
+// 在 Astro v5 中，动态路由需要明确声明 prerender
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { slug } = Astro.params;
+const blogEntries = await getCollection('blog');
+const entry = blogEntries.find(e => e.slug === slug);
+
+// 检查 entry 是否存在
+if (!entry) {
+  console.error('Entry not found for slug:', slug);
+  return Astro.redirect('/blog');
+}
+
+const { Content } = await entry.render();
+---
+
+<BlogLayout {...entry.data}>
+  <article class="prose max-w-none">
+    <Content />
+  </article>
+</BlogLayout>

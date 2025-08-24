@@ -1,14 +1,15 @@
 ---
-import { capitalize } from '../../utils';
-const { tags } = Astro.props;
-interface Props {
+export interface Props {
   tags: string[];
 }
+
+const { tags } = Astro.props;
 ---
-<div class="flex flex-wrap gap-2">
-  {tags.map((tag: string) => (
-   <span
-   class="px-2 py-1 bg-lime text-black rounded-full text-xs hover:opacity-90"
-   ><a href={'/blog?tag=' + tag}>#{capitalize(tag)}</a></span>
+
+<div class="flex flex-wrap gap-2 justify-center">
+  {tags.map((tag) => (
+    <span class="inline-block bg-gray text-primary px-3 py-1 rounded-full text-sm font-medium">
+      {tag}
+    </span>
   ))}
- </div>
+</div>
