@@ -113,17 +113,65 @@ npm run create-blog
 #### 🟣 创建 Astro 文章
 ```astro
 ---
-title: "文章标题"
-pubDate: "2025-01-20"
-author: "作者名"
-tags: ["标签1", "标签2"]
-summary: "文章摘要"
-type: "技术文章"
-featured: true
+// 导入必要的组件
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import Card from '../../components/ui/Card.astro';
+import SectionTitle from '../../components/ui/SectionTitle.astro';
+import ServiceCard from '../../components/ui/ServiceCard.astro';
+
+// 文章元数据
+const blogData = {
+  title: "Astro 组件化开发指南",
+  pubDate: new Date("2025-01-20"),
+  author: "SparkAstro Team",
+  tags: ["Astro", "组件化", "开发指南"],
+  summary: "学习如何在 Astro 中使用可复用的 UI 组件构建现代化网站",
+  type: "技术文章",
+  featured: true,
+  authImage: "/images/author-avatar.png",
+  image: "/images/astro-components-guide.png"
+};
 ---
 
-<!-- 文章内容 -->
-<h1>🎉 Astro 文章示例</h1>
+<BlogLayout blogData={blogData}>
+  <!-- 使用 SectionTitle 组件 -->
+  <SectionTitle 
+    sectionTitle="组件化开发" 
+    description="了解如何使用 SparkAstro 的 UI 组件库构建美观、一致的页面"
+  />
+  
+  <!-- 使用 Card 组件包装内容 -->
+  <Card isUnderline={true}>
+    <div class="p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-[45px]">
+      <h3 class="text-2xl font-bold text-gray-900 mb-4">💡 重要提示</h3>
+      <p class="text-gray-700">
+        SparkAstro 提供了丰富的 UI 组件库，让你可以快速构建专业级的网站页面。
+      </p>
+    </div>
+  </Card>
+  
+  <!-- 使用 ServiceCard 组件展示功能特性 -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+    <ServiceCard 
+      title="响应式设计"
+      description="所有组件都支持移动端优先的响应式设计"
+      icon="responsive-icon"
+      index={0}
+    />
+    <ServiceCard 
+      title="类型安全"
+      description="TypeScript 支持确保组件使用的类型安全"
+      icon="typescript-icon"
+      index={1}
+    />
+    <ServiceCard 
+      title="易于定制"
+      description="基于 Tailwind CSS，支持灵活的样式定制"
+      icon="customize-icon"
+      index={2}
+    />
+  </div>
+</BlogLayout>
 ```
 
 #### 🔴 添加 YouTube 视频
@@ -293,6 +341,168 @@ const blogCollection = defineCollection({
 export const collections = {
   blog: blogCollection
 };
+```
+
+### 🎨 UI 组件库使用指南
+
+#### 📦 可用组件一览
+
+| 组件名称 | 功能说明 | 导入路径 |
+|----------|----------|----------|
+| **Card** | 通用卡片容器，支持下划线装饰 | `import Card from '../../components/ui/Card.astro'` |
+| **SectionTitle** | 章节标题组件，统一标题样式 | `import SectionTitle from '../../components/ui/SectionTitle.astro'` |
+| **ServiceCard** | 服务展示卡片，支持多种主题 | `import ServiceCard from '../../components/ui/ServiceCard.astro'` |
+| **AccordionItem** | 可折叠内容区块，适合FAQ | `import AccordionItem from '../../components/ui/AccordionItem.astro'` |
+| **Tags** | 标签显示组件，自动样式 | `import Tags from '../../components/ui/Tags.astro'` |
+| **BlogLayout** | 博客页面专用布局 | `import BlogLayout from '../../layouts/BlogLayout.astro'` |
+| **MainLayout** | 网站主布局，包含导航和页脚 | `import MainLayout from '../../layouts/MainLayout.astro'` |
+
+#### 🔧 组件详细使用示例
+
+##### Card 组件
+```astro
+<!-- 基础卡片 -->
+<Card>
+  <div class="p-6">
+    <h3>标题</h3>
+    <p>内容...</p>
+  </div>
+</Card>
+
+<!-- 带下划线装饰的卡片 -->
+<Card isUnderline={true}>
+  <div class="p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-[45px]">
+    <h3 class="text-2xl font-bold mb-4">💡 重要提示</h3>
+    <p>这里是重要内容...</p>
+  </div>
+</Card>
+
+<!-- 自定义样式的卡片 -->
+<Card isUnderline={true} class="hover:shadow-2xl transition-shadow duration-300 my-8">
+  <div class="p-6">
+    <p>这个卡片有自定义的悬停效果和外边距。</p>
+  </div>
+</Card>
+```
+
+##### SectionTitle 组件
+```astro
+<!-- 基础章节标题 -->
+<SectionTitle 
+  sectionTitle="核心功能" 
+  description="了解 SparkAstro 的强大功能特性"
+/>
+
+<!-- 用于内容分节 -->
+<SectionTitle 
+  sectionTitle="开始使用" 
+  description="跟随这个指南快速上手项目开发"
+/>
+```
+
+##### ServiceCard 组件
+```astro
+<!-- 服务卡片网格布局 -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <ServiceCard 
+    title="响应式设计"
+    description="完美适配各种设备尺寸"
+    icon="responsive-icon"
+    index={0}  <!-- 灰色主题 -->
+  />
+  <ServiceCard 
+    title="高性能"
+    description="静态生成确保极速加载"
+    icon="performance-icon"
+    index={1}  <!-- 绿色主题 -->
+  />
+  <ServiceCard 
+    title="易于维护"
+    description="模块化架构便于扩展"
+    icon="maintenance-icon"
+    index={2}  <!-- 黑色主题 -->
+  />
+</div>
+```
+
+##### AccordionItem 组件
+```astro
+<!-- FAQ 折叠面板 -->
+<div class="space-y-4">
+  <AccordionItem 
+    index={1} 
+    title="如何安装依赖？" 
+    description="运行 `npm install` 即可安装所有必需的项目依赖。"
+  />
+  <AccordionItem 
+    index={2} 
+    title="如何启动开发服务器？" 
+    description="使用 `npm run dev` 命令启动本地开发服务器，默认运行在 http://localhost:4321"
+  />
+</div>
+```
+
+##### Tags 组件
+```astro
+<!-- 文章标签显示 -->
+<Tags tags={["Astro", "TypeScript", "组件化"]} />
+```
+
+##### BlogLayout 完整示例
+```astro
+---
+// 导入所需组件
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import Card from '../../components/ui/Card.astro';
+import SectionTitle from '../../components/ui/SectionTitle.astro';
+import ServiceCard from '../../components/ui/ServiceCard.astro';
+
+// 定义博客数据
+const blogData = {
+  title: "组件化开发最佳实践",
+  pubDate: new Date("2025-01-20"),
+  author: "SparkAstro Team",
+  tags: ["Astro", "组件化", "最佳实践"],
+  summary: "深入了解如何在 Astro 项目中高效使用组件化开发模式",
+  type: "技术文章",
+  featured: true,
+  authImage: "/images/author-avatar.png",
+  image: "/images/component-guide.png"
+};
+---
+
+<BlogLayout blogData={blogData}>
+  <!-- 文章内容开始 -->
+  <SectionTitle 
+    sectionTitle="为什么选择组件化？" 
+    description="组件化开发带来的优势和最佳实践"
+  />
+  
+  <Card isUnderline={true}>
+    <div class="p-8">
+      <h3 class="text-xl font-bold mb-4">📈 开发效率提升</h3>
+      <p>通过复用预构建的组件，可以显著提升开发效率...</p>
+    </div>
+  </Card>
+  
+  <!-- 更多内容... -->
+</BlogLayout>
+```
+
+#### 🎯 组件使用最佳实践
+
+1. **统一导入路径**：所有组件都使用相对路径导入
+2. **类型安全**：利用 TypeScript 确保 props 类型正确
+3. **样式一致性**：遵循现有的设计系统和 Tailwind 类名规范
+4. **响应式优先**：所有组件都支持移动端优先的响应式设计
+5. **可访问性**：组件内置了基本的可访问性支持
+
+#### ⚠️ 注意事项
+
+- 组件路径需要根据文件层级调整相对路径
+- `BlogLayout` 组件需要完整的 `blogData` 对象
+- `ServiceCard` 的 `index` 属性控制主题颜色（0=灰色，1=绿色，2=黑色）
+- 所有组件都支持通过 `class` 属性添加自定义样式
 ```
 
 ## 🔧 部署
