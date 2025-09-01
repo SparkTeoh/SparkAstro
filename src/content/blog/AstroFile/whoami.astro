@@ -2,6 +2,7 @@
 import BlogLayout from '../../../layouts/BlogLayout.astro';
 import SectionTitle from '../../../components/ui/SectionTitle.astro';
 import Card from '../../../components/ui/Card.astro';
+import AccordionItem from '../../../components/ui/AccordionItem.astro';
 
 // 博客数据 - 这是必需的元数据
 const blogData = {
@@ -15,369 +16,343 @@ const blogData = {
   type: "深度思考",
   featured: true
 };
+
+// 核心概念数据
+const coreIdeas = [
+  {
+    icon: '🫀',
+    title: '"我是我的身体"',
+    description: '身体只是你体验世界的载具，会变化会衰老，但观察身体变化的"你"始终存在。'
+  },
+  {
+    icon: '🧠',
+    title: '"我是我的思维"',
+    description: '思维如天空中的云朵来去自如，真正的你是容纳所有云朵的广阔天空。'
+  },
+  {
+    icon: '❤️',
+    title: '"我是我的情绪"',
+    description: '情绪是身体里的能量流，有起有落，真正的你是感受这股能量的观察者。'
+  }
+];
+
+// 语言转换对比
+const languageShift = [
+  {
+    type: "因为",
+    description: "通往过去的单行道",
+    examples: [
+      "我之所以不快乐，因为我的童年不幸福。",
+      "我之所以不敢尝试，因为我上次失败了。"
+    ],
+    result: "让你陷入习得性无助，认为一切都是过去决定的。"
+  },
+  {
+    type: "因此",
+    description: "通往未来的创造之门", 
+    examples: [
+      "我未来的目标是成为健康有活力的人，因此，我现在选择去健身房。",
+      "我渴望建立真诚的亲密关系，因此，我现在选择学习如何更好地沟通。"
+    ],
+    result: "让你当下的每个行动都充满目的性，为未来投资。"
+  }
+];
+
+// FAQ数据
+const faqData = [
+  {
+    title: "什么是'身份认同'？",
+    description: "身份认同是指将自己与外在的身份、角色、情绪或思维划等号的现象。它是一种限制性思维模式，会让我们被过去的体验所束缚。真正的你远比这些更广阔。"
+  },
+  {
+    title: "如何区分'我是'和'我拥有'？",
+    description: "通过有意识地改变语言习惯，比如将'我很焦虑'改为'我正在体验焦虑的情绪'。这种语言转换能够帮助你从情绪的囚犯变成观察者，获得选择的自由。"
+  },
+  {
+    title: "'因为'和'因此'的区别是什么？",
+    description: "'因为'让你回头看过去，将现在的问题归因于过去的事件，这会导致习得性无助。而'因此'让你面向未来，基于你渴望的目标来采取行动，这是一种创造性的思维方式。"
+  },
+  {
+    title: "怎样才能真正做到'我决定我是谁'？",
+    description: "这是一个宣告的过程。不需要等待外在条件或过去经历的证明，你可以在任何时刻选择你想成为的人。这个决定本身就是你的力量源泉。"
+  }
+];
 ---
 
 <BlogLayout {...blogData}>
   <main class="space-y-16">
 
-<div class="prose-hero bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white p-12 rounded-2xl mb-12 shadow-2xl">
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-5xl font-bold mb-6 leading-tight">
-      你是谁？
-    </h1>
-    <p class="text-xl opacity-90 mb-8 max-w-3xl mx-auto leading-relaxed">
-      从"过去决定论"到"未来创造论"的思维革命
-    </p>
-    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 text-left">
-      <h3 class="text-2xl font-semibold mb-4 text-yellow-300">🤔 思考实验</h3>
-      <p class="text-lg leading-relaxed">
-        我们开始吧。我想请你先做一个小小的思考实验。闭上眼睛，花几秒钟时间，问问自己：<strong>"我是谁？"</strong> 
-        好，睁开眼睛。你的脑海里可能闪过了一些答案，比如你的名字、职业、角色（父亲、女儿），或者是一些形容词（一个努力的人、一个内向的人）。
-      </p>
-      <div class="mt-6 p-4 bg-red-500/20 border-l-4 border-red-400 rounded-r-lg">
-        <p class="text-xl font-semibold">
-          现在，我要告诉你一个可能会颠覆你认知的事实：<span class="text-yellow-300">这些答案，都不是真正的你。</span>
-        </p>
-      </div>
-      <p class="mt-4 text-lg opacity-90">
-        这听起来可能有点玄，但这是我们这节课最核心、也是最能赋予你力量的起点。我们来一步步拆解。
-      </p>
-    </div>
-  </div>
-</div>
-
-<div class="max-w-4xl mx-auto space-y-16">
-  
-  <!-- 第一课 -->
-  <section class="lesson-section">
-    <div class="flex items-center mb-8">
-      <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">
-        1
-      </div>
-      <h2 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-        区分"你"和"你的东西"——摆脱身份的牢笼
-      </h2>
-    </div>
-    
-    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 mb-8">
-      <p class="text-lg leading-relaxed mb-6">
-        我们从小到大，习惯性地将自己和我们所拥有的一切划上等号。这是一种非常普遍但极具限制性的思维模式，我们称之为<strong class="text-purple-600">"身份认同" (Identification)</strong>。
-      </p>
-      
-      <h3 class="text-2xl font-semibold mb-6 text-red-600">⚠️ 常见的身份认同陷阱：</h3>
-      
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-md">
-          <h4 class="text-xl font-semibold mb-3 text-blue-600">🫀 "我是我的身体"</h4>
-          <p class="text-sm leading-relaxed">
-            当你生病时，你可能会说"我很虚弱"。当你的外貌不符合社会标准时，你可能会觉得"我不够好"。在这种认同下，你的自我价值完全被身体的状态所捆绑。但事实是，身体只是你体验这个世界的载具，它会衰老、会变化，但那个能够观察到身体变化的"你"，始终都在。
-          </p>
-        </div>
-        
-        <div class="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-md">
-          <h4 class="text-xl font-semibold mb-3 text-green-600">🧠 "我是我的思维"</h4>
-          <p class="text-sm leading-relaxed">
-            这是最普遍的陷阱。当你脑海中出现一个念头，比如"我这次肯定会失败"，你立刻就相信了它，并认为"我就是一个会失败的人"。你把一个随机的、暂时的念头，当成了永恒的、关于你本质的标签。但思维就像天空中的云，来了又去，而真正的你是那片广阔的天空，能够容纳所有云朵，却不等于任何一朵云。
-          </p>
-        </div>
-        
-        <div class="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-md">
-          <h4 class="text-xl font-semibold mb-3 text-orange-600">❤️ "我是我的情绪"</h4>
-          <p class="text-sm leading-relaxed">
-            当你感到愤怒时，你整个人都被愤怒的情绪所淹没，你说的话、做的事都充满了攻击性。那一刻，你就是愤怒。但情绪其实是你身体里的一股能量流，它有起有落。真正的你，是那个能够感受到这股能量流动的"你"。
-          </p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900 dark:to-blue-900 rounded-xl p-8">
-      <h3 class="text-2xl font-semibold mb-4 text-green-700 dark:text-green-300">🛠️ 练习：从"是"到"拥有"的语言切换</h3>
-      <p class="mb-4 text-lg">这个心法的第一个实践，就是有意识地在语言上进行区分 (Differentiation)。</p>
-      
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-red-100 dark:bg-red-900 p-4 rounded-lg">
-          <h4 class="font-semibold text-red-700 dark:text-red-300 mb-2">❌ 不要再说：</h4>
-          <p class="italic">"我很焦虑。"</p>
-        </div>
-        
-        <div class="bg-green-100 dark:bg-green-900 p-4 rounded-lg">
-          <h4 class="font-semibold text-green-700 dark:text-green-300 mb-2">✅ 尝试对自己说：</h4>
-          <p class="italic">"我正在体验到一种叫做'焦虑'的情绪。"</p>
-          <p class="italic">"我拥有一个焦虑的感受。"</p>
-        </div>
-      </div>
-      
-      <div class="mt-6 p-4 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
-        <p class="text-lg leading-relaxed">
-          感觉一下这两句话的不同。第一句让你成为了焦虑的"囚犯"，而第二句让你成为了焦虑的"观察者"。当你能够观察它时，你就和它之间拉开了一个距离，这个距离就是你的自由和力量所在。你不再需要被动地被它控制，你可以选择如何与它共处。
-        </p>
-      </div>
-    </div>
-    
-    <div class="bg-blue-50 dark:bg-blue-900 border-l-4 border-blue-500 p-6 rounded-r-lg">
-      <h4 class="text-xl font-semibold mb-2 text-blue-700 dark:text-blue-300">💡 小结</h4>
-      <p class="text-lg">
-        你不是你的身体、思维或情绪。它们是你生命体验的一部分，是你所拥有的，但它们不能定义你。你远比这一切更广阔。这是摆脱过去束缚的第一步。
-      </p>
-    </div>
-  </section>
-
-  <!-- 第二课 -->
-  <section class="lesson-section">
-    <div class="flex items-center mb-8">
-      <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">
-        2
-      </div>
-      <h2 class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-        重塑你的语言，重塑你的未来——"因为" vs. "因此"
-      </h2>
-    </div>
-    
-    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 mb-8">
-      <p class="text-lg leading-relaxed mb-6">
-        语言是我们思考和构建现实的基本工具。我们使用的词语，在潜移默化中决定了我们的心态和行动。
-      </p>
-      
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-red-100 dark:bg-red-900 rounded-lg p-6">
-          <h3 class="text-2xl font-semibold mb-4 text-red-700 dark:text-red-300">
-            ⬅️ "因为"（Because）：通往过去的单行道
-          </h3>
-          <p class="mb-4">仔细听听我们日常的抱怨：</p>
-          <div class="space-y-2 mb-4">
-            <p class="italic bg-red-200 dark:bg-red-800 p-2 rounded">"我之所以不快乐，因为我的童年不幸福。"</p>
-            <p class="italic bg-red-200 dark:bg-red-800 p-2 rounded">"我之所以不敢尝试，因为我上次失败了。"</p>
-          </div>
-          <p class="text-sm leading-relaxed">
-            "因为"这个词，像一个强大的磁铁，把你的注意力牢牢地吸附在无法改变的过去。它构建了一个看似合理的因果逻辑链，让你相信：过去的事件A，必然导致了你现在的状态B。
-          </p>
-          <div class="mt-4 p-3 bg-red-200 dark:bg-red-800 rounded">
-            <p class="font-semibold text-red-800 dark:text-red-200">
-              这种思维模式，我们称之为"过去决定论"。它最大的危害是让你陷入一种习得性无助 (Learned Helplessness) 的状态，因为既然一切都是过去决定的，那你现在做什么都没用了。
+    <!-- 思考实验 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="思考实验" 
+        description="让我们从一个简单的问题开始探索自我认知的奥秘"
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <h3 class="text-2xl font-bold text-primary mb-6">🤔 "我是谁？"</h3>
+            <p class="text-lg leading-relaxed text-dark mb-6">
+              我们开始吧。我想请你先做一个小小的思考实验。闭上眼睛，花几秒钟时间，问问自己：<strong class="text-primary">"我是谁？"</strong> 
+            </p>
+            <p class="text-lg leading-relaxed text-dark mb-6">
+              好，睁开眼睛。你的脑海里可能闪过了一些答案，比如你的名字、职业、角色（父亲、女儿），或者是一些形容词（一个努力的人、一个内向的人）。
+            </p>
+            <div class="mt-6 p-6 bg-accent/10 border-l-4 border-accent rounded-r-lg">
+              <p class="text-xl font-semibold text-dark">
+                现在，我要告诉你一个可能会颠覆你认知的事实：<span class="text-accent font-bold">这些答案，都不是真正的你。</span>
+              </p>
+            </div>
+            <p class="mt-6 text-lg text-dark/80">
+              这听起来可能有点玄，但这是我们这节课最核心、也是最能赋予你力量的起点。我们来一步步拆解。
             </p>
           </div>
-        </div>
-        
-        <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6">
-          <h3 class="text-2xl font-semibold mb-4 text-green-700 dark:text-green-300">
-            ➡️ "因此"（Therefore/So）：通往未来的创造之门
-          </h3>
-          <p class="mb-4">现在，我们来做一个思维的"换挡"。把你的焦点从过去转向你渴望的未来。</p>
-          <div class="space-y-2 mb-4">
-            <p class="italic bg-green-200 dark:bg-green-800 p-2 rounded">"我未来的目标是成为一个健康有活力的人，因此，我现在选择去健身房。"</p>
-            <p class="italic bg-green-200 dark:bg-green-800 p-2 rounded">"我渴望建立一段真诚的亲密关系，因此，我现在选择去学习如何更好地沟通。"</p>
-          </div>
-          <p class="text-sm leading-relaxed">
-            "因此"这个词，它斩断了与过去的无效连接，转而建立了一个与未来的强大连接。它让你当下的每一个行动，都充满了目的性和意义。你不再是为过去"还债"，而是在为未来"投资"。
-          </p>
-          <div class="mt-4 p-3 bg-green-200 dark:bg-green-800 rounded">
-            <p class="font-semibold text-green-800 dark:text-green-200">
-              这种思维模式，我们称之为"未来创造论"。它赋予你当下的力量和责任，让你明白，你现在的每一个选择，都在塑造你的未来。
-            </p>
-          </div>
-        </div>
+        </Card>
       </div>
-    </div>
-    
-    <div class="bg-purple-50 dark:bg-purple-900 border-l-4 border-purple-500 p-6 rounded-r-lg">
-      <h4 class="text-xl font-semibold mb-2 text-purple-700 dark:text-purple-300">💡 小结</h4>
-      <p class="text-lg">
-        停止用"因为"来解释你的现在，开始用"因此"来创造你的未来。你的过去不决定你的未来，你现在基于未来的选择，才决定你的未来。
-      </p>
-    </div>
-  </section>
+    </section>
 
-  <!-- 第三课 -->
-  <section class="lesson-section">
-    <div class="flex items-center mb-8">
-      <div class="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mr-4">
-        3
-      </div>
-      <h2 class="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
-        真正的成长是"转移"，不是"改变"
-      </h2>
-    </div>
-    
-    <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-8 mb-8">
-      <p class="text-lg leading-relaxed mb-6">
-        当我们意识到自己某些模式不再有效时，我们的第一反应往往是"我要改变它！" 但"改变"这个词本身就隐藏着一个陷阱。
-      </p>
+    <!-- 第一课 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="第一课：区分'你'和'你的东西'" 
+        description="摆脱身份认同的牢笼，找回真正的自己"
+      />
       
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-red-100 dark:bg-red-900 rounded-lg p-6">
-          <h3 class="text-2xl font-semibold mb-4 text-red-700 dark:text-red-300">
-            ⚔️ "改变"（Change）的内在冲突
-          </h3>
-          <p class="mb-4">当你对自己说"我要改变我拖延的坏毛病"时，你其实在对自己说两件事：</p>
-          <ol class="list-decimal list-inside space-y-2 mb-4">
-            <li>拖延是"坏"的、是"错"的</li>
-            <li>拥有这个毛病的"我"也是不好的</li>
-          </ol>
-          <p class="text-sm leading-relaxed mb-4">
-            这是一种自我否定和自我攻击。你内在的一个部分在评判和攻击另一个部分。这种内在的战争，会消耗你大量的心理能量，而且往往效果不佳，甚至会产生反弹。
-          </p>
-          <div class="bg-red-200 dark:bg-red-800 p-3 rounded">
-            <p class="text-sm italic">
-              你越是告诉自己"不要拖延"，拖延的念头可能就越强烈。
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <p class="text-lg leading-relaxed mb-6 text-dark">
+              我们从小到大，习惯性地将自己和我们所拥有的一切划上等号。这是一种非常普遍但极具限制性的思维模式，我们称之为<strong class="text-accent">"身份认同" (Identification)</strong>。
             </p>
+            
+            <h3 class="text-2xl font-semibold mb-6 text-primary">⚠️ 常见的身份认同陷阱：</h3>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+              {coreIdeas.map((idea, index) => (
+                <div class="bg-background border border-primary/20 rounded-lg p-6 hover:shadow-md transition-all duration-300">
+                  <h4 class="text-xl font-semibold mb-3 text-primary">{idea.icon} {idea.title}</h4>
+                  <p class="text-sm leading-relaxed text-dark/80">
+                    {idea.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        
-        <div class="bg-green-100 dark:bg-green-900 rounded-lg p-6">
-          <h3 class="text-2xl font-semibold mb-4 text-green-700 dark:text-green-300">
-            🌊 "转移"（Shift）的接纳与创造
-          </h3>
-          <p class="mb-4">"转移"是一个更智慧、更优雅的词。它意味着：</p>
-          
-          <div class="space-y-4">
-            <div class="bg-blue-100 dark:bg-blue-800 p-3 rounded">
-              <h4 class="font-semibold text-blue-700 dark:text-blue-300">1. 接纳现状</h4>
-              <p class="text-sm">首先，我看到并接纳"我过去常常有拖延的行为"这个事实，我不评判它。</p>
+        </Card>
+      </div>
+      
+      <div class="mt-8">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <h3 class="text-2xl font-semibold mb-4 text-accent">🛠️ 练习：从"是"到"拥有"的语言切换</h3>
+            <p class="mb-6 text-lg text-dark">这个心法的第一个实践，就是有意识地在语言上进行区分 (Differentiation)。</p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-accent/10 border border-accent/20 p-6 rounded-lg">
+                <h4 class="font-semibold text-accent mb-3">❌ 不要再说：</h4>
+                <p class="italic text-dark font-medium">"我很焦虑。"</p>
+              </div>
+              
+              <div class="bg-primary/10 border border-primary/20 p-6 rounded-lg">
+                <h4 class="font-semibold text-primary mb-3">✅ 尝试对自己说：</h4>
+                <p class="italic text-dark mb-2">"我正在体验到一种叫做'焦虑'的情绪。"</p>
+                <p class="italic text-dark">"我拥有一个焦虑的感受。"</p>
+              </div>
             </div>
             
-            <div class="bg-yellow-100 dark:bg-yellow-800 p-3 rounded">
-              <h4 class="font-semibold text-yellow-700 dark:text-yellow-300">2. 选择新方向</h4>
-              <p class="text-sm">然后，我选择一个新的、更有效的行为模式。例如，"我选择转移到一种'先完成最重要的事'的工作模式。"</p>
-            </div>
-            
-            <div class="bg-purple-100 dark:bg-purple-800 p-3 rounded">
-              <h4 class="font-semibold text-purple-700 dark:text-purple-300">3. 创造新体验</h4>
-              <p class="text-sm">最后，我开始有意识地去练习这个新的模式。</p>
+            <div class="mt-6 p-6 bg-accent/5 border border-accent/10 rounded-lg">
+              <p class="text-lg leading-relaxed text-dark">
+                感觉一下这两句话的不同。第一句让你成为了焦虑的"囚犯"，而第二句让你成为了焦虑的"观察者"。当你能够观察它时，你就和它之间拉开了一个距离，这个距离就是你的自由和力量所在。你不再需要被动地被它控制，你可以选择如何与它共处。
+              </p>
             </div>
           </div>
-          
-          <div class="mt-4 bg-green-200 dark:bg-green-800 p-3 rounded">
-            <p class="text-sm">
-              "转移"不否定过去，它只是增加了一个新的选择。它不是一场你死我活的战争，而是一次平顺的范畴切换。它把能量从"对抗旧的"转移到了"创造新的"上面。
+        </Card>
+      </div>
+      
+      <!-- 第一课小结 -->
+      <div class="mt-8">
+        <Card isUnderline={true}>
+          <div class="p-6 bg-primary/5 border border-primary/10 rounded-[45px]">
+            <h4 class="text-xl font-semibold mb-2 text-primary">💡 小结</h4>
+            <p class="text-lg text-dark">
+              你不是你的身体、思维或情绪。它们是你生命体验的一部分，是你所拥有的，但它们不能定义你。你远比这一切更广阔。这是摆脱过去束缚的第一步。
             </p>
           </div>
-        </div>
+        </Card>
       </div>
-    </div>
-    
-    <div class="bg-orange-50 dark:bg-orange-900 border-l-4 border-orange-500 p-6 rounded-r-lg">
-      <h4 class="text-xl font-semibold mb-2 text-orange-700 dark:text-orange-300">💡 小结</h4>
-      <p class="text-lg">
-        不要再试图"改变"自己，那会让你陷入内耗。学会接纳你现在所拥有的一切，然后有意识地转移到你更想去的方向。
-      </p>
-    </div>
-  </section>
+    </section>
 
-  <!-- 终极领悟 -->
-  <section class="lesson-section">
-    <div class="bg-gradient-to-br from-purple-800 via-blue-800 to-indigo-800 text-white rounded-2xl p-12 text-center">
-      <h2 class="text-4xl font-bold mb-8">
-        🌟 最终的领悟：我决定我是谁，不凭什么
-      </h2>
-      
-      <p class="text-xl leading-relaxed mb-8 opacity-90">
-        当你把前面三课融会贯通时，你就会来到这个终极的、也是最自由的领悟。
-      </p>
-      
-      <div class="grid md:grid-cols-2 gap-8 mb-8">
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-          <h3 class="text-2xl font-semibold mb-4 text-yellow-300">"不凭什么"</h3>
-          <p class="text-left leading-relaxed">
-            这意味着你的价值和身份，不依赖于任何外在的条件。
-          </p>
-          <ul class="text-left mt-4 space-y-2 opacity-90">
-            <li>• 你的价值，不取决于你的银行账户、职位头衔、他人的评价。</li>
-            <li>• 你的身份，不取决于你过去的成功或失败。</li>
-          </ul>
-        </div>
-        
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
-          <h3 class="text-2xl font-semibold mb-4 text-yellow-300">"我决定"</h3>
-          <p class="text-left leading-relaxed">
-            这是一个宣告 (Declaration)。语言具有创造的力量。当你发自内心地宣告"我决定我是一个自信、有爱的人"时，你就为自己的生命设定了一个新的"出厂设置"。
-          </p>
-          <p class="text-left mt-4 text-sm opacity-90">
-            这不是自欺欺人，而是在创造一个新的现实。这个宣告会像磁场一样，开始吸引和组织你的思维、情绪和行为，让它们与这个新的身份保持一致。
-          </p>
-        </div>
+    <!-- 第二课 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="第二课：重塑你的语言，重塑你的未来" 
+        description="从'因为'vs.'因此'的语言切换中获得力量"
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <p class="text-lg leading-relaxed mb-6 text-dark">
+              语言是我们思考和构建现实的基本工具。我们使用的词语，在潜移默化中决定了我们的心态和行动。
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              {languageShift.map((shift, index) => (
+                <div class={`border rounded-lg p-6 ${index === 0 ? 'bg-accent/10 border-accent/20' : 'bg-primary/10 border-primary/20'}`}>
+                  <h3 class={`text-2xl font-semibold mb-4 ${index === 0 ? 'text-accent' : 'text-primary'}`}>
+                    {index === 0 ? '⬅️' : '➡️'} "{shift.type}"：{shift.description}
+                  </h3>
+                  <p class="mb-4 text-dark/80">
+                    {index === 0 ? '仔细听听我们日常的抱怨：' : '现在，我们来做一个思维的"换挡"。把你的焦点从过去转向你渴望的未来。'}
+                  </p>
+                  <div class="space-y-3 mb-4">
+                    {shift.examples.map((example, idx) => (
+                      <p class="italic bg-background border border-primary/30 p-3 rounded text-dark font-medium">"{example}"</p>
+                    ))}
+                  </div>
+                  <p class="text-sm leading-relaxed text-dark/70">
+                    {shift.result}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
       </div>
       
-      <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 rounded-xl p-8 text-center">
-        <h3 class="text-3xl font-bold mb-4">所以，你是谁？</h3>
-        <p class="text-xl font-semibold mb-4">
-          答案是：在此时此刻，你决定你是谁，你就是谁。
-        </p>
-        <p class="text-lg leading-relaxed">
-          你可以决定你是一个学习者，一个创造者，一个有爱的人。这个决定，不需要任何理由，也不需要任何过去来证明。它本身，就是力量的源泉。
-        </p>
+      <!-- 第二课小结 -->
+      <div class="mt-8">
+        <Card isUnderline={true}>
+          <div class="p-6 bg-accent/5 border border-accent/10 rounded-[45px]">
+            <h4 class="text-xl font-semibold mb-2 text-accent">💡 小结</h4>
+            <p class="text-lg text-dark">
+              停止用"因为"来解释你的现在，开始用"因此"来创造你的未来。你的过去不决定你的未来，你现在基于未来的选择，才决定你的未来。
+            </p>
+          </div>
+        </Card>
       </div>
-    </div>
-  </section>
+    </section>
 
-</div>
+    <!-- 第三课 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="第三课：真正的成长是'转移'，不是'改变'" 
+        description="学会接纳现状，然后优雅地转移到新的方向"
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <p class="text-lg leading-relaxed mb-6 text-dark">
+              当我们意识到自己某些模式不再有效时，我们的第一反应往往是"我要改变它！" 但"改变"这个词本身就隐藏着一个陷阱。
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <div class="bg-accent/10 border border-accent/20 rounded-lg p-6">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">
+                  ⚔️ "改变"的内在冲突
+                </h3>
+                <p class="mb-4 text-dark/80">当你对自己说"我要改变我拖延的坏毛病"时，你其实在对自己说两件事：</p>
+                <ol class="list-decimal list-inside space-y-2 mb-4 text-dark/80">
+                  <li>拖延是"坏"的、是"错"的</li>
+                  <li>拥有这个毛病的"我"也是不好的</li>
+                </ol>
+                <p class="text-sm leading-relaxed mb-4 text-dark/70">
+                  这是一种自我否定和自我攻击。你内在的一个部分在评判和攻击另一个部分。这种内在的战争，会消耗你大量的心理能量，而且往往效果不佳，甚至会产生反弹。
+                </p>
+                <div class="bg-background border border-accent/30 p-3 rounded">
+                  <p class="text-sm italic text-dark">
+                    你越是告诉自己"不要拖延"，拖延的念头可能就越强烈。
+                  </p>
+                </div>
+              </div>
+              
+              <div class="bg-primary/10 border border-primary/20 rounded-lg p-6">
+                <h3 class="text-2xl font-semibold mb-4 text-primary">
+                  🌊 "转移"的接纳与创造
+                </h3>
+                <p class="mb-4 text-dark/80">"转移"是一个更智慧、更优雅的词。它意味着：</p>
+                
+                <div class="space-y-4">
+                  <div class="bg-background border border-primary/30 p-3 rounded">
+                    <h4 class="font-semibold text-primary mb-1">1. 接纳现状</h4>
+                    <p class="text-sm text-dark/70">首先，我看到并接纳"我过去常常有拖延的行为"这个事实，我不评判它。</p>
+                  </div>
+                  
+                  <div class="bg-background border border-primary/30 p-3 rounded">
+                    <h4 class="font-semibold text-primary mb-1">2. 选择新方向</h4>
+                    <p class="text-sm text-dark/70">然后，我选择一个新的、更有效的行为模式。例如，"我选择转移到一种'先完成最重要的事'的工作模式。"</p>
+                  </div>
+                  
+                  <div class="bg-background border border-primary/30 p-3 rounded">
+                    <h4 class="font-semibold text-primary mb-1">3. 创造新体验</h4>
+                    <p class="text-sm text-dark/70">最后，我开始有意识地去练习这个新的模式。</p>
+                  </div>
+                </div>
+                
+                <div class="mt-4 bg-primary/5 border border-primary/20 p-3 rounded">
+                  <p class="text-sm text-primary">
+                    "转移"不否定过去，它只是增加了一个新的选择。它不是一场你死我活的战争，而是一次平顺的范畴切换。它把能量从"对抗旧的"转移到了"创造新的"上面。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+      
+      <!-- 第三课小结 -->
+      <div class="mt-8">
+        <Card isUnderline={true}>
+          <div class="p-6 bg-primary/5 border border-primary/10 rounded-[45px]">
+            <h4 class="text-xl font-semibold mb-2 text-primary">💡 小结</h4>
+            <p class="text-lg text-dark">
+              不要再试图"改变"自己，那会让你陷入内耗。学会接纳你现在所拥有的一切，然后有意识地转移到你更想去的方向。"转移"不否定过去，而是增加新的选择。
+            </p>
+          </div>
+        </Card>
+      </div>
+    </section>
 
-<style>
-  .prose-hero {
-    animation: fadeInUp 1s ease-out;
-  }
-  
-  .lesson-section {
-    animation: fadeInUp 0.8s ease-out;
-    animation-fill-mode: both;
-  }
-  
-  .lesson-section:nth-child(2) { animation-delay: 0.2s; }
-  .lesson-section:nth-child(3) { animation-delay: 0.4s; }
-  .lesson-section:nth-child(4) { animation-delay: 0.6s; }
-  .lesson-section:nth-child(5) { animation-delay: 0.8s; }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .lesson-section h2 {
-    position: relative;
-  }
-  
-  .lesson-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(to right, currentColor, transparent);
-    opacity: 0.7;
-  }
-  
-  .bg-gradient-to-br {
-    background-attachment: fixed;
-  }
-  
-  /* 响应式调整 */
-  @media (max-width: 768px) {
-    .prose-hero h1 {
-      font-size: 2.5rem;
-    }
-    
-    .lesson-section h2 {
-      font-size: 1.5rem;
-    }
-    
-    .grid {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  /* 深色模式适配 */
-  @media (prefers-color-scheme: dark) {
-    .bg-gradient-to-br {
-      background-attachment: scroll;
-    }
-  }
-</style>
+    <!-- 终极领悟 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="终极领悟" 
+        description="我决定我是谁，不凭什么"
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-12 bg-gradient-to-r from-primary/5 via-accent/5 to-background rounded-[45px] text-center border border-primary/20">
+            <div class="text-6xl mb-6">🌟</div>
+            <h3 class="text-3xl font-bold text-primary mb-6">最终的领悟：我决定我是谁，不凭什么</h3>
+            <p class="text-xl text-dark leading-relaxed mb-8 max-w-2xl mx-auto">
+              当你把前面的思维方式融会贯通时，你就会来到这个终极的、也是最自由的领悟。
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              <div class="bg-background/50 p-6 rounded-xl border border-primary/10">
+                <div class="text-3xl mb-3">💫</div>
+                <h4 class="font-bold text-primary mb-2">"不凭什么"</h4>
+                <p class="text-dark/80 text-sm">你的价值和身份，不依赖于任何外在条件</p>
+              </div>
+              <div class="bg-background/50 p-6 rounded-xl border border-accent/10">
+                <div class="text-3xl mb-3">✨</div>
+                <h4 class="font-bold text-accent mb-2">"我决定"</h4>
+                <p class="text-dark/80 text-sm">语言具有创造的力量，你的宣告将塑造你的现实</p>
+              </div>
+            </div>
+            
+            <div class="mt-8 p-6 bg-accent/10 rounded-xl border border-accent/20">
+              <h4 class="text-2xl font-bold text-primary mb-4">所以，你是谁？</h4>
+              <p class="text-xl font-semibold mb-4 text-dark">
+                答案是：在此时此刻，你决定你是谁，你就是谁。
+              </p>
+              <p class="text-lg leading-relaxed text-dark/90">
+                你可以决定你是一个学习者，一个创造者，一个有爱的人。这个决定，不需要任何理由，也不需要任何过去来证明。它本身，就是力量的源泉。
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
 
   </main>
 </BlogLayout>
