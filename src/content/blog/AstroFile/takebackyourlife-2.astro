@@ -1,0 +1,1315 @@
+---
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import SectionTitle from '../../../components/ui/SectionTitle.astro';
+import Card from '../../../components/ui/Card.astro';
+import ServiceCard from '../../../components/ui/ServiceCard.astro';
+import AccordionItem from '../../../components/ui/AccordionItem.astro';
+import VideoCard from '../../../components/ui/VideoCard.astro';
+
+// 博客数据 - 这是必需的元数据
+const blogData = {
+  title: "解锁你的内在力量——如何真正'搞定自己'的实践指南",
+  pubDate: new Date('2025-09-01'),
+  author: "SparkLiang",
+  authImage: "../images/image1.png",
+  image: "../images/image1.png",
+  tags: ["自我成长", "心理学", "内在修炼", "人生智慧", "情绪管理"],
+  summary: "一门关于如何识别、理解并重写内在'自动化程序'的终极实践指南，帮你从内耗走向自主创造",
+  type: "深度实践",
+  featured: true
+};
+
+// 五大心法数据
+const heartMethods = [
+  {
+    icon: '🧠',
+    title: '体验我的体验',
+    subtitle: '从情绪的奴隶到内在的主人',
+    description: '学会自我区分模型，将自己从纷繁复杂的念头和汹涌的情绪中分离开来。',
+    benefit: '拥有在情绪风暴中保持稳定的能力'
+  },
+  {
+    icon: '💬',
+    title: '沟通我的感受，让他人收到',
+    subtitle: '从自我表达到深度连接',
+    description: '掌握事实-感受-评判区分法，建立"沟通效果由我负责"的心态。',
+    benefit: '成为高情商沟通者，话语充满力量和连接的温度'
+  },
+  {
+    icon: '💪',
+    title: '愿意为所有事情负责任',
+    subtitle: '从被动受害者到主动创造者',
+    description: '理解范畴决定内容模型，学会创造者提问法，从"为什么是我？"转向"我能创造什么？"',
+    benefit: '告别抱怨指责，拿回创造理想生活的主导权'
+  },
+  {
+    icon: '❤️',
+    title: '接纳我所拥有的',
+    subtitle: '从内在分裂到完整整合',
+    description: '学会"是这样"的力量，停止与现实的对抗，拥抱"猪"的智慧。',
+    benefit: '结束与自己的战争，内心变得平静和整合'
+  },
+  {
+    icon: '🎯',
+    title: '依我的原则立场生活',
+    subtitle: '从摇摆不定到内在坚定',
+    description: '通过深刻自我探索，提炼核心原则，建立稳固立场。',
+    benefit: '拥有强大内在定力，活出真实 authentic 的自己'
+  }
+];
+
+// 扩展的FAQ数据
+const faqData = [
+  {
+    title: "什么是\"自动化程序\"？为什么要重写它？",
+    description: "自动化程序指我们内在的旧有思维模式、情绪反应和行为习惯，就像电脑的默认设置。这些程序让我们变成生活的\"机器人\"，不断重复同样的模式。重写这些程序意味着重新获得选择权，从被动反应转向主动创造。"
+  },
+  {
+    title: "五大心法之间是什么关系？必须按顺序学习吗？",
+    description: "五大心法是一个有机整体。心法一是基础，提供觉察能力；心法二和三是核心技能；心法四提供整合力量；心法五是最终成就。虽然建议按顺序深入，但它们可以同时练习，相互促进。"
+  },
+  {
+    title: "为什么要\"养猪\"而不是\"杀猪\"？",
+    description: "\"猪\"代表我们内心那些不被接纳的部分（如懒惰、恐惧、自私等）。\"杀猪\"会导致内在分裂和对抗，消耗大量能量。\"养猪\"意味着接纳并整合这些能量，理解它们的积极动机，转化为成长的动力。"
+  },
+  {
+    title: "\"范畴决定内容\"是什么意思？",
+    description: "这是心法三的核心理论。\"内容\"是客观事实，\"范畴\"是我们的信念系统和世界观。同样的事实，通过不同的范畴，会产生完全不同的体验。改变范畴（信念），就能改变我们对现实的体验和感受。"
+  },
+  {
+    title: "如何知道自己是在\"反应\"还是\"回应\"？",
+    description: "反应是基于旧模式的无意识自动行为，通常很快、情绪化、重复性。回应是基于当下觉察和选择的有意识行为，通常有停顿、考虑、创新性。通过心法一的练习，你会越来越敏锐地感知这个差别。"
+  },
+  {
+    title: "这套心法适合哪些人？有什么前提条件吗？",
+    description: "适合所有渴望深度自我探索和成长的人。唯一的前提是：愿意向内看，愿意为自己的体验负责，愿意挑战自己的舒适区。无论你的年龄、职业、文化背景如何，只要你准备好真正\"搞定自己\"，这套心法都会有效。"
+  },
+  {
+    title: "学会这五大心法需要多长时间？",
+    description: "理解概念可能只需几小时，但真正掌握是一个终身的修炼过程。通常3-6个月的刻意练习会让你感受到明显变化，1-2年能建立稳定的新模式。记住，这不是一次性学会的知识，而是不断深化的功夫。"
+  },
+  {
+    title: "如何开始实践这五大心法？",
+    description: "从日常生活中的小事开始：每天花5-10分钟觉察自己的内在状态（心法一），在沟通中练习\"我\"句式（心法二），遇到挑战时问\"我能创造什么\"（心法三）。建议找练习伙伴，相互提供\"镜子\"和支持。"
+  }
+];
+
+// 实践案例数据
+const practicalCases = [
+  {
+    title: "搞定拖延症",
+    subtitle: "从自我内耗到高效行动",
+    oldPattern: {
+      title: "旧系统：被\"猪\"掌控",
+      behaviors: [
+        "内心两个小人打架：一个督促，一个反抗",
+        "在纠结和自责中继续拖延",
+        "最终熬夜赶工，质量堪忧"
+      ]
+    },
+    newPattern: {
+      title: "新系统：心法应用",
+      steps: [
+        "观察内在体验：区分思维、情绪、身体感受",
+        "拥抱\"拖延的猪\"：理解其背后的需求",
+        "重写故事：从\"太难了\"到\"我能创造什么\"",
+        "用感受连接行动：与内在达成协议"
+      ]
+    },
+    result: "轻松完成任务，打破拖延-自责循环，体验到有力量的自我管理"
+  },
+  {
+    title: "搞定\"人际冲突\"",
+    subtitle: "从互相指责到深度理解",
+    oldPattern: {
+      title: "旧系统：自动化反应",
+      behaviors: [
+        "立刻反击或冷战",
+        "陷入\"对错\"游戏",
+        "关系出现裂痕，双方受伤"
+      ]
+    },
+    newPattern: {
+      title: "新系统：心法应用",
+      steps: [
+        "稳住自己：观察并接纳内在愤怒",
+        "负责任：为自己的感受负100%责任",
+        "用\"我\"句式搭建沟通桥梁",
+        "基于\"爱与连接\"原则深度聆听"
+      ]
+    },
+    result: "潜在危机转化为加深理解的机会，关系更加亲密"
+  }
+];
+---
+
+<BlogLayout {...blogData}>
+  <main class="space-y-16">
+
+    <!-- 英雄区域 -->
+    <section>
+      <div class="bg-gradient-to-br from-primary/10 via-accent/10 to-background rounded-2xl p-12 text-center border border-primary/20">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6">
+          🔓 解锁你的内在力量
+        </h1>
+        <p class="text-2xl text-dark/90 max-w-4xl mx-auto leading-relaxed mb-4">
+          一门关于如何真正"搞定自己"的实践课
+        </p>
+        <p class="text-lg text-dark/70 max-w-3xl mx-auto leading-relaxed mb-8">
+          教你识别、理解并重写内在"自动化程序"的终极实践指南，帮你从内耗走向自主创造
+        </p>
+        
+        <!-- 核心价值主张 -->
+        <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-8 mb-8 border border-primary/20">
+          <h2 class="text-2xl font-bold text-primary mb-6">💡 我们不提供"打鸡血"式的口号</h2>
+          <div class="grid md:grid-cols-2 gap-6 text-left">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-red-700 mb-4 flex items-center gap-2">
+                ❌ 传统方法的问题
+              </h3>
+              <ul class="space-y-3 text-red-600">
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 text-lg">•</span>
+                  <span>一招鲜的技巧，治标不治本</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 text-lg">•</span>
+                  <span>激励式口号，热血三分钟</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-red-500 text-lg">•</span>
+                  <span>外在强迫，内在对抗更激烈</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-green-700 mb-4 flex items-center gap-2">
+                ✅ 我们的心法系统
+              </h3>
+              <ul class="space-y-3 text-green-600">
+                <li class="flex items-start gap-2">
+                  <span class="text-green-500 text-lg">•</span>
+                  <span>深入内在世界的系统性探索</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-500 text-lg">•</span>
+                  <span>终身使用的"内在操作系统升级工具"</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-green-500 text-lg">•</span>
+                  <span>从根源改变，由内而外的蜕变</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 关键统计数据 -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+          <div class="text-center p-4 bg-white/40 dark:bg-gray-800/40 rounded-xl border border-accent/20">
+            <div class="text-3xl font-bold text-accent mb-2">5</div>
+            <div class="text-sm text-dark/70 leading-tight">核心心法</div>
+          </div>
+          <div class="text-center p-4 bg-white/40 dark:bg-gray-800/40 rounded-xl border border-accent/20">
+            <div class="text-3xl font-bold text-accent mb-2">100%</div>
+            <div class="text-sm text-dark/70 leading-tight">实践<br>导向</div>
+          </div>
+          <div class="text-center p-4 bg-white/40 dark:bg-gray-800/40 rounded-xl border border-accent/20">
+            <div class="text-3xl font-bold text-accent mb-2">终身</div>
+            <div class="text-sm text-dark/70 leading-tight">可用<br>工具</div>
+          </div>
+          <div class="text-center p-4 bg-white/40 dark:bg-gray-800/40 rounded-xl border border-accent/20">
+            <div class="text-2xl font-bold text-accent mb-2">心法</div>
+            <div class="text-sm text-dark/70 leading-tight">修炼体系</div>
+          </div>
+        </div>
+        
+        <!-- 核心转变展示 -->
+        <div class="mt-8 p-6 bg-gradient-to-r from-yellow-100 via-orange-100 to-red-100 dark:from-yellow-900 dark:via-orange-900 dark:to-red-900 rounded-xl border border-orange-200">
+          <h3 class="text-2xl font-bold text-orange-800 dark:text-orange-200 mb-4">
+            🎯 核心转变：从内耗走向自主创造
+          </h3>
+          <div class="grid md:grid-cols-2 gap-6 text-left">
+            <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+              <h4 class="font-semibold text-red-700 mb-2">😵‍💫 内耗状态</h4>
+              <p class="text-sm text-red-600">被内在"自动化程序"所操控，大量生命能量消耗在无谓的内心纠结和自我攻击中</p>
+            </div>
+            <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+              <h4 class="font-semibold text-green-700 mb-2">🌟 自主创造</h4>
+              <p class="text-sm text-green-600">成为自己生命的掌舵人，能够有意识地选择和创造自己想要的生活状态</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 思考实验：体验这样的时刻 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="你是否曾有过这样的时刻？" 
+        description="让我们深入体验那些每个人都会遇到的内在挑战"
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-8 bg-background rounded-[45px]">
+            <h3 class="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
+              🧠 内在的"小人"打架
+            </h3>
+            <p class="text-dark leading-relaxed mb-6 text-lg">
+              脑海里有两个小人在打架：一个说"今天必须完成这项工作！"，另一个却说"太累了，刷会儿手机再说吧"……最终，你在纠结和自责中一事无成。
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mt-6">
+              <div class="bg-accent/10 border border-accent/20 rounded-xl p-6">
+                <h4 class="text-lg font-semibold text-accent mb-3">😰 痛苦的现状</h4>
+                <ul class="space-y-2 text-dark">
+                  <li class="flex items-start gap-2">
+                    <span class="text-accent">•</span>
+                    <span>情绪的"过山车"：一句批评就郁闷半天</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-accent">•</span>
+                    <span>人生的"鬼打墙"：总在重复同样的错误模式</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-accent">•</span>
+                    <span>沟通的"迷宫"：好意却让对方误解受伤</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div class="bg-primary/10 border border-primary/20 rounded-xl p-6">
+                <h4 class="text-lg font-semibold text-primary mb-3">💡 我们的方法</h4>
+                <ul class="space-y-2 text-dark">
+                  <li class="flex items-start gap-2">
+                    <span class="text-primary">•</span>
+                    <span>不提供"打鸡血"式的口号</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-primary">•</span>
+                    <span>深入内在世界的系统性探索</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-primary">•</span>
+                    <span>终身使用的"内在操作系统升级工具"</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="mt-8 p-6 bg-gradient-to-r from-primary/5 via-accent/5 to-background rounded-xl border border-primary/10">
+              <p class="text-lg font-semibold text-center text-primary">
+                💎 我们的目标：帮你识别、理解并重写内在的"自动化程序"，从内耗走向自主创造
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 五大心法框架 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="五大核心心法" 
+        description="从被动的'反应者'转变为主动的'创造者'的完整修炼体系"
+      />
+      
+      <!-- 使用 Card 组件展示五大心法 -->
+      <div class="mt-12">
+        <div class="text-center mb-12">
+          <h3 class="text-2xl font-bold text-primary mb-4">✨ 深入了解五大心法</h3>
+          <p class="text-dark/70 max-w-2xl mx-auto">每个心法都经过精心设计，确保为你提供真正可行的内在变化工具</p>
+        </div>
+        
+        <!-- 使用 Card 组件展示五个心法 -->
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {heartMethods.map((method, index) => (
+            <Card isUnderline={true}>
+              <div class="p-8 bg-background rounded-[45px] h-full text-center hover:scale-105 transition-all duration-300">
+                <div class="text-5xl mb-6">{method.icon}</div>
+                <h3 class="text-xl font-bold text-primary mb-3 leading-tight">{method.title}</h3>
+                <h4 class="text-lg font-medium text-accent mb-4">{method.subtitle}</h4>
+                <p class="text-dark/80 leading-relaxed mb-6 text-sm">{method.description}</p>
+                
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mt-auto">
+                  <p class="text-green-700 font-medium text-sm">
+                    ✨ {method.benefit}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+        
+        <!-- 心法细节介绍 -->
+        <div class="mt-16 space-y-8">
+          <div class="text-center mb-12">
+            <h3 class="text-2xl font-bold text-primary mb-4">📚 深入了解每个心法</h3>
+            <p class="text-dark/70 max-w-2xl mx-auto">每个心法都包含了丰富的实践方法和深层智慧</p>
+          </div>
+          
+          {heartMethods.map((method, index) => (
+            <Card isUnderline={true}>
+              <div class="p-8 bg-background rounded-[45px]">
+                <div class="grid md:grid-cols-12 gap-6 items-center">
+                  <div class="md:col-span-2 text-center">
+                    <div class="text-6xl">{method.icon}</div>
+                  </div>
+                  <div class="md:col-span-10">
+                    <h4 class="text-2xl font-bold text-primary mb-2">{method.title}</h4>
+                    <h5 class="text-lg font-medium text-accent mb-3">{method.subtitle}</h5>
+                    <p class="text-dark leading-relaxed text-lg mb-4">{method.description}</p>
+                    
+                    <!-- 根据不同心法添加具体的核心要点 -->
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {index === 0 && (
+                        <>
+                          <div class="bg-accent/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-accent">区分技术</div>
+                            <div class="text-xs text-dark/70">将自我与体验分离</div>
+                          </div>
+                          <div class="bg-accent/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-accent">观察者视角</div>
+                            <div class="text-xs text-dark/70">获得选择的空间</div>
+                          </div>
+                        </>
+                      )}
+                      
+                      {index === 1 && (
+                        <>
+                          <div class="bg-green-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-green-600">事实-感受-评判</div>
+                            <div class="text-xs text-dark/70">区分三种表达方式</div>
+                          </div>
+                          <div class="bg-green-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-green-600">责任心态</div>
+                            <div class="text-xs text-dark/70">沟通效果由我负责</div>
+                          </div>
+                        </>
+                      )}
+                      
+                      {index === 2 && (
+                        <>
+                          <div class="bg-blue-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-blue-600">范畴决定内容</div>
+                            <div class="text-xs text-dark/70">信念系统塑造现实</div>
+                          </div>
+                          <div class="bg-blue-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-blue-600">创造者提问</div>
+                            <div class="text-xs text-dark/70">从被动到主动</div>
+                          </div>
+                        </>
+                      )}
+                      
+                      {index === 3 && (
+                        <>
+                          <div class="bg-purple-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-purple-600">"是这样"的力量</div>
+                            <div class="text-xs text-dark/70">停止与现实对抗</div>
+                          </div>
+                          <div class="bg-purple-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-purple-600">拥抱"猪"</div>
+                            <div class="text-xs text-dark/70">接纳与整合内在</div>
+                          </div>
+                        </>
+                      )}
+                      
+                      {index === 4 && (
+                        <>
+                          <div class="bg-orange-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-orange-600">核心原则</div>
+                            <div class="text-xs text-dark/70">提炼人生指导原则</div>
+                          </div>
+                          <div class="bg-orange-500/10 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-orange-600">稳固立场</div>
+                            <div class="text-xs text-dark/70">建立内在定海神针</div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 课程精炼总结：核心理论框架 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="课程精炼总结：核心理论框架" 
+        description="深入理解五大心法背后的三大核心模型和主要观点"
+      />
+      <div class="mt-12 space-y-8">
+        
+        <!-- 三大核心模型 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">🏗️ 三大核心模型</h3>
+            
+            <!-- 自我区分模型 -->
+            <div class="mb-10">
+              <h4 class="text-2xl font-bold text-accent mb-6 flex items-center gap-3">
+                <span class="text-3xl">🎯</span>
+                自我区分模型 (Self-Differentiation Model)
+              </h4>
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200">
+                <p class="text-lg leading-relaxed text-dark mb-4">
+                  <strong>核心洞见：</strong>"我"不等于"我的体验"。我们是一个能够观察思维、情绪和身体感受的意识中心。
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">❌ 融合状态 (Fusion)</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 我就是我的想法</li>
+                      <li>• 我就是我的情绪</li>
+                      <li>• 被体验完全淹没</li>
+                      <li>• 失去选择能力</li>
+                    </ul>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2">✅ 区分状态 (Defusion)</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 我拥有想法，但我不是想法</li>
+                      <li>• 我感受情绪，但我不是情绪</li>
+                      <li>• 保持观察者视角</li>
+                      <li>• 创造选择空间</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mt-4 p-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                  <p class="text-blue-800 dark:text-blue-200 font-medium">
+                    💡 <strong>实践要点：</strong>通过语言标签化练习（"我注意到一个愤怒的想法"）和身体扫描，培养观察者意识。
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 范畴模型 -->
+            <div class="mb-10">
+              <h4 class="text-2xl font-bold text-accent mb-6 flex items-center gap-3">
+                <span class="text-3xl">🔍</span>
+                范畴模型 (Paradigm Model)
+              </h4>
+              <div class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200">
+                <p class="text-lg leading-relaxed text-dark mb-4">
+                  <strong>核心公式：</strong>范畴决定内容。我们透过内在信念系统（范畴）这副"有色眼镜"来体验客观现实（内容）。
+                </p>
+                <div class="grid md:grid-cols-3 gap-4">
+                  <div class="text-center p-4 bg-white/60 dark:bg-gray-800/60 rounded-lg">
+                    <h5 class="font-bold text-purple-600 mb-2">内容 (Content)</h5>
+                    <p class="text-sm text-dark">客观事实<br/>中立的人事物</p>
+                  </div>
+                  <div class="text-center p-4 bg-white/60 dark:bg-gray-800/60 rounded-lg">
+                    <h5 class="font-bold text-purple-600 mb-2">范畴 (Paradigm)</h5>
+                    <p class="text-sm text-dark">信念系统<br/>解读框架</p>
+                  </div>
+                  <div class="text-center p-4 bg-white/60 dark:bg-gray-800/60 rounded-lg">
+                    <h5 class="font-bold text-purple-600 mb-2">体验 (Experience)</h5>
+                    <p class="text-sm text-dark">主观感受<br/>情绪反应</p>
+                  </div>
+                </div>
+                <div class="mt-4 p-4 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                  <p class="text-purple-800 dark:text-purple-200 font-medium">
+                    💡 <strong>革命性转变：</strong>改变范畴比改变内容更有力量。当我们升级信念系统，整个世界的体验就会改变。
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 信念系统模型 -->
+            <div>
+              <h4 class="text-2xl font-bold text-accent mb-6 flex items-center gap-3">
+                <span class="text-3xl">🧭</span>
+                信念系统模型 (Belief System Model)
+              </h4>
+              <div class="bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 p-6 rounded-xl border border-green-200">
+                <p class="text-lg leading-relaxed text-dark mb-4">
+                  <strong>核心转变：</strong>从外在驱动的"反应者"转向内在驱动的"创造者"。
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-3">🤖 受害者范畴</h5>
+                    <ul class="text-sm text-dark space-y-2">
+                      <li>• <strong>信念：</strong>世界是危险的，资源稀缺</li>
+                      <li>• <strong>身份：</strong>无助的受害者</li>
+                      <li>• <strong>提问：</strong>"为什么是我？"</li>
+                      <li>• <strong>行为：</strong>抱怨、指责、逃避</li>
+                    </ul>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-3">🌟 创造者范畴</h5>
+                    <ul class="text-sm text-dark space-y-2">
+                      <li>• <strong>信念：</strong>世界充满可能，挑战是礼物</li>
+                      <li>• <strong>身份：</strong>有力量的创造者</li>
+                      <li>• <strong>提问：</strong>"我能创造什么？"</li>
+                      <li>• <strong>行为：</strong>负责、探索、创新</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="mt-4 p-4 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                  <p class="text-green-800 dark:text-green-200 font-medium">
+                    💡 <strong>修炼要点：</strong>通过"为所有体验负责任"的练习，逐步从受害者身份转向创造者身份。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+        
+        <!-- 三大主要观点 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">💎 三大主要观点</h3>
+            
+            <div class="space-y-8">
+              <!-- 观点一 -->
+              <div class="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-6 rounded-xl border border-orange-200">
+                <h4 class="text-xl font-bold text-orange-700 dark:text-orange-300 mb-4 flex items-center gap-3">
+                  <span class="text-2xl">🔄</span>
+                  观点一：从"方法"到"心法"的根本转变
+                </h4>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">传统"方法"思维</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 外在技巧和工具</li>
+                      <li>• 一招鲜，治标不治本</li>
+                      <li>• 依赖外在条件</li>
+                      <li>• 容易反弹和失效</li>
+                    </ul>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2">"心法"修炼</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 内在状态和存在品质</li>
+                      <li>• 升级内在操作系统</li>
+                      <li>• 培养核心能力</li>
+                      <li>• 持久的根本转变</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 观点二 -->
+              <div class="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-blue-200">
+                <h4 class="text-xl font-bold text-blue-700 dark:text-blue-300 mb-4 flex items-center gap-3">
+                  <span class="text-2xl">🎭</span>
+                  观点二：发现范畴vs探索范畴
+                </h4>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">发现范畴 (Discovery)</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 问题 → 分析 → 解决方案</li>
+                      <li>• 寻找已知答案</li>
+                      <li>• 教练作为"专家"</li>
+                      <li>• 局限于现有框架</li>
+                    </ul>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2">探索范畴 (Exploration)</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 现象 → 体验 → 洞见浮现</li>
+                      <li>• 创造新的可能性</li>
+                      <li>• 教练作为"镜子"</li>
+                      <li>• 开启未知领域</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 观点三 -->
+              <div class="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 p-6 rounded-xl border border-purple-200">
+                <h4 class="text-xl font-bold text-purple-700 dark:text-purple-300 mb-4 flex items-center gap-3">
+                  <span class="text-2xl">⚡</span>
+                  观点三：抗拒的力量vs接纳的力量
+                </h4>
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">抗拒模式</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• "这不应该发生"</li>
+                      <li>• 与现实对抗</li>
+                      <li>• 大量能量内耗</li>
+                      <li>• 问题持续存在</li>
+                    </ul>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2">接纳模式</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• "是这样" (It is what it is)</li>
+                      <li>• 与现实协作</li>
+                      <li>• 释放能量用于创造</li>
+                      <li>• 真正的改变成为可能</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+        
+        <!-- 最终结论 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-gradient-to-br from-primary/10 via-accent/10 to-background rounded-[45px] border border-primary/20">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">🎯 最终结论</h3>
+            
+            <div class="bg-white/60 dark:bg-gray-800/60 p-8 rounded-xl">
+              <h4 class="text-2xl font-bold text-accent mb-6 text-center">心法修炼的终极目标</h4>
+              
+              <div class="space-y-6">
+                <div class="text-center">
+                  <div class="text-4xl mb-4">🌟</div>
+                  <h5 class="text-xl font-bold text-primary mb-3">成为一个"完整"的人</h5>
+                  <p class="text-dark leading-relaxed">
+                    不再被内在分裂所困扰，能够整合所有的"猪"（包括那些被评判为"负面"的特质），
+                    拥抱一个完整、真实、有力量的自己。
+                  </p>
+                </div>
+                
+                <div class="h-px bg-accent/20"></div>
+                
+                <div class="text-center">
+                  <div class="text-4xl mb-4">🧭</div>
+                  <h5 class="text-xl font-bold text-primary mb-3">活出真正的"原则立场"</h5>
+                  <p class="text-dark leading-relaxed">
+                    不再随波逐流或被外在期望所驱动，而是基于深度自我探索提炼出的核心原则，
+                    过一种由内而外、真实authentic的生活。
+                  </p>
+                </div>
+                
+                <div class="h-px bg-accent/20"></div>
+                
+                <div class="text-center">
+                  <div class="text-4xl mb-4">✨</div>
+                  <h5 class="text-xl font-bold text-primary mb-3">成为他人的"光"</h5>
+                  <p class="text-dark leading-relaxed">
+                    当你真正掌握了这五大心法，你不仅能够"搞定自己"，更能成为一个能够点亮他人生命的
+                    卓越教练和领导者，为世界带来更多的光明和可能性。
+                  </p>
+                </div>
+              </div>
+              
+              <div class="mt-8 p-6 bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/30 dark:to-orange-900/30 rounded-xl">
+                <p class="text-lg font-bold text-center text-orange-800 dark:text-orange-200">
+                  💝 这不仅仅是个人成长，更是对人类集体意识提升的贡献
+                </p>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 模块一：从"方法"到"心法"的根本转变 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="模块一：从'方法'到'心法'的根本转变" 
+        description="深入理解教练的核心能力——从外在技巧到内在修炼的飞跃"
+      />
+      <div class="mt-12 space-y-8">
+        
+        <!-- 核心概念区分 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">
+              🤼 "方法"与"心法"的根本区分
+            </h3>
+            
+            <div class="mb-8 text-center">
+              <p class="text-lg text-dark/80 max-w-3xl mx-auto leading-relaxed">
+                这是课程开篇最重要的概念区分，就像"武功招式"与"内功心法"的关系。
+                <strong>方法只是"术"，心法才是"道"。</strong>
+              </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- 方法（术） -->
+              <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 p-6 rounded-xl border border-red-200">
+                <h4 class="text-2xl font-bold text-red-700 dark:text-red-300 mb-6 flex items-center gap-3">
+                  <span class="text-3xl">🛠️</span>
+                  方法 (Method)：外在的"术"
+                </h4>
+                
+                <div class="space-y-4">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">定义</h5>
+                    <p class="text-sm text-dark">具体可见的工具、技巧和流程，回答"做什么"和"怎么做"</p>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">具体例子</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• GROW模型（目标-现实-选择-意愿）</li>
+                      <li>• 强有力提问的句式</li>
+                      <li>• 教练会谈的标准流程</li>
+                      <li>• SMART原则等框架</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">特点</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>✅ 可复制性：可标准化、模仿</li>
+                      <li>✅ 结构化：提供清晰路径</li>
+                      <li>❌ 局限性：容易机械、僵化</li>
+                      <li>❌ 表层化：缺乏生命力</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 心法（道） -->
+              <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200">
+                <h4 class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-6 flex items-center gap-3">
+                  <span class="text-3xl">🧠</span>
+                  心法 (Mental Model)：内在的"道"
+                </h4>
+                
+                <div class="space-y-4">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-blue-600 mb-2">定义</h5>
+                    <p class="text-sm text-dark">内在的信念系统、价值观、世界观和临在状态，决定"你是谁"</p>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-blue-600 mb-2">具体例子</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>• 核心信念：客户是完整的</li>
+                      <li>• 内在状态：全然好奇、深度倾听</li>
+                      <li>• 思维模式：系统性、非线性</li>
+                      <li>• 临在品质：不带评判的接纳</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-blue-600 mb-2">特点</h5>
+                    <ul class="text-sm text-dark space-y-1">
+                      <li>✨ 根本性：所有方法的能量源泉</li>
+                      <li>✨ 修炼性：需要不断的觉察与练习</li>
+                      <li>✨ 力量性：能真正催化深刻改变</li>
+                      <li>✨ 持久性：不受情境限制</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+        
+        <!-- 发现范畴vs探索范畴：教练的两种根本运作模式 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">
+              🌍 发现范畴vs探索范畴：两种根本不同的世界观
+            </h3>
+            
+            <div class="mb-8 text-center">
+              <p class="text-lg text-dark/80 max-w-4xl mx-auto leading-relaxed">
+                这是建立在"心法"基础上的两种根本不同的运作模式或世界观（范畴/Paradigm）。
+                <strong>它们决定了教练在面对问题时的根本思路和行为模式。</strong>
+              </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+              <!-- 发现范畴 -->
+              <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-8 rounded-xl border border-orange-200">
+                <h4 class="text-2xl font-bold text-orange-700 dark:text-orange-300 mb-6 flex items-center gap-3">
+                  <span class="text-3xl">🗺️</span>
+                  发现范畴 (Discovery Paradigm)
+                </h4>
+                
+                <div class="mb-6">
+                  <h5 class="text-lg font-bold text-orange-600 mb-3">寻找已知答案的地图模式</h5>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg mb-4">
+                    <p class="text-sm text-dark font-medium mb-2">📍 核心信念：</p>
+                    <p class="text-sm text-dark">世界是已知的，存在一个"正确"的答案等着被找到。</p>
+                  </div>
+                  
+                  <div class="bg-orange-100 dark:bg-orange-900/30 p-4 rounded-lg mb-4">
+                    <p class="text-orange-800 dark:text-orange-200 text-sm">
+                      📚 <strong>生动比喻：</strong>你手里有一张完整的城市地图，你的任务是找到从①点到②点的最短路径。一旦找到，任务就结束了。
+                    </p>
+                  </div>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-orange-600 mb-2">🔄 运作模式</h5>
+                    <ol class="text-sm text-dark space-y-1 list-decimal list-inside">
+                      <li>遇到问题 (例如："我总是拖延")</li>
+                      <li>启动分析：为什么会拖延？原因是什么？</li>
+                      <li>寻找解决方案：在已有的知识库里寻找"正确答案"</li>
+                      <li>应用方案：尝试使用工具</li>
+                      <li>目标达成/心安：问题解决了，或者暂时缓解了，思考停止</li>
+                    </ol>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-orange-600 mb-2">🎭 在教练中的体现</h5>
+                    <p class="text-sm text-dark">教练扮演"专家"或"问题解决者"的角色，倾向于给建议、给答案，帮助客户"修复"问题。</p>
+                  </div>
+                  
+                  <div class="bg-red-100 dark:bg-red-900/30 p-4 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-2">⚠️ 局限性</h5>
+                    <p class="text-sm text-red-700 dark:text-red-300">
+                      这种模式限制了创造力和新的可能性。它假设所有答案都已存在，从而关闭了通往真正未知领域的大门。
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 探索范畴 -->
+              <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-8 rounded-xl border border-blue-200">
+                <h4 class="text-2xl font-bold text-blue-700 dark:text-blue-300 mb-6 flex items-center gap-3">
+                  <span class="text-3xl">🧭</span>
+                  探索范畴 (Exploration Paradigm)
+                </h4>
+                
+                <div class="mb-6">
+                  <h5 class="text-lg font-bold text-blue-600 mb-3">深入未知领域的冒险模式</h5>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg mb-4">
+                    <p class="text-sm text-dark font-medium mb-2">📍 核心信念：</p>
+                    <p class="text-sm text-dark">世界是充满可能性的，答案是在过程中不断浮现和创造的。</p>
+                  </div>
+                  
+                  <div class="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-lg mb-4">
+                    <p class="text-blue-800 dark:text-blue-200 text-sm">
+                      🏴‍☠️ <strong>生动比喻：</strong>你是一名探险家，进入一片前人未至的丛林。你没有地图，你的任务是保持警觉和好奇，从中开辟出一条新的道路。
+                    </p>
+                  </div>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-blue-600 mb-2">🔄 运作模式</h5>
+                    <ol class="text-sm text-dark space-y-1 list-decimal list-inside">
+                      <li>观察到一个现象 (例如："我注意到我正在拖延")</li>
+                      <li>保持好奇与接纳：不去评判拖延的好坏</li>
+                      <li>深入体验：全然地感受当下的思维、情绪和身体状态</li>
+                      <li>洞见浮现：在全然的体验中，新的认知、新的选择自然浮现</li>
+                      <li>持续探索：这个过程是动态和持续的，没有终点</li>
+                    </ol>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                    <h5 class="font-semibold text-blue-600 mb-2">🎭 在教练中的体现</h5>
+                    <p class="text-sm text-dark">教练扮演"伙伴"或"镜子"的角色，通过创造一个安全的空间，支持客户自我探索，相信答案在客户自己身上。</p>
+                  </div>
+                  
+                  <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2">✨ 力量所在</h5>
+                    <p class="text-sm text-green-700 dark:text-green-300">
+                      这是通往真正创造力和深刻转变的唯一路径。它开启了无限的可能性空间。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 核心要求 -->
+            <div class="mt-10 p-8 bg-gradient-to-r from-primary/10 via-accent/10 to-background rounded-xl border border-primary/20">
+              <h4 class="text-2xl font-bold text-primary mb-6 text-center">
+                🎯 课程的核心要求：从"发现"到"探索"的飞跃
+              </h4>
+              
+              <div class="bg-white/60 dark:bg-gray-800/60 p-6 rounded-xl">
+                <div class="space-y-4">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">🚀</span>
+                    <div>
+                      <h5 class="font-bold text-dark mb-2">刷意地放下"寻找答案"的冲动</h5>
+                      <p class="text-sm text-dark/80">抵制住给建议的诱惑，从"帮助客户解决问题"转向"支持客户探索可能性"。</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">🧭</span>
+                    <div>
+                      <h5 class="font-bold text-dark mb-2">真正地活在过程中</h5>
+                      <p class="text-sm text-dark/80">允许自己和客户都处于"不知道"的状态。虽然会带来不适感，但这是成长的必经之路。</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl flex-shrink-0">✨</span>
+                    <div>
+                      <h5 class="font-bold text-dark mb-2">开启无限可能性</h5>
+                      <p class="text-sm text-dark/80">在探索范畴中，每一次会谈都可能成为一次独特的冒险，催化出前所未有的洞见和转变。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 心法一深度解析：体验我的体验 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="心法一深度解析：体验我的体验" 
+        description="从被动的生命“经历者”转变为主动的内在“观察者”"
+      />
+      <div class="mt-12 space-y-8">
+        
+        <!-- 心法一核心概念 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">
+              🦄 心法一：体验我的体验 (Experience My Experience)
+            </h3>
+            
+            <div class="mb-8 text-center">
+              <p class="text-lg text-dark/80 max-w-4xl mx-auto leading-relaxed">
+                这是整个教练心法体系的<strong>起点和核心</strong>。它要求我们从一个被动的生命"经历者"转变为一个主动的内在"观察者"。
+              </p>
+            </div>
+            
+            <!-- 双重体验的精义 -->
+            <div class="mb-10">
+              <h4 class="text-2xl font-bold text-accent mb-6 flex items-center gap-3">
+                <span class="text-3xl">🔁</span>
+                双重"体验"的精义
+              </h4>
+              
+              <div class="grid md:grid-cols-2 gap-8">
+                <!-- 第一层体验 -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200">
+                  <h5 class="text-xl font-bold text-purple-700 dark:text-purple-300 mb-4">
+                    🌊 第一层体验 (The Primary Experience)
+                  </h5>
+                  
+                  <p class="text-sm text-dark mb-4">
+                    我们每时每刻都在自动发生的、未经加工的原始内在数据流。
+                  </p>
+                  
+                  <div class="space-y-3">
+                    <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                      <h6 class="font-semibold text-purple-600 mb-1">🧠 思维</h6>
+                      <p class="text-xs text-dark">脑海中闪过的念头、图像、声音、判断、回忆、计划等</p>
+                      <p class="text-xs text-purple-600 mt-1">例如："我今天的工作还没完成"、"他为什么这么说我？"</p>
+                    </div>
+                    
+                    <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                      <h6 class="font-semibold text-purple-600 mb-1">❤️ 情绪</h6>
+                      <p class="text-xs text-dark">由内外刺激引发的能量波动和心理感受</p>
+                      <p class="text-xs text-purple-600 mt-1">例如：喜悦、愤怒、悲伤、焦虑、兴奋、平静</p>
+                    </div>
+                    
+                    <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                      <h6 class="font-semibold text-purple-600 mb-1">💪 身体感受</h6>
+                      <p class="text-xs text-dark">纯粹的生理感知</p>
+                      <p class="text-xs text-purple-600 mt-1">例如：肩膀的僵硬、胃部的抽搐、手心的汗、心跳的加速</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 第二层体验 -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border border-green-200">
+                  <h5 class="text-xl font-bold text-green-700 dark:text-green-300 mb-4">
+                    🔍 第二层体验 (The Meta-Experience)
+                  </h5>
+                  
+                  <p class="text-sm text-dark mb-4">
+                    对第一层体验的有意识的觉察和感受。这才是"心法一"的真正实践。
+                  </p>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg mb-4">
+                    <h6 class="font-semibold text-green-600 mb-2">🎆 核心特征</h6>
+                    <ul class="text-xs text-dark space-y-1">
+                      <li>• 向内的、不带评判的"看见"</li>
+                      <li>• 观察者的视角和意识</li>
+                      <li>• 在刺激和回应之间创造选择空间</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="bg-green-100 dark:bg-green-900/30 p-4 rounded-lg">
+                    <h6 class="font-semibold text-green-600 mb-2">✨ 实践示例</h6>
+                    <p class="text-xs text-green-700 dark:text-green-300">
+                      "哦，我注意到一股愤怒的能量在我的胸口升起，我的心跳在加速，我的拳头不自觉地握紧了。"
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 举例对比 -->
+              <div class="mt-8 p-6 bg-gradient-to-r from-primary/5 via-accent/5 to-background rounded-xl border border-primary/10">
+                <h5 class="text-lg font-bold text-primary mb-4 text-center">举例对比：修炼前后的差异</h5>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200">
+                    <h6 class="font-semibold text-red-600 mb-2">😵 未修炼状态</h6>
+                    <p class="text-sm text-dark">
+                      你感到愤怒（第一层体验），然后立刻做出反应——大声争吵。
+                      <strong>你完全沉浸在愤怒中，你就是愤怒。</strong>
+                    </p>
+                  </div>
+                  
+                  <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border border-green-200">
+                    <h6 class="font-semibold text-green-600 mb-2">🌟 修炼状态</h6>
+                    <p class="text-sm text-dark">
+                      你感到愤怒（第一层体验），同时，你内在有一个部分在观察这个愤怒（第二层体验）。
+                      <strong>你拥有愤怒，但你不是愤怒本身。</strong>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 哲学基础 -->
+            <div class="mt-8 p-6 bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl border border-orange-200">
+              <h4 class="text-xl font-bold text-orange-800 dark:text-orange-200 mb-4 flex items-center gap-3">
+                <span class="text-2xl">🧭</span>
+                哲学基础：意识中心的建立
+              </h4>
+              
+              <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg">
+                <p class="text-dark leading-relaxed">
+                  这个心法根植于一个核心认知：
+                  <strong class="text-orange-700 dark:text-orange-300">"我不是我的思想，我不是我的情绪，我不是我的身体"</strong>。
+                  我们是一个能够观察这一切的<strong>意识中心 (Center of Awareness)</strong>。
+                </p>
+                
+                <div class="mt-4 p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                  <p class="text-orange-800 dark:text-orange-200 font-medium text-sm">
+                    💫 <strong>关键洞见：</strong>这个中心的建立，是所有改变和成长的基础。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+        
+        <!-- 区分技术核心方法 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">
+              🎯 "区分"技术：从融合到观察的转变
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+              <!-- 融合状态 -->
+              <div class="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 p-6 rounded-xl border border-red-200">
+                <h4 class="text-xl font-bold text-red-700 dark:text-red-300 mb-4 flex items-center gap-3">
+                  <span class="text-2xl">😵‍💫</span>
+                  融合状态 (Fusion)
+                </h4>
+                
+                <div class="space-y-3">
+                  <p class="text-sm text-dark mb-3">我们大部分时间的默认状态，与内在体验完全认同。</p>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-1 text-sm">🧠 思维融合</h5>
+                    <p class="text-xs text-dark">想法："我做不好演讲" → "我就是不擅长演讲" → 逃避</p>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                    <h5 class="font-semibold text-red-600 mb-1 text-sm">❤️ 情绪融合</h5>
+                    <p class="text-xs text-dark">焦虑 → 被完全淹没 → 暴饮暴食或刷手机</p>
+                  </div>
+                  
+                  <div class="bg-red-100 dark:bg-red-900/30 p-3 rounded-lg">
+                    <p class="text-xs text-red-700 dark:text-red-300 font-medium">
+                      ⚠️ 后果：失去自由和选择，生活变成自动化反应
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 区分状态 -->
+              <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border border-green-200">
+                <h4 class="text-xl font-bold text-green-700 dark:text-green-300 mb-4 flex items-center gap-3">
+                  <span class="text-2xl">🌟</span>
+                  区分状态 (Defusion)
+                </h4>
+                
+                <div class="space-y-3">
+                  <p class="text-sm text-dark mb-3">通过修炼达到的状态，能够"后退一步"观察内在体验。</p>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-1 text-sm">🧠 思维区分</h5>
+                    <p class="text-xs text-dark">"我注意到一个'做不好演讲'的想法。它只是想法，不等于事实。"</p>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-1 text-sm">❤️ 情绪区分</h5>
+                    <p class="text-xs text-dark">"我观察到焦虑正在通过我的身体。我能感受它，但不被它控制。"</p>
+                  </div>
+                  
+                  <div class="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                    <p class="text-xs text-green-700 dark:text-green-300 font-medium">
+                      ✨ 后果：创造选择空间，获得有意识回应的能力
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+        
+        <!-- 实践方法 -->
+        <Card isUnderline={true}>
+          <div class="p-10 bg-background rounded-[45px]">
+            <h3 class="text-3xl font-bold text-primary mb-8 text-center">
+              🛠️ 三大实践方法
+            </h3>
+            
+            <div class="space-y-6">
+              <!-- 语言标签化 -->
+              <div class="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-xl border border-blue-200">
+                <h4 class="text-lg font-bold text-blue-700 dark:text-blue-300 mb-4 flex items-center gap-3">
+                  <span class="text-xl">🏷️</span>
+                  1. 语言标签化练习
+                </h4>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded text-center">
+                    <h5 class="font-semibold text-blue-600 mb-2 text-sm">🧠 思维</h5>
+                    <p class="text-xs text-dark">"这是一个评判/担忧/计划"</p>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded text-center">
+                    <h5 class="font-semibold text-blue-600 mb-2 text-sm">❤️ 情绪</h5>
+                    <p class="text-xs text-dark">"这是愤怒/喜悦/悲伤"</p>
+                  </div>
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded text-center">
+                    <h5 class="font-semibold text-blue-600 mb-2 text-sm">💪 身体</h5>
+                    <p class="text-xs text-dark">"这是紧绷/温暖/刺痛"</p>
+                  </div>
+                </div>
+                
+                <div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                  <p class="text-blue-800 dark:text-blue-200 text-sm font-medium">
+                    ✨ 作用：瞬间从融合状态中拉出来，开始观察和区分
+                  </p>
+                </div>
+              </div>
+              
+              <!-- 精准描述 -->
+              <div class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl border border-purple-200">
+                <h4 class="text-lg font-bold text-purple-700 dark:text-purple-300 mb-4 flex items-center gap-3">
+                  <span class="text-xl">💬</span>
+                  2. 精准的描述性语言
+                </h4>
+                
+                <div class="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg mb-4">
+                  <h5 class="font-semibold text-purple-600 mb-2 text-sm">📝 句式模板</h5>
+                  <p class="text-xs text-dark bg-purple-100 dark:bg-purple-900/30 p-2 rounded font-mono">
+                    "我体验到/感受到 + 在[部位] + 有[具体描述]的 想法/情绪/感受"
+                  </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-red-50 dark:bg-red-900/20 p-3 rounded border border-red-200">
+                    <h5 class="font-semibold text-red-600 mb-1 text-sm">❌ 模糊表达</h5>
+                    <p class="text-xs text-red-700 dark:text-red-300">"我压力好大。"</p>
+                  </div>
+                  
+                  <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded border border-green-200">
+                    <h5 class="font-semibold text-green-600 mb-1 text-sm">✅ 精准表达</h5>
+                    <p class="text-xs text-green-700 dark:text-green-300">
+                      "我感受到胸口有一股焦灼的情绪，肩膀紧绷沉重。"
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 身体扫描 -->
+              <div class="bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 p-6 rounded-xl border border-green-200">
+                <h4 class="text-lg font-bold text-green-700 dark:text-green-300 mb-4 flex items-center gap-3">
+                  <span class="text-xl">🧘‍♀️</span>
+                  3. 身体扫描 (Body Scan)
+                </h4>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2 text-sm">📍 练习过程</h5>
+                    <p class="text-xs text-dark">安静地从头到脚扫描身体每个部位，只是去感受，不做评判。</p>
+                  </div>
+                  
+                  <div class="bg-white/60 dark:bg-gray-800/60 p-3 rounded-lg">
+                    <h5 class="font-semibold text-green-600 mb-2 text-sm">✨ 作用</h5>
+                    <p class="text-xs text-dark">提升对身体感受的觉察力，身体往往是情绪最直接的"告示牌"。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+    <!-- 常见问题 FAQ -->
+    <section>
+      <SectionTitle 
+        sectionTitle="常见问题" 
+        description="解答心法修炼过程中的常见疑问"
+      />
+      <div class="mt-12 space-y-4">
+        {faqData.map((faq, index) => (
+          <AccordionItem
+            index={index + 1}
+            title={faq.title}
+            description={faq.description}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- 总结和行动号召 -->
+    <section>
+      <SectionTitle 
+        sectionTitle="开始你的心法修炼之旅" 
+        description="现在就开始实践这五大心法，重新掌控你的人生！"
+      />
+      <div class="mt-12">
+        <Card isUnderline={true}>
+          <div class="p-12 bg-gradient-to-r from-primary/5 via-accent/5 to-background rounded-[45px] text-center border border-primary/20">
+            <div class="text-6xl mb-6">🎉</div>
+            <h3 class="text-3xl font-bold text-primary mb-6">恭喜！你已掌握核心智慧</h3>
+            <p class="text-xl text-dark leading-relaxed mb-8 max-w-2xl mx-auto">
+              通过这个完整的指南，你已经了解了五大心法的所有核心概念。
+              现在是时候将这些智慧付诸实践，真正"搞定自己"了！
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div class="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl border border-primary/10">
+                <div class="text-3xl mb-3">💪</div>
+                <h4 class="font-bold text-primary mb-2">持续练习</h4>
+                <p class="text-dark/80 text-sm">五大心法需要终身实践的功夫</p>
+              </div>
+              <div class="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl border border-accent/10">
+                <div class="text-3xl mb-3">👶</div>
+                <h4 class="font-bold text-accent mb-2">从小事开始</h4>
+                <p class="text-dark/80 text-sm">在日常生活中刻意练习心法</p>
+              </div>
+              <div class="bg-white/50 dark:bg-gray-800/50 p-6 rounded-xl border border-green-500/10">
+                <div class="text-3xl mb-3">🤝</div>
+                <h4 class="font-bold text-green-600 mb-2">寻找伙伴</h4>
+                <p class="text-dark/80 text-sm">组成练习小组，相互提供"镜子"</p>
+              </div>
+            </div>
+            
+            <div class="mt-8 p-6 bg-gradient-to-r from-yellow-100 to-orange-100 dark:from-yellow-900 dark:to-orange-900 rounded-xl">
+              <h4 class="text-2xl font-bold text-orange-800 dark:text-orange-200 mb-4">
+                🎆 掌握这套心法
+              </h4>
+              <p class="text-lg text-orange-700 dark:text-orange-300">
+                您将不仅能真正地活出自己，更能成为一个能点亮他人的卓越生命教练。
+              </p>
+              <p class="text-xl font-bold text-orange-800 dark:text-orange-200 mt-4">
+                祝您修炼有成！
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </section>
+
+  </main>
+</BlogLayout>
