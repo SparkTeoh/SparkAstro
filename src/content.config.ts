@@ -67,6 +67,16 @@ const stacks = defineCollection({
           flow: z.array(z.string()).default([]),       // 原理流程图，一步一项
           paragraphs: z.array(z.string()).default([]),
           analogy: z.object({ title: z.string(), text: z.string() }).optional(),
+          // 补充说明：例如「那植发呢？」，左栏讲好处，右栏讲为什么还不够
+          aside: z
+            .object({
+              title: z.string(),
+              lead: z.string().optional(),
+              pros: z.object({ title: z.string(), points: z.array(z.object({ title: z.string(), text: z.string() })) }),
+              cons: z.object({ title: z.string(), points: z.array(z.object({ title: z.string(), text: z.string() })) }),
+              conclusion: z.string().optional(),
+            })
+            .optional(),
         })
         .optional(),
       groups: z.array(layer),

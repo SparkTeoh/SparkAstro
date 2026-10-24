@@ -103,6 +103,36 @@ const isHot = (cell: string) => /微针|Nizoral/.test(cell);
         </aside>
       )}
 
+      {d.science.aside && (
+        <div class="sp-stack sp-transplant">
+          <h3 class="sp-h2" style="font-size:clamp(1.6rem,3.2vw,2.4rem)">{d.science.aside.title}</h3>
+          {d.science.aside.lead && <p class="sp-copy" style="color:var(--sp-ink);font-weight:500">{d.science.aside.lead}</p>}
+          <div class="sp-grid sp-grid--2">
+            <div class="sp-card sp-card--pad-lg">
+              <p class="sp-eyebrow">{d.science.aside.pros.title}</p>
+              {d.science.aside.pros.points.map((pt) => (
+                <div class="sp-stack" style="gap:0.3rem">
+                  <h4 class="sp-h3" style="font-size:1.1rem">{pt.title}</h4>
+                  <p class="sp-body">{pt.text}</p>
+                </div>
+              ))}
+            </div>
+            <div class="sp-card sp-card--pad-lg sp-card--danger">
+              <p class="sp-eyebrow sp-eyebrow--danger">{d.science.aside.cons.title}</p>
+              {d.science.aside.cons.points.map((pt) => (
+                <div class="sp-stack" style="gap:0.3rem">
+                  <h4 class="sp-h3" style="font-size:1.1rem">{pt.title}</h4>
+                  <p class="sp-body">{pt.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {d.science.aside.conclusion && (
+            <div class="sp-mine"><p class="sp-eyebrow">结论</p><p>{d.science.aside.conclusion}</p></div>
+          )}
+        </div>
+      )}
+
       <!-- 四层总览 -->
       <div class="sp-stack" style="gap:0.75rem">
         <p class="sp-eyebrow">所以我的方案分 {d.groups.length} 层</p>
