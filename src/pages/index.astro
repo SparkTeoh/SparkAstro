@@ -1,27 +1,208 @@
 ---
-import OfficialAccount from "../components/sections/OfficialAccount.astro";
-import Contact from "../components/sections/Contact.astro";
-import Hero from "../components/sections/Hero.astro";
-import Process from "../components/sections/Process.astro";
-import Proposal from "../components/sections/Proposal.astro";
-import Services from "../components/sections/Services.astro";
-import WarningBanner from "../components/sections/WarningBanner.astro";
-import Team from "../components/sections/Team.astro";
-import Testimonials from "../components/sections/Testimonials.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+import Button from "../components/ui/Button.astro";
+import SectionIntro from "../components/ui/SectionIntro.astro";
+import Accordion from "../components/ui/Accordion.astro";
+import PartnerCard from "../components/ui/PartnerCard.astro";
+import ContentCard from "../components/ui/ContentCard.astro";
+import CtaCard from "../components/ui/CtaCard.astro";
+import Icon from "../components/ui/Icon.astro";
+import { Image } from "astro:assets";
+import heroIllustration from "../assets/pics/hero.svg";
+import siteData from "../data/siteData.json";
+import pillars from "../data/pillars.json";
+import steps from "../data/verifySteps.json";
+import partners from "../data/partners.json";
+import { getAllContent } from "../lib/content";
+import { getCollection } from "astro:content";
+
+const latest = (await getAllContent()).slice(0, 4);
+const stacks = (await getCollection("stacks", (s) => !s.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const blurbs: Record<string, string> = {
+  Facebook: "理财资讯、防诈骗提醒和市场分析，定期更新。",
+  Instagram: "理财小贴士、日常分享，也是找我聊天最快的地方。",
+  YouTube: "完整的理财教学视频和防诈骗指南。",
+};
 ---
 
-<MainLayout
-  title="Spark官方网站"
-  description="Spark Liang官方网站 - 您的理财引路人。提供专业的理财教育、防诈骗指南和投资建议。认准官方渠道，与我一起安全理财，建立正确的投资观念。"
->
-  <Hero />
-  <WarningBanner />
-  <OfficialAccount />
-  <Services />
-  <Proposal />
-  <Process />
-  <Team />
-  <Testimonials />
-  <Contact />
+<MainLayout title={siteData.title} description={siteData.description}>
+  <!-- Hero -->
+  <section class="sp-wrap sp-hero" aria-labelledby="hero-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">Spark Liang · 官方网站</p>
+      <h1 class="sp-h1" id="hero-title">你的理财<em>引路人</em>。</h1>
+      <p class="sp-lede">
+        我用最平实的方式讲理财、价值投资和如何不被骗。这里是我唯一的官方网站，
+        认准这里和下面三个官方账号，其他自称是我的都是假冒。
+      </p>
+      <div class="sp-actions">
+        <Button href="/fraud-prevention">认准官方渠道</Button>
+        <Button href="/about" variant="ghost">我的故事</Button>
+      </div>
+    </div>
+    <aside class="sp-hero__visual" aria-hidden="true">
+      <!-- TODO(spark): 换成真人照片（4:5 竖图），放进 src/assets/ 后替换 -->
+      <figure class="sp-photo-card sp-photo-card--illustration">
+        <Image src={heroIllustration} alt="" loading="eager" />
+      </figure>
+    </aside>
+  </section>
+
+  <!-- 防诈骗警示 -->
+  <section class="sp-wrap" aria-label="防诈骗声明">
+    <div class="sp-card sp-card--danger sp-card--pad" style="grid-template-columns:auto 1fr;gap:1rem;align-items:start">
+      <span style="display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;background:var(--sp-danger);color:#fff">
+        <Icon name="alert" class="w-6 h-6" />
+      </span>
+      <div class="sp-stack" style="gap:0.4rem">
+        <p class="sp-eyebrow sp-eyebrow--danger">重要声明</p>
+        <p style="margin:0;font-weight:500">
+          我和团队<strong style="color:var(--sp-danger)">绝对不会</strong>主动私信你、拉你进任何投资群组（Telegram / WhatsApp），或要求你转账投资。
+        </p>
+        <a class="sp-text-link" href="/fraud-prevention">查看防诈骗中心</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我的清单 -->
+  {stacks.length > 0 && (
+    <section class="sp-wrap sp-section" aria-labelledby="stack-title">
+      <div class="sp-section__bar">
+        <div class="sp-stack">
+          <p class="sp-eyebrow">我的清单</p>
+          <h2 class="sp-h2" id="stack-title">大家常问我用什么，答案都在这里。</h2>
+        </div>
+        <a class="sp-text-link" href="/stack">全部清单</a>
+      </div>
+      <div class="sp-grid sp-grid--3">
+        {stacks.map((s) => (
+          <article class="sp-card sp-card--link">
+            <div class="sp-card__slot sp-card__slot--ink">
+              <span style="font-family:var(--sp-font-display);font-weight:900;font-size:clamp(2rem,4.5vw,3rem);color:#fff">{s.data.short}</span>
+            </div>
+            <div class="sp-card__body">
+              <h3 class="sp-h3"><a class="sp-card__stretch" href={`/stack/${s.id}`} style="color:inherit;text-decoration:none">{s.data.title}</a></h3>
+              <p class="sp-body">{s.data.tagline}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- 我分享什么 -->
+  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="pillars-title">
+    <SectionIntro
+      eyebrow="我分享什么"
+      title="把复杂的财经知识，讲成你听得懂的话。"
+      copy="理财观念、价值投资、预算与现金流，还有比赚钱更重要的：先保护好你的钱。"
+      id="pillars-title"
+    />
+    <div class="sp-grid sp-grid--3">
+      {pillars.map((p, i) => (
+        <article class="sp-card sp-card--link">
+          <div class={`sp-card__slot ${i % 3 === 1 ? "sp-card__slot--ink" : ""}`}>
+            <Icon name={p.icon} />
+          </div>
+          <div class="sp-card__body">
+            <h3 class="sp-h3">{p.title}</h3>
+            <p class="sp-body">{p.sub}</p>
+            <a class="sp-text-link sp-card__stretch" href={p.href}
+              target={p.external ? "_blank" : undefined} rel={p.external ? "noopener noreferrer" : undefined}>
+              {p.external ? "去看看 ↗" : "查看内容"}
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <aside class="sp-strip">
+      <div class="sp-stack" style="gap:0.3rem">
+        <h3 class="sp-h3">想更系统地学？</h3>
+        <p class="sp-body">我的课程和咨询，只通过两家官方合作伙伴提供。</p>
+      </div>
+      <Button href="/partners" variant="ghost">查看官方合作伙伴</Button>
+    </aside>
+  </section>
+
+  <!-- 如何辨别真假 -->
+  <section class="sp-wrap sp-section" aria-labelledby="verify-title">
+    <SectionIntro
+      eyebrow="防诈骗"
+      title="六个步骤，辨别真假 Spark。"
+      copy="冒充我的账号每天都在出现。花一分钟看完，保护好你和家人的钱。"
+      id="verify-title"
+    />
+    <div><Accordion items={steps} /></div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="sp-wrap sp-section" aria-labelledby="about-title">
+    <div class="sp-split">
+      <!-- TODO(spark): 换成真人照片 -->
+      <figure class="sp-photo-card sp-photo-card--illustration" style="aspect-ratio:3/4">
+        <Image src={heroIllustration} alt="" />
+      </figure>
+      <div class="sp-stack">
+        <p class="sp-eyebrow">关于 Spark</p>
+        <h2 class="sp-h2" id="about-title">金融知识不该是少数人的特权。</h2>
+        <p class="sp-copy">
+          在自己的投资路上，我看到太多人因为缺乏正确的知识陷入困境，甚至被骗。所以我拿起相机，
+          把复杂的财经概念用最平实的方式讲出来。
+        </p>
+        <p class="sp-copy">我相信价值投资：看基本面、长期持有、留足安全边际。投资不是赌博。</p>
+        <div><Button href="/about" variant="ghost">阅读完整故事</Button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 最新内容 -->
+  {latest.length > 0 && (
+    <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="journal-title">
+      <div class="sp-section__bar">
+        <div class="sp-stack">
+          <p class="sp-eyebrow">内容中心</p>
+          <h2 class="sp-h2" id="journal-title">最新文章与视频</h2>
+        </div>
+        <a class="sp-text-link" href="/blog">全部内容</a>
+      </div>
+      <div class="sp-grid sp-grid--2">
+        {latest.map((item) => <ContentCard item={item} />)}
+      </div>
+    </section>
+  )}
+
+  <!-- 官方账号 -->
+  <section class="sp-wrap sp-section" aria-labelledby="social-title">
+    <SectionIntro
+      eyebrow="官方账号"
+      title="只有这三个账号是我。"
+      copy="全部都有平台蓝勾认证。名字相似、没有蓝勾、或主动私信你的，都是假冒。"
+      id="social-title"
+    />
+    <div class="sp-grid sp-grid--3">
+      {siteData.socials.map((s) => (
+        <a class="sp-card sp-card--link" href={s.url} target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+          <div class="sp-card__slot sp-card__slot--ink"><Icon name={s.icon} /></div>
+          <div class="sp-card__body">
+            <span class="sp-meta">{s.name} · 已认证</span>
+            <strong class="sp-h3">{s.handle}</strong>
+            <p class="sp-body">{blurbs[s.name]}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 合作伙伴 -->
+  <section class="sp-wrap sp-section" aria-labelledby="partners-title">
+    <div class="sp-section__bar">
+      <SectionIntro eyebrow="官方合作伙伴" title="我只和这两家合作。" id="partners-title" />
+      <a class="sp-text-link" href="/partners">合作详情</a>
+    </div>
+    <div class="sp-grid sp-grid--2">
+      {partners.map((p) => <PartnerCard {...p} compact />)}
+    </div>
+  </section>
+
+  <CtaCard />
 </MainLayout>

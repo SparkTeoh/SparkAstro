@@ -1,0 +1,18 @@
+[
+  {
+    "name": "价值思维学院",
+    "initial": "价",
+    "tagline": "专业的理财投资教育平台",
+    "url": "https://valueinmind.co/zh",
+    "highlights": ["超过 21,000 名学员", "系统化价值投资课程", "专业教学支持服务", "富人思维培养"],
+    "recommended": true
+  },
+  {
+    "name": "MMC Financial",
+    "initial": "M",
+    "tagline": "专业的预算管理专家",
+    "url": "https://www.mmcfin.com/",
+    "highlights": ["科学预算管理体系", "独家数据分析工具", "全程落地咨询", "企业利润增长方案"],
+    "recommended": false
+  }
+]

@@ -1,15 +1,8 @@
 ---
-export interface Props {
-  tags: string[];
-}
-
+interface Props { tags: string[] }
 const { tags } = Astro.props;
 ---
 
-<div class="flex flex-wrap gap-2 justify-center">
-  {tags.map((tag) => (
-    <span class="inline-block bg-gray text-primary px-3 py-1 rounded-full text-sm font-medium">
-      {tag}
-    </span>
-  ))}
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+  {tags.map((tag) => <a class="sp-tag" style="text-decoration:none" href={`/blog?search=${encodeURIComponent(tag)}`}>{tag}</a>)}
 </div>

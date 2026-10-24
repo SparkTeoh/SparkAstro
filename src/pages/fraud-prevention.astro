@@ -1,11 +1,102 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import FraudPreventionSection from "../components/sections/FraudPrevention.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import Icon from "../components/ui/Icon.astro";
+import siteData from "../data/siteData.json";
+
+const ig = siteData.socials.find((s) => s.icon === "instagram")!;
+const nevers = [
+  { title: "绝不主动私信", text: "我和团队绝不会在任何平台主动私信你，推荐股票、虚拟货币或任何投资产品。" },
+  { title: "绝不索要金钱", text: "我绝不会要求你把钱转进任何个人银行账户或加密钱包，做“代客操盘”或“项目投资”。" },
+  { title: "绝无投资群组", text: "我没有任何付费或免费的 Telegram、WhatsApp、LINE 投资群或“带单”群。所有自称是我建的群都是诈骗。" },
+];
+const identify = [
+  { title: "检查用户名", text: "骗子常用相似但有细微差别的名字，例如多一个点、多一条下划线。" },
+  { title: "警惕“保证回报”", text: "任何承诺“稳赚不赔”“高额回报”的，都是诈骗。" },
+  { title: "注意私信套路", text: "开场白通常很热情，然后很快就把话题带到投资上。" },
+];
+const respond = [
+  { title: "不要互动", text: "不要回复，不要点链接，更不要转账。" },
+  { title: "截图存证", text: "把对话和假冒页面截图保存下来。" },
+  { title: "立即举报", text: "在 Facebook、Instagram、YouTube 上举报该假冒账号。" },
+  { title: "通知我（可选）", text: "把截图通过 Instagram 私信发给我，我会公开提醒大家。" },
+];
 ---
 
 <MainLayout
-  title="官方渠道认证 & 防诈骗声明 - Spark Liang"
-  description="Spark Liang官方渠道认证和防诈骗声明，保护您的财产安全，辨别真伪"
+  title="防诈骗中心 - Spark Liang"
+  description="Spark Liang 官方渠道认证与防诈骗声明：三大绝对不会、如何识别与应对诈骗、官方账号列表。"
 >
-  <FraudPreventionSection />
-</MainLayout> 
+  <PageHero
+    eyebrow="防诈骗中心"
+    danger
+    title="保护好你的钱，是学理财的<em>第一步</em>。"
+    lede="冒充我的账号、群组和广告每天都在出现。请仔细看完这一页，辨别真伪。"
+  />
+
+  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="nevers-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow sp-eyebrow--danger">三大绝对不会</p>
+      <h2 class="sp-h2" id="nevers-title">我永远不会做这三件事。</h2>
+    </div>
+    <div class="sp-grid sp-grid--3">
+      {nevers.map((n, i) => (
+        <article class="sp-card sp-card--danger sp-card--pad">
+          <span class="sp-meta" style="color:var(--sp-danger)">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="sp-h3">{n.title}</h3>
+          <p class="sp-body">{n.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="sp-wrap sp-section" aria-labelledby="identify-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">识别与应对</p>
+      <h2 class="sp-h2" id="identify-title">遇到可疑账号，这样做。</h2>
+    </div>
+    <div class="sp-grid sp-grid--2">
+      <article class="sp-card sp-card--pad-lg">
+        <h3 class="sp-h3">如何识别诈骗</h3>
+        <ul class="sp-check">
+          {identify.map((x) => <li><span><strong style="color:var(--sp-ink)">{x.title}：</strong>{x.text}</span></li>)}
+        </ul>
+      </article>
+      <article class="sp-card sp-card--pad-lg">
+        <h3 class="sp-h3">发现诈骗怎么办</h3>
+        <ul class="sp-check">
+          {respond.map((x) => <li><span><strong style="color:var(--sp-ink)">{x.title}：</strong>{x.text}</span></li>)}
+        </ul>
+        <a class="sp-text-link" href={ig.url} target="_blank" rel="noopener noreferrer">去 Instagram 通知我 ↗</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="sp-wrap sp-section" aria-labelledby="official-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">认准蓝勾勾</p>
+      <h2 class="sp-h2" id="official-title">只有这三个账号是我。</h2>
+      <p class="sp-copy">每个账号都有平台官方认证的蓝勾。没有蓝勾，或者蓝勾是 P 在头像里的，一律当作假冒。</p>
+    </div>
+    <div class="sp-grid sp-grid--3">
+      {siteData.socials.map((s) => (
+        <a class="sp-card sp-card--link" href={s.url} target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">
+          <div class="sp-card__slot sp-card__slot--ink"><Icon name={s.icon} /></div>
+          <div class="sp-card__body">
+            <span class="sp-meta">{s.name} · 已认证</span>
+            <strong class="sp-h3">{s.handle}</strong>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="sp-wrap sp-cta" style="border-color:var(--sp-danger);box-shadow:7px 7px 0 var(--sp-danger)" aria-label="重要提醒">
+    <div class="sp-stack">
+      <p class="sp-eyebrow sp-eyebrow--danger">重要提醒</p>
+      <p class="sp-copy" style="color:var(--sp-ink)">
+        收到任何自称来自 Spark Liang 的私信、投资邀请或转账要求，请立即举报并删除。真正的我只通过上面三个官方账号和大家交流。
+      </p>
+    </div>
+  </section>
+</MainLayout>

@@ -1,34 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}"],
   theme: {
-    screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1280px",
-      "2xl": "1536px",
-    },
     extend: {
       fontFamily: {
-        grotesk: ["Grotesk", "sans-serif"],
-      },
-      fontWeight: {
-        regular: 400,
-        medium: 500,
+        grotesk: ["var(--sp-font-sans)"],
+        display: ["var(--sp-font-display)"],
       },
       colors: {
-        green: "var(--green)",
-        black: "var(--black)",
-        dark: "var(--dark)",
-        gray: "var(--gray)",
-        white: "var(--white)",
-        primary: "var(--primary)",
-        background: "var(--background)",
-        accent: "var(--accent)",
-        navy: "#1A237E",
-        lightBlueGray: "#F0F4F8",
-        goldOrange: "#FFAB40",
+        // 与 site.css 同一套品牌色；RGB 通道写法支持 text-primary/70 等透明度
+        primary: "rgb(var(--c-primary) / <alpha-value>)",
+        accent: "rgb(var(--c-accent) / <alpha-value>)",
+        background: "rgb(var(--c-background) / <alpha-value>)",
+        dark: "rgb(var(--c-primary) / <alpha-value>)",
+        danger: "rgb(var(--c-danger) / <alpha-value>)",
+      },
+      boxShadow: {
+        // 与 site.css 的 --sp-shadow-sm / --sp-shadow 一致
+        offset: "4px 4px 0 rgb(var(--c-primary))",
+        "offset-lg": "7px 7px 0 rgb(var(--c-primary))",
       },
     },
   },

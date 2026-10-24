@@ -1,48 +1,7 @@
 ---
 import AccordionItem from "./AccordionItem.astro";
-
-const content = [
-{
-  index: 1,
-  title: "步骤一",
-  description: "这里可以添加第一个步骤的详细描述。您可以根据需要修改这些内容，描述具体的流程和要点。"
-},
-{
-  index: 2,
-  title: "步骤二", 
-  description: "这里可以添加第二个步骤的详细描述。您可以根据需要修改这些内容，描述具体的流程和要点。"
-},
-{
-  index: 3,
-  title: "步骤三",
-  description: "这里可以添加第三个步骤的详细描述。您可以根据需要修改这些内容，描述具体的流程和要点。"
-},
-{
-  index: 4,
-  title: "步骤四",
-  description: "这里可以添加第四个步骤的详细描述。您可以根据需要修改这些内容，描述具体的流程和要点。"
-},
-{
-  index: 5,
-  title: "步骤五",
-  description: "这里可以添加第五个步骤的详细描述。您可以根据需要修改这些内容，描述具体的流程和要点。"
-},
-{
-  index: 6,
-  title: "步骤六",
-  description: "这里可以添加第六个步骤的详细描述。您可以根据需要修改这些内容，描述具体的流程和要点。"
-}
-];
+interface Props { items: { title: string; description: string }[] }
+const { items } = Astro.props;
 ---
 
-{
-  content.map((item) => {
-    return (
-      <AccordionItem
-        index={item.index}
-        title={item.title}
-        description={item.description}
-      />
-    );
-  })
-}
+{items.map((item, i) => <AccordionItem index={i + 1} title={item.title} description={item.description} />)}

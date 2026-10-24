@@ -3,4 +3,31 @@
   command = "npm run build"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
+
+# 旧 URL 兼容
+[[redirects]]
+  from = "/astro-blog/takebackyourlife-2"
+  to = "/blog/takebackyourlife"
+  status = 301
+
+[[redirects]]
+  from = "/astro-blog/:slug"
+  to = "/blog/:slug"
+  status = 301
+
+[[redirects]]
+  from = "/blog/mdfile/:slug"
+  to = "/blog/:slug"
+  status = 301
+
+[[redirects]]
+  from = "/fraud-detection"
+  to = "/fraud-prevention"
+  status = 301
+
+# 短网址：方便在 WhatsApp 里直接发
+[[redirects]]
+  from = "/hair"
+  to = "/stack/hair"
+  status = 301

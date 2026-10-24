@@ -1,35 +1,33 @@
 import siteData from "../data/siteData.json";
-import { slugify } from "./slugify";
+
+const person = {
+  "@type": "Person",
+  name: siteData.name,
+  url: siteData.url,
+  sameAs: siteData.socials.map((s) => s.url),
+};
 
 export default function jsonLDGenerator({ type, post, url }) {
-  // If the page has CMS data, use it.
-  if (type === "post") {
-    return `<script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": "${url}"
-        },
-        "headline": "${post.title}",
-        "description": "${post.description}",
-        "image": "${post.image.src}",
-        "author": {
-          "@type": "Person",
-          "name": "${post.author}",
-          "url": "/author/${slugify(post.author)}"
-        },
-        "datePublished": "${post.date}"
-      }
-    </script>`;
-  }
-  return `<script type="application/ld+json">
-      {
-      "@context": "https://schema.org/",
-      "@type": "WebSite",
-      "name": "${siteData.title}",
-      "url": "${import.meta.env.SITE}"
-      }
-    </script>`;
+  const data =
+    type === "post" && post
+      ? {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          mainEntityOfPage: { "@type": "WebPage", "@id": url },
+          headline: post.title,
+          description: post.summary,
+          author: person,
+          datePublished: new Date(post.pubDate).toISOString(),
+          keywords: post.tags,
+          inLanguage: "zh-CN",
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: siteData.title,
+          url: siteData.url,
+          inLanguage: "zh-CN",
+          author: person,
+        };
+  return `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 }

@@ -1,15 +1,66 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import AboutHero from "../components/sections/AboutHero.astro";
-import AboutContent from "../components/sections/AboutContent.astro";
-import Process from "../components/sections/Process.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import CtaCard from "../components/ui/CtaCard.astro";
+import { Image } from "astro:assets";
+import heroIllustration from "../assets/pics/hero.svg";
+
+const philosophy = [
+  { title: "注重基本面", text: "深入研究公司的财务状况、商业模式和竞争优势。" },
+  { title: "长期持有", text: "不追逐短期波动，与优秀的公司一起成长。" },
+  { title: "安全边际", text: "以低于内在价值的价格买入，给自己留出保护。" },
+];
 ---
 
-<MainLayout
-  title="关于 Spark - Spark Liang"
-  description="了解Spark Liang的故事，投资哲学和使命"
->
-  <AboutHero />
-  <AboutContent />
-  <Process />
+<MainLayout title="关于 Spark - Spark Liang" description="了解 Spark Liang 的故事、投资哲学和使命。">
+  <PageHero
+    eyebrow="关于 Spark"
+    title="不只是 YouTuber，更是<em>理财教育者</em>。"
+    lede="我是 Spark Liang。我做理财内容，是因为我相信每个人都值得拥有掌控自己财务未来的能力。"
+  />
+
+  <section class="sp-wrap sp-section" aria-labelledby="story-title">
+    <div class="sp-split">
+      <!-- TODO(spark): 换成真人照片（3:4 竖图） -->
+      <figure class="sp-photo-card sp-photo-card--illustration" style="aspect-ratio:3/4">
+        <Image src={heroIllustration} alt="" />
+      </figure>
+      <div class="sp-stack">
+        <p class="sp-eyebrow">我的故事</p>
+        <h2 class="sp-h2" id="story-title">为什么开始做理财视频？</h2>
+        <p class="sp-copy">
+          一切都源于一个简单的想法：金融知识不应该是少数人的特权。在自己的投资旅程中，我看到太多人因为缺乏正确的知识而陷入困境，甚至成为诈骗的受害者。
+        </p>
+        <p class="sp-copy">
+          于是我拿起相机，把复杂难懂的财经概念，用最平实、最易懂的方式分享出来。希望能帮更多人建立自信，掌控自己的财务未来。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="philosophy-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">投资哲学</p>
+      <h2 class="sp-h2" id="philosophy-title">投资不是赌博，是长期持有好公司。</h2>
+    </div>
+    <div class="sp-grid sp-grid--3">
+      {philosophy.map((p, i) => (
+        <article class="sp-card sp-card--pad">
+          <span class="sp-meta">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="sp-h3">{p.title}</h3>
+          <p class="sp-body">{p.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="sp-wrap sp-section" aria-labelledby="mission-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">我的使命</p>
+      <h2 class="sp-h2" id="mission-title">普及正确的理财观念，让每个人都能掌控自己的财务未来。</h2>
+      <p class="sp-copy">我希望这里不只是分享知识，更是一个积极、健康的学习社群。我们一起，在理财的路上走得更远、更稳。</p>
+    </div>
+  </section>
+
+  <CtaCard />
 </MainLayout>

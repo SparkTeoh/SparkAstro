@@ -1,8 +1,15 @@
 {
-  "title": "Positivus",
-  "description": "Positivus is a simple and minimalistic blog theme for Ghost. It is designed to be a perfect starting point for your blog project.",
+  "name": "Spark Liang",
+  "title": "Spark Liang 官方网站",
+  "description": "Spark Liang 官方网站：你的理财引路人。理财教育、价值投资、防诈骗指南。认准官方渠道，与我一起安全理财。",
+  "url": "https://sparkliang.com",
   "image": {
-    "src": "https://github.com/manulthanura/Positivus/raw/main/public/cover.png",
-    "alt": "Positivus"
-  }
+    "src": "/og-cover.png",
+    "alt": "Spark Liang 官方网站"
+  },
+  "socials": [
+    { "name": "Facebook", "handle": "sparkliang", "url": "https://www.facebook.com/sparkliang", "icon": "facebook" },
+    { "name": "Instagram", "handle": "@spark_liang", "url": "https://www.instagram.com/spark_liang/", "icon": "instagram" },
+    { "name": "YouTube", "handle": "@Mr18SparkLiang", "url": "https://www.youtube.com/@Mr18SparkLiang", "icon": "youtube" }
+  ]
 }

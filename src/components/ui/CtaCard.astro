@@ -1,0 +1,26 @@
+---
+import Button from "./Button.astro";
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  copy?: string;
+  cta?: string;
+  href?: string;
+}
+const {
+  eyebrow = "商业合作",
+  title = "有合作意向？",
+  copy = "课程合作、品牌合作、投资教育、媒体访谈。留下你的需求，我会在 3 个工作日内回复。",
+  cta = "填写合作表单",
+  href = "/contact#collab",
+} = Astro.props;
+---
+
+<section class="sp-wrap sp-cta" aria-label={eyebrow}>
+  <div class="sp-stack">
+    <p class="sp-eyebrow">{eyebrow}</p>
+    <h2 class="sp-h2" style="font-size:clamp(1.6rem,3.2vw,2.5rem)">{title}</h2>
+    <p class="sp-copy">{copy}</p>
+  </div>
+  <div><Button href={href}>{cta}</Button></div>
+</section>
