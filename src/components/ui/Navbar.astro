@@ -1,86 +1,61 @@
 ---
-import { Astronav } from "astro-navbar";
+import nav from "../../data/nav.json";
 
-const menuitems = [
-  { href: '/', label: '首页' },
-  { href: '/fraud-prevention', label: '防诈骗中心' },
-  { href: '/partners', label: '官方合作伙伴' },
-  { href: '/about', label: '关于 Spark' },
-  { href: '/blog', label: '内容中心' },
-  { href: '/contact', label: '联系我们' },
-  { href: '/fraud-detection', label: '诈骗检测工具' }
-];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const items = nav.map((item) => ({
+  ...item,
+  active: path === item.href || path.startsWith(item.href + "/"),
+}));
 ---
 
-<div class="mt-8">
-  <nav class="w-full top-0 left-0 z-50 fixed bg-background">
-    <div class="px-5 flex justify-center">
-      <div class="w-full max-w-[1280px] mx-auto">
-        <header class="flex flex-col lg:flex-row justify-between items-center h-16">
-        <Astronav>
-          <div class="flex w-full lg:w-auto items-center justify-between h-full">
-            <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-              <img src="/Logo.svg" class="h-14" alt="Logo" />
-            </a>
-            <div class="block lg:hidden">
-              <div id="menu-icon" class="w-8 h-8 text-black cursor-pointer">
-                <!-- Open (hamburger) icon -->
-                <svg id="open-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-8 h-8">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-                <!-- Close (X) icon -->
-                <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="w-8 h-8 hidden">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          
-        <nav class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0" id="menu-items">
-          <ul class="font-medium flex flex-col p-4 lg:p-0 mt-4 border rounded-lg lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0">
-            {menuitems.map((item) => (
-              <li>
-                <a 
-                  href={item.href} 
-                  class="mobile-nav-link block py-2 px-3 text-black rounded lg:bg-transparent lg:p-0"
-                  data-close-menu="true"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </Astronav>
-    </header>
-    </div>
+<header class="sp-nav-wrapper">
+  <div class="sp-wrap sp-nav">
+    <a class="sp-brand" href="/" aria-label="Spark Liang 首页">
+      <img src="/Logo.svg" alt="" width="1413" height="649" />
+      <span class="sr-only">Spark Liang</span>
+    </a>
+
+    <nav class="sp-nav__links" aria-label="主导航">
+      {items.map((item) => (
+        <a href={item.href} aria-current={item.active ? "page" : undefined}>{item.label}</a>
+      ))}
+    </nav>
+
+    <button class="sp-menu-btn" type="button" aria-expanded="false" aria-controls="sp-menu" aria-label="打开菜单">
+      <span>MENU</span>
+      <span class="sp-menu-btn__icon" aria-hidden="true"><span></span><span></span></span>
+    </button>
   </div>
+</header>
+
+<div id="sp-menu" class="sp-menu-overlay" aria-hidden="true">
+  <nav class="sp-wrap" aria-label="移动端导航">
+    <ul>
+      <li style="--d: 0s"><a href="/" aria-current={path === "/" ? "page" : undefined}>首页</a></li>
+      {items.map((item, i) => (
+        <li style={`--d: ${(i + 1) * 0.06}s`}>
+          <a href={item.href} aria-current={item.active ? "page" : undefined}>{item.label}</a>
+        </li>
+      ))}
+    </ul>
   </nav>
 </div>
 
-<script is:inline>
-  // Get references to the menu icon, open/close icons, and menu items
-  const menuIcon = document.getElementById('menu-icon');
-  const openIcon = document.getElementById('open-icon');
-  const closeIcon = document.getElementById('close-icon');
-  const menuItems = document.getElementById('menu-items');
-  const closeMenuItems = document.querySelectorAll('[data-close-menu="true"]');  // Select all items with the 'data-close-menu' attribute
+<script>
+  const btn = document.querySelector<HTMLButtonElement>(".sp-menu-btn");
+  const overlay = document.querySelector<HTMLElement>(".sp-menu-overlay");
 
-  // Toggle the menu visibility and icon when the menu icon is clicked
-  menuIcon.addEventListener('click', () => {
-    menuItems.classList.toggle('hidden');  // Toggle the 'hidden' class on the menu
+  function setOpen(open: boolean) {
+    overlay?.classList.toggle("is-open", open);
+    overlay?.setAttribute("aria-hidden", String(!open));
+    btn?.setAttribute("aria-expanded", String(open));
+    btn?.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+    document.body.classList.toggle("sp-menu-locked", open);
+  }
 
-    // Toggle between open and close icons
-    openIcon.classList.toggle('hidden');
-    closeIcon.classList.toggle('hidden');
-  });
-
-  // Close the menu when any item is clicked
-  closeMenuItems.forEach(item => {
-    item.addEventListener('click', () => {
-      menuItems.classList.add('hidden');  // Add the 'hidden' class to hide the menu
-      openIcon.classList.remove('hidden');  // Show the open (hamburger) icon
-      closeIcon.classList.add('hidden');  // Hide the close (X) icon
-    });
+  btn?.addEventListener("click", () => setOpen(!overlay?.classList.contains("is-open")));
+  overlay?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
   });
 </script>

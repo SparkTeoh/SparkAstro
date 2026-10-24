@@ -1,0 +1,11 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import PageHero from "../../components/ui/PageHero.astro";
+import Button from "../../components/ui/Button.astro";
+---
+
+<MainLayout title="已收到你的申请 - Spark Liang" description="感谢你的合作申请，我会尽快与你联系。" robots={true}>
+  <PageHero eyebrow="已收到" title="谢谢你的合作申请！" lede="我已经收到你的信息，会在 3 个工作日内回复。">
+    <div class="sp-actions"><Button href="/">回到首页</Button></div>
+  </PageHero>
+</MainLayout>

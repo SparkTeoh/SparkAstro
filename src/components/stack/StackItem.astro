@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import ShareButtons from "./ShareButtons.astro";
+
+type Item = CollectionEntry<"stacks">["data"]["groups"][number]["items"][number];
+interface Props { item: Item; stackSlug: string; stackTitle: string }
+const { item, stackSlug, stackTitle } = Astro.props;
+---
+
+<article id={item.id} class="sp-card sp-stack-item">
+  <div class="sp-stack-item__media">
+    {item.image ? (
+      <Image src={item.image} alt={item.name} widths={[400, 800]} sizes="(max-width: 720px) 100vw, 36rem" />
+    ) : (
+      <!-- TODO(spark): 放产品照片到 src/content/stacks/<slug>/，并在 YAML 里加 image -->
+      <span class="sp-stack-item__placeholder" aria-hidden="true">{item.name.replace(/\s.*$/, "")}</span>
+    )}
+  </div>
+  <div class="sp-card__body">
+    <div class="sp-stack-item__head">
+      <span class={`sp-status sp-status--${item.status}`}>{item.status}</span>
+      {item.alias && <span class="sp-meta">{item.alias}</span>}
+    </div>
+    <h3 class="sp-h3">{item.name}</h3>
+    <p class="sp-body" style="color:var(--sp-ink);font-weight:500">{item.role}</p>
+    <dl class="sp-dl">
+      <div><dt>为什么选这一款</dt><dd>{item.why}</dd></div>
+      <div><dt>我怎么用</dt><dd>{item.how}</dd></div>
+      {(item.price || item.since) && (
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+          {item.price && <div><dt>价位</dt><dd>{item.price}</dd></div>}
+          {item.since && <div><dt>用了多久</dt><dd>{item.since}</dd></div>}
+        </div>
+      )}
+    </dl>
+    <div class="sp-stack-item__foot">
+      {item.link && (
+        <a class="sp-icon-btn sp-icon-btn--accent" href={item.link} target="_blank" rel={item.affiliate ? "noopener noreferrer sponsored" : "noopener noreferrer"}>
+          去哪里买 ↗
+        </a>
+      )}
+      {item.link && item.affiliate && <span class="sp-meta" title="通过这个链接购买，我会获得佣金，你的价格不变">佣金链接</span>}
+      <ShareButtons path={`/stack/${stackSlug}#${item.id}`} title={`${stackTitle}：${item.name}`} />
+    </div>
+  </div>
+</article>

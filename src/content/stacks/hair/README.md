@@ -1,0 +1,18 @@
+# 生发清单的产品照片
+
+把照片放在这个文件夹，然后在 `../hair.yaml` 对应产品下加一行，例如：
+
+    image: ./hair/nizoral.jpg
+
+建议：
+- 用你自己拍的实物照片（手机拍即可），比官方图更有说服力，也不涉及品牌图片版权。
+- 正方形或 4:3，长边 1200px 左右，jpg 或 webp。
+- 白色或浅色背景，产品放中间。
+
+建议文件名：
+- topical-finasteride.jpg
+- minoxidil-foam.jpg
+- kerastase-shampoo.jpg
+- nizoral-shampoo.jpg
+- lllt-helmet.jpg
+- derma-stamp.jpg

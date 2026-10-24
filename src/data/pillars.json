@@ -1,0 +1,8 @@
+[
+  { "title": "理财教育", "sub": "从零建立观念", "href": "/blog?search=理财", "icon": "book" },
+  { "title": "价值投资", "sub": "长期持有好公司", "href": "/blog?search=投资", "icon": "chart" },
+  { "title": "防诈骗指南", "sub": "认准官方渠道", "href": "/fraud-prevention", "icon": "shield" },
+  { "title": "预算与现金流", "sub": "先管好每一块钱", "href": "/partners", "icon": "wallet" },
+  { "title": "心态与成长", "sub": "搞定自己再谈钱", "href": "/blog?search=成长", "icon": "spark" },
+  { "title": "视频频道", "sub": "YouTube 深度教学", "href": "https://www.youtube.com/@Mr18SparkLiang", "icon": "play", "external": true }
+]

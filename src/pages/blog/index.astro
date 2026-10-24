@@ -1,0 +1,71 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import PageHero from "../../components/ui/PageHero.astro";
+import ContentCard from "../../components/ui/ContentCard.astro";
+import { getAllContent } from "../../lib/content";
+
+const all = await getAllContent();
+const tags = [...new Set(all.flatMap((i) => i.tags))].slice(0, 12);
+---
+
+<MainLayout title="内容中心 - Spark Liang" description="Spark Liang 的文章与视频：理财教育、价值投资、防诈骗指南与个人成长。">
+  <PageHero
+    eyebrow="内容中心"
+    title="文章与视频"
+    lede="关于理财、投资，以及如何更好地掌控自己的人生。"
+  >
+    <form class="blog-search" role="search" onsubmit="return false">
+      <label for="blog-search-input" class="sr-only">搜索内容</label>
+      <input id="blog-search-input" class="sp-input" type="search" placeholder="搜索标题、摘要或标签…" />
+    </form>
+    <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+      {tags.map((t) => <button type="button" class="sp-tag blog-tag" data-tag={t} style="cursor:pointer">{t}</button>)}
+    </div>
+    <p id="blog-status" class="sp-meta" hidden></p>
+  </PageHero>
+
+  <section class="sp-wrap sp-section sp-section--alt" aria-label="全部内容">
+    <div class="sp-grid sp-grid--2">
+      {all.map((item) => <ContentCard item={item} />)}
+    </div>
+    <p id="blog-empty" class="sp-copy" hidden>没有找到相关内容，换个关键词试试。</p>
+  </section>
+</MainLayout>
+
+<style>
+  .blog-search { max-width: 36rem; margin-top: 0.5rem; }
+  .blog-tag:hover, .blog-tag[aria-pressed="true"] { background: var(--sp-accent); border-color: var(--sp-accent); color: var(--sp-on-accent); }
+</style>
+
+<script>
+  const input = document.getElementById("blog-search-input") as HTMLInputElement;
+  const status = document.getElementById("blog-status")!;
+  const empty = document.getElementById("blog-empty")!;
+  const items = Array.from(document.querySelectorAll<HTMLElement>(".blog-item"));
+  const tags = Array.from(document.querySelectorAll<HTMLButtonElement>(".blog-tag"));
+
+  function apply(raw: string) {
+    const q = raw.trim().toLowerCase();
+    let shown = 0;
+    for (const el of items) {
+      const hit = !q || [el.dataset.title, el.dataset.summary, el.dataset.tags].some((s) => s?.includes(q));
+      el.hidden = !hit;
+      if (hit) shown++;
+    }
+    tags.forEach((t) => t.setAttribute("aria-pressed", String(t.dataset.tag?.toLowerCase() === q)));
+    status.hidden = !q;
+    status.textContent = q ? `“${raw.trim()}”：${shown} 个结果` : "";
+    empty.hidden = shown > 0;
+    const url = new URL(location.href);
+    q ? url.searchParams.set("search", raw.trim()) : url.searchParams.delete("search");
+    history.replaceState(null, "", url);
+  }
+
+  input.addEventListener("input", () => apply(input.value));
+  tags.forEach((t) => t.addEventListener("click", () => {
+    input.value = input.value === t.dataset.tag ? "" : t.dataset.tag ?? "";
+    apply(input.value);
+  }));
+  const initial = new URLSearchParams(location.search).get("search");
+  if (initial) { input.value = initial; apply(initial); }
+</script>

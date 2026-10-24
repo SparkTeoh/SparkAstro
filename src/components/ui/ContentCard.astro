@@ -1,0 +1,21 @@
+---
+import type { ContentItem } from "../../lib/content";
+interface Props { item: ContentItem }
+const { item } = Astro.props;
+const date = item.pubDate.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<article
+  class="sp-card sp-card--pad sp-card--link blog-item"
+  data-title={item.title.toLowerCase()}
+  data-summary={item.summary.toLowerCase()}
+  data-tags={item.tags.join(" ").toLowerCase()}
+>
+  <p class="sp-eyebrow">{item.type}{item.featured ? " · 推荐" : ""}</p>
+  <h3 class="sp-h3">
+    <a class="sp-card__stretch" href={item.link} style="color:inherit;text-decoration:none"
+      target={item.external ? "_blank" : undefined} rel={item.external ? "noopener noreferrer" : undefined}>{item.title}</a>
+  </h3>
+  <p class="sp-body" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">{item.summary}</p>
+  <p class="sp-meta">{date} · {item.kind === "youtube" ? "观看视频" : "阅读全文"} →</p>
+</article>

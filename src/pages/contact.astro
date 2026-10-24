@@ -1,13 +1,40 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import ContactSection from "../components/sections/Contact.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import BusinessForm from "../components/ui/BusinessForm.astro";
+import Button from "../components/ui/Button.astro";
+import Icon from "../components/ui/Icon.astro";
+import siteData from "../data/siteData.json";
+
+const ig = siteData.socials.find((s) => s.icon === "instagram")!;
 ---
 
-<MainLayout 
-  title="联系我 - Spark官方网站"
-  description="通过Instagram与Spark聊天，或填写商业合作表单。多种方式联系Spark，获得专业的理财指导和合作机会。"
->
-  <main class="pt-20">
-    <ContactSection />
-  </main>
-</MainLayout> 
+<MainLayout title="联系我 - Spark Liang" description="通过 Instagram 与 Spark 聊天，或填写商业合作表单。">
+  <PageHero
+    eyebrow="联系我"
+    title="想聊理财，还是谈合作？"
+    lede="理财问题来 Instagram 找我。课程、品牌、媒体合作，请填写下面的表单。"
+  />
+
+  <section class="sp-wrap sp-section sp-section--alt" aria-label="联系方式">
+    <div class="sp-split" style="align-items:start">
+      <article class="sp-card">
+        <div class="sp-card__slot sp-card__slot--ink"><Icon name="instagram" /></div>
+        <div class="sp-card__body">
+          <span class="sp-meta">Instagram · 最快回复</span>
+          <h2 class="sp-h3">想聊聊？找我聊天！</h2>
+          <p class="sp-body">有理财问题、想了解更多投资知识，直接在 Instagram 上私信我。</p>
+          <div style="margin-top:0.5rem"><Button href={ig.url} variant="ink" external>去 Instagram 聊天 ↗</Button></div>
+          <p class="sp-meta">{ig.handle}</p>
+        </div>
+      </article>
+
+      <article id="collab" class="sp-card sp-card--pad-lg sp-card--heavy">
+        <p class="sp-eyebrow">商业合作</p>
+        <h2 class="sp-h3">填写合作需求</h2>
+        <p class="sp-body">我会在 3 个工作日内回复。</p>
+        <BusinessForm />
+      </article>
+    </div>
+  </section>
+</MainLayout>

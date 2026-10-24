@@ -1,11 +1,34 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import PartnersSection from "../components/sections/Partners.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import PartnerCard from "../components/ui/PartnerCard.astro";
+import CtaCard from "../components/ui/CtaCard.astro";
+import partners from "../data/partners.json";
 ---
 
 <MainLayout
   title="官方合作伙伴 - Spark Liang"
-  description="Spark Liang的官方合作伙伴，包括价值思维学院和MMC Financial等专业机构"
+  description="Spark Liang 的官方合作伙伴：价值思维学院与 MMC Financial。除此之外任何声称合作的均为假冒。"
 >
-  <PartnersSection />
-</MainLayout> 
+  <PageHero
+    eyebrow="官方合作伙伴"
+    title="我只和这<em>两家</em>机构合作。"
+    lede="为了提供更系统、更深入的财经教育，我只与经过严格筛选的机构合作。除了下面两家，任何声称与我合作的个人或机构都是假冒。"
+  />
+
+  <section class="sp-wrap sp-section sp-section--alt" aria-label="合作伙伴列表">
+    <div class="sp-grid sp-grid--2">
+      {partners.map((p) => <PartnerCard {...p} />)}
+    </div>
+  </section>
+
+  <section class="sp-wrap sp-section" aria-labelledby="why-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">为什么是这两家</p>
+      <h2 class="sp-h2" id="why-title">我只推荐自己长期参与、看得到学员反馈的机构。</h2>
+      <p class="sp-copy">他们具备专业资质、良好声誉和丰富的行业经验，和我一样致力于提供可靠的财经教育。</p>
+    </div>
+  </section>
+
+  <CtaCard />
+</MainLayout>

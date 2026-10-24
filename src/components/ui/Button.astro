@@ -1,0 +1,22 @@
+---
+/**
+ * 按钮。primary = 品牌橙（每屏最多两个）；ghost = 白底描边；ink = 靛蓝实底。
+ * 传 href 渲染 <a>，否则渲染 <button>。
+ */
+interface Props {
+  href?: string;
+  variant?: "primary" | "ghost" | "ink";
+  type?: "button" | "submit";
+  block?: boolean;
+  external?: boolean;
+  class?: string;
+}
+const { href, variant = "primary", type = "button", block = false, external = false, class: extra = "" } = Astro.props;
+const cls = ["sp-button", `sp-button--${variant}`, block && "sp-button--block", extra].filter(Boolean).join(" ");
+---
+
+{href ? (
+  <a href={href} class={cls} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}><slot /></a>
+) : (
+  <button type={type} class={cls}><slot /></button>
+)}

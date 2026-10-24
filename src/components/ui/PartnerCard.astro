@@ -1,0 +1,26 @@
+---
+import Button from "./Button.astro";
+interface Props {
+  name: string;
+  initial: string;
+  tagline: string;
+  url: string;
+  highlights: string[];
+  recommended?: boolean;
+  compact?: boolean;
+}
+const { name, initial, tagline, url, highlights, recommended = false, compact = false } = Astro.props;
+---
+
+<article class="sp-card">
+  <div class="sp-card__slot sp-card__slot--ink" style="aspect-ratio:auto;padding:2rem;justify-items:start;gap:1rem">
+    <span style="display:grid;place-items:center;width:3.5rem;height:3.5rem;border:1.5px solid #fff;border-radius:50%;background:var(--sp-accent);color:var(--sp-on-accent);font-weight:900;font-size:1.4rem;box-shadow:4px 4px 0 #fff">{initial}</span>
+    {recommended && <span class="sp-meta" style="color:#fff">推荐合作</span>}
+  </div>
+  <div class="sp-card__body">
+    <h3 class="sp-h3">{name}</h3>
+    <p class="sp-body">{tagline}</p>
+    {!compact && <ul class="sp-check">{highlights.map((h) => <li>{h}</li>)}</ul>}
+    <div style="margin-top:0.5rem"><Button href={url} variant="ghost" external>访问官方网站 ↗</Button></div>
+  </div>
+</article>

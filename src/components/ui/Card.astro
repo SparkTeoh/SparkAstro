@@ -1,15 +1,8 @@
 ---
-const { isUnderline } = Astro.props;
+// 通用卡片：描边 + 实色偏移阴影。isUnderline 保留给旧文章，含义同默认。
+const { class: extra = "" } = Astro.props;
 ---
 
-{
-  isUnderline ? (
-    <div class="rounded-[45px] border border-dark shadow-[0px_5px_0px_#191a23]">
-      <slot />
-    </div>
-  ) : (
-    <div class="rounded-[45px]">
-      <slot />
-    </div>
-  )
-}
+<div class={`sp-card ${extra}`}>
+  <slot />
+</div>

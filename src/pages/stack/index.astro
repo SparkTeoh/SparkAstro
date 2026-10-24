@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import PageHero from "../../components/ui/PageHero.astro";
+
+const stacks = (await getCollection("stacks", (s) => !s.data.draft)).sort((a, b) => a.data.order - b.data.order);
+const upcoming = ["Tech", "健康", "穿搭", "皮肤管理"].filter((n) => !stacks.some((s) => s.data.short === n));
+---
+
+<MainLayout
+  title="我的清单 - Spark Liang"
+  description="Spark Liang 在用的方法和产品：生发、皮肤管理、健康、穿搭、Tech。每一项都写清楚为什么选、怎么用。"
+>
+  <PageHero
+    eyebrow="我的清单"
+    title="我在用的，<em>都在这里</em>。"
+    lede="很多人问我用什么、怎么用。我把答案整理成清单，每一项都写清楚为什么选、怎么用、多少钱。直接收藏，或者把链接转给问你的朋友。"
+  />
+
+  <section class="sp-wrap sp-section sp-section--alt" aria-label="全部清单">
+    <div class="sp-grid sp-grid--3">
+      {stacks.map((s) => {
+        const count = s.data.groups.reduce((n, g) => n + g.items.length, 0);
+        return (
+          <article class="sp-card sp-card--link">
+            <div class="sp-card__slot sp-card__slot--ink" style="aspect-ratio:16/9">
+              <span style="font-family:var(--sp-font-display);font-weight:900;font-size:clamp(2.2rem,5vw,3.2rem);color:#fff">{s.data.short}</span>
+            </div>
+            <div class="sp-card__body">
+              <span class="sp-meta">{count} 项 · 更新于 {s.data.updated.toLocaleDateString("zh-CN")}</span>
+              <h2 class="sp-h3"><a class="sp-card__stretch" href={`/stack/${s.id}`} style="color:inherit;text-decoration:none">{s.data.title}</a></h2>
+              <p class="sp-body">{s.data.tagline}</p>
+            </div>
+          </article>
+        );
+      })}
+      {upcoming.map((name) => (
+        <article class="sp-card" style="opacity:0.55;box-shadow:none;border-style:dashed">
+          <div class="sp-card__slot" style="aspect-ratio:16/9">
+            <span style="font-family:var(--sp-font-display);font-weight:900;font-size:clamp(2.2rem,5vw,3.2rem);color:var(--sp-soft)">{name}</span>
+          </div>
+          <div class="sp-card__body">
+            <span class="sp-meta">整理中</span>
+            <h2 class="sp-h3">我的{name}清单</h2>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</MainLayout>

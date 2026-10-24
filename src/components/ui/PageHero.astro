@@ -1,0 +1,19 @@
+---
+// 内页单栏 hero
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  danger?: boolean;
+}
+const { eyebrow, title, lede, danger = false } = Astro.props;
+---
+
+<section class="sp-wrap sp-hero sp-hero--single">
+  <div class="sp-stack">
+    {eyebrow && <p class={`sp-eyebrow ${danger ? "sp-eyebrow--danger" : ""}`}>{eyebrow}</p>}
+    <h1 class="sp-h1" set:html={title} />
+    {lede && <p class="sp-lede">{lede}</p>}
+    <slot />
+  </div>
+</section>
