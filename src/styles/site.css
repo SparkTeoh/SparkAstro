@@ -1011,7 +1011,7 @@ body.sp-menu-locked {
 .sp-stack-item__media {
   display: grid;
   place-items: center;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   border-bottom: 1.5px solid var(--sp-ink);
   background:
     linear-gradient(135deg, transparent 0 49.7%, var(--sp-line) 50%, transparent 50.3%),
@@ -1019,14 +1019,24 @@ body.sp-menu-locked {
   overflow: hidden;
 }
 
-.sp-stack-item__media:has(img) { background: #fff; }
+/* 有产品照片时：白底 + 内边距在容器上，图片自适应、绝不裁切 */
+.sp-stack-item__media:has(img) {
+  background: #fff;
+  padding: 1.25rem;
+  box-sizing: border-box;
+}
 
 .sp-stack-item__media img {
-  width: 100%;
-  height: 100%;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
   object-fit: contain;
-  padding: 0.75rem;
-  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 .sp-stack-item__placeholder {
@@ -1070,7 +1080,7 @@ body.sp-menu-locked {
 @media (max-width: 720px) {
   .sp-grid--2 > .sp-stack-item:only-child { grid-template-columns: 1fr; }
   .sp-grid--2 > .sp-stack-item:only-child .sp-stack-item__media {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     min-height: 0;
     border-right: 0;
     border-bottom: 1.5px solid var(--sp-ink);
