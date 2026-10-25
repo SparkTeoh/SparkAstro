@@ -1,0 +1,179 @@
+# 我的饮食与保健品清单 → sparkliang.com/stack/diet（短网址 /diet）
+# 结构同 hair.yaml / skincare.yaml，但这份比较简单：早餐代餐 → 早晨保健品 → 晚间保健品 → 执行纪律 → 常见问题
+# 产品照片放 src/content/stacks/diet/，在对应产品下加 image: ./diet/xxx.jpg
+
+title: 我的饮食与保健品清单
+short: 饮食保健品
+tagline: 早餐一杯奶昔搞定，保健品分早晚两批，每天固定吃，不折腾。
+intro: 这份清单记录的是我每天实际在吃的东西：早餐是一杯用蛋白粉和代餐粉冲的奶昔，早上吃一批保健品，晚上再吃一批。我不是营养师，也不是医生，这里只写我吃什么、怎么吃、为什么挑这一款，不讲功效。你可以参考，但不要照抄。
+updated: 2026-10-25
+order: 3
+medical: true
+safety:
+  - 保健品不是药物，不能治病，也不能替代均衡饮食、运动、睡眠和正规医疗。
+  - 怀孕、哺乳、有慢性病，或正在服用任何药物的人，开始吃任何保健品之前，先问医生或药剂师。
+  - 我吃的剂量都按包装上的建议量，没有自己加码。剂量请以你买到的产品包装为准。
+  - 这是我按自己的情况配的方案，不是医疗建议。吃了之后有任何不舒服，就停下来，去看医生。
+priceNote: 价格是 2026 年 10 月我实际购买的订阅价，会随促销和购买渠道变化，以实际购买为准。没写价格的，是我一时查不到确切价钱，不乱写。
+relatedTag: 健康
+
+groups:
+  - id: breakfast
+    name: 第一组：早餐代餐
+    metaphor: 一杯搞定
+    explain:
+      - 我的早餐就是一杯奶昔：Soluxe 蛋白粉加 No Nasties Complete Meal，加水或牛奶摇匀。两分钟做好，省掉早上想吃什么的时间。
+    mine: 我选无味、无糖的版本，这样蛋白粉的味道才是主角，也不会两种甜味叠在一起。
+    fit: 早上没时间、又不想随便吃面包或不吃早餐的人。
+    skip: 本来就有时间好好吃早餐的人，不需要特地改成代餐。
+    items:
+      - id: no-nasties-complete-meal
+        name: NO NASTIES Complete Meal（Unflavoured & unsweetened）
+        alias: 早餐底
+        status: 必备
+        icon: bottle
+        role: 早餐奶昔的主体，负责把一餐的分量补上。
+        why: 我早上固定喝的代餐粉。选无味、无糖的版本，方便和蛋白粉混在一起。
+        how: 每天早上按包装建议量，和一份 Soluxe 蛋白粉一起加水或牛奶摇匀喝。
+        price: RM 269.10（3×800g，60 天订阅）
+        image: ./diet/no-nasties-complete-meal.jpg
+        link: https://www.nonasties.shop/products/complete-meal-checkout
+      - id: soluxe-protein
+        name: Soluxe 蛋白粉
+        alias: 早餐味道
+        status: 必备
+        icon: pump
+        role: 早餐奶昔里的蛋白质来源，也决定了奶昔的味道。
+        why: 我现在早上固定用的蛋白粉，和无味的 Complete Meal 搭配刚好。
+        how: 每天早上一份，和 Complete Meal 一起冲。口味以实际购买为准。
+        link: https://soluxeshop.com/
+
+  - id: morning
+    name: 第二组：早晨保健品
+    metaphor: 早上一批
+    explain:
+      - 这一批我都是早上和早餐一起吃，一次吃完，不用整天记着。
+      - 每一样都按包装上的建议量吃，没有自己加码。
+    mine: 我把所有白天吃的保健品集中在早餐这一餐，粉剂直接加进奶昔里，胶囊和药片配水吞，固定成一个流程就不会漏。
+    fit: 想把保健品固定成一个早上流程、不想分散在一天里吃的人。
+    skip: 正在服药、怀孕、哺乳或有慢性病的人，哪一样该吃、哪一样不该吃，先问医生。
+    items:
+      - id: lennox-collagen
+        name: Lennox Collagen Powder
+        status: 必备
+        icon: bottle
+        role: 早上加进奶昔里的胶原蛋白粉。
+        why: 我早上固定吃的胶原蛋白粉，粉剂直接加进奶昔，不用另外吞。
+        how: 每天早上 1 scoop（10g），直接加进早餐奶昔里摇匀。
+      - id: no-nasties-just-creatine
+        name: NO NASTIES Just Creatine（Creatine Monohydrate）
+        status: 必备
+        icon: bottle
+        role: 早上加进奶昔里的肌酸。
+        why: 成分只有 creatine monohydrate，无味，加进奶昔里喝不出来。
+        how: 每天早上 5g，直接加进早餐奶昔里摇匀。
+        price: RM 73.51（1 pouch，60 天订阅）
+        image: ./diet/no-nasties-just-creatine.jpg
+        link: https://www.nonasties.shop/
+      - id: biofunction-nmn
+        name: Biofunction NMN 咀嚼片
+        status: 必备
+        icon: bottle
+        role: 早上吃的 NMN。
+        why: 我现在吃的是这一款咀嚼片，不用配水。
+        how: 每天早上 1–2 片，按包装建议量。
+      - id: vitahealth-vitamin-c-zinc
+        name: VitaHealth Vitamin C with Zinc+
+        status: 必备
+        icon: bottle
+        role: 早上吃的维生素 C 加锌。
+        why: 维生素 C 和锌做在一片里，少吞一粒。
+        how: 每天早上 1 片，和早餐一起吃。
+      - id: omega-3
+        name: 高纯度 Omega-3 鱼油
+        status: 必备
+        icon: bottle
+        role: 早上吃的鱼油。
+        why: 我挑的是纯度比较高的鱼油胶囊。这里先只写品类。
+        how: 每天早上 1–2 粒，和早餐一起吃，按包装建议量。
+      - id: coenzyme-plus-coq10
+        name: Coenzyme Plus CoQ10 + L-carnitine
+        status: 必备
+        icon: bottle
+        role: 早上吃的 CoQ10 加左旋肉碱。
+        why: 两种成分做在一粒里。
+        how: 每天早上 1 粒，和早餐一起吃。
+      - id: multivitamin
+        name: 综合维生素 / 矿物质
+        status: 必备
+        icon: bottle
+        role: 早上吃的综合维生素。
+        why: 一粒把基础的维生素和矿物质补齐。这里先只写品类。
+        how: 每天早上 1 粒，和早餐一起吃。
+      - id: eye-formula
+        name: 护眼复合配方
+        status: 必备
+        icon: bottle
+        role: 早上吃的护眼配方。
+        why: 这是我早上固定吃的一粒。这里先只写品类。
+        how: 每天早上 1 粒，和早餐一起吃。
+      - id: duo-leaf-vitamin-d3
+        name: DUO LEAF Vitamin D3 1000 IU
+        status: 必备
+        icon: bottle
+        role: 早上吃的维生素 D3。
+        why: 我现在吃的这一款是 1000 IU，吃完这瓶打算换成下面那款 K2 + D3。
+        how: 每天早上 1 粒，和早餐一起吃。
+      - id: vitahealth-k2-d3
+        name: VitaHealth K2 + D3
+        status: 计划入手
+        icon: bottle
+        role: 之后用来接替 DUO LEAF D3 的维生素 D3。
+        why: 想把 K2 和 D3 换成做在一粒里的版本。等现在这瓶 D3 吃完再换，换了会更新这一页。
+        how: 还没开始吃。到时按包装建议量，每天早上 1 粒。
+
+  - id: evening
+    name: 第三组：晚间保健品
+    metaphor: 晚上一批
+    explain:
+      - 晚上只有两样：晚饭后一样，睡前一样。
+    mine: 我把镁放在睡前约 1 小时吃，护肝配方放在晚饭后吃，这是我自己固定下来的时间，方便记。
+    fit: 想把晚上的保健品也固定成流程的人。
+    skip: 正在服药或有肝肾相关问题的人，先问医生再决定要不要吃。
+    items:
+      - id: biofizz-magnesium
+        name: BiOFIZZ Magnesium Bisglycinate
+        status: 必备
+        icon: bottle
+        role: 睡前吃的镁。
+        why: 我现在吃的镁是 bisglycinate 这个形态，这一款是胶囊，方便。
+        how: 睡前约 1 小时吃 2 粒，配水。
+      - id: liver-formula
+        name: 护肝复合配方
+        status: 必备
+        icon: bottle
+        role: 晚饭后吃的护肝配方。
+        why: 我晚上固定吃的一样。这里先只写品类。
+        how: 晚饭后 2 粒，配水，按包装建议量。
+
+principles:
+  - title: 早餐一杯搞定
+    text: Soluxe 蛋白粉加 No Nasties Complete Meal，再把胶原蛋白粉和肌酸一起倒进去摇匀。粉剂全部在这一杯里解决。
+  - title: 保健品分早晚两批
+    text: 白天的一批全部跟早餐一起吃，晚上只有晚饭后的护肝配方和睡前的镁。固定成两个时间点，就不会漏。
+  - title: 按包装剂量，不加码
+    text: 每一样都照包装上的建议量吃。多吃不等于更好，保健品也不是药。
+  - title: 先问医生，再照抄
+    text: 这是我自己的方案。怀孕、哺乳、有慢性病或正在服药的人，先问医生，不要直接照抄。
+
+faq:
+  - title: 为什么选无味无糖的 Complete Meal？
+    description: 因为我是和 Soluxe 蛋白粉混在一起喝的。Complete Meal 没有味道，奶昔的味道就由蛋白粉决定，也不会两种甜味叠在一起。
+  - title: 为什么有些产品只写品类、没写品牌？
+    description: 像鱼油、综合维生素、护眼和护肝配方，这里先只写品类和用量，不乱推荐具体品牌。
+  - title: 为什么价格只写了两样？
+    description: 这两样是我订阅购买、价钱确定的。其他的我一时查不到确切价钱，宁愿不写，也不乱写。
+  - title: 维生素 D3 为什么要换？
+    description: 现在吃的是 DUO LEAF 1000 IU，之后打算换成 VitaHealth K2 + D3，把两样做在一粒里。等这瓶吃完再换，换了会更新这一页。
+  - title: 这些可以直接照抄吗？
+    description: 不建议。这是我按自己的情况配的，不是医疗建议。保健品不能替代饮食和医疗，怀孕、哺乳、有慢性病或正在服药的人，先问医生。
