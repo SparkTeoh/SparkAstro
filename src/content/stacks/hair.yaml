@@ -6,7 +6,7 @@
 
 title: 我的生发清单
 short: 生发
-tagline: 先搞懂为什么会掉，再决定用什么。我的方案分四层。
+tagline: 先搞懂为什么会掉，再决定用什么。前四层在家做，第五层去诊所。
 intro: 很多人问我头发怎么保住、怎么长回来。与其直接丢一串产品给你，不如先把原理讲清楚：你看懂了，就知道哪些要跟、哪些不用。
 updated: 2026-10-24
 order: 1
@@ -17,6 +17,8 @@ safety:
   - 怀孕或可能怀孕的女性不要接触 finasteride。
   - minoxidil、ketoconazole 请按说明书使用。头皮出现持续刺痛、红肿或脱屑，先停用并咨询医生。
   - 微针有感染风险，工具必须严格消毒，头皮有伤口或发炎时不要做。
+  - 医美疗程请找有执照的医生和诊所，问清楚用的是什么成分、产品有没有注册。
+priceNote: 参考价是 2026 年 10 月在网上查到的大概价格，会随促销和购买渠道变化，以实际购买为准。
 relatedTag: 生发
 
 science:
@@ -78,6 +80,8 @@ groups:
         name: 外用 finasteride 溶液 0.1%
         alias: The Blocker · 靶向阻断
         status: 必备
+        icon: dropper
+        price: 需处方，价格看诊所或药房
         role: 第一层。减少头皮的 DHT，让毛囊不再被缩小。
         why: 纯水或酒精基底，干得快、不油腻，可以精准滴在需要的区域。
         how: 早上干发时滴在发际线和头顶，等 2 分钟完全干透，再上第二层。
@@ -107,6 +111,8 @@ groups:
         name: Mandi 5% minoxidil 泡沫
         alias: The Accelerator · 重火促生
         status: 必备
+        icon: foam
+        price: 约 RM 230–300（3 瓶装，约 3 个月用量；按中国电商售价换算）
         role: 第二层。延长生长期，让头发长得更快、更粗。
         why: 不含 propylene glycol，秒干、哑光，白天出门看不出来。
         how: finasteride 干透后涂上，涂完马上洗手，避免碰到脸。
@@ -125,6 +131,8 @@ groups:
         name: Kérastase 双重功能洗发水
         alias: 常态控油驻防
         status: 可选
+        icon: shampoo
+        price: 约 RM 120–160（250ml；按海外售价换算）
         role: 日常控油，洗掉白天的药物残留，让发根恢复空气感。
         why: 我是油头，需要控油；它控油又不会洗得太干，可以天天用。
         how: 周一、三、四、六、日晚上用，洗完彻底吹干。
@@ -132,6 +140,8 @@ groups:
         name: Nizoral 2% ketoconazole 洗发水
         alias: 战时灭火杀菌
         status: 可选
+        icon: shampoo
+        price: 约 RM 48–64（100ml，马来西亚网上药房）
         role: 抑制 Malassezia，控制头皮发炎、头屑和长痘。
         why: 单用 Kérastase 头皮还是会长痘，ketoconazole 专门针对 Malassezia，一周两次就够。
         how: 周二、周五晚上用。抹开后停留 3–5 分钟再冲净。
@@ -149,6 +159,7 @@ groups:
         name: 黑密 / iHelmet 160 颗激光管生发头盔
         alias: The Energy Multiplier · 能量干预
         status: 计划入手
+        icon: helmet
         role: 低能量激光照射，给毛囊额外刺激。我还没开始用，打算之后加进来。
         why: 160 颗纯激光管，不是 LED，覆盖整个头顶。
         how: 打算隔天晚上用。洗完头、头皮 100% 吹干、没有药剂时戴 20–30 分钟。
@@ -156,9 +167,30 @@ groups:
         name: 0.5mm 垂直微针印章（Derma Stamp）
         alias: The Wall-Breaker · 终极破壁重建
         status: 进阶
+        icon: stamp
         role: 微针刺激头皮修复，配合前两层一起用。
         why: 印章是垂直按压，比滚轮更好控制深度和区域。
         how: 每周日晚上一次。75% 酒精消毒，只按 M 字无发区，深度 0.5mm。做完的第二天早上什么都不涂。
+
+  - id: clinic
+    name: 第五层：医美疗程
+    metaphor: 专业加强
+    explain:
+      - 前四层都是在家做的。如果想要效果更好，可以再去医美诊所做头皮疗程，常见的组合是 stem cell（干细胞）相关疗程加上 peptide（胜肽）。
+      - 诊所说的 stem cell 疗程，多数用的是干细胞培养液或 exosome（外泌体），不是把活的干细胞打进头皮。它们含有生长因子，目的是刺激毛囊、改善头皮环境。peptide 是一小段氨基酸，用来帮助毛囊修复和生长。通常用微针导入或头皮注射，一个疗程要做好几次。
+      - 要老实说：这类疗程的研究还在早期，效果因人而异，价格也比前面几层高很多。它是加分项，不能代替第一、二层。
+    fit: 前两层已经坚持半年以上、预算比较充足、想再推一把的人。
+    skip: 还没开始用 finasteride 和 minoxidil 的人。先把基础打好，不然就像在有毒的土壤上撒很贵的肥料。
+    items:
+      - id: stem-cell-peptide
+        name: stem cell + peptide 头皮疗程
+        alias: 医美诊所
+        status: 可选
+        icon: clinic
+        role: 在诊所由医生操作，给毛囊额外的生长因子刺激。
+        why: 适合在家用方案之外想再加强的人。去之前问清楚用的是干细胞培养液、exosome 还是其他成分，以及产品有没有注册。
+        how: 由医生安排，一般每月左右做一次，一个疗程好几次。期间第一、二层照常用，用药时间听医生的。
+        price: 单次约 RM 500 起（各诊所差别很大，问清楚一个疗程几次）
 
 principles:
   - title: 晨间无缝叠加
@@ -192,5 +224,7 @@ faq:
     description: 第一层 finasteride 要 100% 干透，再叠第二层 Mandi。这样两层不会混在一起，头皮也能保持干爽哑光，出门看不出来。
   - title: 我头皮不油，也要用 Nizoral 和 Kérastase 吗？
     description: 不用。这两瓶是因为我是油头、头皮还会长痘才用的。头皮正常的话，用温和的洗发水就好，钱花在前两层更值得。
+  - title: 干细胞疗程可以代替用药吗？
+    description: 不能。stem cell 和 peptide 疗程是在前两层的基础上再加强，它们不会减少 DHT。土壤的毒还在，单靠诊所疗程很难守住头发。
   - title: 这些可以直接照抄吗？
     description: 这是我个人的方案，不是医疗建议。finasteride 是处方药，开始之前请先看皮肤科医生，按你自己的情况调整。

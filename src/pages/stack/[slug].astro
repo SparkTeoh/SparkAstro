@@ -50,6 +50,7 @@ const isHot = (cell: string) => /微针|Nizoral/.test(cell);
       <p class="sp-lede">{d.tagline}</p>
       <p class="sp-copy">{d.intro}</p>
       <p class="sp-meta">共 {itemCount} 项 · 最后更新 {updated}</p>
+      {d.priceNote && <p class="sp-body" style="font-size:0.88rem">{d.priceNote}</p>}
       <ShareButtons path={`/stack/${slug}`} title={d.title} />
     </div>
   </section>

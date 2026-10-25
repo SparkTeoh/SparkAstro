@@ -919,7 +919,7 @@ body.sp-menu-locked {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   gap: 1rem;
 }
 
@@ -1074,3 +1074,11 @@ body.sp-menu-locked {
 }
 
 .sp-status--计划入手 { border-style: dashed; color: var(--sp-soft); }
+
+.sp-product-icon {
+  width: clamp(5.5rem, 12vw, 8rem);
+  height: auto;
+  color: var(--sp-ink);
+}
+.sp-product-icon .sp-fill { fill: var(--sp-accent); stroke: var(--sp-ink); }
+.sp-product-icon .sp-accent-stroke { stroke: var(--sp-accent); }
