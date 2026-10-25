@@ -46,7 +46,7 @@ zones:
       level: focus
       label: 太阳穴
       tag: 重点
-      note: 也容易长痘、留痘印。早上和下半脸一起平铺 AZ 精华。
+      note: 也容易长痘、留痘印。早上和下半脸一起平铺 AZ 精华控油、褪红。
       products: [azelain-az-serum]
     - id: t
       level: light
@@ -64,8 +64,8 @@ zones:
       level: light
       label: 全脸都用
       tag: 基本步骤
-      note: 清洁、打底、防晒、保湿和修护面膜是全脸的基本功，每个区域都照顾到。
-      products: [bioderma-micellar, eucerin-proacne-gel, ipsa-time-r-aqua, eucerin-sun-dry-touch, shiseido-men-moisturizer, quality-1st-ceramide-mask]
+      note: 清洁、打底、防晒、保湿和修护面膜是全脸的基本功。每周日的 AHA 也是全脸用，只避开眼周。
+      products: [bioderma-micellar, eucerin-proacne-gel, ipsa-time-r-aqua, eucerin-sun-dry-touch, shiseido-men-moisturizer, eucerin-peeling-10, quality-1st-ceramide-mask]
 
 groups:
   - id: cleanse
@@ -153,7 +153,7 @@ groups:
         icon: dropper
         role: 每周一次的 AHA 大扫除。
         why: 复合果酸，把表面的老废角质清掉，皮肤更平滑。
-        how: 只在周日晚上用，取代当晚的 Differin。
+        how: 只在周日晚上用，全脸都涂，避开眼周，取代当晚的 Differin。
         price: 约 RM 83–118（40ml）
 
   - id: oil
@@ -162,7 +162,8 @@ groups:
     explain:
       - 油皮的出油量是天生的，没办法「关掉」，但可以用控油精华让白天的油光少一点，看起来更哑光。
       - 马来西亚室外又湿又热，出油特别严重；冷气房又很干，皮肤缺水时反而会分泌更多油。所以控油不等于把脸弄干，保湿还是要做。
-    mine: 我全脸都很油，T 区和苹果肌最明显。早上我上半脸用 Eucerin SOS Serum 专门控油；下半脸交给下一层的 AZ 精华，一边控油一边褪印。
+      - azelaic acid 和它的衍生物除了控油，还能帮忙褪红，适合又油又有红印的地方。
+    mine: 我全脸都很油，T 区和苹果肌最明显。早上分区控油：上半脸用 Eucerin SOS Serum；下半脸和太阳穴用 AZ 精华，控油的同时顺便帮下颚的红印褪红。
     fit: 白天两三个小时就满脸油光的人。
     skip: 中性或干性皮肤不需要控油精华，保湿做好就行。
     items:
@@ -174,6 +175,14 @@ groups:
         role: 上半脸（T 区、苹果肌）控油、哑光。
         why: 专门针对出油最严重的 T 区和苹果肌，让白天保持哑光。
         how: 早上洗脸按干后，上半脸平铺一层。
+      - id: azelain-az-serum
+        name: AZELAIN AZ Advanced Serum
+        alias: 晨间控油底漆（下半脸）
+        status: 必备
+        icon: dropper
+        role: 下半脸和太阳穴控油，顺便帮忙褪红。
+        why: azelaic acid 衍生物，控油之外还能褪红，比 20% 的乳霜温和，可以每天大面积用。
+        how: 早上平铺下半脸和太阳穴，避开 C20 点涂的地方。如果下颚开始搓泥或变油，就改到晚上用。
 
   - id: marks
     name: 第四层：淡化痘印
@@ -193,7 +202,7 @@ groups:
       - name: niacinamide
         pros: 温和，控油，也能改善痘印。
         cons: 效果比较慢。
-    mine: 我下颚、侧脸和太阳穴都有红褐色痘印，这是我现在最想解决的。早上先用 Obagi C20 点涂下颚最深的几个印，等 2 分钟；再用 AZ 精华平铺整个下半脸和太阳穴，避开刚刚点过 C20 的地方。
+    mine: 我下颚、侧脸和太阳穴都有红褐色痘印，这是我现在最想解决的。早上第一步用 Obagi C20 点涂下颚最深的几个印，等 2 分钟再上下一层。第三层的 AZ 精华平铺下半脸和太阳穴，也会顺便帮忙褪红。
     fit: 痘痘消了，但留下红印、褐印的人。
     skip: 没有痘印的人不需要这一层。敏感肌用高浓度 vitamin C 可能太刺激，先从低浓度试。
     items:
@@ -206,14 +215,6 @@ groups:
         why: 高浓度 vitamin C，针对最顽固的褐印。
         how: 早上洗脸按干后，只点在下颚痘印上，强制等 2 分钟再上下一层。
         price: 约 RM 570–640（30ml）
-      - id: azelain-az-serum
-        name: AZELAIN AZ Advanced Serum
-        alias: 晨间褪印底漆（下半脸）
-        status: 必备
-        icon: dropper
-        role: 下半脸和太阳穴大面积褪红、控油。
-        why: azelaic acid 衍生物，比 20% 的乳霜温和，可以每天大面积用。
-        how: 早上平铺下半脸和太阳穴，避开 C20 点涂的地方。如果下颚开始搓泥或变油，就改到晚上用。
 
   - id: sun
     name: 第五层：防晒
