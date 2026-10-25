@@ -14,7 +14,7 @@ safety:
   - 怀孕、哺乳、有慢性病，或正在服用任何药物的人，开始吃任何保健品之前，先问医生或药剂师。
   - 我吃的剂量都按包装上的建议量，没有自己加码。剂量请以你买到的产品包装为准。
   - 这是我按自己的情况配的方案，不是医疗建议。吃了之后有任何不舒服，就停下来，去看医生。
-priceNote: 价格是 2026 年 10 月我实际购买的订阅价，会随促销和购买渠道变化，以实际购买为准。没写价格的，是我一时查不到确切价钱，不乱写。
+priceNote: 价格是 2026 年 10 月我实际购买的价钱（No Nasties 是订阅价，Soluxe 是当时下单的促销价，原价一并注明），会随促销和购买渠道变化，以实际购买为准。没写价格的，是我一时查不到确切价钱，不乱写。
 relatedTag: 健康
 
 groups:
@@ -22,8 +22,9 @@ groups:
     name: 第一组：早餐代餐
     metaphor: 一杯搞定
     explain:
-      - 我的早餐就是一杯奶昔：Soluxe 蛋白粉加 No Nasties Complete Meal，加水或牛奶摇匀。两分钟做好，省掉早上想吃什么的时间。
-    mine: 我选无味、无糖的版本，这样蛋白粉的味道才是主角，也不会两种甜味叠在一起。
+      - 我的早餐就是一杯奶昔：一份 Soluxe 蛋白粉加 No Nasties Complete Meal，加水或牛奶摇匀。两分钟做好，省掉早上想吃什么的时间。
+      - 蛋白粉我在 soluxeshop.com 一次买了五款轮着喝，下面五款都是我目前囤着的。哪一天用哪一款没有固定，看心情和库存。
+    mine: Complete Meal 我选无味、无糖的版本，这样奶昔的味道由当天用的蛋白粉决定，也不会两种甜味叠在一起。
     fit: 早上没时间、又不想随便吃面包或不吃早餐的人。
     skip: 本来就有时间好好吃早餐的人，不需要特地改成代餐。
     items:
@@ -34,19 +35,65 @@ groups:
         icon: bottle
         role: 早餐奶昔的主体，负责把一餐的分量补上。
         why: 我早上固定喝的代餐粉。选无味、无糖的版本，方便和蛋白粉混在一起。
-        how: 每天早上按包装建议量，和一份 Soluxe 蛋白粉一起加水或牛奶摇匀喝。
+        how: 每天早上按包装建议量，和一份 Soluxe 蛋白粉（下面五款轮着用）一起加水或牛奶摇匀喝。
         price: RM 269.10（3×800g，60 天订阅）
         image: ./diet/no-nasties-complete-meal.jpg
         link: https://www.nonasties.shop/products/complete-meal-checkout
-      - id: soluxe-protein
-        name: Soluxe 蛋白粉
-        alias: 早餐味道
+      - id: soluxe-pea-chocolate-deluxe
+        name: Pea Protein Isolate - Soluxe Chocolate Deluxe（500g）
+        alias: 早餐蛋白粉
         status: 必备
         icon: pump
-        role: 早餐奶昔里的蛋白质来源，也决定了奶昔的味道。
-        why: 我现在早上固定用的蛋白粉，和无味的 Complete Meal 搭配刚好。
-        how: 每天早上一份，和 Complete Meal 一起冲。口味以实际购买为准。
-        link: https://soluxeshop.com/
+        role: 早餐奶昔轮着用的豌豆蛋白粉，巧克力口味。
+        why: 五款里唯一的巧克力味，想喝有味道的奶昔时就用这一包。
+        how: 一份和 Complete Meal 一起加水或牛奶摇匀，和其他四款轮着用。
+        price: RM 66.43（原价 RM 94.90，30% 折扣）
+        image: ./diet/soluxe-pea-chocolate-deluxe.jpg
+        link: https://soluxeshop.com/products/soluxe-chocolate-deluxe-500g
+      - id: soluxe-soy-black-sesame
+        name: Soluxe Soy Protein Isolate - High Fibre Black Sesame（518g）
+        alias: 早餐蛋白粉
+        status: 必备
+        icon: pump
+        role: 早餐奶昔轮着用的大豆蛋白粉，黑芝麻口味。
+        why: 五款里口味最偏亚洲的一款，想换个味道时用。
+        how: 一份和 Complete Meal 一起加水或牛奶摇匀，和其他四款轮着用。
+        price: RM 59.43（原价 RM 84.90）
+        image: ./diet/soluxe-soy-black-sesame.jpg
+        link: https://soluxeshop.com/products/soy-protein-isolate-black-sesame
+      - id: soluxe-soy-original
+        name: Soluxe Soy Protein Isolate - Original Unflavoured（518g）
+        alias: 早餐蛋白粉
+        status: 必备
+        icon: pump
+        role: 早餐奶昔轮着用的大豆蛋白粉，无味。
+        why: 无味无糖，和无味的 Complete Meal 配在一起最干净，喝不腻。
+        how: 一份和 Complete Meal 一起加水或牛奶摇匀，和其他四款轮着用。
+        price: RM 66.43（原价 RM 94.90）
+        image: ./diet/soluxe-soy-original.jpg
+        link: https://soluxeshop.com/products/original-unflavoured-soy-protein-isolate
+      - id: soluxe-brown-rice-original
+        name: Soluxe Brown Rice Protein Isolate - Original Unflavoured（500g）
+        alias: 早餐蛋白粉
+        status: 必备
+        icon: pump
+        role: 早餐奶昔轮着用的糙米蛋白粉，无味。
+        why: 五款里唯一的糙米蛋白，买来和豌豆、大豆换着喝，蛋白质来源不只靠一种。
+        how: 一份和 Complete Meal 一起加水或牛奶摇匀，和其他四款轮着用。
+        price: RM 118.90
+        image: ./diet/soluxe-brown-rice-original.jpg
+        link: https://soluxeshop.com/products/soluxe-original-non-gmo-brown-rice-protein-isolate-usa-500g
+      - id: soluxe-pea-original
+        name: Soluxe Original Pea Protein Isolate - Unflavoured（500g）
+        alias: 早餐蛋白粉
+        status: 必备
+        icon: pump
+        role: 早餐奶昔轮着用的豌豆蛋白粉，无味。
+        why: 无味的豌豆蛋白，和无味大豆蛋白一样是基本款，当天想喝哪一种就用哪一种。
+        how: 一份和 Complete Meal 一起加水或牛奶摇匀，和其他四款轮着用。
+        price: RM 66.43（原价 RM 94.90）
+        image: ./diet/soluxe-pea-original.jpg
+        link: https://soluxeshop.com/products/original-pea-protein
 
   - id: morning
     name: 第二组：早晨保健品
@@ -158,7 +205,7 @@ groups:
 
 principles:
   - title: 早餐一杯搞定
-    text: Soluxe 蛋白粉加 No Nasties Complete Meal，再把胶原蛋白粉和肌酸一起倒进去摇匀。粉剂全部在这一杯里解决。
+    text: 一份 Soluxe 蛋白粉（五款轮着用）加 No Nasties Complete Meal，再把胶原蛋白粉和肌酸一起倒进去摇匀。粉剂全部在这一杯里解决。
   - title: 保健品分早晚两批
     text: 白天的一批全部跟早餐一起吃，晚上只有晚饭后的护肝配方和睡前的镁。固定成两个时间点，就不会漏。
   - title: 按包装剂量，不加码
@@ -168,11 +215,13 @@ principles:
 
 faq:
   - title: 为什么选无味无糖的 Complete Meal？
-    description: 因为我是和 Soluxe 蛋白粉混在一起喝的。Complete Meal 没有味道，奶昔的味道就由蛋白粉决定，也不会两种甜味叠在一起。
+    description: 因为我是和 Soluxe 蛋白粉混在一起喝的。Complete Meal 没有味道，奶昔的味道就由当天用的蛋白粉决定，也不会两种甜味叠在一起。
   - title: 为什么有些产品只写品类、没写品牌？
     description: 像鱼油、综合维生素、护眼和护肝配方，这里先只写品类和用量，不乱推荐具体品牌。
-  - title: 为什么价格只写了两样？
-    description: 这两样是我订阅购买、价钱确定的。其他的我一时查不到确切价钱，宁愿不写，也不乱写。
+  - title: 蛋白粉为什么一次买五款？
+    description: 我在 soluxeshop.com 一次买了五款轮着喝：两款有味道（巧克力、黑芝麻），三款无味（大豆、豌豆、糙米）。哪一天用哪一款没有固定，看心情和库存，喝完了再补。
+  - title: 为什么只有部分产品写了价格？
+    description: 写了价格的是我在 nonasties.shop 和 soluxeshop.com 实际下单、价钱确定的。其他的我一时查不到确切价钱，宁愿不写，也不乱写。
   - title: 维生素 D3 为什么要换？
     description: 现在吃的是 DUO LEAF 1000 IU，之后打算换成 VitaHealth K2 + D3，把两样做在一粒里。等这瓶吃完再换，换了会更新这一页。
   - title: 这些可以直接照抄吗？

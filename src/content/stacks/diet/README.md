@@ -13,8 +13,14 @@
 - no-nasties-complete-meal.jpg
 - no-nasties-just-creatine.jpg
 
+目前已有（取自 soluxeshop.com 官方商品图，缩成 1200×1200 jpg）：
+- soluxe-pea-chocolate-deluxe.jpg
+- soluxe-soy-black-sesame.jpg
+- soluxe-soy-original.jpg
+- soluxe-brown-rice-original.jpg
+- soluxe-pea-original.jpg
+
 建议文件名（还没有照片的）：
-- soluxe-protein.jpg
 - lennox-collagen.jpg
 - biofunction-nmn.jpg
 - vitahealth-vitamin-c-zinc.jpg
