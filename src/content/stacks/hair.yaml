@@ -85,6 +85,7 @@ groups:
         role: 第一层。减少头皮的 DHT，让毛囊不再被缩小。
         why: 纯水或酒精基底，干得快、不油腻，可以精准滴在需要的区域。
         how: 早上干发时滴在发际线和头顶，等 2 分钟完全干透，再上第二层。
+        image: ./hair/topical-finasteride.png
 
   - id: grow
     name: 第二层：促进生长
@@ -116,6 +117,7 @@ groups:
         role: 第二层。延长生长期，让头发长得更快、更粗。
         why: 不含 propylene glycol，秒干、哑光，白天出门看不出来。
         how: finasteride 干透后涂上，涂完马上洗手，避免碰到脸。
+        image: ./hair/mandi-minoxidil-foam.jpg
 
   - id: scalp
     name: 第三层：管好头皮环境
@@ -136,6 +138,7 @@ groups:
         role: 日常控油，洗掉白天的药物残留，让发根恢复空气感。
         why: 我是油头，需要控油；它控油又不会洗得太干，可以天天用。
         how: 周一、三、四、六、日晚上用，洗完彻底吹干。
+        image: ./hair/kerastase-shampoo.jpg
       - id: nizoral-shampoo
         name: Nizoral 2% ketoconazole 洗发水
         alias: 战时灭火杀菌
@@ -145,6 +148,7 @@ groups:
         role: 抑制 Malassezia，控制头皮发炎、头屑和长痘。
         why: 单用 Kérastase 头皮还是会长痘，ketoconazole 专门针对 Malassezia，一周两次就够。
         how: 周二、周五晚上用。抹开后停留 3–5 分钟再冲净。
+        image: ./hair/nizoral-shampoo.jpg
 
   - id: boost
     name: 第四层：物理刺激
@@ -171,6 +175,7 @@ groups:
         role: 微针刺激头皮修复，配合前两层一起用。
         why: 印章是垂直按压，比滚轮更好控制深度和区域。
         how: 每周日晚上一次。75% 酒精消毒，只按 M 字无发区，深度 0.5mm。做完的第二天早上什么都不涂。
+        image: ./hair/derma-stamp.jpg
 
   - id: clinic
     name: 第五层：医美疗程
