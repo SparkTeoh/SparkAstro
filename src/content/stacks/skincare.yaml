@@ -32,6 +32,41 @@ science:
     title: 打个比方：排水管堵塞
     text: 油脂是水，毛孔是排水管。水量太大、管口又被角质塞住，管子就会堵；细菌在里面发酵，就是发炎；处理完留在墙上的水渍，就是痘印。所以要做的事很清楚：把管道洗干净、疏通管口、控制水量、清理水渍，再把屋顶修好（防晒），不让水渍越晒越深。
 
+zones:
+  title: 我重点照顾的区域
+  intro: 我的痘痘集中在 U 字区和太阳穴，所以疏通毛孔、淡化痘印的产品都重点涂在这两个地方。其他不严重的地方，只做基本的清洁、控油和防晒，不会每样都涂满脸。
+  areas:
+    - id: u
+      level: focus
+      label: U 字区：下巴、下颚、脸颊下半
+      tag: 重点
+      note: 最容易长闭口、长痘、留痘印的地方。疏通毛孔和淡化痘印的产品都集中在这里；侧脸那几粒顽固的油粒，另外用 salicylic acid 点涂。
+      products: [differin, to-salicylic-acid, azelain-az-serum, obagi-c20, acnes-labo]
+    - id: temple
+      level: focus
+      label: 太阳穴
+      tag: 重点
+      note: 也容易长痘、留痘印。早上和下半脸一起平铺 AZ 精华。
+      products: [azelain-az-serum]
+    - id: t
+      level: light
+      label: T 区和苹果肌
+      tag: 只控油
+      note: 很油，但不太长痘。只用控油精华，不涂酸，也不涂 retinoid。
+      products: [eucerin-sos-serum]
+    - id: eye
+      level: light
+      label: 眼周
+      tag: 只用 caffeine
+      note: 早晚用无名指按压眼眶，消浮肿、改善黑眼圈。
+      products: [to-caffeine]
+    - id: all
+      level: light
+      label: 全脸都用
+      tag: 基本步骤
+      note: 清洁、打底、防晒、保湿和修护面膜是全脸的基本功，每个区域都照顾到。
+      products: [bioderma-micellar, eucerin-proacne-gel, ipsa-time-r-aqua, eucerin-sun-dry-touch, shiseido-men-moisturizer, quality-1st-ceramide-mask]
+
 groups:
   - id: cleanse
     name: 第一层：彻底清洁

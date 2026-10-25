@@ -81,6 +81,23 @@ const stacks = defineCollection({
             .optional(),
         })
         .optional(),
+      // 脸部重点区域图（护肤清单用）：products 填产品 id，会自动变成链接
+      zones: z
+        .object({
+          title: z.string(),
+          intro: z.string().optional(),
+          areas: z.array(
+            z.object({
+              id: z.enum(['u', 'temple', 't', 'eye', 'all']),
+              level: z.enum(['focus', 'light']).default('focus'),
+              label: z.string(),
+              tag: z.string(),
+              note: z.string(),
+              products: z.array(z.string()).default([]),
+            }),
+          ),
+        })
+        .optional(),
       groups: z.array(layer),
       principles: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
       schedule: z

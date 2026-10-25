@@ -6,6 +6,7 @@ import ContentCard from "../../components/ui/ContentCard.astro";
 import Icon from "../../components/ui/Icon.astro";
 import StackItem from "../../components/stack/StackItem.astro";
 import ShareButtons from "../../components/stack/ShareButtons.astro";
+import FaceZones from "../../components/stack/FaceZones.astro";
 import { getAllContent } from "../../lib/content";
 import siteData from "../../data/siteData.json";
 
@@ -32,6 +33,16 @@ const weeklyRows = sched ? sched.rows.filter((r) => !isDaily(r)) : [];
 const byDay = days.map((day, i) => ({
   day,
   items: weeklyRows.map((r) => r.days[i]).filter(Boolean),
+}));
+// 区域图：把产品 id 换成名称；写错 id 时构建直接报错
+const allItems = d.groups.flatMap((g) => g.items);
+const zoneAreas = (d.zones?.areas ?? []).map((a) => ({
+  ...a,
+  products: a.products.map((id) => {
+    const it = allItems.find((x) => x.id === id);
+    if (!it) throw new Error(`zones 里的产品 id「${id}」在清单里找不到`);
+    return { id, name: it.name };
+  }),
 }));
 const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includes(k));
 ---
@@ -149,6 +160,18 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
           ))}
         </ol>
       </div>
+    </section>
+  )}
+
+  <!-- 重点区域图 -->
+  {d.zones && (
+    <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="zones-title">
+      <div class="sp-stack">
+        <p class="sp-eyebrow">重点区域</p>
+        <h2 class="sp-h2" id="zones-title">{d.zones.title}</h2>
+        {d.zones.intro && <p class="sp-copy">{d.zones.intro}</p>}
+      </div>
+      <FaceZones areas={zoneAreas} />
     </section>
   )}
 

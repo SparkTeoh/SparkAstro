@@ -1,0 +1,115 @@
+---
+/**
+ * 原创的正面脸部示意图 + 区域说明。
+ * 鼠标移到（或点到）右边的说明卡，图上对应区域会亮起来。
+ */
+interface Area {
+  id: "u" | "temple" | "t" | "eye" | "all";
+  level: "focus" | "light";
+  label: string;
+  tag: string;
+  note: string;
+  products: { id: string; name: string }[];
+}
+interface Props { areas: Area[] }
+const { areas } = Astro.props;
+const level = (id: Area["id"]) => areas.find((a) => a.id === id)?.level;
+---
+
+<div class="sp-zones">
+  <figure class="sp-zones__figure">
+    <svg viewBox="0 0 300 350" role="img" aria-labelledby="face-title">
+      <title id="face-title">脸部区域示意图：U 字区和太阳穴是重点，T 区和苹果肌只控油，眼周只用 caffeine</title>
+      <defs>
+        <pattern id="sp-dots" width="8" height="8" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.4" fill="currentColor" opacity="0.35"></circle>
+        </pattern>
+      </defs>
+
+      <!-- 脸与五官 -->
+      <g class="sp-face" data-zone="all">
+        <ellipse cx="46" cy="178" rx="10" ry="22" class="sp-face__skin"></ellipse>
+        <ellipse cx="254" cy="178" rx="10" ry="22" class="sp-face__skin"></ellipse>
+        <path class="sp-face__skin" d="M150 30C215 30 250 80 250 150C250 200 240 245 220 280C200 315 175 335 150 335C125 335 100 315 80 280C60 245 50 200 50 150C50 80 85 30 150 30Z"></path>
+      </g>
+      <path class="sp-face__hair" d="M50 150C44 70 95 20 150 20C205 20 256 70 250 150C242 98 206 68 150 68C94 68 58 98 50 150Z"></path>
+
+      <!-- 区域 -->
+      <g class={`sp-zone sp-zone--${level("t")}`} data-zone="t">
+        <path d="M92 86Q150 72 208 86L206 116Q150 106 94 116Z"></path>
+        <rect x="137" y="116" width="26" height="92" rx="12"></rect>
+        <circle cx="98" cy="203" r="22"></circle>
+        <circle cx="202" cy="203" r="22"></circle>
+      </g>
+      <g class={`sp-zone sp-zone--${level("temple")}`} data-zone="temple">
+        <ellipse cx="70" cy="128" rx="17" ry="27"></ellipse>
+        <ellipse cx="230" cy="128" rx="17" ry="27"></ellipse>
+      </g>
+      <g class={`sp-zone sp-zone--${level("u")}`} data-zone="u">
+        <path d="M60 222C68 268 96 312 150 324C204 312 232 268 240 222L212 230C206 266 186 294 150 300C114 294 94 266 88 230Z"></path>
+        <circle cx="76" cy="250" r="3.5" class="sp-zone__spot"></circle>
+        <circle cx="84" cy="266" r="3" class="sp-zone__spot"></circle>
+        <circle cx="224" cy="252" r="3.5" class="sp-zone__spot"></circle>
+      </g>
+      <g class="sp-zone sp-zone--eye" data-zone="eye">
+        <ellipse cx="114" cy="160" rx="26" ry="16"></ellipse>
+        <ellipse cx="186" cy="160" rx="26" ry="16"></ellipse>
+      </g>
+
+      <!-- 五官线条（放最上层） -->
+      <g class="sp-face__lines">
+        <ellipse cx="114" cy="156" rx="14" ry="6"></ellipse>
+        <ellipse cx="186" cy="156" rx="14" ry="6"></ellipse>
+        <path d="M98 140Q114 132 130 140M170 140Q186 132 202 140"></path>
+        <path d="M150 168L142 206Q150 213 158 206"></path>
+        <path d="M128 250Q150 262 172 250"></path>
+      </g>
+    </svg>
+    <figcaption class="sp-zones__legend">
+      <span><i class="sp-swatch sp-swatch--focus"></i>重点照顾</span>
+      <span><i class="sp-swatch sp-swatch--light"></i>轻轻带过</span>
+      <span><i class="sp-swatch sp-swatch--eye"></i>眼周</span>
+    </figcaption>
+  </figure>
+
+  <ol class="sp-zones__list">
+    {areas.map((a) => (
+      <li>
+        <button type="button" class={`sp-zones__card sp-zones__card--${a.id === "eye" ? "eye" : a.level}`} data-zone={a.id} aria-pressed="false">
+          <span class="sp-zones__head">
+            <strong>{a.label}</strong>
+            <span class="sp-status">{a.tag}</span>
+          </span>
+          <span class="sp-body">{a.note}</span>
+        </button>
+        {a.products.length > 0 && (
+          <p class="sp-zones__products">
+            {a.products.map((p) => <a href={`#${p.id}`}>{p.name}</a>)}
+          </p>
+        )}
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".sp-zones").forEach((root) => {
+    const svg = root.querySelector("svg")!;
+    const cards = root.querySelectorAll<HTMLButtonElement>(".sp-zones__card");
+    let locked: string | null = null;
+    const show = (zone: string | null) => {
+      svg.querySelectorAll<SVGGElement>("[data-zone]").forEach((g) => g.classList.toggle("is-active", g.dataset.zone === zone));
+      svg.classList.toggle("has-active", !!zone);
+      cards.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.zone === zone)));
+    };
+    cards.forEach((c) => {
+      c.addEventListener("mouseenter", () => show(c.dataset.zone ?? null));
+      c.addEventListener("mouseleave", () => show(locked));
+      c.addEventListener("focus", () => show(c.dataset.zone ?? null));
+      c.addEventListener("click", () => {
+        locked = locked === c.dataset.zone ? null : c.dataset.zone ?? null;
+        show(locked);
+      });
+    });
+  });
+</script>
