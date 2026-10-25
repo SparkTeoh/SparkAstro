@@ -33,7 +33,7 @@ const byDay = days.map((day, i) => ({
   day,
   items: weeklyRows.map((r) => r.days[i]).filter(Boolean),
 }));
-const isHot = (cell: string) => /微针|Nizoral/.test(cell);
+const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includes(k));
 ---
 
 <MainLayout
@@ -292,8 +292,8 @@ const isHot = (cell: string) => /微针|Nizoral/.test(cell);
   {d.notRecommended.length > 0 && (
     <section class="sp-wrap sp-section" aria-labelledby="nope-title">
       <div class="sp-stack">
-        <p class="sp-eyebrow">试过但不推荐</p>
-        <h2 class="sp-h2" id="nope-title" style="font-size:clamp(1.8rem,3.6vw,3rem)">这些我已经淘汰了</h2>
+        <p class="sp-eyebrow">停用 / 暂停</p>
+        <h2 class="sp-h2" id="nope-title" style="font-size:clamp(1.8rem,3.6vw,3rem)">我停用的产品</h2>
       </div>
       <ul class="sp-check">
         {d.notRecommended.map((n) => <li><span><strong style="color:var(--sp-ink)">{n.name}：</strong>{n.reason}</span></li>)}

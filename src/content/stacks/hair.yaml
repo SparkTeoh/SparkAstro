@@ -209,6 +209,7 @@ schedule:
       days: [Kérastase, Nizoral, Kérastase, Kérastase, Nizoral, Kérastase, Kérastase]
     - label: 晚上加练
       days: ["", "", "", "", "", "", 微针 0.5mm]
+  highlight: [微针, Nizoral]
   note: 周日晚上做了微针，周一早上就什么都不涂；如果忘了做微针，周一早上照常涂。
 
 faq:

@@ -28,7 +28,7 @@ const stacks = defineCollection({
       alias: z.string().optional(),          // 外号，例如 The Blocker
       status: z.enum(['必备', '进阶', '可选', '计划入手', '已淘汰']).default('必备'),
       image: image().optional(),             // 产品照片（没有照片时显示 icon 图标）
-      icon: z.enum(['dropper', 'foam', 'shampoo', 'helmet', 'stamp', 'clinic']).optional(),
+      icon: z.enum(['dropper', 'foam', 'shampoo', 'bottle', 'tube', 'pump', 'mask', 'patch', 'helmet', 'stamp', 'clinic']).optional(),
       role: z.string(),                      // 一句话：它负责什么
       why: z.string(),                       // 为什么选这一款
       how: z.string(),                       // 我怎么用
@@ -87,6 +87,7 @@ const stacks = defineCollection({
         .object({
           title: z.string(),
           rows: z.array(z.object({ label: z.string(), days: z.array(z.string()).length(7) })),
+          highlight: z.array(z.string()).default([]),  // 包含这些字的格子用蓝色标出
           note: z.string().optional(),
         })
         .optional(),

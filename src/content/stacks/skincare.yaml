@@ -1,0 +1,305 @@
+# 我的皮肤管理清单 → sparkliang.com/stack/skincare（短网址 /skin）
+# 结构同 hair.yaml：原理 → 分层方案 → 执行纪律 → 一周排程 → 停用的产品 → 常见问题
+# 产品照片放 src/content/stacks/skincare/，在对应产品下加 image: ./skincare/xxx.jpg
+
+title: 我的皮肤管理清单
+short: 皮肤管理
+tagline: 极油皮、长闭口、留痘印，在湿热的马来西亚怎么做到干净哑光。
+intro: 我是极度油性的皮肤，下巴和下颚容易长闭口，下颚、侧脸和太阳穴还有痘印。我追求的是干净、哑光、毛孔细，看不出化妆的样子。这份清单是我每天在用的方案，先讲为什么会长痘、留印，再讲每一步用什么。
+updated: 2026-10-25
+order: 2
+medical: true
+safety:
+  - 这是我按自己极油、长闭口、留痘印的皮肤配的方案，不是医疗建议。反复红肿、有硬块或囊肿型的痘痘，请看皮肤科医生。
+  - Differin（adapalene）在马来西亚属于处方药，请在医生指导下使用。怀孕或备孕不要用 retinoid（A 酸类）。
+  - 用 retinoid、salicylic acid、AHA 期间，白天一定要防晒。
+  - 这些强效成分不要同一晚叠在一起用。刚开始先在小范围试，出现持续红肿、刺痛就停用。
+priceNote: 参考价是 2026 年 10 月在网上查到的大概价格，会随促销和购买渠道变化，以实际购买为准。
+relatedTag: 护肤
+
+science:
+  title: 先搞懂：为什么会长痘、留痘印？
+  flow:
+    - 皮脂分泌太多：天生油皮，加上马来西亚又湿又热
+    - 老废角质和油脂混在一起，堵住毛孔出口
+    - 形成闭口粉刺（closed comedone），摸起来一粒一粒
+    - Cutibacterium acnes 在里面繁殖，引起发炎，变成红肿的痘
+    - 发炎退了，留下红印或褐印
+  paragraphs:
+    - 长痘不是因为脸洗得不够干净，而是毛孔「塞住了」。油皮的皮脂本来就多，毛孔出口的角质又代谢得不顺，两样混在一起就成了闭口。闭口里缺氧，正是 Cutibacterium acnes 最喜欢的环境，一繁殖就发炎。
+    - 痘痘好了之后留下的印有两种：红色的是发炎后微血管还没退（post-inflammatory erythema，PIE），褐色的是发炎刺激了黑色素（post-inflammatory hyperpigmentation，PIH）。两种都会慢慢退，但晒太阳会让它们更深、退得更慢。
+  analogy:
+    title: 打个比方：排水管堵塞
+    text: 油脂是水，毛孔是排水管。水量太大、管口又被角质塞住，管子就会堵；细菌在里面发酵，就是发炎；处理完留在墙上的水渍，就是痘印。所以要做的事很清楚：把管道洗干净、疏通管口、控制水量、清理水渍，再把屋顶修好（防晒），不让水渍越晒越深。
+
+groups:
+  - id: cleanse
+    name: 第一层：彻底清洁
+    metaphor: 清空管道
+    explain:
+      - 每天涂的高倍控油防晒，加上一整天的油脂，单靠洗面奶很难完全洗掉。残留会慢慢堵住毛孔，下巴和下颚最明显。所以晚上先卸、再洗，这叫双重清洁（double cleansing）。
+      - 洗面奶要选温和、不含皂基的。洗得太干，皮肤反而会分泌更多油。
+    options:
+      - name: micellar water（卸妆水）
+        pros: 温和、不油，用化妆棉一擦就好，适合每天卸防晒。
+        cons: 浓妆或防水彩妆卸不太干净。
+        mine: true
+      - name: 卸妆油
+        pros: 卸得最彻底，浓妆也没问题。
+        cons: 油皮一定要乳化、冲洗彻底，不然残留反而闷痘。
+    mine: 我每天都涂高倍控油防晒，下颚又最容易长闭口，所以只要白天涂了防晒，晚上一定先用卸妆水、再用洗面奶。这是我防下颚闭口的底线。
+    fit: 每天涂防晒或化妆的人，尤其是下巴、下颚爱长闭口的人。
+    skip: 白天没涂防晒、也没化妆的晚上，用洗面奶洗一次就够。
+    items:
+      - id: bioderma-micellar
+        name: Bioderma 卸妆水（Sébium 绿水 / Sensibio 粉水）
+        alias: 卸除防御
+        status: 必备
+        icon: bottle
+        role: 晚上第一步，卸掉防晒和一整天的油脂。
+        why: 温和、不油，不需要冲洗，用化妆棉就能卸干净。
+        how: 每晚第一步。纯棉化妆棉沾湿，顺着毛发方向擦，擦完再洗脸。
+        price: 约 RM 70–107（500ml）
+      - id: eucerin-proacne-gel
+        name: Eucerin ProACNE Solution Cleansing Gel
+        alias: 主力清洁
+        status: 必备
+        icon: pump
+        role: 早晚唯一的洗面奶。
+        why: 针对油皮和痘痘肌，洗得干净，又不像皂基那样把脸洗得紧绷。
+        how: 早上洗一次；晚上在卸妆水之后洗一次。
+        price: 约 RM 83–102（400ml）
+
+  - id: unclog
+    name: 第二层：疏通毛孔
+    metaphor: 疏通管道
+    explain:
+      - 这一层是整套方案的核心。闭口和痘痘的源头是毛孔出口被角质塞住，所以要用能「疏通」的成分，让角质正常代谢、不再堆积。
+      - 常用的有三类：retinoid（A 酸类，例如 adapalene）让毛孔里的角质正常脱落，是预防闭口最有效的；salicylic acid（BHA）是油溶性的，能钻进毛孔溶解油脂；AHA（果酸）作用在表面，帮老废角质脱落，让皮肤更平滑。
+      - 三种都会让皮肤比较敏感，不能同一晚叠在一起用，白天一定要防晒。
+    options:
+      - name: adapalene（retinoid）
+        pros: 证据最多，预防闭口和痘痘的主力，在 retinoid 里算比较温和的。
+        cons: 刚开始会干、脱皮，甚至先冒痘。在马来西亚需要处方。
+        mine: true
+      - name: salicylic acid 2%（BHA）
+        pros: 油溶性，能进毛孔，适合点涂顽固的闭口。
+        cons: 大面积用容易干，和 retinoid 同一晚用太刺激。
+        mine: true
+      - name: AHA（果酸）
+        pros: 表面去角质，让皮肤更平滑、更亮。
+        cons: 刺激比较大，一周一次就够。
+        mine: true
+    mine: 我的皮肤已经适应 Differin，不再脱皮泛红，所以用它负责下巴、下颚这一大片。侧脸那几粒顽固的「油粒」，另外用 salicylic acid 点涂。每周日再用一次 AHA 大扫除。三种错开在不同晚上，绝不叠加。
+    fit: 有闭口、反复长痘的油皮和混合皮。
+    skip: 皮肤很干很敏感、正在怀孕或备孕的人，先问医生，不要自己开始用 retinoid。
+    items:
+      - id: differin
+        name: Differin（adapalene 0.1% gel）
+        alias: 夜间核心引擎
+        status: 必备
+        icon: tube
+        role: 下巴、下颚这一大片的「清道夫」，预防闭口和痘痘。
+        why: adapalene 0.1%，我已经建立耐受，可以稳定使用。
+        how: A 晚（周三、周五）薄薄一层，涂满下巴、下颚和侧脸，包括油粒的位置。
+        price: 约 RM 61–63（30g，马来西亚需处方）
+      - id: to-salicylic-acid
+        name: The Ordinary Salicylic Acid 2% Solution
+        alias: 夜间溶脂突击队
+        status: 必备
+        icon: dropper
+        role: 侧脸顽固闭口「油粒」的局部点涂。
+        why: salicylic acid 是油溶性的，能进到毛孔里溶解油脂。
+        how: B 晚（周二、四、六）用极少量，只点在凸起的油粒上，不大面积涂。这一晚不用 Differin。
+      - id: eucerin-peeling-10
+        name: Eucerin DermoPure Clinical Peeling 10
+        alias: 周期化学剥脱
+        status: 进阶
+        icon: dropper
+        role: 每周一次的 AHA 大扫除。
+        why: 复合果酸，把表面的老废角质清掉，皮肤更平滑。
+        how: 只在周日晚上用，取代当晚的 Differin。
+        price: 约 RM 83–118（40ml）
+
+  - id: oil
+    name: 第三层：控油
+    metaphor: 控制水量
+    explain:
+      - 油皮的出油量是天生的，没办法「关掉」，但可以用控油精华让白天的油光少一点，看起来更哑光。
+      - 马来西亚室外又湿又热，出油特别严重；冷气房又很干，皮肤缺水时反而会分泌更多油。所以控油不等于把脸弄干，保湿还是要做。
+    mine: 我全脸都很油，T 区和苹果肌最明显。早上我上半脸用 Eucerin SOS Serum 专门控油；下半脸交给下一层的 AZ 精华，一边控油一边褪印。
+    fit: 白天两三个小时就满脸油光的人。
+    skip: 中性或干性皮肤不需要控油精华，保湿做好就行。
+    items:
+      - id: eucerin-sos-serum
+        name: Eucerin SOS Serum
+        alias: 晨间控油底漆（上半脸）
+        status: 必备
+        icon: dropper
+        role: 上半脸（T 区、苹果肌）控油、哑光。
+        why: 专门针对出油最严重的 T 区和苹果肌，让白天保持哑光。
+        how: 早上洗脸按干后，上半脸平铺一层。
+
+  - id: marks
+    name: 第四层：淡化痘印
+    metaphor: 清理水渍
+    explain:
+      - 痘印分两种：红印（PIE）是发炎后微血管还没退，褐印（PIH）是黑色素沉淀。两种都会自己慢慢退，但可以加速。
+      - 常用成分：vitamin C（L-ascorbic acid）抗氧化、抑制黑色素，适合点涂深色的印；azelaic acid 同时褪红、抑制黑色素，还有一点抗痘控油的作用；另外还有 niacinamide、tranexamic acid 等。
+    options:
+      - name: vitamin C 20%
+        pros: 浓度高，针对顽固的褐色痘印。
+        cons: 酸性强，可能刺痛，要点涂、等干了再叠下一层。
+        mine: true
+      - name: azelaic acid
+        pros: 褪红、褪印、抗痘一次处理，相对温和。
+        cons: 浓度高的乳霜（例如 20%）刺激比较大。
+        mine: true
+      - name: niacinamide
+        pros: 温和，控油，也能改善痘印。
+        cons: 效果比较慢。
+    mine: 我下颚、侧脸和太阳穴都有红褐色痘印，这是我现在最想解决的。早上先用 Obagi C20 点涂下颚最深的几个印，等 2 分钟；再用 AZ 精华平铺整个下半脸和太阳穴，避开刚刚点过 C20 的地方。
+    fit: 痘痘消了，但留下红印、褐印的人。
+    skip: 没有痘印的人不需要这一层。敏感肌用高浓度 vitamin C 可能太刺激，先从低浓度试。
+    items:
+      - id: obagi-c20
+        name: Obagi C20 精华（vitamin C 20%）
+        alias: 晨间强酸靶向
+        status: 必备
+        icon: dropper
+        role: 早上第一步，点涂下颚的深色痘印。
+        why: 高浓度 vitamin C，针对最顽固的褐印。
+        how: 早上洗脸按干后，只点在下颚痘印上，强制等 2 分钟再上下一层。
+        price: 约 RM 570–640（30ml）
+      - id: azelain-az-serum
+        name: AZELAIN AZ Advanced Serum
+        alias: 晨间褪印底漆（下半脸）
+        status: 必备
+        icon: dropper
+        role: 下半脸和太阳穴大面积褪红、控油。
+        why: azelaic acid 衍生物，比 20% 的乳霜温和，可以每天大面积用。
+        how: 早上平铺下半脸和太阳穴，避开 C20 点涂的地方。如果下颚开始搓泥或变油，就改到晚上用。
+
+  - id: sun
+    name: 第五层：防晒
+    metaphor: 修好屋顶
+    explain:
+      - 防晒是整套方案里最不能省的一步。紫外线会让痘印变深、退得更慢；而 retinoid、salicylic acid、AHA 都会让皮肤对阳光更敏感。不防晒，前面几层等于白做。
+    mine: 油皮最怕防晒油腻、闷痘，所以我用控油、干爽触感的防晒，放在早上最后一步。
+    fit: 每一个人。这一层没有人可以跳过。
+    items:
+      - id: eucerin-sun-dry-touch
+        name: Eucerin Sun Gel-Cream Dry Touch Oil Control SPF50+
+        alias: 晨间哑光防御
+        status: 必备
+        icon: tube
+        role: 早上最后一步，控油防晒。
+        why: 质地干爽哑光，不会让油皮更油。
+        how: 前面几层都干透之后，全脸均匀涂上。
+        price: 约 RM 80–110（50ml；按海外售价换算）
+
+  - id: repair
+    name: 第六层：保湿修护
+    metaphor: 维修管道
+    explain:
+      - 用 retinoid 和酸类的人，皮肤屏障一定会比较弱。屏障坏了会干、红、刺痛，反而出更多油、长更多痘。所以就算是油皮，晚上也要保湿；用完 AHA 的隔天，还要专门修护。
+    mine: 晚上我先用 IPSA 流金水打底，作为 Differin 和酸类之前的缓冲；最后用 Shiseido Men 的乳液锁水。周日用完 AHA，周一晚上停用所有酸和 retinoid，只敷 ceramide 面膜修护。
+    fit: 正在用 retinoid、salicylic acid 或 AHA 的人。
+    items:
+      - id: ipsa-time-r-aqua
+        name: IPSA The Time R Aqua（流金水）
+        alias: 夜间舒缓缓冲
+        status: 必备
+        icon: bottle
+        role: 晚上的基础打底，也可以急救湿敷。
+        why: 清爽保湿，作为 Differin 和酸类之前的缓冲。
+        how: 晚上洗脸后第一步。皮肤不稳定的时候，用化妆棉湿敷几分钟。
+      - id: shiseido-men-moisturizer
+        name: Shiseido Men 保湿乳
+        alias: 夜间屏障修护
+        status: 必备
+        icon: pump
+        role: 晚上最后一步锁水。
+        why: 轻透不油，适合油皮晚上用。
+        how: 每晚最后一步。B 晚避开 salicylic acid 点涂的位置。
+      - id: quality-1st-ceramide-mask
+        name: Quality 1st ceramide 面膜
+        alias: 周期维稳修复
+        status: 进阶
+        icon: mask
+        role: 周一晚上的修护。
+        why: ceramide 帮助修复被 AHA 削弱的屏障。
+        how: 周一晚上敷 15 分钟后洗净，当晚不用任何酸和 retinoid。
+
+  - id: extra
+    name: 第七层：局部加强
+    metaphor: 眼周与急救
+    explain:
+      - 最后是两个局部问题：黑眼圈和突然冒出来的大痘。我的黑眼圈是血管型加结构型混合，冷热交替的环境影响很大；红肿大痘要尽快局部处理，不要用手挤。
+    mine: 眼周早晚都用 caffeine 精华，用无名指轻轻按压眼眶，A 晚再加温敷。突然冒出红肿大痘或发炎的闭口，就用祛痘膏加隐形痘痘贴。
+    fit: 有浮肿、黑眼圈的人；偶尔冒大痘的人。
+    skip: 眼窝凹陷造成的结构型黑眼圈，擦什么都改善有限，这种要找医美。
+    items:
+      - id: to-caffeine
+        name: The Ordinary Caffeine Solution 5% + EGCG
+        alias: 晨晚眼周激活
+        status: 可选
+        icon: dropper
+        role: 眼周消浮肿，改善血管型黑眼圈。
+        why: caffeine 帮助收缩血管，质地哑光不油。
+        how: 早晚洗脸后，用无名指像弹钢琴一样轻轻按压眼眶。
+        price: 约 RM 60（30ml）
+      - id: acnes-labo
+        name: Acnes Labo 祛痘膏 + 隐形痘痘贴
+        alias: 战时急救
+        status: 可选
+        icon: patch
+        role: 突发红肿大痘的急救。
+        why: 局部处理发炎的痘；贴片晚上隔开手和枕头。
+        how: 只点在发炎的痘上，晚上再贴上隐形痘痘贴。
+
+principles:
+  - title: 双重清洁
+    text: 只要白天涂了高倍控油防晒，晚上一定先用卸妆水和纯棉化妆棉顺着毛发方向擦，再用洗面奶。这是杜绝下颚闭口的底线。
+  - title: 早上分区
+    text: 洗脸按干后，先用 C20 点涂下颚痘印，等 2 分钟；眼周点 caffeine；上半脸平铺 SOS Serum，下半脸和太阳穴平铺 AZ 精华；确认干爽后再涂防晒。一发现下颚搓泥或变油，就把 AZ 精华改到晚上。
+  - title: 晚上 A / B 交替
+    text: A 晚用 Differin，大面积薄涂下巴、下颚和侧脸；B 晚用 salicylic acid，只点在侧脸凸起的油粒上。同一晚绝不叠加两种。
+  - title: 周日大扫除，周一强修护
+    text: 周日晚上用 AHA 取代 Differin；周一晚上敷 ceramide 面膜 15 分钟后洗净，停用所有酸和 retinoid。
+
+schedule:
+  title: 一周排程
+  rows:
+    - label: 早上
+      days: [洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒, 洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒, 洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒, 洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒, 洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒, 洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒, 洁面 → C20 点涂 → 眼周 → SOS / AZ 分区 → 防晒]
+    - label: 晚上打底
+      days: [卸妆水 → 洁面 → IPSA → 眼周, 卸妆水 → 洁面 → IPSA → 眼周, 卸妆水 → 洁面 → IPSA → 眼周, 卸妆水 → 洁面 → IPSA → 眼周, 卸妆水 → 洁面 → IPSA → 眼周, 卸妆水 → 洁面 → IPSA → 眼周, 卸妆水 → 洁面 → IPSA → 眼周]
+    - label: 晚上主角
+      days: [ceramide 面膜, salicylic acid 点涂, Differin, salicylic acid 点涂, Differin, salicylic acid 点涂, AHA Peeling 10]
+    - label: 晚上收尾
+      days: [Shiseido Men 乳液, Shiseido Men 乳液, Shiseido Men 乳液, Shiseido Men 乳液, Shiseido Men 乳液, Shiseido Men 乳液, Shiseido Men 乳液]
+  highlight: [面膜, AHA]
+  note: 周一晚上停用所有酸和 retinoid，只敷面膜修护。A 晚（周三、周五）可以加眼周温敷。
+
+notRecommended:
+  - name: Eucerin 皂基洁面泡沫
+    reason: 我用了不适合，已经停用。
+  - name: Laneige 睡眠面膜
+    reason: 我用了不适合，已经停用。
+  - name: Skinoren 20%（azelaic acid 乳霜）
+    reason: 暂时封存。我已经有 AZ 精华和其他酸类，再加 20% 的乳霜，皮肤负担太大。
+
+faq:
+  - title: 油皮还需要保湿吗？
+    description: 需要。用 retinoid 和酸类会让屏障变弱，太干反而出更多油、长更多痘。选轻薄、不油的乳液就好。
+  - title: 我没化妆，也要用卸妆水吗？
+    description: 有涂防晒就要。高倍控油防晒很难只靠洗面奶洗干净，残留会堵毛孔，下颚尤其明显。没涂防晒的晚上，洗面奶就够。
+  - title: Differin 和 salicylic acid 为什么要分开晚上用？
+    description: 两种都会刺激皮肤，同一晚叠加很容易泛红、脱皮。错开使用，两种的效果都在，皮肤也受得了。
+  - title: 刚开始用 Differin 会不会变严重？
+    description: 头几周可能会干、脱皮，甚至先冒一些痘，一般 4 到 8 周后会稳定。从隔两三晚、少量开始，慢慢增加。Differin 在马来西亚需要处方，先问医生。
+  - title: 痘印多久才会退？
+    description: 通常要几个月。防晒做好、加上褪印的成分，会快很多。
+  - title: 这些可以直接照抄吗？
+    description: 这是我按自己极油、长闭口、留痘印的皮肤配的。干皮或敏感肌照抄，可能会过度刺激。这不是医疗建议，严重的痘痘请看皮肤科医生。

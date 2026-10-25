@@ -31,3 +31,8 @@
   from = "/hair"
   to = "/stack/hair"
   status = 301
+
+[[redirects]]
+  from = "/skin"
+  to = "/stack/skincare"
+  status = 301

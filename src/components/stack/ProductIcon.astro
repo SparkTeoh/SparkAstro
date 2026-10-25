@@ -1,6 +1,6 @@
 ---
 // 原创的产品类型线条图标（无品牌），在没有产品照片时显示
-interface Props { name?: "dropper" | "foam" | "shampoo" | "helmet" | "stamp" | "clinic" }
+interface Props { name?: "dropper" | "foam" | "shampoo" | "bottle" | "tube" | "pump" | "mask" | "patch" | "helmet" | "stamp" | "clinic" }
 const { name } = Astro.props;
 ---
 
@@ -23,7 +23,7 @@ const { name } = Astro.props;
       <path d="M48 64h24" />
     </g>
   )}
-  {name === "shampoo" && (
+  {(name === "shampoo" || name === "bottle") && (
     <g>
       <path d="M42 46c0-6 4-10 10-10h16c6 0 10 4 10 10v52a8 8 0 01-8 8H50a8 8 0 01-8-8z" />
       <path d="M52 36v-8h16v8" />
@@ -55,6 +55,39 @@ const { name } = Astro.props;
       <path d="M86 18l16 16M94 26l-8 8" />
       <path d="M30 90l-8 8" />
       <path d="M24 30h16M32 22v16" class="sp-accent-stroke" />
+    </g>
+  )}
+  {name === "tube" && (
+    <g>
+      <path d="M40 30h40l-6 64H46z" />
+      <path d="M40 30l4-10h32l4 10" />
+      <rect x="52" y="94" width="16" height="12" rx="2" class="sp-fill" />
+      <path d="M50 52h20M51 62h18" />
+    </g>
+  )}
+  {name === "pump" && (
+    <g>
+      <rect x="38" y="48" width="44" height="58" rx="10" />
+      <path d="M54 48V36h12v12" />
+      <path d="M50 36h20M66 30h16v6" />
+      <rect x="48" y="66" width="24" height="22" rx="3" class="sp-fill" />
+    </g>
+  )}
+  {name === "mask" && (
+    <g>
+      <path d="M30 40c0-12 14-22 30-22s30 10 30 22v26c0 20-14 36-30 36S30 86 30 66z" />
+      <ellipse cx="47" cy="50" rx="6" ry="4" class="sp-fill" />
+      <ellipse cx="73" cy="50" rx="6" ry="4" class="sp-fill" />
+      <path d="M52 82c5 4 11 4 16 0" />
+    </g>
+  )}
+  {name === "patch" && (
+    <g>
+      <circle cx="46" cy="52" r="16" />
+      <circle cx="46" cy="52" r="6" class="sp-fill" />
+      <circle cx="78" cy="74" r="12" />
+      <circle cx="78" cy="74" r="4" class="sp-fill" />
+      <path d="M30 98h60" />
     </g>
   )}
   {!name && <circle cx="60" cy="60" r="30" />}
