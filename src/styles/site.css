@@ -1019,10 +1019,14 @@ body.sp-menu-locked {
   overflow: hidden;
 }
 
+.sp-stack-item__media:has(img) { background: #fff; }
+
 .sp-stack-item__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 0.75rem;
+  box-sizing: border-box;
 }
 
 .sp-stack-item__placeholder {
