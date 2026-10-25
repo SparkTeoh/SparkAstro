@@ -95,6 +95,7 @@ groups:
         why: 温和、不油，不需要冲洗，用化妆棉就能卸干净。
         how: 每晚第一步。纯棉化妆棉沾湿，顺着毛发方向擦，擦完再洗脸。
         price: 约 RM 70–107（500ml）
+        image: ./skincare/bioderma-micellar.jpg
       - id: eucerin-proacne-gel
         name: Eucerin ProACNE Solution Cleansing Gel
         alias: 主力清洁
@@ -104,6 +105,9 @@ groups:
         why: 针对油皮和痘痘肌，洗得干净，又不像皂基那样把脸洗得紧绷。
         how: 早上洗一次；晚上在卸妆水之后洗一次。
         price: 约 RM 83–102（400ml）
+        image: ./skincare/eucerin-proacne-gel.jpg
+        link: https://s.shopee.com.my/4fxG5EQrkU
+        affiliate: true
 
   - id: unclog
     name: 第二层：疏通毛孔
@@ -138,6 +142,7 @@ groups:
         why: adapalene 0.1%，我已经建立耐受，可以稳定使用。
         how: A 晚（周三、周五）薄薄一层，涂满下巴、下颚和侧脸，包括油粒的位置。
         price: 约 RM 61–63（30g，马来西亚需处方）
+        image: ./skincare/differin.jpg
       - id: to-salicylic-acid
         name: The Ordinary Salicylic Acid 2% Solution
         alias: 夜间溶脂突击队
@@ -146,6 +151,9 @@ groups:
         role: 侧脸顽固闭口「油粒」的局部点涂。
         why: salicylic acid 是油溶性的，能进到毛孔里溶解油脂。
         how: B 晚（周二、四、六）用极少量，只点在凸起的油粒上，不大面积涂。这一晚不用 Differin。
+        image: ./skincare/to-salicylic-acid.jpg
+        link: https://s.shopee.com.my/4B0zUJSllL
+        affiliate: true
       - id: eucerin-peeling-10
         name: Eucerin DermoPure Clinical Peeling 10
         alias: 周期化学剥脱
@@ -155,6 +163,7 @@ groups:
         why: 复合果酸，把表面的老废角质清掉，皮肤更平滑。
         how: 只在周日晚上用，全脸都涂，避开眼周，取代当晚的 Differin。
         price: 约 RM 83–118（40ml）
+        image: ./skincare/eucerin-peeling-10.jpg
 
   - id: oil
     name: 第三层：控油
@@ -175,6 +184,9 @@ groups:
         role: 上半脸（T 区、苹果肌）控油、哑光。
         why: 专门针对出油最严重的 T 区和苹果肌，让白天保持哑光。
         how: 早上洗脸按干后，上半脸平铺一层。
+        image: ./skincare/eucerin-sos-serum.jpg
+        link: https://s.shopee.com.my/5AtWg9OxjZ
+        affiliate: true
       - id: azelain-az-serum
         name: AZELAIN AZ Advanced Serum
         alias: 晨间控油底漆（下半脸）
@@ -183,6 +195,7 @@ groups:
         role: 下半脸和太阳穴控油，顺便帮忙褪红。
         why: azelaic acid 衍生物，控油之外还能褪红，比 20% 的乳霜温和，可以每天大面积用。
         how: 早上平铺下半脸和太阳穴，避开 C20 点涂的地方。如果下颚开始搓泥或变油，就改到晚上用。
+        image: ./skincare/azelain-az-serum.jpg
 
   - id: marks
     name: 第四层：淡化痘印
@@ -215,6 +228,7 @@ groups:
         why: 高浓度 vitamin C，针对最顽固的褐印。
         how: 早上洗脸按干后，只点在下颚痘印上，强制等 2 分钟再上下一层。
         price: 约 RM 570–640（30ml）
+        image: ./skincare/obagi-c20.jpg
 
   - id: sun
     name: 第五层：防晒
@@ -233,6 +247,9 @@ groups:
         why: 质地干爽哑光，不会让油皮更油。
         how: 前面几层都干透之后，全脸均匀涂上。
         price: 约 RM 80–110（50ml；按海外售价换算）
+        image: ./skincare/eucerin-sun-dry-touch.jpg
+        link: https://s.shopee.com.my/4qGgHXQEPX
+        affiliate: true
 
   - id: repair
     name: 第六层：保湿修护
@@ -250,6 +267,7 @@ groups:
         role: 晚上的基础打底，也可以急救湿敷。
         why: 清爽保湿，作为 Differin 和酸类之前的缓冲。
         how: 晚上洗脸后第一步。皮肤不稳定的时候，用化妆棉湿敷几分钟。
+        image: ./skincare/ipsa-time-r-aqua.jpg
       - id: shiseido-men-moisturizer
         name: Shiseido Men 保湿乳
         alias: 夜间屏障修护
@@ -258,6 +276,7 @@ groups:
         role: 晚上最后一步锁水。
         why: 轻透不油，适合油皮晚上用。
         how: 每晚最后一步。B 晚避开 salicylic acid 点涂的位置。
+        image: ./skincare/shiseido-men-moisturizer.jpg
       - id: quality-1st-ceramide-mask
         name: Quality 1st ceramide 面膜
         alias: 周期维稳修复
@@ -266,6 +285,7 @@ groups:
         role: 周一晚上的修护。
         why: ceramide 帮助修复被 AHA 削弱的屏障。
         how: 周一晚上敷 15 分钟后洗净，当晚不用任何酸和 retinoid。
+        image: ./skincare/quality-1st-ceramide-mask.jpg
 
   - id: extra
     name: 第七层：局部加强
@@ -285,6 +305,9 @@ groups:
         why: caffeine 帮助收缩血管，质地哑光不油。
         how: 早晚洗脸后，用无名指像弹钢琴一样轻轻按压眼眶。
         price: 约 RM 60（30ml）
+        image: ./skincare/to-caffeine.jpg
+        link: https://s.shopee.com.my/50a6TqPb4W
+        affiliate: true
       - id: acnes-labo
         name: Acnes Labo 祛痘膏 + 隐形痘痘贴
         alias: 战时急救
@@ -293,6 +316,7 @@ groups:
         role: 突发红肿大痘的急救。
         why: 局部处理发炎的痘；贴片晚上隔开手和枕头。
         how: 只点在发炎的痘上，晚上再贴上隐形痘痘贴。
+        image: ./skincare/acnes-labo.jpg
 
 principles:
   - title: 双重清洁
