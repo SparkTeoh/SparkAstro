@@ -8,8 +8,7 @@ import ContentCard from "../components/ui/ContentCard.astro";
 import CtaCard from "../components/ui/CtaCard.astro";
 import Icon from "../components/ui/Icon.astro";
 import { Image } from "astro:assets";
-import heroIllustration from "../assets/pics/hero.svg";
-import sparkPortrait from "../assets/pics/spark-portrait.png";
+import sparkPortrait from "../assets/pics/spark-portrait-4x5.png";
 import siteData from "../data/siteData.json";
 import pillars from "../data/pillars.json";
 import steps from "../data/verifySteps.json";
@@ -145,9 +144,14 @@ const blurbs: Record<string, string> = {
   <!-- 关于 -->
   <section class="sp-wrap sp-section" aria-labelledby="about-title">
     <div class="sp-split">
-      <!-- TODO(spark): 换成真人照片 -->
-      <figure class="sp-photo-card sp-photo-card--illustration" style="aspect-ratio:3/4">
-        <Image src={heroIllustration} alt="" />
+      <figure class="sp-photo-card">
+        <Image
+          src={sparkPortrait}
+          alt="Spark Liang 本人照片"
+          widths={[480, 720, 941]}
+          sizes="(max-width: 720px) min(100vw - 2rem, 22rem), (max-width: 980px) calc(100vw - 2rem), 28rem"
+          loading="lazy"
+        />
       </figure>
       <div class="sp-stack">
         <p class="sp-eyebrow">关于 Spark</p>

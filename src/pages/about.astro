@@ -3,7 +3,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 import PageHero from "../components/ui/PageHero.astro";
 import CtaCard from "../components/ui/CtaCard.astro";
 import { Image } from "astro:assets";
-import heroIllustration from "../assets/pics/hero.svg";
+import sparkPortrait from "../assets/pics/spark-portrait-4x5.png";
 
 const philosophy = [
   { title: "注重基本面", text: "深入研究公司的财务状况、商业模式和竞争优势。" },
@@ -21,9 +21,14 @@ const philosophy = [
 
   <section class="sp-wrap sp-section" aria-labelledby="story-title">
     <div class="sp-split">
-      <!-- TODO(spark): 换成真人照片（3:4 竖图） -->
-      <figure class="sp-photo-card sp-photo-card--illustration" style="aspect-ratio:3/4">
-        <Image src={heroIllustration} alt="" />
+      <figure class="sp-photo-card">
+        <Image
+          src={sparkPortrait}
+          alt="Spark Liang 本人照片"
+          widths={[480, 720, 941]}
+          sizes="(max-width: 720px) min(100vw - 2rem, 22rem), (max-width: 980px) calc(100vw - 2rem), 28rem"
+          loading="lazy"
+        />
       </figure>
       <div class="sp-stack">
         <p class="sp-eyebrow">我的故事</p>
