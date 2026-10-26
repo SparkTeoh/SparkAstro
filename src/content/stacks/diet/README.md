@@ -20,15 +20,19 @@
 - soluxe-brown-rice-original.jpg
 - soluxe-pea-original.jpg
 
-建议文件名（还没有照片的）：
-- lennox-collagen.jpg
+目前已有（2026-10 从品牌官网或马来西亚药房官方商品图取得，统一处理成 1200×1200 白底 jpg）：
+- lennox-collagen.jpg — lennox.com.my/product/collagen-5000-powder/（官网，新包装）
+- vitahealth-vitamin-c-zinc.jpg — vitahealth.com.my/product/vitamin-c-with-zinc/（官网）
+- vitahealth-k2-d3.jpg — vitahealth.com.my/product/vitamins-k2-d3-2/（官网）
+- duo-leaf-vitamin-d3.jpg — htmpharmacy.my/products/duoleaf-vitamin-d3-1000iu-10s-x-10（HTM Pharmacy）
+- biofizz-magnesium.jpg — htmpharmacy.my/products/biofizz-magnesium-bisglycinate-30s-x-2-magnesium-glycinatemagnesium-supplement（HTM Pharmacy）
+
+还没有照片的（网上找不到能确认是同一款的官方图，先用 icon；最好自己拍）：
 - biofunction-nmn.jpg
-- vitahealth-vitamin-c-zinc.jpg
-- omega-3.jpg
 - coenzyme-plus-coq10.jpg
+
+只写品类、没写品牌的，不放图（避免放错品牌）：
+- omega-3.jpg
 - multivitamin.jpg
 - eye-formula.jpg
-- duo-leaf-vitamin-d3.jpg
-- vitahealth-k2-d3.jpg
-- biofizz-magnesium.jpg
 - liver-formula.jpg
