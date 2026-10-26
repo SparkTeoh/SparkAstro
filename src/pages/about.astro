@@ -5,6 +5,13 @@ import CtaCard from "../components/ui/CtaCard.astro";
 import { Image } from "astro:assets";
 import sparkPortrait from "../assets/pics/spark-portrait-blazer-4x5.png";
 
+const values = [
+  { title: "研究规律，分享解法", text: "我最享受的，是找到事情背后的规律，想出解法，再分享出去。看到别人因此有收获，就是我最大的满足。我不太在意输赢，更喜欢 love and peace。" },
+  { title: "不争，但要送到", text: "我的想法偏道家，讲不争。但我也明白：再好的解法，没有送到需要的人手上，影响力就是零。酒香也怕巷子深。所以营销和销售不是杂事，是一个解决方案的最后一公里。" },
+  { title: "点免费，线与面收费", text: "零散的知识点，我在网上免费分享。把这些点串成线、织成面的系统性方案，我才收费。这样我才能持续研究，持续分享。" },
+  { title: "不做标题党，只做翻译", text: "我拒绝恶性的标题党。但我愿意用你的语言，把你的痛点和解药连起来。这不是骗点击，是搭桥。" },
+];
+
 const philosophy = [
   { title: "注重基本面", text: "深入研究公司的财务状况、商业模式和竞争优势。" },
   { title: "长期持有", text: "不追逐短期波动，与优秀的公司一起成长。" },
@@ -43,7 +50,37 @@ const philosophy = [
     </div>
   </section>
 
-  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="philosophy-title">
+  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="values-title">
+    <div class="sp-stack">
+      <p class="sp-eyebrow">我的理念</p>
+      <h2 class="sp-h2" id="values-title">成就自己，成就他人。</h2>
+      <p class="sp-copy">
+        成就自己，是持续学习、持续突破，把技术、经济、健康这些方面的能力一点点拿到手，让自己有得选。
+      </p>
+      <p class="sp-copy">
+        成就他人，是把沉淀下来的能力拿出来，帮别人把人生过得更好一点。这就是我想留下的 positive impact。
+      </p>
+    </div>
+    <article class="sp-card sp-card--pad">
+      <span class="sp-meta">我的北极星</span>
+      <h3 class="sp-h3">「探寻世界运行的规律以强壮自我，搭建传递价值的桥梁以渡化他人。」</h3>
+      <p class="sp-body">我是 Spark，一个成就自己，成就他人的榜样。榜样不是想出来的，是活出来给人看的。所以这些话，我得先自己做到。</p>
+    </article>
+    <div class="sp-grid sp-grid--2">
+      {values.map((v, i) => (
+        <article class="sp-card sp-card--pad">
+          <span class="sp-meta">{String(i + 1).padStart(2, "0")}</span>
+          <h3 class="sp-h3">{v.title}</h3>
+          <p class="sp-body">{v.text}</p>
+        </article>
+      ))}
+    </div>
+    <p class="sp-copy">
+      关于钱，我以前觉得够用就好。现在我明白，钱不只是够用，它是选择权，也是杠杆。有了它，我才能搭更大的桥，帮到更多人。
+    </p>
+  </section>
+
+  <section class="sp-wrap sp-section" aria-labelledby="philosophy-title">
     <div class="sp-stack">
       <p class="sp-eyebrow">投资哲学</p>
       <h2 class="sp-h2" id="philosophy-title">投资不是赌博，是长期持有好公司。</h2>
@@ -59,7 +96,7 @@ const philosophy = [
     </div>
   </section>
 
-  <section class="sp-wrap sp-section" aria-labelledby="mission-title">
+  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="mission-title">
     <div class="sp-stack">
       <p class="sp-eyebrow">我的使命</p>
       <h2 class="sp-h2" id="mission-title">普及正确的理财观念，让每个人都能掌控自己的财务未来。</h2>
