@@ -9,6 +9,7 @@ import CtaCard from "../components/ui/CtaCard.astro";
 import Icon from "../components/ui/Icon.astro";
 import { Image } from "astro:assets";
 import heroIllustration from "../assets/pics/hero.svg";
+import sparkPortrait from "../assets/pics/spark-portrait.png";
 import siteData from "../data/siteData.json";
 import pillars from "../data/pillars.json";
 import steps from "../data/verifySteps.json";
@@ -40,10 +41,16 @@ const blurbs: Record<string, string> = {
         <Button href="/about" variant="ghost">我的故事</Button>
       </div>
     </div>
-    <aside class="sp-hero__visual" aria-hidden="true">
-      <!-- TODO(spark): 换成真人照片（4:5 竖图），放进 src/assets/ 后替换 -->
-      <figure class="sp-photo-card sp-photo-card--illustration">
-        <Image src={heroIllustration} alt="" loading="eager" />
+    <aside class="sp-hero__visual">
+      <figure class="sp-photo-card">
+        <Image
+          src={sparkPortrait}
+          alt="Spark Liang 本人照片"
+          widths={[480, 720, 941]}
+          sizes="(max-width: 980px) min(100vw - 2rem, 26rem), 27rem"
+          loading="eager"
+          fetchpriority="high"
+        />
       </figure>
     </aside>
   </section>
