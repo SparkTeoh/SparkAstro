@@ -6,7 +6,7 @@ title: 我的饮食与保健品清单
 short: 饮食保健品
 tagline: 早餐一杯奶昔搞定，保健品分早晚两批，每天固定吃，不会麻烦。
 intro: 这份清单记录的是我每天实际在吃的东西：早餐是一杯用蛋白粉和代餐粉冲的奶昔，早上吃一批保健品，晚上再吃一批。我不是营养师，也不是医生，这里只写我吃什么、怎么吃、为什么挑这一款，不讲功效。你可以参考，但不要照抄。
-updated: 2026-10-25
+updated: 2026-10-26
 order: 3
 medical: true
 safety:
@@ -125,13 +125,14 @@ groups:
         price: RM 73.51（1 pouch，60 天订阅）
         image: ./diet/no-nasties-just-creatine.jpg
         link: https://www.nonasties.shop/
-      - id: biofunction-nmn
-        name: Biofunction NMN 咀嚼片
+      - id: nutrinlife-nmn3
+        name: NutrinLife NMN3+（凤梨味咀嚼片，50 片）
         status: 必备
         icon: bottle
-        role: 早上吃的 NMN，一种 NAD+ 前体。
-        why: NMN 是 NAD+ 的前体，这几年在「健康老化」这个话题上很热门，但人体研究还很早期，我把它当作一个尝试，不期待什么明显的效果。选这一款咀嚼片是因为不用配水。
-        how: 每天早上 1–2 片，按包装建议量。
+        role: 早上吃的 NMN 咀嚼片，一种 NAD+ 前体，这一款还配了茄红素和槲皮素。
+        why: NMN 是 NAD+ 的前体，这几年在「健康老化」这个话题上很热门，但人体研究还很早期，我把它当作一个尝试，不期待什么明显的效果。选这一款是凤梨味的咀嚼片，不用配水，顺手就吃了；标签上另外配了茄红素（lycopene）和槲皮素（quercetin）。
+        how: 每天早上 1–2 片（按包装）。
+        image: ./diet/nutrinlife-nmn3.jpg
       - id: vitahealth-vitamin-c-zinc
         name: VitaHealth Vitamin C with Zinc+
         status: 必备
@@ -140,34 +141,30 @@ groups:
         why: 维生素 C 和锌都是最基本的、和免疫相关的营养素，我当作日常保底来吃。这一款把两样做在一片里，而且是缓释配方，少吞一粒。
         how: 每天早上 1 片，和早餐一起吃。
         image: ./diet/vitahealth-vitamin-c-zinc.jpg
-      - id: omega-3
-        name: 高纯度 Omega-3 鱼油
+      - id: puremed-fish-oil-plus
+        name: PureMed Fish Oil Plus（90 粒）
         status: 必备
         icon: bottle
-        role: 早上吃的鱼油，补 Omega-3 里的 EPA 和 DHA。
-        why: 平时吃鱼不多，用鱼油补 EPA 和 DHA。我挑的是纯度比较高的鱼油胶囊。这里先只写品类。
-        how: 每天早上 1–2 粒，和早餐一起吃，按包装建议量。
-      - id: coenzyme-plus-coq10
-        name: Coenzyme Plus CoQ10 + L-carnitine
+        role: 早上吃的鱼油，补 Omega-3 里的 EPA 和 DHA，配方里另外加了亚麻籽油、维生素 E 和 D3。
+        why: 平时吃鱼不多，用鱼油补 EPA 和 DHA。这一款除了鱼油还加了亚麻籽油、维生素 E 和 D3，而且是肠溶（enteric-coated）软胶囊，我比较喜欢这种剂型。
+        how: 早餐时 1–2 粒（按包装）。
+        image: ./diet/puremed-fish-oil-plus.jpg
+      - id: biofizz-coq10-plus
+        name: BioFIZZ Coenzyme Q10 Plus（30 粒）
         status: 必备
         icon: bottle
-        role: 早上吃的 CoQ10 加左旋肉碱，两样都和细胞的能量代谢有关。
-        why: CoQ10 和 L-carnitine 都参与细胞产生能量的过程，所以常被做在一起。这一款两种成分在一粒里，少吞一粒。
-        how: 每天早上 1 粒，和早餐一起吃。
-      - id: multivitamin
-        name: 综合维生素 / 矿物质
+        role: 早上吃的辅酶 Q10（CoQ10），一种参与细胞能量代谢的物质。
+        why: CoQ10 参与细胞产生能量的过程，我当作日常保养吃一粒，不期待什么明显的效果。和我晚上吃的镁是同一个牌子 BiOFIZZ，胶囊一粒，好吞。
+        how: 每天早上 1 粒，和早餐一起吃，按包装建议量。
+        image: ./diet/biofizz-coq10-plus.jpg
+      - id: eldon-performix
+        name: ELDON Nutrition PERFORMIX（30 片）
         status: 必备
         icon: bottle
-        role: 早上吃的综合维生素和矿物质，补日常饮食的缺口。
-        why: 一粒把基础的维生素和矿物质补齐，当作饮食不够均衡时的保底，不指望它做别的。这里先只写品类。
-        how: 每天早上 1 粒，和早餐一起吃。
-      - id: eye-formula
-        name: 护眼复合配方
-        status: 必备
-        icon: bottle
-        role: 早上吃的护眼复合配方，叶黄素这一类。
-        why: 护眼复合配方（常见成分如叶黄素），我当作日常保养吃一粒。这里先只写品类。
-        how: 每天早上 1 粒，和早餐一起吃。
+        role: 早上吃的综合维生素和矿物质，补日常饮食的缺口，配方里还有叶黄素和茄红素。
+        why: 一片把基础的维生素和矿物质补齐，当作饮食不够均衡时的保底，不指望它做别的。这一款标签上另外配了叶黄素（lutein）和茄红素（lycopene），所以我没有再另外吃护眼配方，少吞一粒。
+        how: 每天早上 1 片，和早餐一起吃，按包装建议量。
+        image: ./diet/eldon-performix.jpg
       - id: duo-leaf-vitamin-d3
         name: DUO LEAF Vitamin D3 1000 IU
         status: 必备
@@ -184,37 +181,54 @@ groups:
         why: K2 常和 D3 搭配在一起吃，我想换成两样做在一粒里的版本，少吞一粒。等现在这盒 D3 吃完再换，换了会更新这一页。
         how: 还没开始吃。到时按包装建议量，每天早上 1 粒。
         image: ./diet/vitahealth-k2-d3.jpg
+      - id: puremed-symplus
+        name: PureMed Symplus（益生菌 18 株 + 益生元，150 亿 CFU，45 粒）
+        status: 必备
+        icon: bottle
+        role: 早上吃的益生菌加益生元，当作肠道的日常保养。
+        why: 我每天早餐都是奶昔加一堆保健品，想顺手补一点益生菌，当作肠道的日常保养，不期待什么明确的效果。这一款是 18 株菌加益生元做在一粒里，每粒 150 亿 CFU，胶囊配水吞就好。
+        how: 早餐时按包装服用。
+        image: ./diet/puremed-symplus.jpg
+      - id: phoenix-grape-seed
+        name: PHOENIX Grape Seed 300mg（葡萄籽萃取）
+        status: 必备
+        icon: bottle
+        role: 早上吃的葡萄籽萃取，当作日常抗氧化的一部分。
+        why: 葡萄籽萃取是常见的抗氧化类保健品，我当作日常保养吃一粒，不指望它做别的。这一款一粒 300mg，剂量清楚，一天一粒就好记。
+        how: 每天 1 粒，饭后。
+        image: ./diet/phoenix-grape-seed.jpg
 
   - id: evening
     name: 第三组：晚间保健品
     metaphor: 晚上一批
     explain:
       - 晚上只有两样：晚饭后一样，睡前一样。
-    mine: 我把镁放在睡前约 1 小时吃，护肝配方放在晚饭后吃，这是我自己固定下来的时间，方便记。
+    mine: 我把镁放在睡前约 1 小时吃，BiOFIZZ FORLIV 放在晚饭后吃，这是我自己固定下来的时间，方便记。
     fit: 想把晚上的保健品也固定成流程的人。
     skip: 正在服药或有肝肾相关问题的人，先问医生再决定要不要吃。
     items:
       - id: biofizz-magnesium
-        name: BiOFIZZ Magnesium Bisglycinate
+        name: BiOFIZZ Magnesium Bisglycinate 555.56mg
         status: 必备
         icon: bottle
         role: 睡前吃的镁，是我睡前放松流程的一部分。
         why: bisglycinate 是比较温和、肠胃比较不容易不舒服的镁形态。我把它固定在睡前约 1 小时吃，当作睡前放松和准备睡觉的一个固定动作。这一款是胶囊，方便。
-        how: 睡前约 1 小时吃 2 粒，配水。
+        how: 睡前约 1 小时吃 2 粒，配水。每粒标签上写的是 Magnesium Bisglycinate 555.56mg，剂量以包装为准。
         image: ./diet/biofizz-magnesium.jpg
-      - id: liver-formula
-        name: 护肝复合配方
+      - id: biofizz-forliv
+        name: BiOFIZZ FORLIV Capsule（50 粒）
         status: 必备
         icon: bottle
-        role: 晚饭后吃的护肝复合配方，一般性的日常保养。
-        why: 当作一般的日常保养来吃，不期待什么明确的效果。这里先只写品类。
+        role: 晚饭后吃的胶囊，包装上写的是传统上用于养肝（traditionally used as liver tonic），我当作一般的日常保养。
+        why: 当作一般的日常保养来吃，不是治病，也不期待什么明确的效果。包装上的说法是「传统上用于养肝」，我照这个理解，不加码解读。和我吃的镁、CoQ10 是同一个牌子 BiOFIZZ。
         how: 晚饭后 2 粒，配水，按包装建议量。
+        image: ./diet/biofizz-forliv.jpg
 
 principles:
   - title: 早餐一杯搞定
     text: 一份 Soluxe 蛋白粉（五款轮着用）加 No Nasties Complete Meal，总量凑到 80g：Soluxe 一份 35g 就加 45g，一份 50g 就加 30g。再把胶原蛋白粉和肌酸一起倒进去摇匀，粉剂全部在这一杯里解决。
   - title: 保健品分早晚两批
-    text: 白天的一批全部跟早餐一起吃，晚上只有晚饭后的护肝配方和睡前的镁。固定成两个时间点，就不会漏。
+    text: 白天的一批全部跟早餐一起吃，晚上只有晚饭后的 BiOFIZZ FORLIV 和睡前的镁。固定成两个时间点，就不会漏。
   - title: 按包装剂量，不加码
     text: 每一样都照包装上的建议量吃。多吃不等于更好，保健品也不是药。
   - title: 先问医生，再照抄
@@ -225,8 +239,8 @@ faq:
     description: 因为我是和 Soluxe 蛋白粉混在一起喝的。Complete Meal 没有味道，奶昔的味道就由当天用的蛋白粉决定，也不会两种甜味叠在一起。
   - title: 为什么要把 Complete Meal 和蛋白粉混在一起，还要凑到 80g？
     description: 因为 Soluxe 单独一份只有 35–50g，我喝完没多久就饿了。Complete Meal 单独喝的正常分量是 80g，我就把一杯凑到 80g：Soluxe 一份 35g 的加 45g Complete Meal，一份 50g 的加 30g。这个 80g 是我自己试出来的量。你如果也容易饿，或者觉得太饱，Complete Meal 那部分自己往上或往下调。
-  - title: 为什么有些产品只写品类、没写品牌？
-    description: 像鱼油、综合维生素、护眼和护肝配方，这里先只写品类和用量，不乱推荐具体品牌。
+  - title: 这里写的品牌是推荐吗？
+    description: 不是。写品牌只是让你知道我实际在吃哪一款、怎么吃，方便对照包装。没有任何一款是广告或带佣金的链接，我也不会说哪一款比较好。换了产品我会更新这一页。
   - title: 蛋白粉为什么一次买五款？
     description: 我在 soluxeshop.com 一次买了五款轮着喝：两款有味道（巧克力、黑芝麻），三款无味（大豆、豌豆、糙米）。哪一天用哪一款没有固定，看心情和库存，喝完了再补。
   - title: 为什么只有部分产品写了价格？
