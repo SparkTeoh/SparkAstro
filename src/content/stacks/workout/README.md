@@ -11,3 +11,6 @@ YAML 里引用 PNG，例如：
     image: ./workout/max-hangs.png
 
 风格：浅底、黑色线稿小人、蓝色标注（角度、箭头、节奏），底部黑条写负荷和组次数。
+
+握姿一律用真人照片（`grip-half-crimp.jpg` 半抠 ✓、`grip-thumb-lock.jpg` 拇指锁全抠 ×，640×640 方图），
+由 `photo_panel()` 嵌进 Max Hangs / No-Hangs 的 SVG；不要再画抽象手指线稿。

@@ -1,6 +1,7 @@
 # 运动清单的动作图解：生成 src/content/stacks/workout/*.svg
 # 用法：python3 scripts/workout-figures.py && node scripts/workout-figures-png.mjs
 # 风格：浅底 + 黑色线稿小人 + 站点蓝色标注（角度、箭头、节奏）。改图就改这里，重新跑一次。
+import base64
 import math
 import pathlib
 
@@ -98,6 +99,40 @@ def frame(title, body, cue=None):
     )
 
 
+def photo(x, y, w, h, name):
+    """嵌入真人照片（src/content/stacks/workout/grip-*.jpg，640×640 方图），居中裁成 w×h"""
+    data = base64.b64encode((OUT / name).read_bytes()).decode()
+    return (f'<clipPath id="c-{name}-{x}-{y}"><rect x="{x}" y="{y}" width="{w}" height="{h}"/></clipPath>'
+            f'<image x="{x}" y="{y}" width="{w}" height="{h}" preserveAspectRatio="xMidYMid slice" clip-path="url(#c-{name}-{x}-{y})" href="data:image/jpeg;base64,{data}"/>')
+
+
+def photo_panel(x, y, w, h, kind, caption=True):
+    """真人握姿照片：half = ✓ 半抠（拇指放松垂下）；lock = × 拇指锁全抠（拇指压指甲）"""
+    ok = kind == "half"
+    col = "#2e7d32" if ok else DANGER
+    head = "✓ 正确：半抠 Half Crimp" if ok else "× 禁止：拇指锁全抠"
+    out = rect(x, y, w, h + 40, fill=col, stroke=col, sw=0, r=10)
+    out += text(x + w / 2, y + 28, head, size=21, color="#fff", weight=800, anchor="middle")
+    out += photo(x, y + 40, w, h, "grip-half-crimp.jpg" if ok else "grip-thumb-lock.jpg")
+    out += f'<rect x="{x}" y="{y}" width="{w}" height="{h + 40}" rx="10" fill="none" stroke="{col}" stroke-width="5"/>'
+    sx = w / 640
+    if ok:
+        tx, ty = x + 486 * sx, y + 40 + 318 * sx      # 拇指：放松垂在一边
+        out += circle((tx, ty), 34 * sx * 1.6, "#2e7d32", fill="none", w=4)
+        out += rect(tx - 64, ty + 34 * sx * 1.6 + 6, 128, 30, fill="#2e7d32", stroke="#2e7d32", sw=0, r=6)
+        out += text(tx, ty + 34 * sx * 1.6 + 28, "拇指放松", size=18, color="#fff", weight=800, anchor="middle")
+    else:
+        tx, ty = x + 460 * sx, y + 40 + 222 * sx      # 拇指压住食指 / 中指指甲
+        out += circle((tx, ty), 42 * sx * 1.6, DANGER, fill="none", w=5)
+        out += rect(tx - 76, ty + 42 * sx * 1.6 + 6, 152, 30, fill=DANGER, stroke=DANGER, sw=0, r=6)
+        out += text(tx, ty + 42 * sx * 1.6 + 28, "拇指压指甲", size=18, color="#fff", weight=800, anchor="middle")
+    if caption:
+        cap = ("第二指节约 90°，指尖平直", "拇指放松垂下，不压指甲") if ok else ("拇指压住食指 / 中指指甲", "就是全抠，Max Hang 禁止")
+        out += text(x + w / 2, y + h + 70, cap[0], size=18, weight=700, anchor="middle")
+        out += text(x + w / 2, y + h + 96, cap[1], size=18, color=col, weight=700, anchor="middle")
+    return out
+
+
 def floor(y, x0=40, x1=760):
     return line([(x0, y), (x1, y)], LINE, 4, cap="butt")
 
@@ -121,48 +156,6 @@ def dumbbell(c, vertical=True, size=1.0):
     return (line([(x - L / 2, y), (x + L / 2, y)], INK, 7)
             + rect(x - L / 2 - ph, y - pw / 2, ph, pw, fill=INK, sw=0, r=4)
             + rect(x + L / 2, y - pw / 2, ph, pw, fill=INK, sw=0, r=4))
-
-
-def grip_panel(ox, oy, w, h, kind="half"):
-    """握姿侧面图（拇指一侧看过去，指力板边在右下）。
-    half = ✓ 半抠：第二指节约 90°、指尖关节平直、拇指放松垂下
-    lock = ✕ 拇指锁：拇指压住食指（或食指+中指）指甲，也就是全抠
-    hyper = ✕ 死折：拇指没锁，但第二指节折过 90°、指尖关节反折"""
-    ok = kind == "half"
-    col = "#2e7d32" if ok else DANGER
-    head = {"half": "✓ 半抠 / 开放握", "lock": "✕ 禁止：拇指锁", "hyper": "✕ 禁止：指尖反折"}[kind]
-    cap = {"half": ("第二指节约 90°，指尖平直", "拇指放松垂下，不压指甲"),
-           "lock": ("拇指压住食指 / 中指指甲", "就是全抠，Max Hang 禁止"),
-           "hyper": ("拇指没锁也不行：", "指节折死、指尖关节反折")}[kind]
-    s = min(w / 230, (h - 96) / 190)
-    dx = ox + (w - 230 * s) / 2
-    def P(x, y):
-        return (dx + x * s, oy + 44 + y * s)
-    out = rect(ox, oy, w, h, fill="#fff", stroke=col, sw=4, r=14)
-    out += f'<path d="M{ox},{oy + 40} V{oy + 14} Q{ox},{oy} {ox + 14},{oy} H{ox + w - 14} Q{ox + w},{oy} {ox + w},{oy + 14} V{oy + 40} Z" fill="{col}"/>'
-    out += text(ox + w / 2, oy + 28, head, size=19, color="#fff", weight=800, anchor="middle")
-    out += rect(*P(128, 160), 100 * s, 22 * s, fill="#e9dcc0", stroke=INK, sw=3, r=3)  # 20mm 边
-    out += line([P(30, 0), P(66, 76)], INK, 36 * s)                                       # 手掌
-    if ok:
-        mcp, pip, dip, tip = (72, 82), (84, 152), (142, 154), (172, 158)
-    else:
-        mcp, pip, dip, tip = (72, 82), (84, 152), (126, 122), (168, 158)
-    out += line([P(*mcp), P(*pip)], INK, 20 * s) + line([P(*pip), P(*dip)], INK, 18 * s) + line([P(*dip), P(*tip)], INK, 16 * s)
-    if kind == "lock":
-        out += line([P(40, 60), P(84, 104), P(134, 128)], "#6b6b72", 15 * s)            # 拇指压在指甲上
-        out += circle(P(136, 130), 15 * s, DANGER, fill="none", w=4)
-    else:
-        out += line([P(40, 60), P(34, 112), P(40, 150)], "#6b6b72", 15 * s)             # 拇指放松垂下
-    if ok:
-        out += arc(P(*pip), 24 * s, 0, 90, None, color="#2e7d32")
-        out += text(*P(120, 132), "90°", size=round(22 * s), color="#2e7d32", weight=900, anchor="middle")
-    if kind == "hyper":
-        out += circle(P(*dip), 16 * s, DANGER, fill="none", w=4)
-        out += text(*P(160, 96), "反折", size=round(20 * s), color=DANGER, weight=900, anchor="middle")
-        out += text(*P(44, 186), "折过 90°", size=round(20 * s), color=DANGER, weight=900, anchor="middle")
-    out += text(ox + w / 2, oy + h - 36, cap[0], size=17, weight=700, anchor="middle")
-    out += text(ox + w / 2, oy + h - 12, cap[1], size=17, color=col, weight=700, anchor="middle")
-    return out
 
 
 svgs = {}
@@ -190,18 +183,16 @@ def scap():
 
 # 2. Max Hangs ------------------------------------------------------------------
 def maxhang():
-    b = text(48, 152, "握姿（侧面看）：Max Hang 只用左边这一种", size=21, weight=800)
-    for i, k in enumerate(("half", "lock", "hyper")):
-        b += grip_panel(40 + i * 244, 168, 232, 300, k)
+    b = photo_panel(40, 136, 352, 300, "half") + photo_panel(408, 136, 352, 300, "lock")
     j = dict(hand=(230, 182), far_hand=(218, 182), elbow=(240, 268), far_elbow=(230, 268), shoulder=(232, 352), far_shoulder=(226, 352),
              head=(276, 330), hip=(236, 522), far_hip=(232, 522), knee=(256, 632), far_knee=(246, 634), ankle=(240, 732), far_ankle=(232, 734),
              toe=(262, 738), far_toe=(254, 740), r=30)
-    b += f'<g transform="translate(40 452) scale(0.4)">{hangboard(110, 150)}{figure(j, w=22, head_w=14)}</g>'
-    b += note(250, 530, "双脚离地，沉肩不耸肩")
-    b += note(250, 574, "手肘约 170°，微屈不锁死")
-    b += note(250, 618, "7 秒全程缓慢吐气，不憋气")
-    b += note(250, 662, "撑不满：单脚点地卸力", color=INK)
-    b += text(250, 696, "宁可减重，也不改成全抠", size=21, color=DANGER, weight=700)
+    b += f'<g transform="translate(20 504) scale(0.3)">{hangboard(110, 150)}{figure(j, w=22, head_w=14)}</g>'
+    b += note(170, 598, "双脚离地，沉肩不耸肩", size=21) + note(170, 642, "手肘约 170°，微屈不锁死", size=21)
+    b += note(170, 686, "7 秒缓慢吐气，不憋气", size=21)
+    b += note(480, 598, "撑不满：单脚点地卸力", color=INK, size=21)
+    b += text(480, 640, "宁可减重，也不改成全抠", size=20, color=DANGER, weight=700)
+    b += text(480, 680, "指尖反折、折过 90° 也不行", size=20, color=DANGER, weight=700)
     return frame("双脚离地最大悬垂（Max Hangs）", b, "7 秒全力 + 113 秒休息 × 4 组 · 半抠 / 开放握，拇指放松")
 
 
@@ -343,11 +334,11 @@ def nohang():
     b += arrow((120, 470), (120, 560))
     b += note(268, 452, "臀部往下坐") + note(268, 492, "部分体重交给手指")
     b += note(250, 700, "双脚始终踩地")
-    b += grip_panel(470, 150, 290, 300, "half")
-    b += note(484, 500, "手指拉力约 30–35 kg")
-    b += text(484, 534, "约体重的 40–50%", size=21, color=INK, weight=600)
-    b += note(484, 590, "前臂温和充血")
-    b += text(484, 624, "不酸、不累就对了", size=21, color=INK, weight=600)
+    b += photo_panel(470, 140, 290, 290, "half")
+    b += note(484, 590, "手指拉力约 30–35 kg")
+    b += text(484, 624, "约体重的 40–50%", size=21, color=INK, weight=600)
+    b += note(484, 670, "前臂温和充血")
+    b += text(484, 704, "不酸、不累就对了", size=21, color=INK, weight=600)
     return frame("双脚踩地减重悬垂（No-Hangs）", b, "拉紧 10 秒 + 放松 20 秒 × 6 · 半抠 / 开放握，拇指放松")
 
 
