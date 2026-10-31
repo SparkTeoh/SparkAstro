@@ -8,11 +8,11 @@ const all = await getAllContent();
 const tags = [...new Set(all.flatMap((i) => i.tags))].slice(0, 12);
 ---
 
-<MainLayout title="内容中心 - Spark Liang" description="Spark Liang 的文章与视频：理财教育、价值投资、防诈骗指南与个人成长。">
+<MainLayout title="内容中心 - Spark Liang" description="Spark Liang 的文章与视频：商业与理财、价值投资、AI 实战 Case Study 与个人成长。">
   <PageHero
     eyebrow="内容中心"
     title="文章与视频"
-    lede="关于理财、投资，以及如何更好地掌控自己的人生。"
+    lede="关于商业与理财、AI 实战 Case Study，以及如何更好地掌控自己的人生。"
   >
     <form class="blog-search" role="search" onsubmit="return false">
       <label for="blog-search-input" class="sr-only">搜索内容</label>

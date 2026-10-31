@@ -12,6 +12,7 @@ import heroPortrait from "../assets/pics/spark-portrait-overshirt-4x5.png";
 import aboutPortrait from "../assets/pics/spark-portrait-polo-4x5.png";
 import siteData from "../data/siteData.json";
 import pillars from "../data/pillars.json";
+const pillarList: Array<(typeof pillars)[number] & { external?: boolean }> = pillars;
 import steps from "../data/verifySteps.json";
 import partners from "../data/partners.json";
 import { getAllContent } from "../lib/content";
@@ -33,7 +34,7 @@ const blurbs: Record<string, string> = {
       <p class="sp-eyebrow">Spark Liang · 成就自己，成就他人</p>
       <h1 class="sp-h1" id="hero-title">掌控财务，也掌控<em>自己的人生</em>。</h1>
       <p class="sp-lede">
-        真正的自由，是把商业与财富、身心健康和知行合一的能力一点点拿到手，让自己有得选。在这里，我用最平实的话分享价值投资、企业财务、我在用的日常清单与深度思考。这里也是我唯一的官方网站，认准这里和下面三个官方账号，其他自称是我的都是假冒。
+        真正的自由，是把商业与财富、身心健康和知行合一的能力一点点拿到手，让自己有得选。在这里，我用最平实的话分享价值投资、企业财务、AI 实战、我在用的日常清单与深度思考。这里也是我唯一的官方网站，认准这里和下面三个官方账号，其他自称是我的都是假冒。
       </p>
       <div class="sp-actions">
         <Button href="/fraud-prevention">认准官方渠道</Button>
@@ -105,7 +106,7 @@ const blurbs: Record<string, string> = {
       id="pillars-title"
     />
     <div class="sp-grid sp-grid--3">
-      {pillars.map((p, i) => (
+      {pillarList.map((p, i) => (
         <article class="sp-card sp-card--link">
           <div class={`sp-card__slot ${i % 3 === 1 ? "sp-card__slot--ink" : ""}`}>
             <Icon name={p.icon} />

@@ -1,8 +1,8 @@
 [
   { "title": "理财与价值投资", "sub": "从零建立观念，长期持有好公司", "href": "/blog?search=投资", "icon": "chart" },
   { "title": "企业预算与财务", "sub": "算好钱、分好钱，帮企业守住利润", "href": "/partners", "icon": "wallet" },
-  { "title": "身心健康清单", "sub": "生发、护肤、饮食补剂与运动实测", "href": "/stack", "icon": "check" },
-  { "title": "知行合一与成长", "sub": "识别内在自动化程序，搞定自己", "href": "/blog", "icon": "spark" },
-  { "title": "防诈骗指南", "sub": "先保护好你的钱，认准官方渠道", "href": "/fraud-prevention", "icon": "shield" },
-  { "title": "视频频道", "sub": "YouTube 深度教学与分享", "href": "https://www.youtube.com/@Mr18SparkLiang", "icon": "play", "external": true }
+  { "title": "AI 与效率实战", "sub": "Grok、Claude 等 AI 工具实测与商业 Case Study", "href": "/blog?search=AI", "icon": "spark" },
+  { "title": "身心健康清单", "sub": "生发、护肤、饮食补剂与一周运动方案", "href": "/stack", "icon": "check" },
+  { "title": "穿搭与 Tech 清单", "sub": "干净利落的形象管理与日常生产力装备", "href": "/stack", "icon": "book" },
+  { "title": "知行合一与心智", "sub": "识别内在自动化程序，搞定自己不内耗", "href": "/blog?search=成长", "icon": "shield" }
 ]
