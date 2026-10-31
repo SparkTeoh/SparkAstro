@@ -64,7 +64,7 @@ def arc(c, r, a0, a1, label=None, color=ACCENT, lr=None, size=24):
     return out
 
 
-def figure(j, color=INK, far=FAR, dash=None, w=11):
+def figure(j, color=INK, far=FAR, dash=None, w=11, head_w=7):
     """j: 关节坐标。far_* 是远侧肢体（灰色），其余是近侧（黑色）。"""
     out = []
     for a, b in (("far_shoulder", "far_elbow"), ("far_elbow", "far_hand"), ("far_hip", "far_knee"), ("far_knee", "far_ankle"), ("far_ankle", "far_toe")):
@@ -79,7 +79,7 @@ def figure(j, color=INK, far=FAR, dash=None, w=11):
     dist = math.hypot(hx - sx, hy - sy)
     if dist > r:
         out.append(line([(sx, sy), (hx - (hx - sx) * r / dist, hy - (hy - sy) * r / dist)], color, w - 2, dash))
-    out.append(circle(j["head"], r, color, w=7, dash=dash))
+    out.append(circle(j["head"], r, color, w=head_w, dash=dash))
     return "".join(out)
 
 
@@ -123,20 +123,45 @@ def dumbbell(c, vertical=True, size=1.0):
             + rect(x + L / 2, y - pw / 2, ph, pw, fill=INK, sw=0, r=4))
 
 
-def finger_closeup(ox, oy, s=1.0, kind="half"):
-    """手指特写：半抠 90°（指尖垫在 20mm 边上）"""
+def grip_panel(ox, oy, w, h, kind="half"):
+    """握姿侧面图（拇指一侧看过去，指力板边在右下）。
+    half = ✓ 半抠：第二指节约 90°、指尖关节平直、拇指放松垂下
+    lock = ✕ 拇指锁：拇指压住食指（或食指+中指）指甲，也就是全抠
+    hyper = ✕ 死折：拇指没锁，但第二指节折过 90°、指尖关节反折"""
+    ok = kind == "half"
+    col = "#2e7d32" if ok else DANGER
+    head = {"half": "✓ 半抠 / 开放握", "lock": "✕ 禁止：拇指锁", "hyper": "✕ 禁止：指尖反折"}[kind]
+    cap = {"half": ("第二指节约 90°，指尖平直", "拇指放松垂下，不压指甲"),
+           "lock": ("拇指压住食指 / 中指指甲", "就是全抠，Max Hang 禁止"),
+           "hyper": ("拇指没锁也不行：", "指节折死、指尖关节反折")}[kind]
+    s = min(w / 230, (h - 96) / 190)
+    dx = ox + (w - 230 * s) / 2
     def P(x, y):
-        return (ox + x * s, oy + y * s)
-    out = rect(*P(0, 0), 250 * s, 210 * s, fill="#fff", stroke=INK, sw=3, r=14)
-    out += rect(*P(120, 132), 130 * s - 3, 26 * s, fill="#e9dcc0", stroke=INK, sw=3, r=3)  # 20mm 边
-    out += text(*P(186, 190), "20mm 边", size=int(18 * s), color=FAR, weight=600, anchor="middle")
-    out += line([P(40, 10), P(60, 60)], INK, 34 * s)            # 手掌/手背
-    out += line([P(60, 60), P(78, 64)], INK, 22 * s)
-    out += line([P(78, 64), P(80, 122)], INK, 20 * s)          # 近节指骨
-    out += line([P(80, 122), P(132, 124)], INK, 18 * s)        # 中节
-    out += line([P(132, 124), P(158, 128)], INK, 16 * s)       # 远节（指腹压边）
-    out += arc(P(80, 122), 26 * s, 0, 90, None)
-    out += text(*P(54, 168), "90°", size=int(26 * s), color=ACCENT, weight=900, anchor="middle")
+        return (dx + x * s, oy + 44 + y * s)
+    out = rect(ox, oy, w, h, fill="#fff", stroke=col, sw=4, r=14)
+    out += f'<path d="M{ox},{oy + 40} V{oy + 14} Q{ox},{oy} {ox + 14},{oy} H{ox + w - 14} Q{ox + w},{oy} {ox + w},{oy + 14} V{oy + 40} Z" fill="{col}"/>'
+    out += text(ox + w / 2, oy + 28, head, size=19, color="#fff", weight=800, anchor="middle")
+    out += rect(*P(128, 160), 100 * s, 22 * s, fill="#e9dcc0", stroke=INK, sw=3, r=3)  # 20mm 边
+    out += line([P(30, 0), P(66, 76)], INK, 36 * s)                                       # 手掌
+    if ok:
+        mcp, pip, dip, tip = (72, 82), (84, 152), (142, 154), (172, 158)
+    else:
+        mcp, pip, dip, tip = (72, 82), (84, 152), (126, 122), (168, 158)
+    out += line([P(*mcp), P(*pip)], INK, 20 * s) + line([P(*pip), P(*dip)], INK, 18 * s) + line([P(*dip), P(*tip)], INK, 16 * s)
+    if kind == "lock":
+        out += line([P(40, 60), P(84, 104), P(134, 128)], "#6b6b72", 15 * s)            # 拇指压在指甲上
+        out += circle(P(136, 130), 15 * s, DANGER, fill="none", w=4)
+    else:
+        out += line([P(40, 60), P(34, 112), P(40, 150)], "#6b6b72", 15 * s)             # 拇指放松垂下
+    if ok:
+        out += arc(P(*pip), 24 * s, 0, 90, None, color="#2e7d32")
+        out += text(*P(120, 132), "90°", size=round(22 * s), color="#2e7d32", weight=900, anchor="middle")
+    if kind == "hyper":
+        out += circle(P(*dip), 16 * s, DANGER, fill="none", w=4)
+        out += text(*P(160, 96), "反折", size=round(20 * s), color=DANGER, weight=900, anchor="middle")
+        out += text(*P(44, 186), "折过 90°", size=round(20 * s), color=DANGER, weight=900, anchor="middle")
+    out += text(ox + w / 2, oy + h - 36, cap[0], size=17, weight=700, anchor="middle")
+    out += text(ox + w / 2, oy + h - 12, cap[1], size=17, color=col, weight=700, anchor="middle")
     return out
 
 
@@ -165,25 +190,19 @@ def scap():
 
 # 2. Max Hangs ------------------------------------------------------------------
 def maxhang():
-    b = hangboard(110, 150)
+    b = text(48, 152, "握姿（侧面看）：Max Hang 只用左边这一种", size=21, weight=800)
+    for i, k in enumerate(("half", "lock", "hyper")):
+        b += grip_panel(40 + i * 244, 168, 232, 300, k)
     j = dict(hand=(230, 182), far_hand=(218, 182), elbow=(240, 268), far_elbow=(230, 268), shoulder=(232, 352), far_shoulder=(226, 352),
              head=(276, 330), hip=(236, 522), far_hip=(232, 522), knee=(256, 632), far_knee=(246, 634), ankle=(240, 732), far_ankle=(232, 734),
-             toe=(262, 738), far_toe=(254, 740))
-    b += figure(j) + floor(760, 40, 400)
-    b += arc((240, 268), 34, 95, 265, None) + note(326, 262, "手肘约 170°")
-    b += note(326, 296, "微屈，不锁死")
-    b += arrow((150, 330), (150, 380)) + note(136, 300, "沉肩", anchor="end")
-    b += note(136, 340, "不耸肩", anchor="end")
-    b += note(326, 470, "双脚离地")
-    b += finger_closeup(470, 180, 1.1)
-    b += note(484, 440, "半抠 Half Crimp")
-    b += text(484, 474, "第二指节约弯 90°，指腹压边", size=21, color=INK, weight=600)
-    b += text(484, 504, "也可以用开放握 Open Hand", size=21, color=INK, weight=600)
-    b += note(484, 562, "✕ 不用全抠 Full Crimp", color=DANGER)
-    b += text(484, 596, "大拇指不压在食指指甲上", size=21, color=DANGER, weight=600)
-    b += note(484, 660, "7 秒：缓慢吐气")
-    b += text(484, 694, "全程不憋气", size=21, color=INK, weight=600)
-    return frame("双脚离地最大悬垂（Max Hangs）", b, "7 秒全力 + 113 秒休息 × 4 组 · 撑不满可单脚点地卸力")
+             toe=(262, 738), far_toe=(254, 740), r=30)
+    b += f'<g transform="translate(40 452) scale(0.4)">{hangboard(110, 150)}{figure(j, w=22, head_w=14)}</g>'
+    b += note(250, 530, "双脚离地，沉肩不耸肩")
+    b += note(250, 574, "手肘约 170°，微屈不锁死")
+    b += note(250, 618, "7 秒全程缓慢吐气，不憋气")
+    b += note(250, 662, "撑不满：单脚点地卸力", color=INK)
+    b += text(250, 696, "宁可减重，也不改成全抠", size=21, color=DANGER, weight=700)
+    return frame("双脚离地最大悬垂（Max Hangs）", b, "7 秒全力 + 113 秒休息 × 4 组 · 半抠 / 开放握，拇指放松")
 
 
 # 3. 高脚杯全蹲 -----------------------------------------------------------------
@@ -316,21 +335,20 @@ def cossack():
 
 # 8. No-Hangs -------------------------------------------------------------------
 def nohang():
-    b = hangboard(280, 150)
-    j = dict(hand=(400, 182), far_hand=(388, 182), elbow=(394, 268), far_elbow=(386, 268), shoulder=(386, 352), far_shoulder=(380, 352),
-             head=(430, 330), hip=(372, 520), far_hip=(368, 520), knee=(432, 612), far_knee=(424, 616), ankle=(398, 712), far_ankle=(390, 714),
-             toe=(442, 718), far_toe=(434, 718))
-    b += figure(j) + floor(722)
-    b += arrow((300, 470), (300, 560)) + note(286, 450, "臀部往下坐", anchor="end")
-    b += note(286, 490, "把部分体重", anchor="end") + note(286, 530, "交给手指", anchor="end")
-    b += note(470, 700, "双脚始终踩地")
-    b += note(520, 270, "手指拉力约 30–35 kg")
-    b += text(520, 304, "约体重的 40–50%", size=21, color=INK, weight=600)
-    b += note(520, 380, "半抠或开放握")
-    b += text(520, 414, "20 mm 四指洞", size=21, color=INK, weight=600)
-    b += note(520, 490, "前臂温和充血")
-    b += text(520, 524, "不酸、不累就对了", size=21, color=INK, weight=600)
-    return frame("双脚踩地减重悬垂（No-Hangs）", b, "拉紧 10 秒 + 放松 20 秒 × 6 · 不离地死挂")
+    b = hangboard(60, 150)
+    j = dict(hand=(180, 182), far_hand=(168, 182), elbow=(174, 268), far_elbow=(166, 268), shoulder=(166, 352), far_shoulder=(160, 352),
+             head=(210, 330), hip=(152, 520), far_hip=(148, 520), knee=(212, 612), far_knee=(204, 616), ankle=(178, 712), far_ankle=(170, 714),
+             toe=(222, 718), far_toe=(214, 718))
+    b += figure(j) + floor(722, 40, 440)
+    b += arrow((120, 470), (120, 560))
+    b += note(268, 452, "臀部往下坐") + note(268, 492, "部分体重交给手指")
+    b += note(250, 700, "双脚始终踩地")
+    b += grip_panel(470, 150, 290, 300, "half")
+    b += note(484, 500, "手指拉力约 30–35 kg")
+    b += text(484, 534, "约体重的 40–50%", size=21, color=INK, weight=600)
+    b += note(484, 590, "前臂温和充血")
+    b += text(484, 624, "不酸、不累就对了", size=21, color=INK, weight=600)
+    return frame("双脚踩地减重悬垂（No-Hangs）", b, "拉紧 10 秒 + 放松 20 秒 × 6 · 半抠 / 开放握，拇指放松")
 
 
 # 9. 攀岩热身 -------------------------------------------------------------------
