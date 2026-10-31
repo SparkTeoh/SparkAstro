@@ -4,7 +4,8 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import PageHero from "../../components/ui/PageHero.astro";
 
 const stacks = (await getCollection("stacks", (s) => !s.data.draft)).sort((a, b) => a.data.order - b.data.order);
-const upcoming = ["Tech", "健康", "穿搭", "皮肤管理"].filter((n) => !stacks.some((s) => s.data.short === n));
+// 「健康」已由饮食保健品 + 运动两份清单覆盖，不再放占位
+const upcoming = ["Tech", "穿搭", "皮肤管理"].filter((n) => !stacks.some((s) => s.data.short === n));
 ---
 
 <MainLayout

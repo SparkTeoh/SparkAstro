@@ -5,14 +5,15 @@ import ShareButtons from "./ShareButtons.astro";
 import ProductIcon from "./ProductIcon.astro";
 
 type Item = CollectionEntry<"stacks">["data"]["groups"][number]["items"][number];
-interface Props { item: Item; stackSlug: string; stackTitle: string }
-const { item, stackSlug, stackTitle } = Astro.props;
+interface Props { item: Item; stackSlug: string; stackTitle: string; kind?: "product" | "routine" }
+const { item, stackSlug, stackTitle, kind = "product" } = Astro.props;
+const routine = kind === "routine";
 ---
 
 <article id={item.id} class="sp-card sp-stack-item">
   <div class="sp-stack-item__media">
     {item.image ? (
-      <Image src={item.image} alt={item.name} widths={[400, 800]} sizes="(max-width: 720px) 100vw, 36rem" />
+      <Image src={item.image} alt={routine ? `${item.name}：动作图解` : item.name} widths={[400, 800]} sizes="(max-width: 720px) 100vw, 36rem" />
     ) : (
       <!-- TODO(spark): 放产品照片到 src/content/stacks/<slug>/，并在 YAML 里加 image -->
       <span class="sp-stack-item__placeholder"><ProductIcon name={item.icon} /></span>
@@ -26,8 +27,11 @@ const { item, stackSlug, stackTitle } = Astro.props;
     <h3 class="sp-h3">{item.name}</h3>
     <p class="sp-body" style="color:var(--sp-ink);font-weight:500">{item.role}</p>
     <dl class="sp-dl">
-      <div><dt>为什么选这一款</dt><dd>{item.why}</dd></div>
-      <div><dt>我怎么用</dt><dd>{item.how}</dd></div>
+      <div><dt>{routine ? "为什么做" : "为什么选这一款"}</dt><dd>{item.why}</dd></div>
+      <div><dt>{routine ? "怎么做" : "我怎么用"}</dt><dd>{item.how}</dd></div>
+      {item.steps.length > 0 && (
+        <div><dt>{routine ? "一步一步" : "步骤"}</dt><dd><ol class="sp-steps">{item.steps.map((s) => <li>{s}</li>)}</ol></dd></div>
+      )}
       {(item.price || item.since) && (
         <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
           {item.price && <div><dt>参考价</dt><dd>{item.price}</dd></div>}
