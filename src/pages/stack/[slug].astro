@@ -18,6 +18,7 @@ export async function getStaticPaths() {
 const { stack } = Astro.props;
 const d = stack.data;
 const slug = stack.id;
+const routine = d.kind === "routine";
 const days = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
 const itemCount = d.groups.reduce((n, g) => n + g.items.length, 0);
 const updated = d.updated.toLocaleDateString("zh-CN", { year: "numeric", month: "long", day: "numeric" });
@@ -93,7 +94,7 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
       </div>
 
       {d.science.flow.length > 0 && (
-        <ol class="sp-flow" aria-label="脱发的过程">
+        <ol class="sp-flow" aria-label={d.science.title}>
           {d.science.flow.map((step, i) => (
             <li class={i === d.science!.flow.length - 1 ? "is-last" : ""}>
               <span class="sp-meta">{String(i + 1).padStart(2, "0")}</span>
@@ -147,7 +148,7 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
 
       <!-- 四层总览 -->
       <div class="sp-stack" style="gap:0.75rem">
-        <p class="sp-eyebrow">所以我的方案分 {d.groups.length} 层</p>
+        <p class="sp-eyebrow">{routine ? `一周分 ${d.groups.length} 类训练日` : `所以我的方案分 ${d.groups.length} 层`}</p>
         <ol class="sp-layers">
           {d.groups.map((g, i) => (
             <li>
@@ -181,13 +182,13 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
       <header class="sp-chapter__head">
         <span class="sp-chapter__num">{String(gi + 1).padStart(2, "0")}</span>
         <h2 class="sp-h2" id={`${g.id}-title`} style="font-size:clamp(1.8rem,3.6vw,3rem)">{g.name}</h2>
-        {g.metaphor && <span class="sp-tag sp-tag--accent">比喻：{g.metaphor}</span>}
+        {g.metaphor && <span class="sp-tag sp-tag--accent">{routine ? g.metaphor : `比喻：${g.metaphor}`}</span>}
       </header>
 
       <div class="sp-chapter__body">
         {g.explain.length > 0 && (
           <div class="sp-stack">
-            <p class="sp-eyebrow">原理</p>
+            <p class="sp-eyebrow">{routine ? "器械和安排" : "原理"}</p>
             {g.explain.map((p) => <p class="sp-copy">{p}</p>)}
           </div>
         )}
@@ -219,9 +220,9 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
 
         {g.items.length > 0 && (
           <div class="sp-stack">
-            <p class="sp-eyebrow">我用的是</p>
+            <p class="sp-eyebrow">{routine ? "动作" : "我用的是"}</p>
             <div class="sp-grid sp-grid--2">
-              {g.items.map((item) => <StackItem item={item} stackSlug={slug} stackTitle={d.title} />)}
+              {g.items.map((item) => <StackItem item={item} stackSlug={slug} stackTitle={d.title} kind={d.kind} />)}
             </div>
           </div>
         )}
@@ -251,7 +252,7 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
     <section class="sp-wrap sp-section" aria-labelledby="principles-title">
       <div class="sp-stack">
         <p class="sp-eyebrow">执行纪律</p>
-        <h2 class="sp-h2" id="principles-title">顺序和间隔，比产品本身更重要。</h2>
+        <h2 class="sp-h2" id="principles-title">{routine ? "呼吸和休息，比练多少更重要。" : "顺序和间隔，比产品本身更重要。"}</h2>
       </div>
       <div class="sp-grid sp-grid--2">
         {d.principles.map((p, i) => (

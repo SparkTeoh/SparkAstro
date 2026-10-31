@@ -19,6 +19,7 @@ const blog = defineCollection({
 
 // 我的清单：每个清单一个 YAML 文件，放在 src/content/stacks/<slug>.yaml，网址是 /stack/<slug>
 // 产品照片放在 src/content/stacks/<slug>/ 里，YAML 里用相对路径引用，例如 image: ./hair/nizoral.jpg
+// kind: routine 的清单（例如运动）放动作图解，网页标签改成「为什么做 / 怎么做」，不显示「我用的是」
 const stacks = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/stacks' }),
   schema: ({ image }) => {
@@ -31,7 +32,8 @@ const stacks = defineCollection({
       icon: z.enum(['dropper', 'foam', 'shampoo', 'bottle', 'tube', 'pump', 'mask', 'patch', 'helmet', 'stamp', 'clinic']).optional(),
       role: z.string(),                      // 一句话：它负责什么
       why: z.string(),                       // 为什么选这一款
-      how: z.string(),                       // 我怎么用
+      how: z.string(),                       // 我怎么用（运动：负荷、组次数、休息）
+      steps: z.array(z.string()).default([]), // 逐步做法，一步一项（运动清单用）
       price: z.string().optional(),          // 价位，例如 RM 80–120
       since: z.string().optional(),          // 用了多久，例如 2 年
       link: z.string().url().optional(),     // 购买或官网链接
@@ -54,6 +56,7 @@ const stacks = defineCollection({
 
     return z.object({
       title: z.string(),                     // 页面标题：我的生发清单
+      kind: z.enum(['product', 'routine']).default('product'), // product = 产品清单；routine = 动作/流程清单
       short: z.string(),                     // 卡片短名：生发
       tagline: z.string(),
       intro: z.string(),
