@@ -1,0 +1,679 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import SectionIntro from "../../components/ui/SectionIntro.astro";
+import Accordion from "../../components/ui/Accordion.astro";
+import CtaCard from "../../components/ui/CtaCard.astro";
+import Tags from "../../components/ui/Tags.astro";
+import Icon from "../../components/ui/Icon.astro";
+import { formatDate } from "../../utils";
+
+// 博客数据 - 内容中心列表靠它
+export const blogData = {
+  title: "高密度、零膨胀的力量训练完整指南",
+  pubDate: new Date("2026-11-02"),
+  author: "Spark Liang",
+  tags: ["健康", "力量训练", "运动生理学", "攀岩"],
+  summary: "如何练出有爆发力、却不显壮（bulky）的体态：只刺激神经募集与肌原纤维，不刺激肌浆储水。讲清原理，再用案例示范：怎么加重、一次课怎么练、练完要歇几天。",
+  type: "深度实践",
+  featured: true,
+};
+
+const toc = [
+  { id: "mechanism", num: "01", title: "底层机制", note: "力量 ≠ 大块头" },
+  { id: "rules", num: "02", title: "五大铁律", note: "只练神经与肌丝" },
+  { id: "compare", num: "03", title: "全景对照", note: "一表看懂" },
+  { id: "progression", num: "04", title: "阶梯计算器", note: "体积不变也能进步" },
+  { id: "recovery", num: "05", title: "案例示范", note: "一次课 + 练完歇几天" },
+  { id: "redlines", num: "06", title: "执行红线", note: "皮肤与肌腱安全" },
+];
+
+const stats = [
+  { label: "负荷区间", value: "3–5", unit: "RM", note: "80%–90% 1RM，纯机械张力" },
+  { label: "单组努力", value: "RPE 8", unit: "", note: "保留 1–2 次余力，不追求 pump" },
+  { label: "组间休息", value: "3–5", unit: "分钟", note: "ATP-CP 与 CNS 完全恢复" },
+  { label: "热量策略", value: "±0", unit: "kcal", note: "等热量或微缺口，存量改造" },
+];
+
+const modes = {
+  density: {
+    tag: "目标通道：肌原纤维肥大（myofibrillar hypertrophy）",
+    title: "像把钢丝绳拧得更紧，而不是往海绵里注水",
+    text: "用大重量（80%–90% 1RM）、低次数（3–5 次）、长组间休息（3–5 分钟），强迫中枢神经系统（CNS）调动高阈值快肌纤维，并让细胞内真正负责发力的收缩蛋白（actin 与 myosin）排得更密。",
+    look: "放松时线条修长，发力时像压缩饼干一样硬；穿修身西装不会绷紧。",
+    who: "攀岩抱石好手、体操运动员、拳击与综合格斗的轻量级选手。",
+  },
+  bulky: {
+    tag: "需要避开的通道：肌浆肥大（sarcoplasmic hypertrophy）",
+    title: "高频充血与代谢压力，把细胞撑成储水海绵",
+    text: "传统健美练法用中等重量、每组 8–12 次做到力竭、短休息（30–60 秒）。肌肉为了应付缺氧和代谢产物堆积，会在非收缩空间（肌浆）里大量储存 glycogen，而每 1 克 glycogen 大约会带上 3 克水。",
+    look: "围度涨得快，看起来厚重壮硕，但单位截面积的力量密度偏低，停练后也消得快。",
+    who: "传统健美增肌期（bulk phase）的体态，追求极致 pump 和围度。",
+  },
+};
+
+const dna = [
+  {
+    tag: "ACTN3 (TC) / ACE (GC)",
+    title: "力量与爆发力底盘",
+    text: "我的基因报告里 Power Sports Performance 是 Enhanced。快肌纤维和 CNS 天生擅长响应「大重量、3–5 次、长休息」的机械张力刺激，不需要靠充血就能拉高绝对力量。",
+  },
+  {
+    tag: "VO2 Max Enhanced",
+    title: "收干与线条引擎",
+    text: "Energy Utilization 和最大摄氧量都是 Enhanced，Protein Utilization 是 Optimal。配合高强度间歇维持低体脂，能把高密度肌纤维的线条直接显出来。",
+  },
+  {
+    tag: "COL1A1 CC / COL3A1 AA",
+    title: "胶原蛋白要补上",
+    text: "软组织损伤风险是 Low，但 Collagen Integrity 是 Reduced。冲大重量时要同步补 glycine、proline、维生素 C 和锌、铜，让肌腱韧带的刚性跟得上神经力量。",
+  },
+];
+
+const rules = [
+  {
+    tag: "负荷与次数",
+    spec: "80%–90% 1RM",
+    title: "锁定神经募集区：每组 3–5 次",
+    text: "肌肉变大主要来自代谢压力，力量和密度来自机械张力。选一个你只能标准完成 3–5 次的重量，逼 CNS 一次唤醒最高比例的快肌纤维，把 actin 和 myosin 拧得更紧。",
+  },
+  {
+    tag: "拒绝力竭与 pump",
+    spec: "RPE 8–8.5",
+    title: "永远保留 1–2 次余力",
+    text: "健身房追求的酸胀充血感（pump）正是视觉膨胀的来源。如果一个重量你最多做 5 次，那么第 3 或第 4 次动作速度开始变慢时就停下，从源头切断细胞储水的信号。",
+  },
+  {
+    tag: "组间恢复",
+    spec: "ATP-CP 重置",
+    title: "组间休息拉长到 3–5 分钟",
+    text: "30–60 秒的短休息会制造代谢压力，促使细胞储水膨胀。严格休息 3–5 分钟，等呼吸完全平复、神经与磷酸肌酸系统恢复，每一组都能输出最高质量的爆发力。",
+  },
+  {
+    tag: "动作节奏",
+    spec: "F = m × a",
+    title: "强调向心爆发，弱化离心",
+    text: "围度增长很大一部分来自慢速下放（离心微撕裂）。推起、拉起时意图追求最快速度；下放受控即可，不刻意慢放 3–4 秒。再叠加等长收缩（平板、悬垂）和爆发动作（壶铃摇摆），快速提高肌腱刚性。",
+  },
+  {
+    tag: "热量与碳水",
+    spec: "等热量 + 蛋白质 1.6–2.0 g/kg",
+    title: "建筑工很猛，但不给多余的砖头",
+    text: "即使训练偶尔给出「变大」的信号，只要维持等热量（maintenance calories）或极轻微的热量缺口，身体就没有多余能量去合成大体积新组织，只能对现有肌纤维做内部升级：淘汰低效结构、排紧肌丝、消耗肌内脂肪。同时控制精制碳水，避免过多 glycogen 锁水造成浮肿。",
+  },
+];
+
+const compare = [
+  ["核心生理机制", "神经募集效率提升 + 肌原纤维致密化", "肌浆肥大（glycogen 与细胞水分扩充）"],
+  ["每组次数与负荷", "3–5 次，80%–90% 1RM", "8–15 次，65%–75% 1RM"],
+  ["单组状态", "保留 1–2 次余力（RPE 8），动作干脆", "做到力竭（RPE 10），追求酸痛与充血"],
+  ["组间休息", "3–5 分钟，神经与磷酸肌酸完全恢复", "45–90 秒，维持代谢压力与充血"],
+  ["动作选择", "多关节复合动作：深蹲、硬拉、引体、推举", "大量单关节孤立动作：弯举、飞鸟、夹胸"],
+  ["饮食策略", "等热量或微缺口 + 高蛋白 + 控精制碳水", "明显热量盈余 + 高碳水撑大体积"],
+  ["穿衣与触感", "穿西装显瘦挺拔，摸起来紧实坚硬", "修身衣物容易绷紧，触感偏软胀"],
+];
+
+const upgrades = [
+  {
+    title: "神经系统解锁隐藏算力",
+    text: "未经训练的人发力时只能调动一部分肌纤维；大重量训练后，CNS 能同时唤醒更高比例的运动单位，放电频率（rate coding）也更快。就像本来 5 个人散漫地拉绳，变成 9 个人听口令一起拉。",
+  },
+  {
+    title: "撤掉身体的内部刹车",
+    text: "新手发力时，负责反向动作的拮抗肌会本能地紧张，等于一边踩油门一边踩刹车。神经力量训练让大脑学会放松拮抗肌（antagonist inhibition），力量传导的损耗降到最低。",
+  },
+  {
+    title: "肌腱刚性与蛋白丝致密化",
+    text: "长期承受 85% 以上的重量，肌腱会变得像高强度碳纤维弹簧，力量传递不再卸力；肌细胞里的收缩蛋白丝也排得更紧，单位面积的张力随之上升。",
+  },
+];
+
+const stages = [
+  { id: "w1", weeks: "第 1–2 周", name: "适应蓄力", scheme: "5 组 × 3 次", note: "RPE 7.5–8，还能多做 2 次。推起速度要快，共 15 次高质量触发。" },
+  { id: "w3", weeks: "第 3–4 周", name: "容量微进", scheme: "5 组 × 4 次", note: "重量不变，每组加 1 次（共 20 次）。第 4 次轨迹不变形、速度不掉。" },
+  { id: "w5", weeks: "第 5–6 周", name: "密度巩固", scheme: "5 组 × 5 次", note: "重量不变，推进到 5×5（共 25 次）。最后一次依然留至少 1 次余力。" },
+  { id: "w7", weeks: "第 7 周", name: "减载 deload", scheme: "3 组 × 3 次（−25%）", note: "主动减重 25%、组数减少，让累积疲劳的 CNS 和肌腱胶原完成超量恢复。", kind: "deload" },
+  { id: "w8", weeks: "第 8 周", name: "新周期", scheme: "回到 5 组 × 3 次", note: "稳拿 5×5 并减载后，小幅加重，退回 5×3 开始新一轮阶梯。", kind: "next" },
+];
+
+const lifts = [
+  { label: "杠铃后深蹲", weight: 60 },
+  { label: "六角杠硬拉", weight: 70 },
+  { label: "负重引体向上（外挂重量）", weight: 15 },
+  { label: "站姿推举", weight: 40 },
+];
+
+// 示范用的一次下肢课
+const sample = [
+  { slot: "A · 神经主项", rest: "休 3–5 分钟", name: "杠铃后深蹲", dose: "5 组 × 3 次（RPE 8）", note: "下放约 1 秒受控，底部瞬间全力站起。第 3 次速度开始变慢就收组，不硬挤第 4 次。" },
+  { slot: "B · 向心爆发", rest: "休 2–3 分钟", name: "壶铃摇摆 / 跳箱", dose: "4 组 × 5 次", note: "每一下都追求最快速度，做到速度掉了就停。练的是发力速度，不是累。" },
+  { slot: "C · 等长收缩", rest: "休 90 秒", name: "高张力平板支撑（RKC plank）", dose: "3 组 × 30 秒", note: "全身绷到最紧，30 秒就够。整节课约 45 分钟，练完应该是精神清醒，不是瘫软。" },
+];
+
+// 练完大约要隔多久，才再练同一个部位 / 同一种强度
+const recovery = [
+  { hours: "72", label: "大重量下肢与硬拉", note: "深蹲、硬拉这类全身主项对 CNS 和下背压力最大，同一个动作至少隔 3 天再上大重量。" },
+  { hours: "48", label: "上肢推拉主项", note: "负重引体、推举、臂屈伸，3–5 RM 且不力竭，隔 2 天基本能恢复。" },
+  { hours: "48", label: "指力与悬垂等长", note: "肌腱血供比肌肉少，恢复更慢。指力板或高强度抱石之后，手指至少歇 2 天。" },
+  { hours: "48", label: "VO2 max 间歇", note: "心率推到 85%–90% HRmax 的间歇，隔 2 天再做；中间可以快走或轻松骑车。" },
+];
+
+const timeline = [
+  { day: "Day 0", title: "练完大重量深蹲", text: "当天补足蛋白质和睡眠，不再加练充血动作。" },
+  { day: "Day 1", title: "腿不上大重量", text: "可以练上肢推拉，或只做 20–30 分钟快走、活动度。" },
+  { day: "Day 2", title: "还是先放过腿", text: "可以抱石或做间歇；腿部只做轻松的活动，不做主项。" },
+  { day: "Day 3", title: "可以再蹲", text: "热身重量感觉轻快，就按阶梯继续；感觉沉，就再歇一天。" },
+];
+
+const redlines = [
+  {
+    tag: "训练红线",
+    danger: true,
+    title: "不要在最后加练充血孤立动作",
+    text: "主项练完觉得还有精力，也不要去抓哑铃做 3 组 × 12 次力竭的弯举、飞鸟或腿屈伸找酸胀感。最后 10 分钟的充血力竭，就足以诱发肌浆水肿，还会透支 CNS 的恢复。",
+    links: [],
+  },
+  {
+    tag: "营养与控痘",
+    title: "不用普通乳清蛋白和高糖增肌粉",
+    text: "我的乳糖不耐受是 Higher Tendency。乳制品和高升糖负荷会推高 insulin 与 IGF-1，可能让皮脂分泌变旺、出油冒痘。所以我用植物分离蛋白和无糖代餐，每天早上 5 g creatine monohydrate（不做 20 g 冲击期）。",
+    links: [
+      { label: "Soluxe 植物蛋白", href: "/stack/diet#soluxe-pea-original" },
+      { label: "No Nasties Complete Meal", href: "/stack/diet#no-nasties-complete-meal" },
+      { label: "Just Creatine", href: "/stack/diet#no-nasties-just-creatine" },
+    ],
+  },
+  {
+    tag: "关节与结缔组织",
+    title: "用胶原原料匹配神经爆发力",
+    text: "针对 Collagen Integrity 偏低（COL1A1 CC / COL3A1 AA），力量涨得越快，越要同步强化肌腱。我每天早餐固定加 10 g 胶原（补 glycine 与 proline）和维生素 C + 锌。",
+    links: [
+      { label: "Lennox Collagen 5000", href: "/stack/diet#lennox-collagen" },
+      { label: "VitaHealth Vitamin C with Zinc+", href: "/stack/diet#vitahealth-vitamin-c-zinc" },
+    ],
+  },
+];
+
+const faq = [
+  {
+    title: "每组只做 3–5 次、还不做到力竭，真的有效吗？",
+    description: "很多人把「第二天酸痛到下不了楼」当成训练有效的指标，但酸痛反映的是代谢产物堆积和微损伤，不是力量增长。用 85% 左右的重量做 5 组 × 3–5 次、每一下都全力推起，对 CNS 和高阈值快肌纤维的募集刺激远高于轻重量做 15 次力竭。练完觉得神经清醒、全身紧实，才是这套训练最理想的状态。",
+  },
+  {
+    title: "大重量（3–5 RM）会不会比中等重量（8–12 RM）更容易受伤？",
+    description: "健身房里很多受伤发生在「中等重量做到第 11、12 次、动作已经变形」的那一下：核心稳定肌群已经累垮，负荷全砸在关节韧带上。这套方案严格守 RPE 8、组间休息 3–5 分钟，每一次动作都在神经专注、核心锁死、动作不变形的状态下完成。前提是技术先练扎实，重量循序渐进。",
+  },
+  {
+    title: "第 4 周做 5 × 4 时，最后一组明显变慢怎么办？",
+    description: "不要硬撑。如果因为出差或睡眠不足导致速度下降，当周就停在 5 × 3，或者把组数减到 4 组。永远把推起速度和动作干脆度放第一位，等神经恢复了再推进下一阶。",
+  },
+  {
+    title: "多久能看到效果？",
+    description: "前 1–2 个月是神经唤醒期：体重和围度几乎不变（原本有代谢水肿的话反而更紧致），但深蹲、引体、硬拉的重量会涨得很快。3–6 个月后进入肌丝致密期：放松时线条修长，摸起来很硬，穿修身衬衫或西装也不会有壮硕绷紧的感觉。",
+  },
+];
+---
+
+<MainLayout
+  title={`${blogData.title} - Spark Liang`}
+  description={blogData.summary}
+  frontmatter={{ title: blogData.title, pubDate: blogData.pubDate, summary: blogData.summary, tags: blogData.tags }}
+>
+  <!-- Hero -->
+  <header class="sp-wrap sp-hero sp-hero--single" style="padding-bottom:2rem">
+    <div class="sp-stack">
+      <a class="sp-text-link" href="/blog">← 内容中心</a>
+      <p class="sp-eyebrow">{blogData.type} · 运动生理学</p>
+      <h1 class="sp-h1" style="max-width:14em;font-size:clamp(2.2rem,5vw,4rem)">高密度、<em>零膨胀</em>的力量训练完整指南</h1>
+      <p class="sp-lede">如果我想要肌肉密度高、有力量，但不要太大只，穿西装或修身衬衫不绷紧，能同时做到吗？可以。轻量级举重选手、攀岩和体操运动员，用的就是这套只刺激<strong>神经募集与肌原纤维</strong>、不刺激<strong>肌浆储水</strong>的系统，在锁定体重和围度的前提下，把绝对力量往上推。</p>
+      <p class="sp-meta">{blogData.author} · <time datetime={blogData.pubDate.toISOString()}>{formatDate(blogData.pubDate)}</time></p>
+      <Tags tags={blogData.tags} />
+    </div>
+  </header>
+
+  <section class="sp-wrap" aria-label="核心参数">
+    <div class="hd-stats">
+      {stats.map((s) => (
+        <div class="sp-card sp-card--pad">
+          <span class="sp-meta">{s.label}</span>
+          <strong class="hd-stat">{s.value}{s.unit && <small>{s.unit}</small>}</strong>
+          <span class="sp-body" style="font-size:0.88rem">{s.note}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 免责 -->
+  <section class="sp-wrap" aria-label="免责声明" style="margin-top:2rem">
+    <div class="sp-card sp-card--danger sp-card--pad" style="grid-template-columns:auto 1fr;gap:1rem;align-items:start">
+      <span style="display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;background:var(--sp-danger);color:#fff">
+        <Icon name="alert" class="w-6 h-6" />
+      </span>
+      <div class="sp-stack" style="gap:0.5rem">
+        <p class="sp-eyebrow sp-eyebrow--danger">个人经验，不是医疗建议</p>
+        <ul class="sp-check" style="color:var(--sp-ink)">
+          <li>这是我根据自己的基因报告和训练经验整理的方案，不是教练处方。基因相关的部分只适用于我，你的情况可能完全不同。</li>
+          <li>大重量训练前先把动作技术练扎实；有高血压、心血管问题或关节韧带旧伤，先问医生或物理治疗师。</li>
+          <li>我不会私信卖任何产品给你。有人用“Spark 推荐”的名义私信你卖货，都是假冒。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 目录 -->
+  <nav class="sp-wrap sp-section sp-section--tight" aria-label="本文目录" style="border-bottom:0">
+    <ol class="sp-layers hd-toc">
+      {toc.map((t) => (
+        <li><a href={`#${t.id}`}><span class="sp-meta">{t.num}</span><strong>{t.title}</strong><span class="sp-layers__metaphor">{t.note}</span></a></li>
+      ))}
+    </ol>
+  </nav>
+
+  <!-- 01 机制 -->
+  <section class="sp-wrap sp-section sp-section--alt hd-anchor" id="mechanism" aria-labelledby="mechanism-title">
+    <SectionIntro
+      id="mechanism-title"
+      eyebrow="01 · 底层机制"
+      title="为什么<em>有力量</em>不等于大块头？"
+      copy="两种训练方式会走向两套完全不同的适应机制。切换看看它们在肌细胞横截面上的差别。"
+    />
+
+    <div class="sp-card sp-card--pad-lg sp-card--heavy" style="gap:1.75rem">
+      <div class="hd-switch" role="tablist" aria-label="切换两种肥大机制">
+        <button type="button" role="tab" class="hd-switch__btn" data-mode="density" aria-selected="true" aria-controls="mode-panel">高密度：肌原纤维肥大</button>
+        <button type="button" role="tab" class="hd-switch__btn" data-mode="bulky" aria-selected="false" aria-controls="mode-panel">显壮：肌浆肥大</button>
+      </div>
+
+      <div id="mode-panel" class="hd-mode" data-mode="density" role="tabpanel">
+        <figure class="hd-cell">
+          <!-- 高密度：小而紧，肌丝挤满 -->
+          <svg class="hd-cell__svg hd-cell__svg--density" viewBox="0 0 240 240" role="img" aria-label="肌原纤维肥大：细胞横截面紧凑，收缩蛋白排列致密">
+            <circle cx="120" cy="120" r="84" fill="none" stroke="var(--sp-ink)" stroke-width="1" stroke-dasharray="3 5" opacity="0.35" />
+            <circle cx="120" cy="120" r="76" fill="var(--sp-page)" stroke="var(--sp-ink)" stroke-width="3" />
+            <g fill="var(--sp-accent)" stroke="var(--sp-ink)" stroke-width="1.5">
+              <circle cx="120" cy="120" r="14" class="hd-pulse" />
+              <circle cx="120" cy="88" r="13" /><circle cx="120" cy="152" r="13" />
+              <circle cx="92" cy="104" r="13" /><circle cx="148" cy="104" r="13" />
+              <circle cx="92" cy="136" r="13" /><circle cx="148" cy="136" r="13" />
+              <circle cx="120" cy="60" r="10" /><circle cx="120" cy="180" r="10" />
+              <circle cx="69" cy="91" r="10" /><circle cx="171" cy="91" r="10" />
+              <circle cx="69" cy="149" r="10" /><circle cx="171" cy="149" r="10" />
+              <circle cx="92" cy="69" r="10" /><circle cx="148" cy="69" r="10" />
+              <circle cx="92" cy="171" r="10" /><circle cx="148" cy="171" r="10" />
+            </g>
+          </svg>
+          <!-- 显壮：大而松，肌丝漂在水里 -->
+          <svg class="hd-cell__svg hd-cell__svg--bulky" viewBox="0 0 240 240" role="img" aria-label="肌浆肥大：细胞被 glycogen 和水撑大，收缩蛋白稀疏">
+            <circle cx="120" cy="120" r="104" fill="color-mix(in srgb, var(--sp-danger) 8%, var(--sp-page))" stroke="var(--sp-danger)" stroke-width="3" stroke-dasharray="7 4" />
+            <g fill="var(--sp-page)" stroke="var(--sp-danger)" stroke-width="1.5">
+              <circle cx="120" cy="120" r="10" />
+              <circle cx="84" cy="88" r="9" /><circle cx="156" cy="88" r="9" />
+              <circle cx="84" cy="152" r="9" /><circle cx="156" cy="152" r="9" />
+              <circle cx="120" cy="66" r="8" /><circle cx="120" cy="174" r="8" />
+            </g>
+            <g fill="var(--sp-danger)" font-family="var(--sp-font-mono)" font-size="10" font-weight="700" text-anchor="middle">
+              <text x="62" y="124">H₂O</text><text x="178" y="124">H₂O</text>
+              <text x="120" y="42">glycogen</text><text x="120" y="206">glycogen</text>
+            </g>
+          </svg>
+          <figcaption class="sp-meta hd-cell__cap"></figcaption>
+        </figure>
+
+        <div class="sp-stack hd-mode__copy">
+          <span class="sp-tag sp-tag--accent hd-mode__tag"></span>
+          <h3 class="sp-h3 hd-mode__title"></h3>
+          <p class="sp-body hd-mode__text"></p>
+          <div class="sp-grid sp-grid--2" style="gap:1rem">
+            <div class="sp-fit"><p class="sp-eyebrow">外观与触感</p><p class="hd-mode__look"></p></div>
+            <div class="sp-fit"><p class="sp-eyebrow">代表体态</p><p class="hd-mode__who"></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sp-stack" style="gap:1.25rem">
+      <p class="sp-eyebrow">我的情况 · DNA 报告</p>
+      <div class="sp-grid sp-grid--3">
+        {dna.map((d) => (
+          <div class="sp-card sp-card--pad">
+            <span class="sp-tag sp-tag--accent" style="width:fit-content">{d.tag}</span>
+            <h3 class="sp-h3">{d.title}</h3>
+            <p class="sp-body">{d.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 铁律 -->
+  <section class="sp-wrap sp-section hd-anchor" id="rules" aria-labelledby="rules-title">
+    <SectionIntro
+      id="rules-title"
+      eyebrow="02 · 五大铁律"
+      title="练出高密度、零膨胀的<em>五条规矩</em>"
+      copy="核心只有一句话：只刺激神经系统和肌原纤维（收缩蛋白），不刺激肌浆（储水储糖的空间）。"
+    />
+    <ol class="hd-rules">
+      {rules.map((r, i) => (
+        <li class="sp-card sp-card--pad-lg">
+          <div class="hd-rules__head">
+            <span class="sp-chapter__num" style="font-size:clamp(2.4rem,5vw,3.4rem)">{String(i + 1).padStart(2, "0")}</span>
+            <div class="sp-stack" style="gap:0.35rem">
+              <span class="sp-meta">{r.tag}</span>
+              <span class="sp-tag" style="width:fit-content;font-family:var(--sp-font-mono)">{r.spec}</span>
+            </div>
+          </div>
+          <h3 class="sp-h3">{r.title}</h3>
+          <p class="sp-body">{r.text}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- 03 对照表 -->
+  <section class="sp-wrap sp-section sp-section--alt hd-anchor" id="compare" aria-labelledby="compare-title">
+    <SectionIntro id="compare-title" eyebrow="03 · 全景对照" title="高密度力量 vs. 传统显壮增肌" />
+    <div class="sp-schedule">
+      <table class="hd-table">
+        <thead>
+          <tr>
+            <th scope="col">训练维度</th>
+            <th scope="col" class="hd-table__good">高密度 / 零膨胀<br /><span>体操、攀岩、格斗体态</span></th>
+            <th scope="col" class="hd-table__bad">传统增肌 / 显壮<br /><span>健美 bulky 体态</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {compare.map(([dim, good, bad]) => (
+            <tr><th scope="row">{dim}</th><td class="hd-table__good">{good}</td><td>{bad}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 04 进阶 -->
+  <section class="sp-wrap sp-section hd-anchor" id="progression" aria-labelledby="progression-title">
+    <SectionIntro
+      id="progression-title"
+      eyebrow="04 · 零膨胀渐进超负荷"
+      title="体积不变，新的力量<em>从哪来？</em>"
+      copy="不靠「练到酸痛、吃胖长粗」，力量照样能持续上升。靠的是身体内部三项硬件升级，加上 step loading（3 → 5 阶梯蓄力法）。"
+    />
+
+    <ol class="sp-flow" style="grid-template-columns:repeat(3,minmax(0,1fr))" aria-label="三项硬件升级">
+      {upgrades.map((u, i) => (
+        <li class={i === upgrades.length - 1 ? "is-last" : ""}>
+          <span class="sp-meta">升级 {String(i + 1).padStart(2, "0")}</span>
+          <strong style="font-family:var(--sp-font-display);font-size:1.1rem">{u.title}</strong>
+          <span style="font-size:0.92rem;font-weight:400">{u.text}</span>
+        </li>
+      ))}
+    </ol>
+
+    <div class="sp-card sp-card--pad-lg sp-card--heavy hd-calc" style="gap:1.5rem">
+      <div class="hd-calc__head">
+        <div class="sp-stack" style="gap:0.5rem">
+          <p class="sp-eyebrow">互动工具</p>
+          <h3 class="sp-h3" style="font-size:clamp(1.4rem,2.6vw,2rem)">8 周阶梯蓄力计算器</h3>
+          <p class="sp-body">输入你现在能标准完成 5 组 × 3 次（RPE 8，留 2 次余力）的工作重量，自动算出整个周期。</p>
+        </div>
+        <div class="hd-calc__controls">
+          <label class="sp-field">
+            <span class="sp-label">主项动作</span>
+            <select id="calc-lift" class="sp-input">
+              {lifts.map((l) => <option value={l.weight}>{l.label}</option>)}
+            </select>
+          </label>
+          <label class="sp-field">
+            <span class="sp-label">起始重量（kg）</span>
+            <input id="calc-weight" class="sp-input" type="number" inputmode="decimal" min="0" max="300" step="2.5" value="60" />
+          </label>
+          <label class="sp-field">
+            <span class="sp-label">达标后加重</span>
+            <select id="calc-inc" class="sp-input">
+              <option value="2.5">+2.5 kg（上肢 / 稳健）</option>
+              <option value="5">+5 kg（下肢）</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <ol class="hd-stages" aria-live="polite">
+        {stages.map((s) => (
+          <li class={`hd-stage ${s.kind ? `hd-stage--${s.kind}` : ""}`}>
+            <span class="sp-meta">{s.weeks} · {s.name}</span>
+            <strong class="hd-stage__kg" id={`calc-${s.id}`}>—</strong>
+            <span class="hd-stage__scheme">{s.scheme}</span>
+            <p>{s.note}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="sp-mine" style="background:var(--sp-alt)">
+        <p class="sp-eyebrow">速度也是进步</p>
+        <p>根据 F = m × a，第 1–6 周重量（m）没变，但只要推起的加速度（a）越来越快，你输出的力量（F）其实已经上升了。每 4–6 周做一次 deload。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 案例示范 -->
+  <section class="sp-wrap sp-section sp-section--alt hd-anchor" id="recovery" aria-labelledby="recovery-title">
+    <SectionIntro
+      id="recovery-title"
+      eyebrow="05 · 案例示范"
+      title="一次课怎么练，<em>练完歇几天？</em>"
+      copy="不给固定课表，只拿一次下肢课当例子，示范前面的铁律落地是什么样子，以及练完之后要等多久才能再练同一个部位。"
+    />
+
+    <div class="hd-day">
+      <div class="sp-section__bar" style="flex-wrap:wrap;align-items:start">
+        <div class="sp-stack" style="gap:0.4rem">
+          <p class="sp-eyebrow">案例 1 · 一次下肢课</p>
+          <h3 class="sp-h3" style="font-size:clamp(1.35rem,2.4vw,1.8rem)">主项 + 爆发 + 等长，三个动作就够</h3>
+        </div>
+        <span class="sp-tag">约 45 分钟</span>
+      </div>
+      <div class="sp-grid sp-grid--3">
+        {sample.map((m) => (
+          <div class="sp-card sp-card--pad">
+            <div class="hd-move__top"><span class="sp-meta">{m.slot}</span><span class="sp-meta">{m.rest}</span></div>
+            <strong style="font-family:var(--sp-font-display);font-size:1.15rem;line-height:1.3">{m.name}</strong>
+            <span class="sp-cell sp-cell--hot" style="width:fit-content;white-space:normal">{m.dose}</span>
+            <p class="sp-body" style="font-size:0.92rem">{m.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="hd-day">
+      <div class="sp-stack" style="gap:0.4rem">
+        <p class="sp-eyebrow">案例 2 · 练完要歇多久</p>
+        <h3 class="sp-h3" style="font-size:clamp(1.35rem,2.4vw,1.8rem)">同一个部位、同一种强度，大约隔这么久</h3>
+      </div>
+      <div class="hd-stats">
+        {recovery.map((r) => (
+          <div class="sp-card sp-card--pad">
+            <span class="sp-meta">{r.label}</span>
+            <strong class="hd-stat">{r.hours}<small>小时</small></strong>
+            <span class="sp-body" style="font-size:0.88rem">{r.note}</span>
+          </div>
+        ))}
+      </div>
+      <ol class="hd-timeline" aria-label="深蹲之后的恢复示范">
+        {timeline.map((t, i) => (
+          <li class={i === timeline.length - 1 ? "is-ready" : ""}>
+            <span class="sp-meta">{t.day}</span>
+            <strong>{t.title}</strong>
+            <span>{t.text}</span>
+          </li>
+        ))}
+      </ol>
+      <div class="sp-mine" style="background:var(--sp-page)">
+        <p class="sp-eyebrow">怎么判断还没恢复</p>
+        <p>热身重量感觉比平时重、推起速度明显变慢、前一晚睡不好、早上静息心率比平常高 5 下以上，有任何一项就多歇一天。少练一天不会退步，带着疲劳硬练才会。</p>
+      </div>
+    </div>
+
+    <p class="sp-body">想看每个动作的图解，可以看 <a class="sp-text-link" href="/stack/workout">我的运动清单</a>。</p>
+  </section>
+
+  <!-- 06 红线 -->
+  <section class="sp-wrap sp-section hd-anchor" id="redlines" aria-labelledby="redlines-title">
+    <SectionIntro
+      id="redlines-title"
+      eyebrow="06 · 执行红线"
+      title="三条红线：<em>皮肤</em>和肌腱都要顾"
+      copy="这部分和我的饮食与保健品清单直接联动，目的是不爆痘、不浮肿、不伤关节。"
+    />
+    <div class="sp-grid sp-grid--3">
+      {redlines.map((r) => (
+        <div class={`sp-card sp-card--pad ${r.danger ? "sp-card--danger" : ""}`}>
+          <p class={`sp-eyebrow ${r.danger ? "sp-eyebrow--danger" : ""}`}>{r.tag}</p>
+          <h3 class="sp-h3">{r.title}</h3>
+          <p class="sp-body">{r.text}</p>
+          {r.links.length > 0 && (
+            <div class="sp-zones__products" style="padding-left:0">
+              {r.links.map((l) => <a href={l.href}>{l.label}</a>)}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 07 FAQ -->
+  <section class="sp-wrap sp-section sp-section--alt" aria-labelledby="faq-title">
+    <SectionIntro id="faq-title" eyebrow="常见问题" title="练之前大家最常问的" />
+    <div><Accordion items={faq} /></div>
+  </section>
+
+  <CtaCard
+    eyebrow="下一步"
+    title="想看动作怎么做？"
+    copy="原理和案例讲完了，动作细节在我的运动清单里：每个动作都有图解、负荷、组次数和休息时间。"
+    cta="打开运动清单"
+    href="/stack/workout"
+  />
+</MainLayout>
+
+<style>
+  .hd-anchor { scroll-margin-top: 5rem; }
+  .hd-toc { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+  .hd-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-gap); }
+  .hd-stat { font-family: var(--sp-font-display); font-size: clamp(1.8rem, 3.4vw, 2.6rem); font-weight: 900; line-height: 1; }
+  .hd-stat small { margin-left: 0.3rem; font-size: 0.45em; color: var(--sp-accent); }
+
+  /* 机制切换 */
+  .hd-switch { display: flex; flex-wrap: wrap; gap: 0.5rem; width: fit-content; max-width: 100%; border: var(--sp-border); border-radius: calc(var(--sp-radius) + 0.25rem); padding: 0.3rem; background: var(--sp-alt); }
+  .hd-switch__btn { border: 1.5px solid transparent; border-radius: var(--sp-radius); padding: 0.6rem 1rem; background: transparent; color: var(--sp-soft); font: 800 0.95rem var(--sp-font-display); cursor: pointer; }
+  .hd-switch__btn[aria-selected="true"] { border-color: var(--sp-ink); background: var(--sp-accent); color: var(--sp-on-accent); box-shadow: 3px 3px 0 var(--sp-ink); }
+  .hd-switch__btn[data-mode="bulky"][aria-selected="true"] { background: var(--sp-danger); }
+
+  .hd-mode { display: grid; grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.2fr); gap: clamp(1.5rem, 4vw, 3rem); align-items: center; }
+  .hd-cell { display: grid; gap: 0.75rem; justify-items: center; margin: 0; border: var(--sp-border); border-radius: var(--sp-radius); padding: 1.5rem; background: var(--sp-alt); }
+  .hd-cell__svg { width: 100%; max-width: 15rem; }
+  .hd-mode[data-mode="density"] .hd-cell__svg--bulky,
+  .hd-mode[data-mode="bulky"] .hd-cell__svg--density { display: none; }
+  .hd-mode[data-mode="bulky"] .hd-mode__tag { border-color: var(--sp-danger); color: var(--sp-danger); }
+  .hd-mode__tag { width: fit-content; }
+  .hd-pulse { transform-origin: 120px 120px; animation: hd-pulse 1.8s ease-in-out infinite; }
+  @keyframes hd-pulse { 50% { transform: scale(0.9); opacity: 0.6; } }
+
+  /* 铁律 */
+  .hd-rules { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-gap); }
+  .hd-rules li:last-child { grid-column: 1 / -1; border-left: 6px solid var(--sp-accent); }
+  .hd-rules__head { display: flex; align-items: center; gap: 1rem; }
+
+  /* 对照表 */
+  .hd-table { width: 100%; min-width: 38rem; border-collapse: collapse; font-size: 0.92rem; }
+  .hd-table th, .hd-table td { padding: 0.9rem 1rem; border-bottom: 1px solid var(--sp-line); text-align: left; vertical-align: top; line-height: 1.6; }
+  .hd-table thead th { background: var(--sp-alt); font-family: var(--sp-font-display); font-size: 1rem; }
+  .hd-table thead th span { font-family: var(--sp-font-mono); font-size: 0.72rem; color: var(--sp-soft); font-weight: 700; }
+  .hd-table thead th.hd-table__bad { color: var(--sp-danger); }
+  .hd-table tbody th { white-space: nowrap; font-weight: 800; }
+  .hd-table tbody td { color: var(--sp-soft); }
+  .hd-table td.hd-table__good { color: var(--sp-ink); font-weight: 500; background: color-mix(in srgb, var(--sp-accent) 7%, var(--sp-page)); }
+  .hd-table thead th.hd-table__good { background: var(--sp-accent); color: var(--sp-on-accent); }
+  .hd-table thead th.hd-table__good span { color: rgba(255, 255, 255, 0.8); }
+  .hd-table tr:last-child th, .hd-table tr:last-child td { border-bottom: 0; }
+
+  /* 计算器 */
+  .hd-calc__head { display: grid; gap: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--sp-line); }
+  .hd-calc__controls { display: grid; grid-template-columns: repeat(3, minmax(9rem, 1fr)); gap: 0.75rem; }
+  .hd-stages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+  .hd-stage { display: grid; gap: 0.4rem; align-content: start; border: var(--sp-border); border-radius: var(--sp-radius); padding: 1rem; background: var(--sp-page); }
+  .hd-stage p { margin: 0.4rem 0 0; padding-top: 0.6rem; border-top: 1px solid var(--sp-line); color: var(--sp-soft); font-size: 0.85rem; line-height: 1.6; }
+  .hd-stage__kg { font-family: var(--sp-font-display); font-size: 1.8rem; font-weight: 900; line-height: 1.1; }
+  .hd-stage__scheme { width: fit-content; border-radius: 0.5rem; padding: 0.15rem 0.5rem; background: var(--sp-alt); font-size: 0.85rem; font-weight: 700; }
+  .hd-stage--deload { border-style: dashed; background: var(--sp-alt); }
+  .hd-stage--next { background: var(--sp-ink); color: var(--sp-page); box-shadow: 4px 4px 0 var(--sp-accent); }
+  .hd-stage--next .sp-meta, .hd-stage--next p { color: rgba(255, 255, 255, 0.72); border-color: rgba(255, 255, 255, 0.18); }
+  .hd-stage--next .hd-stage__scheme { background: var(--sp-accent); color: var(--sp-on-accent); }
+
+  /* 案例示范 */
+  .hd-day { display: grid; gap: 1.5rem; }
+  .hd-day + .hd-day { padding-top: 2rem; border-top: 1px solid var(--sp-line); }
+  .hd-move__top { display: flex; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+  .hd-timeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .hd-timeline li { display: grid; gap: 0.4rem; align-content: start; border: var(--sp-border); border-radius: var(--sp-radius); padding: 1rem; background: var(--sp-page); }
+  .hd-timeline strong { font-family: var(--sp-font-display); font-size: 1.05rem; }
+  .hd-timeline li > span:last-child { color: var(--sp-soft); font-size: 0.88rem; line-height: 1.6; }
+  .hd-timeline li.is-ready { background: var(--sp-ink); color: var(--sp-page); box-shadow: 4px 4px 0 var(--sp-accent); }
+  .hd-timeline li.is-ready .sp-meta, .hd-timeline li.is-ready > span:last-child { color: rgba(255, 255, 255, 0.72); }
+
+  @media (max-width: 980px) {
+    .hd-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hd-toc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .hd-mode { grid-template-columns: 1fr; }
+    .hd-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hd-stage--next { grid-column: 1 / -1; }
+    .hd-timeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 720px) {
+    .hd-rules { grid-template-columns: 1fr; }
+    .hd-toc { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .hd-calc__controls { grid-template-columns: 1fr; }
+    .hd-stages { grid-template-columns: 1fr; }
+    .hd-timeline { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hd-pulse { animation: none; } }
+</style>
+
+<script define:vars={{ modes }}>
+  // 1. 机制切换
+  const panel = document.getElementById("mode-panel");
+  const caps = { density: "横截面紧凑 · 收缩蛋白致密", bulky: "被 glycogen 与水撑大 · 密度偏低" };
+  const switchBtns = document.querySelectorAll(".hd-switch__btn");
+  function setMode(mode) {
+    const m = modes[mode];
+    panel.dataset.mode = mode;
+    panel.querySelector(".hd-cell__cap").textContent = caps[mode];
+    panel.querySelector(".hd-mode__tag").textContent = m.tag;
+    panel.querySelector(".hd-mode__title").textContent = m.title;
+    panel.querySelector(".hd-mode__text").textContent = m.text;
+    panel.querySelector(".hd-mode__look").textContent = m.look;
+    panel.querySelector(".hd-mode__who").textContent = m.who;
+    switchBtns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.mode === mode)));
+  }
+  switchBtns.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+  setMode("density");
+
+  // 2. 阶梯计算器
+  const lift = document.getElementById("calc-lift");
+  const weight = document.getElementById("calc-weight");
+  const inc = document.getElementById("calc-inc");
+  const fmt = (kg) => `${Number.isInteger(kg) ? kg : kg.toFixed(1)} kg`;
+  function calc() {
+    const base = Math.max(0, parseFloat(weight.value) || 0);
+    const step = parseFloat(inc.value) || 2.5;
+    const deload = Math.round(base * 0.75 * 2) / 2; // 取最近的 0.5 kg
+    ["w1", "w3", "w5"].forEach((id) => (document.getElementById(`calc-${id}`).textContent = fmt(base)));
+    document.getElementById("calc-w7").textContent = fmt(deload);
+    document.getElementById("calc-w8").textContent = fmt(base + step);
+  }
+  lift.addEventListener("change", () => { weight.value = lift.value; calc(); });
+  weight.addEventListener("input", calc);
+  inc.addEventListener("change", calc);
+  calc();
+
+</script>
