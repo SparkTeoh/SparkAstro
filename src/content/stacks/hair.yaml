@@ -160,13 +160,16 @@ groups:
     skip: 刚开始的人。先把前两层做好，这一层可以晚点再加。
     items:
       - id: lllt-helmet
-        name: 黑密 / iHelmet 160 颗激光管生发头盔
+        name: iRestore 爱丽朵尔 Elite 388 光束激光 + LED 生发头盔
         alias: The Energy Multiplier · 能量干预
         status: 计划入手
         icon: helmet
-        role: 低能量激光照射，给毛囊额外刺激。我还没开始用，打算之后加进来。
-        why: 160 颗纯激光管，不是 LED，覆盖整个头顶。
-        how: 打算隔天晚上用。洗完头、头皮 100% 吹干、没有药剂时戴 20–30 分钟。
+        image: ./hair/irestore-elite.jpg
+        role: 低能量光疗（LLLT）给毛囊额外刺激，是前两层的辅助，不代替 finasteride / minoxidil。还没买，打算换成这台，取代原本看的 iHelmet 160。
+        why: 天猫旗舰店 388 光束版（ID-5059）标示 188 颗激光 + 200 颗 LED、650nm，激光和 LED 两种光源都有。研究里有效的设备两种光源都有，没有证据说激光一定比 LED 好；对照试验多为厂商赞助、增发幅度中等、因人而异。注意：iRestore 美国官网的 Elite 是 300 激光 + 200 LED、625/655/680nm，和天猫这版规格不同，买前要向店家确认型号和版本。
+        how: 以说明书为准。店家页面写法不一致（表格写每周 3 次，图里写隔天一次、每次 12 分钟）。我打算头皮洗净吹干、没涂药的时候戴，至少坚持 4–6 个月再评估。
+        price: 天猫约 ¥6,616（补贴后；原价 ¥9,899，以下单页为准）
+        link: https://detail.tmall.com/item.htm?id=964247114211&skuId=5904532660643
       - id: derma-stamp
         name: 0.5mm 垂直微针印章（Derma Stamp）
         alias: The Wall-Breaker · 终极破壁重建
