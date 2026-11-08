@@ -48,6 +48,16 @@ const stacks = defineCollection({
       options: z
         .array(z.object({ name: z.string(), pros: z.string(), cons: z.string(), mine: z.boolean().default(false) }))
         .default([]),                        // 有哪些选择
+      // 重点提醒：显示在「有哪些选择」和「我的情况」之间，不填就不显示
+      callout: z
+        .object({
+          title: z.string().optional(),
+          text: z.string().optional(),
+          evidence: z.string().optional(),   // 研究证据，一句话
+          sourceLabel: z.string().optional(),
+          sourceUrl: z.string().url().optional(),
+        })
+        .optional(),
       mine: z.string().optional(),           // 我的情况 / 我为什么这样选
       fit: z.string().optional(),            // 适合谁
       skip: z.string().optional(),           // 谁不需要
