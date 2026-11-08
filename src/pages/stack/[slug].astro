@@ -211,6 +211,19 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
           </div>
         )}
 
+        {g.callout && (
+          <aside class="sp-card sp-card--pad-lg sp-card--heavy" aria-label={g.callout.title ?? "重点提醒"}>
+            {g.callout.title && <h3 class="sp-h3">{g.callout.title}</h3>}
+            {g.callout.text && <p class="sp-copy" style="color:var(--sp-ink);max-width:none">{g.callout.text}</p>}
+            {g.callout.evidence && <p class="sp-body">{g.callout.evidence}</p>}
+            {g.callout.sourceUrl && (
+              <a class="sp-text-link" href={g.callout.sourceUrl} target="_blank" rel="noopener noreferrer">
+                {g.callout.sourceLabel ?? g.callout.sourceUrl} ↗
+              </a>
+            )}
+          </aside>
+        )}
+
         {g.mine && (
           <div class="sp-mine">
             <p class="sp-eyebrow">我的情况</p>
