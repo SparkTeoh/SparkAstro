@@ -51,3 +51,8 @@
   from = "/gadget"
   to = "/stack/gadget"
   status = 301
+
+[[redirects]]
+  from = "/coffee"
+  to = "/stack/coffee"
+  status = 301

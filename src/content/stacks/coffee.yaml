@@ -1,0 +1,73 @@
+# 我的咖啡器材清单 → sparkliang.com/stack/coffee（短网址 /coffee）
+# 结构同 gadget.yaml：目前只有一组「家用意式」，一台机、一台磨
+# 产品照片放 src/content/stacks/coffee/，在对应产品下加 image: ./coffee/xxx.jpg
+# 规格只写零售商页面（Dankoff、CoffeeHub）和 Niche 官网写明的，不自己猜，也不写口味评价
+
+title: 我的咖啡器材清单
+short: 咖啡
+tagline: 我在家煮意式咖啡用的两样东西：一台咖啡机、一台磨豆机。只记录在用的，不做测评。
+intro: 这份清单记录的是我家里在用的咖啡器材。我不是咖啡测评博主，这里不比较品牌，也不打分，只写我现在用的这两样是什么、各自负责什么。规格来自零售商页面和品牌官网，我没有自己测过的数字不会写。换了东西我会更新这一页。
+updated: 2026-11-09
+order: 6
+medical: false
+priceNote: 参考价来自零售商页面（Dankoff、CoffeeHub）当时的标价，会变，以页面为准。写链接只是让你知道我用的是哪一款、规格出自哪里，不是广告，也没有佣金。
+relatedTag: 咖啡
+
+groups:
+  - id: espresso
+    name: 第一组：家用意式
+    metaphor: 机 + 磨
+    explain:
+      - 在家做意式咖啡，最基本的两样是咖啡机和磨豆机。咖啡机负责用压力和热水萃取 espresso，顺带用蒸汽打奶泡；磨豆机负责把豆子磨成合适粗细的粉。
+      - 两样配合着用：磨豆机现磨出一份粉，装进咖啡机的手柄萃取。磨豆机的粗细会直接影响萃取，所以一般会把磨豆机当成和咖啡机同样重要的那一半。
+      - 这一组现在就这两样，一台 Welhome KD-310 做萃取和打奶，一台 Niche Zero 负责磨豆。
+    fit: 想在家做 espresso 和奶咖，愿意自己磨豆、自己调整参数的人。
+    skip: 只喝手冲或挂耳、或者只想要按一个键就出咖啡的人，这一套不是为你准备的。
+    items:
+      - id: welhome-kd-310
+        name: Welhome / WPM KD-310（不锈钢版）
+        alias: 意式咖啡机
+        status: 必备
+        icon: bottle
+        role: 家用意式咖啡机，负责萃取 espresso 和用蒸汽打奶。
+        why: "这是我现在在用的咖啡机。按 Dankoff 产品页写的，它是 WPM（Welhome Pro）的家用意式机，用三组加热块（triple thermoblock）加热，LCD 屏加 PID 控制咖啡水温、预浸泡（pre-infusion）和蒸汽压力，内置 4 个预设的预浸泡程序。机身是全不锈钢（我用的是这个版本，另外有装饰玻璃的款式可选），冲煮头用黄铜套环，操作手柄是传统样式。机器净重 22kg，包装箱约 410×525×575 mm，不算小，摆之前要先量好位置。Dankoff 对制造缺陷提供 1 年保修，详细条款以页面为准。"
+        how: 家用意式机的一般用法：开机等机器预热，磨豆机出一份粉装进手柄，上机萃取；要做奶咖就用蒸汽棒打奶。预浸泡和温度可以在屏幕上调，具体参数要配合自己的豆子和磨豆机试。
+        image: ./coffee/welhome-kd-310.jpg
+        link: https://www.dankoff.com.my/products/welhome-kd-310-s-s
+        price: RM 3,950（Dankoff 标价，不锈钢版；以页面为准）
+        affiliate: false
+
+      - id: niche-zero
+        name: Niche Zero（63mm 锥刀磨豆机）
+        alias: 磨豆机
+        status: 必备
+        icon: bottle
+        role: 单份现磨的锥刀磨豆机，负责把每一份豆子磨成需要的粗细，配咖啡机用。
+        why: "这是我现在配 KD-310 用的磨豆机。按 Niche 官网和 CoffeeHub 页面写的，它是单份（single dose）设计：每次只放要用的那份豆子，磨完直接倒进手柄。刀盘是 63mm 锥刀，粗细是无段调节，从意式到手冲的粗细都在范围内。官方的说法是它的研磨路径几乎不残粉，放多少豆进去，出来差不多就是多少粉，官方引用独立测试说每份误差在 ±0.2g 以内，这是厂商的数据，不是我测的。研磨速度官方写约 1 克/秒，噪音约 72dB。机身是铝合金，配真橡木装饰件，上盖有联锁安全设计（盖子没盖好不会转），底座可以收电源线，附一个不锈钢接粉杯。官方尺寸 122×211×311 mm，重约 4.1kg（CoffeeHub 页面写 5kg，这里以 Niche 官网为准）。"
+        how: 单份磨豆机的一般用法：先称好一份豆子倒进豆仓，盖上盖子开机，磨完的粉落在接粉杯里，再倒进咖啡机手柄。要调粗细就转刻度盘，意式偏细、手冲偏粗，具体刻度要配合豆子和咖啡机自己试。
+        image: ./coffee/niche-zero.jpg
+        link: https://coffeehub.asia/products/ready-stockniche-zero-coffee-grinder-conical-burr-63mm
+        price: RM 4,290（CoffeeHub 标价；以页面为准）
+        affiliate: false
+
+principles:
+  - title: 只写在用的
+    text: 这里不做横评，也不写我没用过的器材。清单上是什么，就是我家里现在在用的什么，换了会更新。
+  - title: 机和磨一起看
+    text: 意式咖啡不是只靠咖啡机。磨豆机决定粉的粗细和每份的分量，和咖啡机一样重要，所以这一页把两样放在同一组。
+  - title: 规格以官网和零售商页面为准
+    text: 我写的规格来自 Dankoff、CoffeeHub 的商品页和 Niche 官网，没写的就是我不确定，不乱写。像残粉、误差这种数字是厂商说法，不是我自己测的。
+  - title: 价格会变
+    text: 页面上的参考价是零售商当时的标价，会随促销和汇率变化。买之前自己再核对一次。
+
+faq:
+  - title: 这一页会写咖啡好不好喝吗？
+    description: 不会。口味受豆子、水、参数影响太多，我不在这里做评价。这一页只记录我用的是什么器材、它们各自负责什么、规格出自哪里。
+  - title: 为什么磨豆机也算「必备」？
+    description: 因为意式萃取对粉的粗细和分量很敏感，没有能磨到意式细度、每份分量稳定的磨豆机，咖啡机再好也难调。Niche Zero 的无段调节和单份设计就是为这个服务的。
+  - title: 单份（single dose）是什么意思？
+    description: 每次只放当下要用的那份豆子进去磨，而不是把一整袋豆倒进豆仓慢慢用。好处是每次都是现磨、换豆方便；厂商也说这种设计几乎不残粉，放进去多少就出来多少。
+  - title: 这两样东西重吗？放哪里？
+    description: KD-310 净重 22kg，Niche Zero 约 4.1kg，咖啡机不轻，要放在稳固的台面上，摆之前先按包装尺寸量好位置和插座。
+  - title: 这些链接是广告吗？
+    description: 不是。写链接只是让你知道我用的是哪一款、规格出自哪里，没有佣金。有换的话我会更新这一页。
