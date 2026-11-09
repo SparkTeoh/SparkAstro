@@ -46,3 +46,8 @@
   from = "/workout"
   to = "/stack/workout"
   status = 301
+
+[[redirects]]
+  from = "/gadget"
+  to = "/stack/gadget"
+  status = 301
