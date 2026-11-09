@@ -1,8 +1,8 @@
 [
-  { "title": "理财与价值投资", "sub": "从零建立观念，长期持有好公司", "href": "/blog?search=投资", "icon": "chart" },
-  { "title": "企业预算与财务", "sub": "算好钱、分好钱，帮企业守住利润", "href": "/partners", "icon": "wallet" },
-  { "title": "AI 与效率实战", "sub": "Grok、Claude 等 AI 工具实测与商业 Case Study", "href": "/blog?search=AI", "icon": "spark" },
-  { "title": "身心健康清单", "sub": "生发、护肤、饮食补剂与一周运动方案", "href": "/stack", "icon": "check" },
-  { "title": "穿搭与 Tech 清单", "sub": "干净利落的形象管理与日常生产力装备", "href": "/stack", "icon": "book" },
-  { "title": "知行合一与心智", "sub": "识别内在自动化程序，搞定自己不内耗", "href": "/blog?search=成长", "icon": "shield" }
+  { "title": "理财与价值投资", "sub": "看懂商业基本面、留足安全边际，建立不盯盘的长期复利系统", "href": "/partners", "icon": "chart" },
+  { "title": "企业预算与 AI 财务", "sub": "用 AI 快速抓出利润漏洞（Variance），做好预算管控与团队分钱机制", "href": "/partners", "icon": "wallet" },
+  { "title": "AI 实战与个人成长系统", "sub": "把 AI 工具与底层思维结合，识别大脑自动化程序，搞定自己不内耗", "href": "/blog", "icon": "spark" },
+  { "title": "身心健康清单", "sub": "生发、护肤、饮食补剂与高密度力量训练——查遍论文后的亲身实测方案", "href": "/stack", "icon": "check" },
+  { "title": "穿搭与 Tech 清单", "sub": "干净利落的形象管理与日常高效率生产力装备", "href": "/stack", "icon": "book" },
+  { "title": "不内耗的人生系统", "sub": "从过去决定论转向未来创造论，找到你的人生北极星与 Identity", "href": "/blog?search=自我成长", "icon": "shield" }
 ]

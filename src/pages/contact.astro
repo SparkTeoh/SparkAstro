@@ -12,8 +12,8 @@ const ig = siteData.socials.find((s) => s.icon === "instagram")!;
 <MainLayout title="联系我 - Spark Liang" description="通过 Instagram 与 Spark 聊天，或填写商业合作表单。">
   <PageHero
     eyebrow="联系我"
-    title="想聊理财，还是谈合作？"
-    lede="理财问题来 Instagram 找我。课程、品牌、媒体合作，请填写下面的表单。"
+    title="日常交流去 IG，商务与企业咨询填表单。"
+    lede="理财、清单或个人成长相关的问题，来 Instagram 私信我最快。如果你是企业老板想解决财务预算与分钱机制问题，或有课程、品牌、媒体合作意向，请填写右侧表单。"
   />
 
   <section class="sp-wrap sp-section sp-section--alt" aria-label="联系方式">
@@ -21,18 +21,18 @@ const ig = siteData.socials.find((s) => s.icon === "instagram")!;
       <article class="sp-card">
         <div class="sp-card__slot sp-card__slot--ink"><Icon name="instagram" /></div>
         <div class="sp-card__body">
-          <span class="sp-meta">Instagram · 最快回复</span>
-          <h2 class="sp-h3">想聊聊？找我聊天！</h2>
-          <p class="sp-body">有理财问题、想了解更多投资知识，直接在 Instagram 上私信我。</p>
+          <span class="sp-meta">通道一 · Instagram 私信（最快回复）</span>
+          <h2 class="sp-h3">日常交流 & 读者提问</h2>
+          <p class="sp-body">看完我的清单或文章有疑问？想聊个人理财、价值投资或如何告别内耗？直接在 Instagram 私信我。</p>
           <div style="margin-top:0.5rem"><Button href={ig.url} variant="ink" external>去 Instagram 聊天 ↗</Button></div>
           <p class="sp-meta">{ig.handle}</p>
         </div>
       </article>
 
       <article id="collab" class="sp-card sp-card--pad-lg sp-card--heavy">
-        <p class="sp-eyebrow">商业合作</p>
-        <h2 class="sp-h3">填写合作需求</h2>
-        <p class="sp-body">我会在 3 个工作日内回复。</p>
+        <p class="sp-eyebrow">通道二 · 商业合作与企业咨询</p>
+        <h2 class="sp-h3">填写合作与咨询需求</h2>
+        <p class="sp-body">请勾选最符合你需求的选项，我和核心团队会在 3 个工作日内通过 WhatsApp 或邮件回复你。</p>
         <BusinessForm />
       </article>
     </div>

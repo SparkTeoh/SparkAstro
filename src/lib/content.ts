@@ -1,6 +1,7 @@
 // 内容中心的数据源：Markdown 文章 + .astro 富媒体文章 + YouTube 视频
 import { getCollection } from "astro:content";
 import videos from "../data/videos.json";
+import { hasMarkdownPosts } from "./blogDir";
 
 export type ContentItem = {
   title: string;
@@ -23,7 +24,8 @@ const astroPosts = import.meta.glob<{ blogData?: BlogData }>(
 );
 
 export async function getAllContent(): Promise<ContentItem[]> {
-  const md = (await getCollection("blog", (e) => !e.data.draft)).map<ContentItem>((e) => ({
+  const mdEntries = hasMarkdownPosts() ? await getCollection("blog", (e) => !e.data.draft) : [];
+  const md = mdEntries.map<ContentItem>((e) => ({
     ...e.data,
     link: `/blog/${e.id}`,
     kind: "markdown",

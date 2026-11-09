@@ -1,10 +1,18 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { BLOG_DIR, hasMarkdownPosts } from './lib/blogDir';
 
 // Markdown 文章：放在 src/content/blog/*.md
 // .astro 富媒体文章不走 collection，直接放在 src/pages/blog/<slug>.astro 并 export const blogData
+// 还没有 .md 时清空并跳过，不让 glob loader 打印「目录不存在」警告（见 lib/blogDir.ts）
 const blog = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/blog' }),
+  loader: {
+    name: 'blog-markdown',
+    load: async (ctx) => {
+      if (!hasMarkdownPosts()) return ctx.store.clear();
+      return glob({ pattern: '*.md', base: BLOG_DIR }).load(ctx);
+    },
+  },
   schema: z.object({
     title: z.string(),
     pubDate: z.coerce.date(),

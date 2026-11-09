@@ -360,13 +360,18 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
     </section>
   )}
 
-  <!-- CTA -->
-  <section class="sp-wrap sp-cta" aria-label="还有问题">
+  <!-- CTA：规律迁移 + 双通道导流 -->
+  <section class="sp-wrap sp-cta" aria-label="延伸交流与合作">
     <div class="sp-stack">
-      <p class="sp-eyebrow">还有问题？</p>
-      <h2 class="sp-h2" style="font-size:clamp(1.6rem,3.2vw,2.5rem)">来 Instagram 问我。</h2>
-      <p class="sp-copy">清单会持续更新。有我没写到的问题，私信我，常被问到的会补进上面的常见问题。</p>
+      <p class="sp-eyebrow">底层逻辑是一样的</p>
+      <h2 class="sp-h2" style="font-size:clamp(1.6rem,3.2vw,2.5rem)">靠意志力死撑容易崩，靠系统才能不内耗。</h2>
+      <p class="sp-copy">
+        无论是管理头发、身材与精力，还是管理个人投资组合与一家公司的财务账目，我做的事情都一样：先搞懂底层原理，再搭建一套最小阻力的执行系统。对这份清单有疑问，欢迎来 Instagram 找我聊；如果是企业财务、课程或品牌合作，可以直接填表联系。
+      </p>
     </div>
-    <div><a class="sp-button sp-button--primary" href={ig.url} target="_blank" rel="noopener noreferrer">去 Instagram ↗</a></div>
+    <div class="sp-actions">
+      <a class="sp-button sp-button--primary" href={ig.url} target="_blank" rel="noopener noreferrer">去 Instagram 问我 ↗</a>
+      <a class="sp-button sp-button--ghost" href="/contact#collab">企业咨询 / 商务合作</a>
+    </div>
   </section>
 </MainLayout>
