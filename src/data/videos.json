@@ -1,4 +1,47 @@
 {
-  "_comment": "TODO(spark): 填入 YouTube 频道 @Mr18SparkLiang 的真实视频。字段：title, description, videoId（URL 里 v= 后面的 11 位）, publishDate (YYYY-MM-DD), tags[]",
-  "featuredVideos": []
+  "_comment": "Spark Liang 官方 YouTube 频道 (@Mr18SparkLiang) 精选代表作",
+  "featuredVideos": [
+    {
+      "title": "小心！99% 保本投资都是坑！3 个方法教你认清黑平台",
+      "description": "为什么市面上号称“稳赚不赔、高息保本”的投资几乎都是骗局？拆解资金盘的底层套路，教你用 3 个标准保护好自己和家人的本金。",
+      "videoId": "X6rHhgMAJDA",
+      "publishDate": "2025-08-08",
+      "tags": ["防诈骗", "理财", "价值投资"]
+    },
+    {
+      "title": "富人思维揭秘：如果忽然没钱了，要怎样从零重新开始？",
+      "description": "当事业或财务遭遇归零冲击时，真正决定你能否翻身的不是运气，而是底层的富人思维与认知系统。",
+      "videoId": "5zCKZWi_7Ck",
+      "publishDate": "2025-01-10",
+      "tags": ["商业思维", "自我成长", "个人成长系统"]
+    },
+    {
+      "title": "长期投资 vs 短期交易：哪个真正适合你？底层区别是什么？",
+      "description": "全面拆解长期价值投资与短期交易的盈利逻辑、时间成本与心理门槛，帮你找到最适合自己性格与生活状态的财富系统。",
+      "videoId": "aY6kLg5pAH0",
+      "publishDate": "2024-01-31",
+      "tags": ["价值投资", "理财", "思维模型"]
+    },
+    {
+      "title": "适合普通人稳扎稳打的致富七大步骤：不需要复杂操作，也不用硬融圈子",
+      "description": "把财富积累拆解成可执行的 7 个系统步骤，不靠赌博和内幕消息，用底层规律一步步拿回财务选择权。",
+      "videoId": "GeK9bOHGFfs",
+      "publishDate": "2023-11-24",
+      "tags": ["理财", "价值投资", "个人成长系统"]
+    },
+    {
+      "title": "最简单的投资致富方法：虽然慢但极其有效，风险低且适合新手",
+      "description": "为什么越追求快钱越容易亏损？讲透基本面、安全边际与长期复利的核心原理，建立不盯盘的稳健投资体系。",
+      "videoId": "UylWdFM7rz4",
+      "publishDate": "2023-11-10",
+      "tags": ["价值投资", "理财"]
+    },
+    {
+      "title": "自雇人士与创业者必看：避免常犯的税务与财务规划错误",
+      "description": "很多自由职业者和小老板赚了钱却留不住钱，甚至在报税和账目管理上踩大坑。梳理自雇与创业必懂的财务合规底线。",
+      "videoId": "O-TJ8pLKu9U",
+      "publishDate": "2023-04-07",
+      "tags": ["企业财务", "理财", "商业思维"]
+    }
+  ]
 }
