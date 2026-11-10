@@ -1,20 +1,21 @@
 # 我的饮食与保健品清单 → sparkliang.com/stack/diet（短网址 /diet）
-# 结构同 hair.yaml / skincare.yaml，但这份比较简单：早餐代餐 → 早晨保健品 → 晚间保健品 → 执行纪律 → 常见问题
+# 结构同 hair.yaml / skincare.yaml：早餐代餐 → 早晨保健品 → 晚间保健品 → 执行纪律 → 常见问题
 # 产品照片放 src/content/stacks/diet/，在对应产品下加 image: ./diet/xxx.jpg
 
 title: 我的饮食与保健品清单
 short: 饮食保健品
-tagline: 早餐一杯预先拌好的奶昔搞定，保健品分早晚两批，每天固定吃，不会麻烦。
-intro: 这份清单记录的是我每天实际在吃的东西：早餐是一杯奶昔，用代餐粉、蛋白粉和可可粉预先拌好，每天舀 85g，再滴几滴代糖，早上吃一批保健品，晚上再吃一批。我不是营养师，也不是医生，这里写我吃什么、怎么吃，也会讲每一样成分是做什么的、我为什么吃、想避免以后出现什么问题。这些是我自己的理由，不是治疗建议，很多研究也还在累积。你可以参考，但不要照抄。
+tagline: 早餐一杯预先拌好的植物奶昔，保健品按五个时间点吃，每天固定，不会麻烦。
+intro: 这份清单记录的是我每天实际在吃的东西。早餐是一杯植物奶昔：代餐粉、蛋白粉和可可粉按 5:2:2:1:1 预先拌在大罐里，每天舀 80g，再另外加肌酸和胶原蛋白肽，最后倒入 15ml 特级初榨橄榄油摇匀；不加牛奶，只用常温水或无糖植物奶。保健品分五个时间点：刷牙后空腹、早餐奶昔、随奶昔吞胶囊、晚餐、睡前大约 1 小时。这份方案参考了我自己的基因检测，是按我的情况配的，不是通用处方。我不是营养师，也不是医生，这里写我吃什么、怎么吃，也会讲每一样成分是做什么的、我为什么吃。这些是我自己的理由，不是治疗建议，很多研究也还在累积。你可以参考，但不要照抄。
 updated: 2026-11-10
 order: 3
 medical: true
 safety:
   - 保健品不是药物，不能治病，也不能替代均衡饮食、运动、睡眠和正规医疗。
-  - 怀孕、哺乳、有慢性病，或正在服用任何药物的人，开始吃任何保健品之前，先问医生或药剂师。
-  - 我吃的剂量都按包装上的建议量，没有自己加码。剂量请以你买到的产品包装为准。
+  - 怀孕、哺乳、有慢性病，或正在服用任何药物的人，开始吃任何保健品之前，先问医生或药剂师。尤其是正在服用华法林（Warfarin）或其他抗凝血药的人：维生素 K2 可能影响凝血控制，包装上也有明确警告，未经医生同意不要自行服用。
+  - 高剂量鱼油可能增加出血风险；NAC 的说明里也提到可能和血液稀释剂、硝酸甘油等药物有相互作用。如果近期要做手术或正在服药，要不要停、停多久，先问医生，不要自己决定。
+  - 有些用量是我按自己情况定的，不一定等于包装上的建议量。剂量请以你买到的产品包装为准，也不要因为我吃得多就跟着加码。
   - 这是我按自己的情况配的方案，不是医疗建议。吃了之后有任何不舒服，就停下来，去看医生。
-priceNote: 价格是 2026 年 10 月我实际购买的价钱（No Nasties 是订阅价，Soluxe 是当时下单的促销价，原价一并注明；可可粉和两款代糖写的是标价），会随促销和购买渠道变化，以实际购买为准。没写价格的，是我一时查不到确切价钱，不乱写。
+priceNote: 价格是我实际购买或当时能查到的标价（No Nasties 是订阅价，Soluxe 是当时下单的促销价，原价一并注明；可可粉和两款代糖写的是标价）。新换的保健品我暂时没把买价一一写上，不乱填。价格会随促销和购买渠道变化，以实际购买为准。
 relatedTag: 健康
 
 groups:
@@ -22,13 +23,13 @@ groups:
     name: 第一组：早餐代餐
     metaphor: 一杯搞定
     explain:
-      - 我的早餐就是一杯奶昔：一份事先拌好的早餐粉，加水或牛奶摇匀。两分钟做好，省掉早上想吃什么的时间。
-      - 早餐粉是我按份数比例先拌在一起的：5 份 No Nasties Complete Meal、2 份 Soluxe 无味大豆蛋白、2 份 Soluxe 无味豌豆蛋白、1 份 Soluxe 无味糙米蛋白、1 份 EidOrganic 可可粉，也就是 5:2:2:1:1。一次拌一大罐，不用每天早上每包各舀一次。
-      - 每天早上舀 85g 这个混合粉。这样配是因为够耐饱、蛋白质的量也够，还多了可可的营养成分和味道。
+      - 我的早餐就是一杯植物奶昔：一份事先拌好的早餐粉，再另外加肌酸、胶原蛋白肽和 15ml 特级初榨橄榄油，加水或无糖植物奶摇匀。两分钟做好，省掉早上想吃什么的时间。
+      - 早餐粉是我按份数比例先拌在一起的：5 份 No Nasties Complete Meal、2 份 Soluxe 无味大豆蛋白、2 份 Soluxe 无味豌豆蛋白、1 份 Soluxe 无味糙米蛋白、1 份 EidOrganic 可可粉，也就是 5:2:2:1:1。一次拌一大罐，不用每天早上每包各舀一次。肌酸和胶原蛋白肽不预先拌进大罐，每天冲泡时再另加，避免结块或分层，剂量才准。
+      - 每天早上从大罐舀 80g 混合粉，加 350–400ml 常温水或无糖植物奶。我不用牛奶冲泡。先加水、再加干粉（包括当天另加的肌酸和胶原蛋白肽），最后倒入 15ml 橄榄油，盖紧剧烈摇匀 15–20 秒，尽量在 20 分钟内喝完。
       - 这几样粉全部没有加糖，单喝没什么甜味，所以我会滴几滴液体代糖（罗汉果或甜菊），调到自己喜欢的甜度。
-    mine: 我全部选无味、无糖的粉，按 5:2:2:1:1 先拌好，每天固定 85g，味道和分量都稳定，早上也少一个步骤。85g 是我自己试出来刚好撑到午餐的量，你如果容易饿或觉得太饱，自己往上或往下调，比例也不用照抄。
+    mine: 我全部选无味、无糖的粉，按 5:2:2:1:1 先拌好，每天固定 80g，味道和分量都稳定，早上也少一个步骤。80g 是我现在实际在用的量，你如果容易饿或觉得太饱，自己往上或往下调，比例也不用照抄。橄榄油和粉剂一起摇，是我用来搭配后面那些需要和脂肪一起吃的胶囊的方法，不是保证吸收更好。
     fit: 早上没时间、又不想随便吃面包或不吃早餐的人。
-    skip: 本来就有时间好好吃早餐的人，不需要特地改成代餐。
+    skip: 本来就有时间好好吃早餐的人，不需要特地改成代餐。对牛奶或大豆等成分过敏的人，先看清楚配料，不要照抄。
     items:
       - id: no-nasties-complete-meal
         name: NO NASTIES Complete Meal（Unflavoured & unsweetened）
@@ -37,7 +38,7 @@ groups:
         icon: bottle
         role: 早餐粉的主体，占 5 份，负责把一餐的分量和饱足感补上。
         why: 我早上固定喝的代餐粉。单喝蛋白粉我很快就饿，有它在早餐粉里打底，一杯才撑得到午餐。选无味、无糖的版本，方便和蛋白粉、可可拌在一起，甜度由我自己滴代糖决定。
-        how: 按 5:2:2:1:1 和三款 Soluxe 蛋白粉、可可粉先拌在一起，它占 5 份。每天早上舀 85g 混合粉，加水或牛奶摇匀。
+        how: 按 5:2:2:1:1 和三款 Soluxe 蛋白粉、可可粉先拌在一起，它占 5 份。每天早上舀 80g 混合粉，加 350–400ml 常温水或无糖植物奶。
         price: RM 269.10（3×800g，60 天订阅）
         image: ./diet/no-nasties-complete-meal.jpg
         link: https://www.nonasties.shop/products/complete-meal-checkout
@@ -48,7 +49,7 @@ groups:
         icon: pump
         role: 早餐粉里的大豆蛋白粉，无味，占 2 份。
         why: 无味无糖，和无味的 Complete Meal 拌在一起最干净，喝不腻。和豌豆、糙米蛋白一起用，蛋白质来源不只靠一种。
-        how: 按 5:2:2:1:1 拌进早餐粉，它占 2 份。每天早上舀 85g 混合粉，加水或牛奶摇匀。
+        how: 按 5:2:2:1:1 拌进早餐粉，它占 2 份。每天早上舀 80g 混合粉，加 350–400ml 常温水或无糖植物奶。
         price: RM 66.43（原价 RM 94.90）
         image: ./diet/soluxe-soy-original.jpg
         link: https://soluxeshop.com/products/original-unflavoured-soy-protein-isolate
@@ -59,7 +60,7 @@ groups:
         icon: pump
         role: 早餐粉里的豌豆蛋白粉，无味，占 2 份。
         why: 和无味大豆蛋白一样是基本款，两样各占 2 份，是早餐粉里蛋白质的主力。
-        how: 按 5:2:2:1:1 拌进早餐粉，它占 2 份。每天早上舀 85g 混合粉，加水或牛奶摇匀。
+        how: 按 5:2:2:1:1 拌进早餐粉，它占 2 份。每天早上舀 80g 混合粉，加 350–400ml 常温水或无糖植物奶。
         price: RM 66.43（原价 RM 94.90）
         image: ./diet/soluxe-pea-original.jpg
         link: https://soluxeshop.com/products/original-pea-protein
@@ -70,7 +71,7 @@ groups:
         icon: pump
         role: 早餐粉里的糙米蛋白粉，无味，占 1 份。
         why: 加一点糙米蛋白，和豌豆、大豆搭在一起，蛋白质来源更多样。
-        how: 按 5:2:2:1:1 拌进早餐粉，它占 1 份。每天早上舀 85g 混合粉，加水或牛奶摇匀。
+        how: 按 5:2:2:1:1 拌进早餐粉，它占 1 份。每天早上舀 80g 混合粉，加 350–400ml 常温水或无糖植物奶。
         price: RM 118.90
         image: ./diet/soluxe-brown-rice-original.jpg
         link: https://soluxeshop.com/products/soluxe-original-non-gmo-brown-rice-protein-isolate-usa-500g
@@ -81,7 +82,7 @@ groups:
         icon: bottle
         role: 早餐粉里的可可粉，Halal、非碱化（non-alkalized）、富含黄烷醇（flavanol），占 1 份。
         why: "可可本身含有黄烷醇（cocoa flavanols），研究上和血管功能、血流有关联，不过这是研究方向，不是保证的效果，它也不是药。市面上很多可可粉是碱化处理过的（Dutch-processed），颜色深、味道顺，但黄烷醇会流失不少；非碱化的保留得比较多，所以我选这一款。我加它是想让早餐多一份可可的营养，也让无味的早餐粉有点可可味。不加也可以，早餐粉照样能喝，只是少了可可的味道和这部分成分。"
-        how: 按 5:2:2:1:1 拌进早餐粉，它占 1 份。每天早上舀 85g 混合粉，加水或牛奶摇匀。
+        how: 按 5:2:2:1:1 拌进早餐粉，它占 1 份。每天早上舀 80g 混合粉，加 350–400ml 常温水或无糖植物奶。
         price: RM 59.90（官网标价；以实际购买为准）
         image: ./diet/eidorganic-kakao.jpg
         link: https://shopee.com.my/EIDORGANIC-HALAL-FLAVANOL-RICH-NON-ALKALIZED-KAKAO-POWDER-EXPIRED-NOVEMBER-2027-i.76727488.6735779762
@@ -92,7 +93,7 @@ groups:
         icon: dropper
         role: 零卡的液体罗汉果代糖，滴几滴给无糖的早餐奶昔加甜。
         why: 早餐粉全部无糖，单喝没什么甜味。我买了这款罗汉果和下面那款甜菊，想对比两种代糖的甜味，目前我喝不出什么差别，滴几滴够甜就好。这一款是在 Shopee 的 Seventynine Wellness 买的，没有另外加甜菊。
-        how: 滴几滴进早上的 85g 奶昔，摇匀试一下，不够甜再加。
+        how: 滴几滴进早上的 80g 奶昔，摇匀试一下，不够甜再加。
         price: RM 45.00（标价；实付可能更低）
         image: ./diet/79-wellness-monk-fruit.jpg
         link: https://shopee.com.my/1-bottle-X-79-Wellness-Monk-Fruits-Sweeteners-Authentic-Genuine-Liquid-30ml-(no-add-on-stevia)-i.251720389.44803904054
@@ -103,162 +104,229 @@ groups:
         icon: dropper
         role: 零卡的液体甜菊代糖，和罗汉果那款一样，滴几滴给早餐奶昔加甜。
         why: 和上面的罗汉果一起买来对比，甜菊和罗汉果我目前喝不出明显差别。官网写的成分是去离子水、有机甜菊叶萃取和 11% 有机甘蔗酒精，0 卡路里。
-        how: 滴几滴进早上的 85g 奶昔，官网建议 1–4 滴，按自己口味调。
+        how: 滴几滴进早上的 80g 奶昔，官网建议 1–4 滴，按自己口味调。
         price: RM 68.90（标价）
         image: ./diet/now-better-stevia.jpg
         link: https://www.nowfoods.com/products/natural-foods/betterstevia-liquid-original
+      - id: no-nasties-just-creatine
+        name: NO NASTIES Just Creatine（Creatine Monohydrate）
+        status: 必备
+        icon: bottle
+        role: 早上加进奶昔里的肌酸（creatine monohydrate），不预先拌进大罐。
+        why: "肌酸帮肌肉在短时间、高强度用力时更快补回能量，所以做重训时能多推一两下、恢复也比较快，是运动补充品里研究最多、证据也最扎实的一种。我吃它是为了让力量训练练得更有效。年纪越大肌肉流失越快，如果不练、也不给训练多一点支持，以后力气和肌肉量就会一点点掉，影响的是日常活动和老了能不能自己行动。也有研究在看肌酸对大脑和记忆的帮助，不过还算早期，我当作附带的好处。选 monohydrate 是因为它是研究最多的形态，这一款成分只有它，无味，加进奶昔喝不出来。"
+        how: 每天早上冲泡时另舀 5g 加进摇摇杯，不提前混进 5:2:2:1:1 大罐，避免沉底分层、每天剂量不准。
+        price: RM 73.51（1 pouch，60 天订阅）
+        image: ./diet/no-nasties-just-creatine.jpg
+        link: https://www.nonasties.shop/
+      - id: naturecan-collagen-peptides
+        name: Naturecan Collagen Peptides（Original Flavour 原味，300g 起）
+        status: 必备
+        icon: bottle
+        role: 早上加进奶昔里的胶原蛋白肽粉，替换了我以前吃的 Lennox 胶原蛋白。
+        why: "胶原蛋白是皮肤、关节软骨和韧带里常见的结构蛋白，身体自己生成的量会随年纪下降。口服胶原蛋白的效果研究还在累积，我当作蛋白质补充加一份保险，不是保证皮肤会变紧、关节一定更好。我换成这一款，是因为它是水解牛胶原蛋白肽，标签上还加了维生素 C、锌和铜；我选的是 Original Flavour 原味（包装上也标 Unflavoured）。按标签，每勺 13g 粉末提供 12.5g 胶原蛋白水解物、50mg 维生素 C、1.5mg 锌和 0.15mg 铜。因为粉里已经有维 C 和锌，我就不再另外吃维 C 加锌片。"
+        how: 每天早上冲泡时另舀 1.5 勺（约 19.5g 粉末，按标签每勺折算约 18.75g 胶原蛋白水解物）加进摇摇杯，不预先拌进大罐，以免吸湿结块。
+        image: ./diet/naturecan-collagen-peptides.jpg
+        link: https://www.naturecan-fitness.my/products/collagen-peptides
+      - id: olea-kotti-evoo
+        name: Olea Kotti Organic Extra Virgin Olive Oil（500ml）
+        alias: 早餐橄榄油
+        status: 必备
+        icon: bottle
+        role: 冲泡时最后倒进奶昔的特级初榨橄榄油，每天 15ml。
+        why: "我把高多酚的特级初榨橄榄油加进早餐奶昔里，既是早餐的一部分脂肪，也方便和后面那些脂溶性胶囊一起吃。这是我自己的吃法，不是保证吸收一定会更好。官网上这一款写的是 533 ppm 多酚、酸度 0.16%，建议份量是 15ml。我的清单里也写过 Domaine Adonis（Chetoui）作为同类选择，这里放的是 Olea Kotti 的产品和照片，不表示我只用过这一瓶。"
+        how: 水和干粉都放进摇摇杯后，最后倒入 15ml（1 汤匙）橄榄油，盖紧剧烈摇匀 15–20 秒，尽量在 20 分钟内喝完，喝完就洗杯子。不要提前倒进大粉罐，也不拿来高温爆炒。我把它放在避光橱柜，不放冰箱。
+        image: ./diet/olea-kotti-evoo.jpg
+        link: https://oleakotti.my/product/extra-virgin-olive-oil/
 
   - id: morning
     name: 第二组：早晨保健品
     metaphor: 早上一批
     explain:
-      - 这一批我都是早上和早餐一起吃，一次吃完，不用整天记着。
-      - 每一样都按包装上的建议量吃，没有自己加码。
-    mine: 我把所有白天吃的保健品集中在早餐这一餐，粉剂直接加进奶昔里，胶囊和药片配水吞，固定成一个流程就不会漏。
+      - 早晨分两步。先在刷牙后空腹，用常温水吞 Estalife NMN 和 Naturecan TMG；其余胶囊全部在喝早餐奶昔时一起吞。
+      - 和奶昔一起吃的，包括鱼油、维生素 D3+K2、还原型辅酶 Q10、虾青素、Triple Biotic 和硒。活性维生素 B6（P-5-P）还在计划入手，打算每周一、三、五各 1 粒。
+      - 每一样能按包装建议量的，我都按包装吃；鱼油 3 粒是我自己定的用量，比页面上按 30 份计算的每日份（2 粒）多 1 粒。
+    mine: 我把白天的保健品都固定在早上，空腹两粒先吃，其余配着奶昔吞，就不会漏。这是我按自己情况排的流程，不是说空腹或配油脂一定能让吸收提高多少倍。
     fit: 想把保健品固定成一个早上流程、不想分散在一天里吃的人。
     skip: 正在服药、怀孕、哺乳或有慢性病的人，哪一样该吃、哪一样不该吃，先问医生。
     items:
-      - id: lennox-collagen
-        name: Lennox Collagen 5000 Powder（280g）
+      - id: estalife-nmn-500
+        name: Estalife NMN 500MG（素食胶囊）
         status: 必备
         icon: bottle
-        role: 早上加进奶昔里的胶原蛋白粉，一种鱼胶原蛋白肽的蛋白质补充。
-        why: "胶原蛋白是撑起皮肤弹性和紧实度的主要结构蛋白，年纪大了皮肤会不会松、会不会下垂，很大程度就看它还剩多少。胶原蛋白从二十几岁开始就慢慢流失，要留住它，我知道的有两条路：一条是医美，比如 HIFU 用能量去刺激皮肤自己生成胶原蛋白；另一条就是从饮食里多补一点原料。我两条都想顾到，这一罐就是「补」的那一边。另外，膝盖等关节的软骨和韧带也大量靠胶原蛋白，我想趁现在还没问题时就开始保养，降低以后膝盖退化、上下楼梯会痛的风险。口服胶原蛋白的效果研究还在累积，我当作蛋白质补充加一份保险。选这一款是无味粉剂，一勺加进奶昔就好。"
-        how: 每天早上 1 scoop（10g），直接加进早餐奶昔里摇匀。
-        image: ./diet/lennox-collagen.jpg
-      - id: no-nasties-just-creatine
-        name: NO NASTIES Just Creatine（Creatine Monohydrate）
+        role: 早上空腹吃的 NMN，一种 NAD+ 前体，替换了我以前吃的 NutrinLife NMN 咀嚼片。
+        why: "NMN 是身体用来合成 NAD+ 的原料，而 NAD+ 参与细胞的能量代谢和修复，它的量会随年纪下降，所以这几年在「健康老化」话题里很热门。我吃它是想给身体多一点原料，看能不能帮我把精力和恢复维持得久一点。老实说，人体研究还很早期，效果没有定论，我把它当作一个对自己的小实验，不当作抗衰老的保证。换成这一款，是因为官方写法是每份 2 粒共 500mg，而且是无糖的素食胶囊，不用再吃带味道的咀嚼片。"
+        how: 每天早上刷牙后空腹吞 2 粒（共 500mg），配常温水。官方建议早上空腹吃，也可以做吃 2 个月、停 2 周的循环。我只在早上吃，不放到下午或晚上。
+        image: ./diet/estalife-nmn-500.jpg
+        link: https://estalife.com/products/nmn-500mg
+      - id: naturecan-tmg
+        name: Naturecan TMG Supplement（Betaine Anhydrous 686mg）
         status: 必备
         icon: bottle
-        role: 早上加进奶昔里的肌酸（creatine monohydrate）。
-        why: "肌酸帮肌肉在短时间、高强度用力时更快补回能量，所以做重训时能多推一两下、恢复也比较快，是运动补充品里研究最多、证据也最扎实的一种。我吃它是为了让力量训练练得更有效。年纪越大肌肉流失越快，如果不练、也不给训练多一点支持，以后力气和肌肉量就会一点点掉，影响的是日常活动和老了能不能自己行动。也有研究在看肌酸对大脑和记忆的帮助，不过还算早期，我当作附带的好处。选 monohydrate 是因为它是研究最多的形态，这一款成分只有它，无味，加进奶昔喝不出来。"
-        how: 每天早上 5g，直接加进早餐奶昔里摇匀。
-        price: RM 73.51（1 pouch，60 天订阅）
-        image: ./diet/no-nasties-just-creatine.jpg
-        link: https://www.nonasties.shop/
-      - id: nutrinlife-nmn3
-        name: NutrinLife NMN3+（凤梨味咀嚼片，50 片）
+        role: 早上和 NMN 一起吃的 TMG（三甲基甘氨酸 / 无水甜菜碱），一种甲基供体。
+        why: "TMG（也叫甜菜碱）可以提供甲基，参与体内一些正常的代谢过程，官网上也提到和同型半胱氨酸代谢有关。我在吃 500mg NMN 的同时加一粒 TMG，是想把甲基供体补上，这是我自己的搭配，不是保证一定能防止什么问题。"
+        how: 每天早上 1 粒（686mg）。我目前是刷牙后和 NMN 一起空腹吃；包装建议每天 1 粒配水，最好和食物一起吃。
+        image: ./diet/naturecan-tmg.jpg
+        link: https://www.naturecan-fitness.my/products/tmg-supplement
+      - id: naturecan-omega-3
+        name: Naturecan High Strength Omega-3 Supplement
         status: 必备
         icon: bottle
-        role: 早上吃的 NMN 咀嚼片，一种 NAD+ 前体，这一款还配了茄红素和槲皮素。
-        why: "NMN 是身体用来合成 NAD+ 的原料，而 NAD+ 参与细胞的能量代谢和修复，它的量会随年纪下降，所以这几年在「健康老化」话题里很热门。我吃它是想给身体多一点原料，看能不能帮我把精力和恢复维持得久一点。老实说，人体研究还很早期，效果没有定论，我把它当作一个对自己的小实验，不当作抗衰老的保证。选这一款是凤梨味咀嚼片，不用配水；另外配了茄红素和槲皮素。"
-        how: 每天早上 1–2 片（按包装）。
-        image: ./diet/nutrinlife-nmn3.jpg
-      - id: vitahealth-vitamin-c-zinc
-        name: VitaHealth Vitamin C with Zinc+
+        role: 随早餐奶昔吃的鱼油，补 Omega-3 里的 EPA 和 DHA，替换了我以前吃的 PureMed 鱼油。
+        why: "鱼油里的 EPA 和 DHA 是 Omega-3 脂肪酸，和心血管、大脑以及身体的发炎反应都有关系，但身体自己做不太出来，主要靠吃深海鱼。我平时吃鱼不多，所以用鱼油补上。我想的是长期照顾心血管、大脑和关节，这是我自己的理由，不是它保证的效果。官网营养表按每日份（页面写 60 粒 / 30 份，相当于 2 粒一份）是 DHA 440mg、EPA 660mg、维生素 E 8mg。我每天吃 3 粒，按这份表折算大约是 DHA 660mg、EPA 990mg、维生素 E 12mg。同一产品的 SKU 带 090，和页面上的 60 粒写法不一致，我没有独立核对瓶身粒数，这里不写死是 90 粒。"
+        how: 每天早上随奶昔吞 3 粒。我在马来西亚把未开封和已开封的鱼油都放冰箱冷藏，避免热天气让油脂容易氧化；这是我自己的保存方式。官网写的是放在阴凉干燥处，避免阳光和高温。对鱼类过敏的人不要吃。
+        image: ./diet/naturecan-omega-3.jpg
+        link: https://www.naturecan-fitness.my/products/high-strength-omega-3-supplement
+      - id: estalife-d3-k2
+        name: Estalife Vitamin D3 1,000 IU + K2 MK-7 100mcg
         status: 必备
         icon: bottle
-        role: 早上吃的维生素 C 加锌，一般的免疫支持。
-        why: "维生素 C 和锌都是免疫系统正常运作需要的基本营养素，维生素 C 还参与胶原蛋白的合成，刚好和我吃的胶原蛋白搭在一起。我吃它是当作营养的保底，不想因为某段时间吃得不好，让这两样缺到。我想避免的是常常小病不断、伤口好得慢这种「底子不够」的状态。这一款两样做在一片里，又是缓释配方，少吞一粒。"
-        how: 每天早上 1 片，和早餐一起吃。
-        image: ./diet/vitahealth-vitamin-c-zinc.jpg
-      - id: puremed-fish-oil-plus
-        name: PureMed Fish Oil Plus（90 粒）
+        role: 随早餐奶昔吃的维生素 D3 加 K2，替换了我以前单独吃的 D3。
+        why: "维生素 D 帮身体吸收钙、维持骨骼，也和免疫、肌肉功能有关。它主要靠皮肤晒太阳合成，可是我大部分时间在室内，就算住在热带，也不一定晒得够。K2（这一款是 MK-7）常和 D3 放在一起，官网上的说法是帮助把钙用到骨骼相关的正常功能上。我换成两样做在一粒里的版本，同样是为了骨骼的长期保养，也少吞一粒。正在吃抗凝血药的人，先看下面的安全说明，不要自己加。"
+        how: 每天早上随奶昔吞 1 粒。
+        image: ./diet/estalife-d3-k2.jpg
+        link: https://estalife.com/products/vitamin-d3-k2-mk7
+      - id: estalife-ubiquinol
+        name: Estalife Kaneka Ubiquinol 100MG
         status: 必备
         icon: bottle
-        role: 早上吃的鱼油，补 Omega-3 里的 EPA 和 DHA，配方里另外加了亚麻籽油、维生素 E 和 D3。
-        why: "鱼油里的 EPA 和 DHA 是 Omega-3 脂肪酸，和心血管、大脑以及身体的发炎反应都有关系，但身体自己做不太出来，主要靠吃深海鱼。我平时吃鱼不多，所以用鱼油补上。我想的是长期：降低以后心血管出问题的风险，也照顾大脑和关节，这是我自己的理由，不是它保证的效果。这一款另外加了亚麻籽油、维生素 E 和 D3，是肠溶软胶囊，比较不会有鱼腥味的嗝。"
-        how: 早餐时 1–2 粒（按包装）。
-        image: ./diet/puremed-fish-oil-plus.jpg
-      - id: biofizz-coq10-plus
-        name: BioFIZZ Coenzyme Q10 Plus（30 粒）
+        role: 随早餐奶昔吃的还原型辅酶 Q10（ubiquinol），替换了我以前吃的普通 CoQ10。
+        why: "CoQ10 是细胞在线粒体里产生能量时会用到的物质，心脏这种耗能大的器官也常用到它，身体自己合成的量会随年纪减少。辅酶 Q10 有氧化型（ubiquinone）和还原型（ubiquinol）两种形态。我换成 Kaneka Ubiquinol 这一款，是想直接吃还原型的 100mg，省去身体再转换的一步。它不是提神药，我不期待吃了马上有感觉。"
+        how: 每天早上随奶昔吞 1 粒（100mg）。
+        image: ./diet/estalife-ubiquinol.jpg
+        link: https://estalife.com/products/ubiquinol-100mg-kaneka
+      - id: estalife-astaxanthin
+        name: Estalife Astaxanthin 6MG
         status: 必备
         icon: bottle
-        role: 早上吃的辅酶 Q10（CoQ10），一种参与细胞能量代谢的物质。
-        why: "CoQ10（辅酶 Q10）是细胞在线粒体里产生能量时要用到的物质，心脏这种耗能大的器官特别需要它，而身体自己合成的量会随年纪减少。我吃它是想支持日常的能量代谢，让精神和体力撑得住每天的工作和训练。我想避免的是年纪大了容易累、体力明显往下掉，但它不是提神药，我不期待吃了马上有感觉。和我吃的镁同一个牌子，一粒好吞。"
-        how: 每天早上 1 粒，和早餐一起吃，按包装建议量。
-        image: ./diet/biofizz-coq10-plus.jpg
-      - id: eldon-performix
-        name: ELDON Nutrition PERFORMIX（30 片）
+        role: 随早餐奶昔吃的虾青素，来自雨生红球藻（Haematococcus pluvialis）。
+        why: "虾青素是一种类胡萝卜素，也是常见的抗氧化成分。我把它加进早上的脂溶性胶囊里，是当作日常抗氧化保养的一环，也想顺便照顾一下长期看屏幕和日晒的负担。这是我自己的期待，不是保证护眼或抗老一定有效，更不是「最强抗氧化剂」这种说法。包装建议 1–2 粒，我日常吃 1 粒（6mg）。"
+        how: 每天早上随奶昔吞 1 粒（6mg）。官方标签也可以吃到 2 粒，我目前维持 1 粒。
+        image: ./diet/estalife-astaxanthin.jpg
+        link: https://estalife.com/products/astaxanthin-6mg
+      - id: no-nasties-triple-biotic
+        name: NO NASTIES Triple Biotic（Pre-, Pro-, and Post-Biotics）
         status: 必备
         icon: bottle
-        role: 早上吃的综合维生素和矿物质，补日常饮食的缺口，配方里还有叶黄素和茄红素。
-        why: "综合维生素和矿物质是用来补日常饮食的缺口：我早餐是奶昔，其他餐也不一定每天都吃得均衡，总会有几样营养素吃不够。我吃它是当作保底，让身体基本运作需要的原料不缺。我想避免的是长期轻微缺乏某种营养素、自己却没发现。这一款另外配了叶黄素（lutein）和茄红素（lycopene），叶黄素和眼睛的黄斑区有关，我每天看屏幕很久，所以没有再另外吃护眼配方。它是保底，不能代替好好吃饭。"
-        how: 每天早上 1 片，和早餐一起吃，按包装建议量。
-        image: ./diet/eldon-performix.jpg
-      - id: duo-leaf-vitamin-d3
-        name: DUO LEAF Vitamin D3 1000 IU
+        role: 随早餐奶昔吃的益生元、益生菌和后生元，替换了我以前吃的 PureMed Symplus。
+        why: "官网写的是每粒 200 亿 CFU（20 billion）、8 株，一天 1 粒：菊苣根来的菊粉益生元 200mg，7 株活菌，再加上热处理的植物乳杆菌 LM1004 后生元 100 亿 CFU。我吃它是当作肠道的日常保养，想让消化和排便稳一点。益生菌的效果因人因菌株而不同，我不期待什么明确的效果。"
+        how: 每天早上随奶昔吞 1 粒，配常温水或常温奶昔，不用热水。官网写无需冷藏。如果正在吃医生开的抗生素，活菌可能受影响，要不要停、怎么错开，先问医生。
+        image: ./diet/no-nasties-triple-biotic.jpg
+        link: https://www.nonasties.shop/products/holistic-gut-health-prebiotics-probiotics-postbiotics-from-natural-sources-30-caps-servings
+      - id: lac-selenium
+        name: LAC Selenium 100mcg（as selenomethionine，100 片）
         status: 必备
         icon: bottle
-        role: 早上吃的维生素 D3。
-        why: "维生素 D 帮身体吸收钙、维持骨骼，也和免疫、肌肉功能有关。它主要靠皮肤晒太阳合成，可是我大部分时间在室内，就算住在热带，也不一定晒得够。我吃 D3 是想把这个缺口补上，避免以后骨质流失、骨头变脆。现在这一款是 1000 IU，吃完这盒打算换成下面那款 K2 + D3。"
-        how: 每天早上 1 粒，和早餐一起吃。
-        image: ./diet/duo-leaf-vitamin-d3.jpg
-      - id: vitahealth-k2-d3
-        name: VitaHealth K2 + D3
+        role: 随早餐奶昔吃的硒，每片 100mcg，形态是硒代蛋氨酸（selenomethionine）。
+        why: "硒是身体需要的微量矿物质，和甲状腺以及抗氧化酶系统都有关系。我吃它是按自己的情况补硒，不是每个人都需要天天吃。硒补太多也不好，所以我给自己定了一条：如果当天早上已经吃了 2 颗生巴西坚果（Brazil nuts），当天就停掉这片硒。"
+        how: 每天早上随奶昔吞 1–2 片（100–200mcg）。包装建议成人每天 1–2 片，和食物一起吃。当天如果已经吃了 2 颗巴西坚果，就不要再吃这片。
+        image: ./diet/lac-selenium.jpg
+        link: https://www.lacworldwide.com.my/en/vitamins-and-supplements_minerals_selenium/lac-minerals/selenium-100mcg-01405270.html
+      - id: p5p-vitamin-b6
+        name: 活性维生素 B6（Pyridoxal-5-Phosphate / P-5-P，50mg）
         status: 计划入手
         icon: bottle
-        role: 之后用来接替 DUO LEAF D3 的维生素 D3，多加了一个 K2。
-        why: "D3 帮身体吸收钙，K2 则帮忙把钙带到骨头里，而不是留在血管里，所以两样常常搭配在一起吃。我想换成两样做在一粒里的版本，同样是为了骨骼的长期保养，也少吞一粒。等现在这盒 D3 吃完再换，换了会更新这一页。"
-        how: 还没开始吃。到时按包装建议量，每天早上 1 粒。
-        image: ./diet/vitahealth-k2-d3.jpg
-      - id: puremed-symplus
-        name: PureMed Symplus（益生菌 18 株 + 益生元，150 亿 CFU，45 粒）
-        status: 必备
-        icon: bottle
-        role: 早上吃的益生菌加益生元，当作肠道的日常保养。
-        why: "益生菌是对肠道有益的好菌，益生元则是给它们吃的「饲料」，两样一起补，是想让肠道里的菌群维持平衡。肠道顺不顺，会影响消化、排便，甚至整个人的状态。我吃它是当作肠道的日常保养，想避免消化不好、肚子常常不舒服的情况。益生菌的效果因人因菌株而不同，我不期待什么明确的效果。这一款 18 株菌加益生元做在一粒里，每粒 150 亿 CFU。"
-        how: 早餐时按包装服用。
-        image: ./diet/puremed-symplus.jpg
-      - id: phoenix-grape-seed
-        name: PHOENIX Grape Seed 300mg（葡萄籽萃取）
-        status: 必备
-        icon: bottle
-        role: 早上吃的葡萄籽萃取，当作日常抗氧化的一部分。
-        why: "葡萄籽萃取里含有原花青素（OPC），是一种常见的抗氧化成分。身体每天代谢都会产生自由基，累积下来和老化有关，抗氧化就是想帮身体处理这部分。我吃它是当作日常抗氧化保养的一环，配合其他营养素，希望老化慢一点，但这是我自己的期待，不是它保证的事。一粒 300mg，剂量清楚，饭后一粒好记。"
-        how: 每天 1 粒，饭后。
-        image: ./diet/phoenix-grape-seed.jpg
+        role: 还没开始吃的活性维生素 B6，打算每周一、三、五各 1 粒。
+        why: "P-5-P 是维生素 B6 的一种活性形态。我想单独补它，而不是吃含高剂量维生素 B12 的复合 B 群，这是按我自己情况做的选择。还没决定买哪个品牌，买了再更新这一页。"
+        how: 还没开始吃。计划是每周一、三、五早上随奶昔吞 1 粒（50mg），不必天天吃。到时以买到的包装建议量为准。
 
   - id: evening
     name: 第三组：晚间保健品
     metaphor: 晚上一批
     explain:
-      - 晚上只有两样：晚饭后一样，睡前一样。
-    mine: 我把镁放在睡前约 1 小时吃，BiOFIZZ FORLIV 放在晚饭后吃，这是我自己固定下来的时间，方便记。
+      - 晚上分两步：晚饭后吃 NAC（以及计划入手的陈年大蒜提取物）；睡前 45–60 分钟喝一杯甘氨酸水，并用这杯水吞 3 粒甘氨酸镁。
+    mine: 我把需要和晚餐一起吃的放在晚饭后，把甘氨酸和镁固定在睡前大约 1 小时，方便记。这是我自己的安排，不是保证一定睡得更深。
     fit: 想把晚上的保健品也固定成流程的人。
-    skip: 正在服药或有肝肾相关问题的人，先问医生再决定要不要吃。
+    skip: 正在服药，或有肝肾、胃部相关问题的人，先问医生再决定要不要吃。
     items:
-      - id: biofizz-magnesium
-        name: BiOFIZZ Magnesium Bisglycinate 555.56mg
+      - id: naturecan-nac
+        name: Naturecan NAC Supplements（N-Acetyl-L-Cysteine 600mg）
         status: 必备
         icon: bottle
-        role: 睡前吃的镁，是我睡前放松流程的一部分。
-        why: "镁参与身体几百种反应，包括肌肉放松和神经稳定，运动出汗也会流失一些。我把它固定在睡前吃，是想让身体和脑袋慢慢放松下来，帮自己建立一个准备睡觉的固定动作，也顺便补训练后的流失。我想避免的是睡得浅、肌肉紧绷或抽筋这类状况。选 bisglycinate 是因为它是比较温和、肠胃比较不容易不舒服的镁形态。"
-        how: 睡前约 1 小时吃 2 粒，配水。每粒标签上写的是 Magnesium Bisglycinate 555.56mg，剂量以包装为准。
-        image: ./diet/biofizz-magnesium.jpg
-      - id: biofizz-forliv
-        name: BiOFIZZ FORLIV Capsule（50 粒）
+        role: 晚饭后吃的 NAC，替换了我以前吃的 BiOFIZZ FORLIV。
+        why: "NAC（N-乙酰半胱氨酸）是半胱氨酸的一种补充形态，身体可以用它来合成谷胱甘肽，而谷胱甘肽参与肝脏的正常解毒过程。我换成这一款，是想用机制比较清楚的前体，而不是继续吃传统「养肝」草本。它不是排毒药，也不能治病；真正护肝还是靠少喝酒、睡好和定期验血。包装上也提到可能和血液稀释剂、硝酸甘油等药物有相互作用，正在服药的人先问医生。"
+        how: 每天晚餐后吞 1 粒（600mg），配水。不要空腹吃，减少对胃的刺激。
+        image: ./diet/naturecan-nac.jpg
+        link: https://www.naturecan-fitness.my/products/nac-supplements
+      - id: aged-garlic-extract
+        name: 陈年大蒜提取物（Aged Garlic Extract，例如 Kyolic 1,200mg）
+        status: 计划入手
+        icon: bottle
+        role: 还没开始吃的陈年大蒜提取物，打算晚饭后和 NAC 一起吃。
+        why: "陈年大蒜提取物常被用来作为心血管方面的补充，经过陈化以后味道会淡很多。这是我计划补上的一项，还没买。Kyolic 只是举例，不是推荐或已经下单的品牌，买了再更新这一页。正在吃抗凝血药或近期要手术的人，先问医生。"
+        how: 还没开始吃。计划是每天随晚餐服用 1,200mg，到时以买到的包装建议量为准。
+      - id: naturecan-glycine
+        name: Naturecan Glycine Powder（纯甘氨酸粉）
         status: 必备
         icon: bottle
-        role: 晚饭后吃的胶囊，包装上写的是传统上用于养肝（traditionally used as liver tonic），我当作一般的日常保养。
-        why: "肝脏每天都在处理我们吃进去的东西，是身体很重要的代谢器官。这一款包装上写的是「传统上用于养肝」（traditionally used as liver tonic），我照这个理解，当作晚饭后对肝的日常保养。我想照顾的是长期的肝脏状态，尤其每天吃不少保健品和蛋白质。它不是排毒，也不能治病，我不加码解读；真正护肝还是靠少喝酒、睡好和定期验血。"
-        how: 晚饭后 2 粒，配水，按包装建议量。
-        image: ./diet/biofizz-forliv.jpg
+        role: 睡前用温水冲泡的纯甘氨酸粉。
+        why: "甘氨酸是一种氨基酸，也是胶原蛋白里含量很高的成分。有研究在看它和睡眠的关系，不过这不是保证吃了一定睡得更好。我把它放在睡前喝，既是补甘氨酸，也当作准备睡觉的固定动作。官网写每份 2.5g；马来西亚产品页曾经出现过剂量和分钟数连在一起的排版错误，不要照那个数字吃。英国同款页面的建议是 1–2g，在睡前 30–60 分钟服用。我自己的用量比这个建议高，是按我的情况定的。"
+        how: 每晚睡前 45–60 分钟，舀 1.5–2 勺（约 3.75–5g）混入 150ml 常温水喝掉。这是我自己的用量，不一定等于包装建议量。
+        image: ./diet/naturecan-glycine.jpg
+        link: https://www.naturecan-fitness.my/products/glycine
+      - id: estalife-magnesium-glycinate
+        name: Estalife Albion™ Magnesium Glycinate TRAACS™
+        status: 必备
+        icon: bottle
+        role: 睡前和甘氨酸一起吃的甘氨酸镁，替换了我以前吃的 BiOFIZZ 甘氨酸镁。
+        why: "镁参与身体很多反应，包括肌肉放松和神经稳定，运动出汗也会流失一些。我把它固定在睡前吃，是想让身体慢慢放松下来，也顺便补训练后的流失。选这一款，是因为官方写法是 Albion TRAACS 螯合甘氨酸镁：3 粒提供 2,000mg 螯合物，相当于 200mg 元素镁。它比较温和，肠胃不容易不舒服，但不是保证一定睡得更好。"
+        how: 每晚睡前 45–60 分钟吞 3 粒（200mg 元素镁），用上面那杯甘氨酸水送服。每瓶 60 粒，按每天 3 粒只够 20 天。
+        image: ./diet/estalife-magnesium-glycinate.jpg
+        link: https://estalife.com/products/magnesium-glycinate-albion-traacs
 
 principles:
   - title: 早餐一杯搞定
-    text: Complete Meal、无味大豆蛋白、无味豌豆蛋白、无味糙米蛋白、可可粉按 5:2:2:1:1 先拌好，每天早上舀 85g，滴几滴代糖调甜度。再把胶原蛋白粉和肌酸一起倒进去摇匀，粉剂全部在这一杯里解决。
-  - title: 保健品分早晚两批
-    text: 白天的一批全部跟早餐一起吃，晚上只有晚饭后的 BiOFIZZ FORLIV 和睡前的镁。固定成两个时间点，就不会漏。
-  - title: 按包装剂量，不加码
-    text: 每一样都照包装上的建议量吃。多吃不等于更好，保健品也不是药。
+    text: Complete Meal、无味大豆蛋白、无味豌豆蛋白、无味糙米蛋白、可可粉按 5:2:2:1:1 先拌好，每天早上舀 80g，用 350–400ml 常温水或无糖植物奶，不加牛奶。肌酸 5g 和胶原蛋白肽 1.5 勺另外加进杯子，最后倒 15ml 橄榄油，摇匀 15–20 秒，尽量在 20 分钟内喝完。需要加甜就滴几滴代糖。
+  - title: 保健品按五个时间点吃
+    text: 刷牙后空腹吃 NMN 和 TMG；早餐喝奶昔；随奶昔吞鱼油、D3+K2、Ubiquinol、虾青素、Triple Biotic 和硒；晚饭后吃 NAC（以及计划中的陈年大蒜提取物）；睡前 45–60 分钟喝甘氨酸、吞甘氨酸镁。固定成这几个时间点，就不会漏。
+  - title: 按包装剂量，不加码；有些是我自己的用量
+    text: 能按包装建议量的，我就按包装吃。鱼油 3 粒、甘氨酸 3.75–5g 是我自己定的用量，不等于包装上的每日份。多吃不等于更好，保健品也不是药。
   - title: 先问医生，再照抄
-    text: 这是我自己的方案。怀孕、哺乳、有慢性病或正在服药的人，先问医生，不要直接照抄。
+    text: 这是我自己的方案，也参考了我的基因检测，不适合直接原样照搬。怀孕、哺乳、有慢性病或正在服药的人，先问医生，不要直接照抄。
+
+notRecommended:
+  - name: Lennox 胶原蛋白粉
+    reason: 已换成 Naturecan Collagen Peptides。
+  - name: NutrinLife NMN3+ 咀嚼片
+    reason: 已换成无糖的 Estalife NMN 500MG 胶囊。
+  - name: VitaHealth Vitamin C with Zinc+
+    reason: 新的胶原蛋白肽标签里已经有维生素 C、锌和铜，不再另外吃维 C 加锌片。
+  - name: PureMed Fish Oil Plus
+    reason: 已换成 Naturecan High Strength Omega-3。
+  - name: BioFIZZ Coenzyme Q10 Plus
+    reason: 已换成 Estalife Kaneka Ubiquinol 100MG。
+  - name: ELDON Nutrition PERFORMIX 综合维生素
+    reason: 已停掉综维，抗氧化和护眼相关的部分改由虾青素等单方承担，不再叠一张综合片。
+  - name: DUO LEAF Vitamin D3 / 计划中的 VitaHealth K2 + D3
+    reason: 已换成 Estalife 把 D3 和 K2 做在一起的这一款。
+  - name: PureMed Symplus 益生菌
+    reason: 已换成 No Nasties Triple Biotic。
+  - name: PHOENIX 葡萄籽萃取
+    reason: 已停掉，相关的抗氧化改由虾青素和橄榄油承担，不是说葡萄籽没有用。
+  - name: BiOFIZZ Magnesium Bisglycinate
+    reason: 已换成 Estalife Albion 甘氨酸镁。
+  - name: BiOFIZZ FORLIV
+    reason: 已换成 Naturecan NAC。它本来也不是药，停掉不表示 NAC 就能护肝治病。
+  - name: 有味道的 Soluxe 蛋白粉
+    reason: 已经不在早餐粉里。现在只留三款无味蛋白，和 Complete Meal、可可粉一起预混。
 
 faq:
   - title: 为什么选无味无糖的 Complete Meal？
     description: 因为我是和三款无味的 Soluxe 蛋白粉、可可粉先拌在一起喝的。整份早餐粉都没有加糖，味道干净，甜度由我自己滴几滴甜菊或罗汉果代糖来调，不会有几种甜味叠在一起。
-  - title: 为什么早餐粉要预先拌好，每天喝 85g？
-    description: 以前我是每天一份 Soluxe 加 Complete Meal 凑到 80g，每天要分开舀。现在把 Complete Meal、大豆、豌豆、糙米蛋白和可可粉按 5:2:2:1:1 先拌在一起，早上舀一次就好。85g 是我试出来够耐饱、蛋白质也够的量，还多了可可的营养成分。你如果容易饿，或者觉得太饱，自己往上或往下调。
+  - title: 为什么早餐粉要预先拌好，每天喝 80g？
+    description: 把 Complete Meal、大豆、豌豆、糙米蛋白和可可粉按 5:2:2:1:1 先拌在一起，早上舀一次就好。我现在每天舀 80g，再用 350–400ml 常温水或无糖植物奶冲开，不加牛奶。肌酸和胶原蛋白肽不进大罐，每天另加。你如果容易饿，或者觉得太饱，自己往上或往下调。
   - title: 为什么买两款代糖？
-    description: 想对比甜菊（stevia）和罗汉果（monk fruit）的甜味有什么不同。目前我喝不出差别，两款都是零卡的液体，滴几滴够甜就好。
+    description: 想对比甜菊（stevia）和罗汉果（monk fruit）的甜味有什么不同。目前我喝不出差别，两款都是零卡的液体，滴几滴够甜就好。这份新方案的原稿没有再写代糖，但我还在用，所以这一页继续保留。
+  - title: 为什么奶昔里要加橄榄油？
+    description: 每天最后倒 15ml 特级初榨橄榄油，和植物奶昔一起摇匀再喝。对我来说，它是早餐的一部分脂肪，也方便和 D3+K2、Ubiquinol、虾青素这些脂溶性胶囊一起吃。这是吃法上的安排，不是保证吸收能提高多少倍。高温爆炒我不用它。
   - title: 这里写的品牌是推荐吗？
     description: 不是。写品牌只是让你知道我实际在吃哪一款、怎么吃，方便对照包装。没有任何一款是广告或带佣金的链接，我也不会说哪一款比较好。换了产品我会更新这一页。
   - title: 蛋白粉为什么用三款？
     description: 我以前在 soluxeshop.com 买过五款轮着喝，其中两款有味道的已经拿掉了。现在只留三款无味的（大豆、豌豆、糙米），和 Complete Meal、可可粉一起按比例拌成早餐粉，蛋白质来源不只靠一种。
   - title: 为什么只有部分产品写了价格？
-    description: 写了价格的是我在 nonasties.shop、soluxeshop.com 和 Shopee 实际下单，或者能查到标价的（可可粉和两款代糖写的是标价）。其他的我一时查不到确切价钱，宁愿不写，也不乱写。
-  - title: 维生素 D3 为什么要换？
-    description: 我一直有补 D3。现在吃的是 DUO LEAF 1000 IU，之后打算换成 VitaHealth K2 + D3，把两样做在一粒里，少吞一粒。等这盒吃完再换，换了会更新这一页。
+    description: 写了价格的是我在 nonasties.shop、soluxeshop.com 和 Shopee 实际下单，或者能查到标价的（可可粉和两款代糖写的是标价）。新换的保健品我暂时没把买价一一写上，宁愿不写，也不乱写。
+  - title: 这些保健品为什么换了一批？
+    description: 我按自己现在的方案做了一次比较大的调整：胶原蛋白、NMN、鱼油、D3、辅酶 Q10、益生菌、镁等换成了上面这些产品，并加了橄榄油、TMG、虾青素、硒、甘氨酸；P-5-P 和陈年大蒜提取物还在计划入手。被换掉的旧产品列在上面的「我停用的产品」里。换的原因是我自己的选择，不是说旧的品牌有问题。
+  - title: 普通人可以照抄吗？要减量吗？
+    description: 不建议原样照抄。这是我按自己的情况配的，也参考了我的基因检测，不是医疗建议。如果只是想参考，我自己会这样提醒朋友：硒、TMG、P-5-P、高剂量鱼油、天天吃的 NAC 和 NMN，不一定人人都需要按我的量；很多情况下硒和 TMG 可以不考虑，P-5-P 也可以先不吃，鱼油可以先看包装建议的 1–2 粒，NAC 不必天天吃，NMN 更不必从 500mg 起。早餐粉、肌酸、橄榄油、D3+K2、虾青素、Triple Biotic，以及较低剂量的胶原蛋白、甘氨酸和镁，相对更接近普通的基础项，但份量仍要按自己的情况和包装来。有生理期的女性还需另外考虑铁，我这套里没有补铁。怀孕、哺乳、有慢性病或正在服药的人，先问医生。
   - title: 这些可以直接照抄吗？
     description: 不建议。这是我按自己的情况配的，不是医疗建议。保健品不能替代饮食和医疗，怀孕、哺乳、有慢性病或正在服药的人，先问医生。
