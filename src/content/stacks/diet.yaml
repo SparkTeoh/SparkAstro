@@ -6,7 +6,7 @@ title: 我的饮食与保健品清单
 short: 饮食保健品
 tagline: 早餐一杯预先拌好的奶昔搞定，保健品分早晚两批，每天固定吃，不会麻烦。
 intro: 这份清单记录的是我每天实际在吃的东西：早餐是一杯奶昔，用代餐粉、蛋白粉和可可粉预先拌好，每天舀 85g，再滴几滴代糖，早上吃一批保健品，晚上再吃一批。我不是营养师，也不是医生，这里写我吃什么、怎么吃，也会讲每一样成分是做什么的、我为什么吃、想避免以后出现什么问题。这些是我自己的理由，不是治疗建议，很多研究也还在累积。你可以参考，但不要照抄。
-updated: 2026-11-09
+updated: 2026-11-10
 order: 3
 medical: true
 safety:
@@ -95,6 +95,7 @@ groups:
         how: 滴几滴进早上的 85g 奶昔，摇匀试一下，不够甜再加。
         price: RM 45.00（标价；实付可能更低）
         image: ./diet/79-wellness-monk-fruit.jpg
+        link: https://shopee.com.my/1-bottle-X-79-Wellness-Monk-Fruits-Sweeteners-Authentic-Genuine-Liquid-30ml-(no-add-on-stevia)-i.251720389.44803904054
       - id: now-better-stevia
         name: NOW Foods BetterStevia Zero-Calorie Liquid Sweetener, Original（液体，约 59ml / 2 fl. oz.）
         alias: 液体代糖
