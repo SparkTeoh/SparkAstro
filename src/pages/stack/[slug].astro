@@ -67,6 +67,19 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
     </div>
   </section>
 
+  {d.guide && (
+    <section class="sp-wrap" aria-labelledby="guide-title">
+      <aside class="sp-card sp-card--pad-lg sp-card--heavy" aria-label={d.guide.title}>
+        <div class="sp-stack" style="gap:0.75rem">
+          <h2 class="sp-h3" id="guide-title">{d.guide.title}</h2>
+          <ul class="sp-check" style="color:var(--sp-ink)">
+            {d.guide.points.map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      </aside>
+    </section>
+  )}
+
   <!-- 医疗免责 -->
   {d.medical && (
     <section class="sp-wrap" aria-label="免责声明">
