@@ -83,6 +83,13 @@ const stacks = defineCollection({
       draft: z.boolean().default(false),
       medical: z.boolean().default(false),   // true 时显示医疗免责声明
       safety: z.array(z.string()).default([]),
+      // 页顶参考说明：只在需要时填写，其他清单不显示
+      guide: z
+        .object({
+          title: z.string(),
+          points: z.array(z.string()),
+        })
+        .optional(),
       priceNote: z.string().optional(),      // 价格说明，例如查价日期
       science: z
         .object({
