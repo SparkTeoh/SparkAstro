@@ -125,13 +125,13 @@ groups:
         how: "每天早上冲泡时另舀 5g 加进摇摇杯，不提前混进 5:2:2:1:1 大罐。颗粒较重，混放会沉底，每天的量会不准。"
         price: RM 73.51（1 pouch，60 天订阅）
         image: ./diet/no-nasties-just-creatine.jpg
-        link: https://www.nonasties.shop/
+        link: https://www.nonasties.shop/products/no-nasties-just-creatine-60-servings
       - id: naturecan-collagen-peptides
         name: Naturecan Collagen Peptides（Original Flavour 原味，300g 起）
         status: 必备
         icon: bottle
-        role: "补充皮肤、关节、肌腱相关的胶原蛋白肽。"
-        why: "我按个人检测和体质，想多给皮肤和韧带提供原料。官网上这一款含 VERISOL®、FORTIGEL®、TENDOFORTE® 三种品牌肽，并加了维生素 C、锌和铜；按标签，每勺 13g 粉末提供 12.5g 胶原蛋白水解物、50mg 维生素 C、1.5mg 锌和 0.15mg 铜。我选 Original 原味（包装上也标 Unflavoured），无糖。口服胶原蛋白的效果研究还在累积，我当作一份补充，不是保证皮肤会变紧、关节一定更好。因为粉里已经有维 C 和锌，我就不再另外吃维 C 加锌片。"
+        role: "补充皮肤、关节和肌腱结构所需的胶原蛋白肽。"
+        why: "胶原蛋白肽会提供皮肤、关节软骨和肌腱结构常用的氨基酸。我按个人检测和体质，想多给这些组织提供原料。官网上这一款含 VERISOL®、FORTIGEL®、TENDOFORTE® 三种品牌肽，并加了维生素 C、锌和铜；按标签，每勺 13g 粉末提供 12.5g 胶原蛋白水解物、50mg 维生素 C、1.5mg 锌和 0.15mg 铜。因为粉里已经有维 C 和锌，我就不再另外吃维 C 加锌片。我选 Original 原味（包装上也标 Unflavoured），无糖。口服胶原蛋白的效果研究还在累积，我当作一份补充，不是保证皮肤会变紧、关节一定更好。"
         how: "每天早上约 1.5 勺（约 19.5g 粉末，按标签每勺折算约 18.75g 胶原蛋白水解物）加进奶昔，不预先拌进大罐，以免吸湿结块。包装建议份量是 13g，我的量是个人调整，不要照抄。"
         image: ./diet/naturecan-collagen-peptides.jpg
         link: https://www.naturecan-fitness.my/products/collagen-peptides
@@ -171,7 +171,7 @@ groups:
         status: 必备
         icon: bottle
         role: "提供甲基（methyl donor），我和 NMN 一起吃。"
-        why: "NMN 代谢会用到甲基，所以我习惯搭配 TMG。我的检测提示同型半胱氨酸代谢中等。这是我自己的搭配，不是保证一定能防止什么问题。"
+        why: "TMG（三甲基甘氨酸，也叫无水甜菜碱）是一种甲基供体，也会参与同型半胱氨酸代谢。高剂量 NMN 在体内代谢时会用到甲基，所以我每天用 1 粒 TMG 和 NMN 搭配。我的检测提示同型半胱氨酸代谢中等。这是我自己的搭配，不是保证一定能防止什么问题。"
         how: "每天早上 1 粒（686mg），和 NMN 一起或随早餐。我目前是刷牙后和 NMN 一起空腹吃；包装建议每天 1 粒配水，最好和食物一起吃。"
         image: ./diet/naturecan-tmg.jpg
         link: https://www.naturecan-fitness.my/products/tmg-supplement
@@ -197,8 +197,8 @@ groups:
         name: Estalife Kaneka Ubiquinol 100MG
         status: 必备
         icon: bottle
-        role: "还原型辅酶 Q10。"
-        why: "我选已经是还原型的版本，不需要体内再转化。这一款是官网上的 Kaneka Ubiquinol 100mg 单方，配料没有列出烟酰胺（nicotinamide）；同一品牌另有一款加了烟酰胺的版本，我没有选那个。它不是提神药，我不期待吃了马上有感觉。"
+        role: "还原型辅酶 Q10，参与细胞的能量代谢。"
+        why: "辅酶 Q10 参与线粒体里的能量（ATP）生成，本身也有抗氧化作用。市面上常见的是氧化型（ubiquinone），吃进去需要身体再转化；这一款是已经还原好的 ubiquinol，不需要再转一步。我选官网上的 Kaneka Ubiquinol 100mg 单方，配料没有列出烟酰胺（nicotinamide）；同一品牌另有一款加了烟酰胺的版本，我没有选那个。它不是提神药，我不期待吃了马上有感觉。"
         how: "每天早上随含橄榄油的奶昔吞 1 粒（100mg）。官网建议和含健康脂肪的餐食一起吃，有助于吸收。这是我目前的吃法，不是说空腹完全吸收不了，也不必固定用 15ml 橄榄油加 3 粒鱼油才有效。"
         image: ./diet/estalife-ubiquinol.jpg
         link: https://estalife.com/products/ubiquinol-100mg-kaneka
@@ -225,7 +225,7 @@ groups:
         status: 必备
         icon: bottle
         role: "微量元素硒补充，我按个人检测补。"
-        why: "我的检测提示血清硒偏低，所以补；不缺硒的人不需要跟着买。硒补太多也不好，所以我给自己定了一条：如果当天早上已经吃了 2 颗生巴西坚果（Brazil nuts），当天就停掉这片硒。"
+        why: "硒是多种含硒酶的组成成分，包括谷胱甘肽过氧化物酶（例如 GPX4），也和甲状腺激素代谢有关。我吃它是因为我的检测提示血清硒偏低；不缺硒的人不需要跟着买。硒补太多有毒性风险，所以我给自己定了一条：如果当天早上已经吃了 2 颗生巴西坚果（Brazil nuts），当天就停掉这片硒。"
         how: "每天早上随早餐吞 1 片（100mcg）。包装建议成人每天 1–2 片，和食物一起吃；我目前是 1 片。不建议没有检测依据的人跟着买。当天如果已经吃了 2 颗巴西坚果，就不要再吃这片。"
         image: ./diet/lac-selenium.jpg
         link: https://shopee.com.my/product/12163583/21652302896
@@ -252,8 +252,8 @@ groups:
         name: Naturecan NAC Supplements（N-Acetyl-L-Cysteine 600mg）
         status: 必备
         icon: bottle
-        role: "半胱氨酸来源，我晚饭后吃。"
-        why: "我想用 NAC 作为日常的抗氧化与肝脏保养补充。官网营养表只列出每粒 600mg 纯素 NAC，没有另外写出糖或钠；相比多数含钠的泡腾片，胶囊更适合我。它不是排毒药，也不能治病；真正护肝还是靠少喝酒、睡好和定期验血。包装上也提到可能和血液稀释剂、硝酸甘油等药物有相互作用，正在服药的人先问医生。"
+        role: "提供半胱氨酸，作为合成谷胱甘肽的前体，我晚饭后吃。"
+        why: "半胱氨酸是身体合成谷胱甘肽时比较紧缺的氨基酸；直接口服谷胱甘肽吸收较差，所以我用 NAC 作为常用的前体。它也可以和睡前的甘氨酸一起用，这个组合常被称为 GlyNAC。我想把它当作日常的抗氧化与肝脏保养补充。官网营养表只列出每粒 600mg 纯素 NAC，没有另外写出糖或钠；相比多数含钠的泡腾片，胶囊更适合我。它不是排毒药，也不能治病；真正护肝还是靠少喝酒、睡好和定期验血。包装上也提到可能和血液稀释剂、硝酸甘油等药物有相互作用，正在服药的人先问医生。"
         how: "每天晚饭后吞 1 粒（600mg），随饱腹吃，不空腹，减少对胃的刺激。"
         image: ./diet/naturecan-nac.jpg
         link: https://www.naturecan-fitness.my/products/nac-supplements
@@ -271,7 +271,7 @@ groups:
         status: 必备
         icon: bottle
         role: "氨基酸补充，我睡前喝。"
-        why: "甘氨酸是胶原蛋白的主要氨基酸之一。和晚饭后的 NAC 一起常被称为 GlyNAC，我也想试这个组合。睡前喝，我觉得睡得比较稳——这是个人感受，不是保证一定睡得更好。官网写每份 2.5g；马来西亚产品页曾经出现过剂量和分钟数连在一起的排版错误，不要照那个数字吃。英国同款页面的建议是 1–2g，在睡前 30–60 分钟服用。"
+        why: "甘氨酸是胶原蛋白的主要氨基酸之一。它和晚饭后的 NAC 一起，正好补上谷胱甘肽合成里常用的甘氨酸和半胱氨酸，这个组合常被称为 GlyNAC，我也想试一下。有一些小规模研究提到，睡前补充甘氨酸可能有助于睡眠质量；我自己喝下来觉得睡得比较稳——这是个人感受，不是保证一定睡得更好。官网营养表写每份 2.5g；马来西亚产品页把睡前用法写成「12 grams / 3060 minutes」，同一段在英国页面是「1–2 grams / 30–60 minutes」，不要照马来西亚页那个连在一起的数字吃。我的用量是个人调整，请勿照抄。"
         how: "睡前 45–60 分钟，舀 1.5–2 勺（约 3.75–5g），用约 150ml 常温水化开，并用这杯水吞镁。包装建议是 2.5g，我的量是个人调整，请勿照抄。"
         image: ./diet/naturecan-glycine.jpg
         link: https://www.naturecan-fitness.my/products/glycine
@@ -279,8 +279,8 @@ groups:
         name: Estalife Albion™ Magnesium Glycinate TRAACS™
         status: 必备
         icon: bottle
-        role: "睡前补镁。"
-        why: "我做力量训练、出汗多，睡前补镁。选 Albion TRAACS 螯合形式；我的肠胃较敏感，所以不选氧化镁。官方写法是 3 粒提供 2,000mg 螯合物，相当于 200mg 元素镁。不是保证一定睡得更好。"
+        role: "睡前补镁，镁参与肌肉和神经的正常功能。"
+        why: "镁参与身体里很多反应，包括肌肉和神经功能。我做力量训练、出汗多，所以把补镁放在睡前。选 Albion TRAACS 螯合形式，是因为我的肠胃较敏感，不想用氧化镁。官方写法是 3 粒提供 2,000mg 螯合物，相当于 200mg 元素镁。不是保证一定睡得更好。"
         how: "睡前 45–60 分钟吞 3 粒（共 200mg 元素镁；与官网一致），用上面那杯甘氨酸水送服。血压偏低者从小量开始。每瓶 60 粒，按每天 3 粒只够 20 天。"
         image: ./diet/estalife-magnesium-glycinate.jpg
         link: https://estalife.com/products/magnesium-glycinate-albion-traacs
