@@ -8,6 +8,7 @@ import StackItem from "../../components/stack/StackItem.astro";
 import ShareButtons from "../../components/stack/ShareButtons.astro";
 import FaceZones from "../../components/stack/FaceZones.astro";
 import { getAllContent } from "../../lib/content";
+import { splitLabeled, splitNameNote, splitNumbered } from "../../lib/stackText";
 import siteData from "../../data/siteData.json";
 
 export async function getStaticPaths() {
@@ -46,6 +47,13 @@ const zoneAreas = (d.zones?.areas ?? []).map((a) => ({
   }),
 }));
 const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includes(k));
+// 页顶参考说明：每一条按「【小标题】：引言——1. 名称（说明）；2. …」拆成小标题 + 编号列表（见 lib/stackText.ts）
+const guideTiers = (d.guide?.points ?? []).flatMap((point) =>
+  splitLabeled(point).map((part) => {
+    const { lead, items } = splitNumbered(part.text);
+    return { label: part.label, lead, items: items.map(splitNameNote) };
+  }),
+);
 ---
 
 <MainLayout
@@ -67,35 +75,48 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
     </div>
   </section>
 
-  {d.guide && (
-    <section class="sp-wrap" aria-labelledby="guide-title">
-      <aside class="sp-card sp-card--pad-lg sp-card--heavy" aria-label={d.guide.title}>
-        <div class="sp-stack" style="gap:0.75rem">
+  <!-- 页顶提示：参考说明 + 医疗免责。两格之间、以及和下一段之间的留白在 .sp-stack-notes 里 -->
+  {(d.guide || d.medical) && (
+    <div class="sp-wrap sp-stack-notes">
+      {d.guide && (
+        <section class="sp-card sp-card--pad-lg sp-card--heavy sp-guide" aria-labelledby="guide-title">
           <h2 class="sp-h3" id="guide-title">{d.guide.title}</h2>
-          <ul class="sp-check" style="color:var(--sp-ink)">
-            {d.guide.points.map((s) => <li>{s}</li>)}
-          </ul>
-        </div>
-      </aside>
-    </section>
-  )}
+          {guideTiers.map((t) => (
+            <div class="sp-guide__tier">
+              {t.label && <h3 class="sp-guide__title">{t.label}</h3>}
+              {t.lead && <p class="sp-guide__lead">{t.lead}{t.items.length > 0 && "："}</p>}
+              {t.items.length > 0 && (
+                <ol class="sp-guide__list">
+                  {t.items.map((it) => (
+                    <li>
+                      <span>
+                        {it.name && <strong>{it.name}</strong>}
+                        <span>{it.note}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
 
-  <!-- 医疗免责 -->
-  {d.medical && (
-    <section class="sp-wrap" aria-label="免责声明">
-      <div class="sp-card sp-card--danger sp-card--pad" style="grid-template-columns:auto 1fr;gap:1rem;align-items:start">
-        <span style="display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;background:var(--sp-danger);color:#fff">
-          <Icon name="alert" class="w-6 h-6" />
-        </span>
-        <div class="sp-stack" style="gap:0.5rem">
-          <p class="sp-eyebrow sp-eyebrow--danger">个人经验，不是医疗建议</p>
-          <ul class="sp-check" style="color:var(--sp-ink)">
-            {d.safety.map((s) => <li>{s}</li>)}
-            <li>我不会私信卖任何产品给你。有人用“Spark 推荐”的名义私信你卖货，都是假冒。</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+      {d.medical && (
+        <section class="sp-card sp-card--danger sp-card--pad" style="grid-template-columns:auto 1fr;gap:1rem;align-items:start" aria-label="免责声明">
+          <span style="display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:50%;background:var(--sp-danger);color:#fff">
+            <Icon name="alert" class="w-6 h-6" />
+          </span>
+          <div class="sp-stack" style="gap:0.5rem">
+            <p class="sp-eyebrow sp-eyebrow--danger">个人经验，不是医疗建议</p>
+            <ul class="sp-check" style="color:var(--sp-ink)">
+              {d.safety.map((s) => <li>{s}</li>)}
+              <li>我不会私信卖任何产品给你。有人用“Spark 推荐”的名义私信你卖货，都是假冒。</li>
+            </ul>
+          </div>
+        </section>
+      )}
+    </div>
   )}
 
   <!-- 原理 -->

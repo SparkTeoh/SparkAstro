@@ -713,6 +713,72 @@ body.sp-menu-locked {
 }
 
 /* ---------- 我的清单 (Stack) ---------- */
+/* 页顶提示（参考说明 + 免责声明）：两格之间留空；下一段是底色区块时，底下也留一段空 */
+.sp-stack-notes {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+}
+
+.sp-stack-notes:has(+ .sp-section--alt) { padding-bottom: clamp(3rem, 7vw, 6rem); }
+
+/* 参考说明：几档方案，各自一个小标题 + 编号列表 */
+.sp-guide { gap: clamp(1.25rem, 3vw, 1.75rem); }
+
+.sp-guide__tier {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: clamp(1.25rem, 3vw, 1.75rem);
+  border-top: 1px solid var(--sp-line);
+}
+
+.sp-guide__title {
+  margin: 0;
+  font-family: var(--sp-font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.sp-guide__lead {
+  margin: 0;
+  max-width: 46rem;
+  color: var(--sp-soft);
+  line-height: 1.75;
+}
+
+.sp-guide__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 2rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: guide;
+}
+
+.sp-guide__list li {
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  gap: 0.5rem;
+  counter-increment: guide;
+}
+
+.sp-guide__list li::before {
+  content: counter(guide, decimal-leading-zero);
+  padding-top: 0.3em;
+  font-family: var(--sp-font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--sp-accent-text);
+}
+
+.sp-guide__list strong { display: block; line-height: 1.5; }
+.sp-guide__list span > span { display: block; color: var(--sp-soft); font-size: 0.92rem; line-height: 1.65; }
+
+@media (max-width: 720px) {
+  .sp-guide__list { grid-template-columns: 1fr; }
+}
+
 .sp-stack-item {
   scroll-margin-top: 6rem;
 }

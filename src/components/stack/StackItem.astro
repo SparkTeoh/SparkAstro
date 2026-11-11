@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import ShareButtons from "./ShareButtons.astro";
 import ProductIcon from "./ProductIcon.astro";
 import HairArt from "./HairArt.astro";
+import { splitLabeled } from "../../lib/stackText";
 
 type Item = CollectionEntry<"stacks">["data"]["groups"][number]["items"][number];
 interface Props {
@@ -21,6 +22,8 @@ const whyText = whyLabel ?? (routine ? "为什么做" : "为什么选这一款")
 const howText = howLabel ?? (routine ? "怎么做" : "我怎么用");
 // 只有生发清单的 helmet / clinic 用整幅插画，其他清单照旧显示小图标
 const hairArt = stackSlug === "hair" && (item.icon === "helmet" || item.icon === "clinic") ? item.icon : undefined;
+// why 里写「【小标题】：」会另起一栏，样式和「我为什么吃」一样（见 lib/stackText.ts）
+const whyParts = splitLabeled(item.why);
 ---
 
 <article id={item.id} class="sp-card sp-stack-item">
@@ -48,7 +51,7 @@ const hairArt = stackSlug === "hair" && (item.icon === "helmet" || item.icon ===
       <p class="sp-body" style="color:var(--sp-ink);font-weight:500">{item.role}</p>
     )}
     <dl class="sp-dl">
-      <div><dt>{whyText}</dt><dd>{item.why}</dd></div>
+      {whyParts.map((p) => <div><dt>{p.label ?? whyText}</dt><dd>{p.text}</dd></div>)}
       <div><dt>{howText}</dt><dd>{item.how}</dd></div>
       {item.steps.length > 0 && (
         <div><dt>{routine ? "一步一步" : "步骤"}</dt><dd><ol class="sp-steps">{item.steps.map((s) => <li>{s}</li>)}</ol></dd></div>

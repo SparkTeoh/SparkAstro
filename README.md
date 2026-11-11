@@ -107,6 +107,7 @@ export const blogData = {
 - **价位、用了多久、购买链接**（`price`、`since`、`link`）可以先不填，填上后网页自动显示。带佣金的链接加 `affiliate: true`，网页会标出「佣金链接」。
 - **健康类清单**设 `medical: true`，并在 `safety` 里写安全提醒，页面顶部会显示免责声明。
 - 还可以加 `principles`（原则）、`schedule`（一周排程）、`notRecommended`（试过但不推荐）、`faq`（常见问题）。没填的区块不显示。
+- **文字里的排版记号**（`src/lib/stackText.ts`）：在 `why` 里写 `【普通人如果吃是为了什么】：……`，网页会把它拆成独立一栏，标题样式和「我为什么吃」一样。页顶的 `guide.points` 每一条写成 `【小标题】：引言——1. 名称（说明）；2. 名称（说明）。`，会变成小标题 + 编号列表。
 - 新清单上线前设 `draft: true`。总入口页会把还没做的清单显示成「整理中」。
 - 分享图放在 `public/og/stack-<slug>.png`（1200×630），在 `scripts/og-images.py` 的 `CARDS` 里加一行，再跑 `python3 scripts/og-images.py` 生成。短网址在 `netlify.toml` 里加，例如 `/hair` → `/stack/hair`。
 

@@ -39,7 +39,7 @@ const stacks = defineCollection({
       image: image().optional(),             // 产品照片（没有照片时显示 icon 图标）
       icon: z.enum(['dropper', 'foam', 'shampoo', 'bottle', 'tube', 'pump', 'mask', 'patch', 'helmet', 'stamp', 'clinic']).optional(),
       role: z.string(),                      // 一句话：它负责什么
-      why: z.string(),                       // 为什么选这一款
+      why: z.string(),                       // 为什么选这一款。文字里写「【小标题】：」会另起一栏（见 lib/stackText.ts）
       how: z.string(),                       // 我怎么用（运动：负荷、组次数、休息）
       steps: z.array(z.string()).default([]), // 逐步做法，一步一项（运动清单用）
       price: z.string().optional(),          // 价位，例如 RM 80–120
@@ -84,6 +84,7 @@ const stacks = defineCollection({
       medical: z.boolean().default(false),   // true 时显示医疗免责声明
       safety: z.array(z.string()).default([]),
       // 页顶参考说明：只在需要时填写，其他清单不显示
+      // 每一条写成「【小标题】：引言——1. 名称（说明）；2. 名称（说明）。」，网页会拆成小标题 + 编号列表
       guide: z
         .object({
           title: z.string(),
