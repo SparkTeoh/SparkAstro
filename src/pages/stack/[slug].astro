@@ -248,7 +248,16 @@ const isHot = (cell: string) => (sched?.highlight ?? []).some((k) => cell.includ
           <div class="sp-stack">
             <p class="sp-eyebrow">{routine ? "动作" : "我用的是"}</p>
             <div class="sp-grid sp-grid--2">
-              {g.items.map((item) => <StackItem item={item} stackSlug={slug} stackTitle={d.title} kind={d.kind} />)}
+              {g.items.map((item) => (
+                <StackItem
+                  item={item}
+                  stackSlug={slug}
+                  stackTitle={d.title}
+                  kind={d.kind}
+                  roleLabel={slug === "diet" ? "吃来做什么" : undefined}
+                  whyLabel={slug === "diet" ? "我为什么吃" : undefined}
+                />
+              ))}
             </div>
           </div>
         )}

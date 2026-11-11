@@ -6,9 +6,19 @@ import ProductIcon from "./ProductIcon.astro";
 import HairArt from "./HairArt.astro";
 
 type Item = CollectionEntry<"stacks">["data"]["groups"][number]["items"][number];
-interface Props { item: Item; stackSlug: string; stackTitle: string; kind?: "product" | "routine" }
-const { item, stackSlug, stackTitle, kind = "product" } = Astro.props;
+interface Props {
+  item: Item;
+  stackSlug: string;
+  stackTitle: string;
+  kind?: "product" | "routine";
+  roleLabel?: string;
+  whyLabel?: string;
+  howLabel?: string;
+}
+const { item, stackSlug, stackTitle, kind = "product", roleLabel, whyLabel, howLabel } = Astro.props;
 const routine = kind === "routine";
+const whyText = whyLabel ?? (routine ? "为什么做" : "为什么选这一款");
+const howText = howLabel ?? (routine ? "怎么做" : "我怎么用");
 // 只有生发清单的 helmet / clinic 用整幅插画，其他清单照旧显示小图标
 const hairArt = stackSlug === "hair" && (item.icon === "helmet" || item.icon === "clinic") ? item.icon : undefined;
 ---
@@ -30,10 +40,16 @@ const hairArt = stackSlug === "hair" && (item.icon === "helmet" || item.icon ===
       {item.alias && <span class="sp-meta">{item.alias}</span>}
     </div>
     <h3 class="sp-h3">{item.name}</h3>
-    <p class="sp-body" style="color:var(--sp-ink);font-weight:500">{item.role}</p>
+    {roleLabel ? (
+      <dl class="sp-dl" style="margin-bottom:0">
+        <div><dt>{roleLabel}</dt><dd style="color:var(--sp-ink);font-weight:500">{item.role}</dd></div>
+      </dl>
+    ) : (
+      <p class="sp-body" style="color:var(--sp-ink);font-weight:500">{item.role}</p>
+    )}
     <dl class="sp-dl">
-      <div><dt>{routine ? "为什么做" : "为什么选这一款"}</dt><dd>{item.why}</dd></div>
-      <div><dt>{routine ? "怎么做" : "我怎么用"}</dt><dd>{item.how}</dd></div>
+      <div><dt>{whyText}</dt><dd>{item.why}</dd></div>
+      <div><dt>{howText}</dt><dd>{item.how}</dd></div>
       {item.steps.length > 0 && (
         <div><dt>{routine ? "一步一步" : "步骤"}</dt><dd><ol class="sp-steps">{item.steps.map((s) => <li>{s}</li>)}</ol></dd></div>
       )}
