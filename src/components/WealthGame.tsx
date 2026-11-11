@@ -263,7 +263,7 @@ export default function WealthGame() {
               ) : (
                 <button
                   onClick={finishGame}
-                  className="px-10 py-4 bg-accent text-white rounded-full font-medium text-lg hover:bg-accent shadow-lg transition-transform hover:scale-105 flex items-center space-x-2"
+                  className="px-10 py-4 bg-accent text-primary rounded-full font-medium text-lg hover:bg-accent shadow-lg transition-transform hover:scale-105 flex items-center space-x-2"
                 >
                   <CheckCircle2 size={24} />
                   <span>I&apos;m Done Adjusting</span>

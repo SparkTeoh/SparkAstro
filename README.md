@@ -108,7 +108,7 @@ export const blogData = {
 - **健康类清单**设 `medical: true`，并在 `safety` 里写安全提醒，页面顶部会显示免责声明。
 - 还可以加 `principles`（原则）、`schedule`（一周排程）、`notRecommended`（试过但不推荐）、`faq`（常见问题）。没填的区块不显示。
 - 新清单上线前设 `draft: true`。总入口页会把还没做的清单显示成「整理中」。
-- 分享图放在 `public/og/stack-<slug>.png`（1200×630）。短网址在 `netlify.toml` 里加，例如 `/hair` → `/stack/hair`。
+- 分享图放在 `public/og/stack-<slug>.png`（1200×630），在 `scripts/og-images.py` 的 `CARDS` 里加一行，再跑 `python3 scripts/og-images.py` 生成。短网址在 `netlify.toml` 里加，例如 `/hair` → `/stack/hair`。
 
 ### 其它数据
 
@@ -120,13 +120,17 @@ export const blogData = {
 
 | 名称 | 值 | 用途 |
 |---|---|---|
-| `--sp-ink` | `#0A0A0D` | 主色：文字、1.5px 描边、实色偏移阴影 |
-| `--sp-accent` | `#3D5AFE` | 点缀蓝：主按钮、眉标小方块、导航下划线、标题高亮。蓝底上用白字 |
-| `--sp-soft` | `#5A5A60` | 次要文字 |
+| `--sp-ink` | `#003054` | 主色（logo 深蓝）：文字、1.5px 描边、实色偏移阴影 |
+| `--sp-accent` | `#F8961D` | 点缀橙（logo 闪电）：主按钮、眉标小方块、导航下划线、标题高亮。只当色块和线条用 |
+| `--sp-on-accent` | `#003054` | 橙底上的文字用深蓝。白字在橙底上对比度只有 2.2:1，不要用 |
+| `--sp-accent-text` | `#A85600` | 浅底上需要橙色文字时用这个加深的橙（亮橙当文字太淡） |
+| `--sp-soft` | `#4A6072` | 次要文字 |
 | `--sp-alt` | `#F1EFE9` | 交替区块底色（暖白） |
 | `--sp-danger` | `#C62828` | 只用于防诈骗警示 |
 
-- **组件**：按钮用 `components/ui/Button.astro`（`primary` 蓝底 / `ghost` 白底 / `ink` 黑底），主按钮每屏最多两个；区块开头用 `SectionIntro.astro`（眉标 → 大标题 → 说明）；内页顶部用 `PageHero.astro`；卡片用 `.sp-card`，可点击的加 `.sp-card--link`。
+配色跟随 logo（深蓝 + 橙）。换色时除了 `site.css` 和 `global.css` 的 token，还要同步：`public/Logo.svg`、`public/favicon.svg`、`MainHead.astro` 的 `theme-color`、运动图解（`scripts/workout-figures.py`）和分享图（`scripts/og-images.py`）。
+
+- **组件**：按钮用 `components/ui/Button.astro`（`primary` 橙底 / `ghost` 白底 / `ink` 深蓝底），主按钮每屏最多两个；区块开头用 `SectionIntro.astro`（眉标 → 大标题 → 说明）；内页顶部用 `PageHero.astro`；卡片用 `.sp-card`，可点击的加 `.sp-card--link`。
 - **版式**：内容宽 72rem（`.sp-wrap`），区块之间用 `.sp-section`，交替底色加 `.sp-section--alt`。断点只有 980px 和 720px。
 - **字体**：Bricolage Grotesque（英文标题）、Inter（英文正文）、Noto Sans SC（中文），从 Google Fonts 加载。
 - Tailwind 里的 `primary` / `accent` / `background` 与上表同值，文章里可以继续用 `text-primary/70`、`bg-accent/10`。

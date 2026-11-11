@@ -132,7 +132,7 @@ const stacks = defineCollection({
         .object({
           title: z.string(),
           rows: z.array(z.object({ label: z.string(), days: z.array(z.string()).length(7) })),
-          highlight: z.array(z.string()).default([]),  // 包含这些字的格子用蓝色标出
+          highlight: z.array(z.string()).default([]),  // 包含这些字的格子用点缀色标出
           note: z.string().optional(),
         })
         .optional(),

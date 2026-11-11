@@ -9,8 +9,8 @@
 @layer base {
   :root {
     /* RGB 通道，供 tailwind.config 的 primary/accent 等组合透明度 */
-    --c-primary: 10 10 13;       /* #0A0A0D 黑 */
-    --c-accent: 61 90 254;       /* #3D5AFE 蓝 */
+    --c-primary: 0 48 84;        /* #003054 深蓝 */
+    --c-accent: 248 150 29;      /* #F8961D 橙（橙底配深蓝字，不配白字） */
     --c-background: 241 239 233; /* #F1EFE9 暖白 */
     --c-danger: 198 40 40;       /* #C62828 */
   }
@@ -18,7 +18,7 @@
 
 @layer components {
   .accenthead {
-    @apply bg-accent text-white rounded-[7px] px-[7px];
+    @apply bg-accent text-primary rounded-[7px] px-[7px];
   }
   .whitehead {
     @apply bg-white text-primary rounded-[7px] px-[7px];
@@ -46,7 +46,7 @@
   .prose ul, .prose ol { @apply mb-6 space-y-2 pl-6; }
   .prose ul { @apply list-disc; }
   .prose ol { @apply list-decimal; }
-  .prose li::marker { color: rgb(var(--c-accent)); }
+  .prose li::marker { color: var(--sp-accent-text); }
   .prose a { @apply underline decoration-accent decoration-2 underline-offset-4; }
   .prose strong { @apply font-bold; }
   .prose blockquote {

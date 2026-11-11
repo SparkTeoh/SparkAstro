@@ -1,14 +1,19 @@
 # 运动清单的动作图解：生成 src/content/stacks/workout/*.svg
 # 用法：python3 scripts/workout-figures.py && node scripts/workout-figures-png.mjs
-# 风格：浅底 (#f7f6f2) + 黑色解剖线稿 (#0a0a0d) + 站点蓝 (#3d5afe) / 警示红 (#c62828) / 安全绿 (#2e7d32)
+# 风格：浅底 (#f7f6f2) + 深蓝解剖线稿 (#003054) + 站点橙 (#f8961d) / 警示红 (#c62828) / 安全绿 (#2e7d32)
+# 橙色只用于箭头、线条、色块；橙色文字一律用加深的 ACCENT_TEXT，橙底上的字用 INK（白字对比度不够）
 import math
 import pathlib
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "src/content/stacks/workout"
-INK = "#0a0a0d"
+INK = "#003054"
 FAR = "#7a7a82"
 GHOST = "#b8b8be"
-ACCENT = "#3d5afe"
+ACCENT = "#f8961d"
+ACCENT_TEXT = "#a85600"
+ACCENT_TINT = "#ffe3bf"
+ACCENT_WASH = "#fff2df"
+ACCENT_LIGHT = "#fbb03f"
 DANGER = "#c62828"
 OK = "#2e7d32"
 BG = "#f7f6f2"
@@ -54,14 +59,16 @@ def text(x, y, s, size=22, color=INK, weight=600, anchor="start"):
     return f'<text x="{x:.1f}" y="{y:.1f}" font-family="{FONT}" font-size="{size}" font-weight="{weight}" fill="{color}" text-anchor="{anchor}">{esc(s)}</text>'
 
 
-def badge(x, y, w, h, s, bg=ACCENT, fg="#fff", size=18, r=7):
+def badge(x, y, w, h, s, bg=ACCENT, fg=None, size=18, r=7):
+    if fg is None:
+        fg = INK if bg == ACCENT else "#fff"
     return (
         rect(x, y, w, h, fill=bg, stroke=bg, sw=0, r=r)
         + text(x + w / 2, y + h / 2 + size * 0.35, s, size=size, color=fg, weight=800, anchor="middle")
     )
 
 
-def note(x, y, s, anchor="start", color=ACCENT, size=20, weight=700):
+def note(x, y, s, anchor="start", color=ACCENT_TEXT, size=20, weight=700):
     dot = x - 13 if anchor == "start" else (x + 13 if anchor == "end" else None)
     out = text(x, y, s, size=size, color=color, weight=weight, anchor=anchor)
     if dot is not None:
@@ -87,7 +94,7 @@ def arc(c, r, a0, a1, label=None, color=ACCENT, lr=None, size=19, w=3.8):
     out = f'<path d="M{s[0]:.1f},{s[1]:.1f} A{r},{r} 0 {large} {sweep} {e[0]:.1f},{e[1]:.1f}" fill="none" stroke="{color}" stroke-width="{w}"/>'
     if label:
         m = pt((a0 + a1) / 2, lr if lr is not None else r + 24)
-        out += text(m[0], m[1] + 7, label, size=size, color=color, weight=800, anchor="middle")
+        out += text(m[0], m[1] + 7, label, size=size, color=ACCENT_TEXT if color == ACCENT else color, weight=800, anchor="middle")
     return out
 
 
@@ -97,7 +104,7 @@ def floor(y, x0=40, x1=760):
 
 def frame(title, body, cue=None):
     head = (
-        text(44, 60, "动作图解 · WORKOUT BIOMECHANICS", size=19, color=ACCENT, weight=800)
+        text(44, 60, "动作图解 · WORKOUT BIOMECHANICS", size=19, color=ACCENT_TEXT, weight=800)
         + text(44, 102, title, size=33, weight=900)
     )
     foot = ""
@@ -179,7 +186,7 @@ def grip_cross_section(ox, oy, w, h, kind="half"):
     # 卡片外框与顶栏
     out.append(rect(ox, oy, w, h, fill="#fff", stroke=col, sw=4, r=12))
     out.append(path(f"M{ox},{oy+38} V{oy+12} Q{ox},{oy} {ox+12},{oy} H{ox+w-12} Q{ox+w},{oy} {ox+w},{oy+12} V{oy+38} Z", fill=col, stroke=col, w=0))
-    out.append(text(ox + w / 2, oy + 26, head_txt, size=18, color="#fff", weight=800, anchor="middle"))
+    out.append(text(ox + w / 2, oy + 26, head_txt, size=18, color=INK if col == ACCENT else "#fff", weight=800, anchor="middle"))
 
     # 局部坐标系：220 × 195 画布映射到卡片内部
     s = min((w - 16) / 220, (h - 98) / 195)
@@ -278,7 +285,7 @@ def grip_cross_section(ox, oy, w, h, kind="half"):
             f"Q{P(84,174)[0]:.1f},{P(84,174)[1]:.1f} {P(56,170)[0]:.1f},{P(56,170)[1]:.1f}"
         )
         out.append(path(thumb_d, fill="#e3d8c4", stroke=INK, w=3 * s))
-        out.append(text(P(82, 188)[0], P(82, 188)[1], "✓ 拇指放松", size=max(12, int(13.5 * s)), color=ACCENT, weight=800, anchor="middle"))
+        out.append(text(P(82, 188)[0], P(82, 188)[1], "✓ 拇指放松", size=max(12, int(13.5 * s)), color=ACCENT_TEXT, weight=800, anchor="middle"))
 
     else:
         # 全抠（严禁）：PIP 高高拱起死折 (<70°)，DIP 向下凹陷反折超伸压在洞沿，且大拇指向上死扣在食指指甲盖上！
@@ -324,7 +331,7 @@ def grip_cross_section(ox, oy, w, h, kind="half"):
 
     # 卡片底部两行说明
     out.append(text(ox + w / 2, oy + h - 30, cap1, size=16.5, color=INK, weight=700, anchor="middle"))
-    out.append(text(ox + w / 2, oy + h - 10, cap2, size=16, color=col, weight=800, anchor="middle"))
+    out.append(text(ox + w / 2, oy + h - 10, cap2, size=16, color=ACCENT_TEXT if col == ACCENT else col, weight=800, anchor="middle"))
     return "".join(out)
 
 
@@ -387,8 +394,8 @@ def scap():
         else:
             l_scap = [(cx - 35, sy + 26), (cx - 10, sy + 30), (cx - 14, sy + 76)]
             r_scap = [(cx + 35, sy + 26), (cx + 10, sy + 30), (cx + 14, sy + 76)]
-            o.append(poly(l_scap, fill="#dce3ff", stroke=ACCENT, w=4))
-            o.append(poly(r_scap, fill="#dce3ff", stroke=ACCENT, w=4))
+            o.append(poly(l_scap, fill=ACCENT_TINT, stroke=ACCENT, w=4))
+            o.append(poly(r_scap, fill=ACCENT_TINT, stroke=ACCENT, w=4))
             o.append(arrow((cx - 36, sy + 14), (cx - 15, sy + 54), color=ACCENT, w=4.5, head=12))
             o.append(arrow((cx + 36, sy + 14), (cx + 15, sy + 54), color=ACCENT, w=4.5, head=12))
 
@@ -455,23 +462,23 @@ def maxhang():
     out.append(line([lh, le, ls], INK, 8.5))
     out.append(line([rh, re, rs], INK, 8.5))
     out.append(arc(re, 20, 100, 250, None, color=ACCENT, w=3))
-    out.append(text(re[0] + 14, re[1] + 4, "肘 170°", size=15.5, color=ACCENT, weight=800))
+    out.append(text(re[0] + 14, re[1] + 4, "肘 170°", size=15.5, color=ACCENT_TEXT, weight=800))
     out.append(arrow((ls[0] - 16, ls[1] - 14), (ls[0] - 16, ls[1] + 14), color=ACCENT, w=4, head=10))
-    out.append(text(ls[0] - 22, ls[1] + 5, "沉肩", size=15.5, color=ACCENT, weight=800, anchor="end"))
+    out.append(text(ls[0] - 22, ls[1] + 5, "沉肩", size=15.5, color=ACCENT_TEXT, weight=800, anchor="end"))
 
     # 躯干与头部
     out.append(poly([ls, rs, (cx + 20, hip_y), (cx - 20, hip_y)], fill=BG, stroke=INK, w=6.5))
     out.append(line([(cx, 584), (cx, 562)], INK, 7))
     out.append(circle((cx, 544), 17, INK, fill="#fff", w=5.5))
 
-    # 双腿完全离地（实线）+ 单脚脚尖轻点地卸力 5-10kg（蓝色虚线）
+    # 双腿完全离地（实线）+ 单脚脚尖轻点地卸力 5-10kg（橙色虚线）
     out.append(line([(cx - 13, hip_y), (cx - 15, 684), (cx - 15, 704), (cx - 26, 708)], INK, 8))
     out.append(line([(cx + 13, hip_y), (cx + 15, 684), (cx + 15, 704), (cx + 26, 708)], INK, 8))
     out.append(line([(cx + 13, hip_y), (cx + 46, 690), (cx + 60, 720)], ACCENT, 5.5, dash="6 5"))
     out.append(circle((cx + 60, 720), 4.5, ACCENT, fill=ACCENT, w=1))
     out.append(line([(54, 722), (324, 722)], LINE, 3.5))
     out.append(text(cx - 18, 718, "双脚离地", size=14.5, color=INK, weight=800, anchor="end"))
-    out.append(text(cx + 68, 718, "点地卸力(-5~10kg)", size=14.5, color=ACCENT, weight=800))
+    out.append(text(cx + 68, 718, "点地卸力(-5~10kg)", size=14.5, color=ACCENT_TEXT, weight=800))
 
     # 下半部分右侧：核心执行参数与禁忌（rx=356，完全控制在 748 以内）
     rx = 356
@@ -547,7 +554,7 @@ def goblet():
             f'</g>'
         )
         out.append(arc((cx, cy), 44, 90, 90 - sgn * 30, None, color=ACCENT, w=3.5))
-    out.append(text(ox + 124, oy + 198, "脚尖外展 30°（膝盖对脚尖）", size=18, color=ACCENT, weight=800, anchor="middle"))
+    out.append(text(ox + 124, oy + 198, "脚尖外展 30°（膝盖对脚尖）", size=18, color=ACCENT_TEXT, weight=800, anchor="middle"))
 
     return frame("大重量高脚杯全蹲（Goblet Squat）", "".join(out), "单只哑铃 20–24 kg 起（进阶 28–32 kg）· 4 组 × 6–8 次 · 组间休息 120 秒")
 
@@ -648,14 +655,14 @@ def pike():
     out.append(rect(ox, oy, 236, 176, fill="#fff", stroke=INK, sw=3, r=12))
     out.append(text(ox + 118, oy + 26, "俯视：三脚架等边三角形", size=17, color=FAR, weight=800, anchor="middle"))
     h1, h2, hd = (ox + 62, oy + 132), (ox + 174, oy + 132), (ox + 118, oy + 56)
-    out.append(poly([h1, h2, hd], fill="#eef1ff", stroke=ACCENT, w=3, dash="6 4"))
+    out.append(poly([h1, h2, hd], fill=ACCENT_WASH, stroke=ACCENT, w=3, dash="6 4"))
     out.append(line([(h1[0] - 8, h1[1] + 16), (h1[0] + 8, h1[1] - 16)], INK, 7))
     out.append(line([(h2[0] - 8, h2[1] - 16), (h2[0] + 8, h2[1] + 16)], INK, 7))
     out.append(circle(h1, 9, INK, fill=INK, w=2))
     out.append(circle(h2, 9, INK, fill=INK, w=2))
     out.append(circle(hd, 16, ACCENT, fill="#fff", w=4.5))
-    out.append(text(hd[0], hd[1] + 5, "头", size=14, color=ACCENT, weight=800, anchor="middle"))
-    out.append(text(ox + 118, oy + 162, "头顶前侧落于双手连线前方", size=16, color=ACCENT, weight=800, anchor="middle"))
+    out.append(text(hd[0], hd[1] + 5, "头", size=14, color=ACCENT_TEXT, weight=800, anchor="middle"))
+    out.append(text(ox + 118, oy + 162, "头顶前侧落于双手连线前方", size=16, color=ACCENT_TEXT, weight=800, anchor="middle"))
 
     # 右上角面板 2：进阶靠墙倒立撑提示
     out.append(rect(524, 322, 236, 108, fill="#fff", stroke=ACCENT, sw=3, r=12))
@@ -691,7 +698,7 @@ def weighted():
     out.append(arrow((560, 266), (560, 224), color=ACCENT, w=4.5, head=12))
 
     # 背负 10-15kg 双肩包（放置在背中部，不遮挡左上方文字）
-    out.append('<g transform="translate(476,250) rotate(-17)">' + rect(-44, -30, 88, 26, fill=ACCENT, stroke=INK, sw=3, r=6) + text(0, -11, "10–15 kg", size=15.5, color="#fff", weight=800, anchor="middle") + "</g>")
+    out.append('<g transform="translate(476,250) rotate(-17)">' + rect(-44, -30, 88, 26, fill=ACCENT, stroke=INK, sw=3, r=6) + text(0, -11, "10–15 kg", size=15.5, color=INK, weight=800, anchor="middle") + "</g>")
 
     out.append(note(64, 168, "3 秒慢放至胸部轻触支架水平面", size=19.5))
     out.append(note(64, 204, "1 秒推起至顶端：肩胛骨主动前推拱背", size=19.5))
@@ -755,7 +762,7 @@ def cossack():
     out.append(text(68, 308, "膝盖严格对齐脚尖", size=17.5, color=FAR, weight=700))
     out.append(arrow((566, 360), (566, 320), color=ACCENT, w=4.5, head=12))
     out.append(note(586, 346, "直腿侧：脚跟着地"))
-    out.append(text(586, 374, "脚尖朝天（拉伸内收肌）", size=17.5, color=ACCENT, weight=700))
+    out.append(text(586, 374, "脚尖朝天（拉伸内收肌）", size=17.5, color=ACCENT_TEXT, weight=700))
 
     # ② 下半部分：地面一字马横叉 PNF 等长收缩循环（3 轮）—— 左右分栏无重叠
     out.append(badge(44, 446, 396, 30, "② 无缝进入地面横叉 PNF 循环：连续重复 3 轮", bg=INK, size=16.5))
@@ -785,8 +792,8 @@ def cossack():
     out.append(text(58, 554, "双脚跟向下、向内死命夹地", size=17.5, color=DANGER, weight=800))
     out.append(text(58, 580, "内收肌等长收缩，保护髋韧带", size=16.5, color=INK, weight=600))
 
-    out.append(note(486, 526, "阶段 B（20 秒）：", color=ACCENT, size=18.5))
-    out.append(text(486, 554, "彻底放松并深呼气", size=17.5, color=ACCENT, weight=800))
+    out.append(note(486, 526, "阶段 B（20 秒）：", color=ACCENT_TEXT, size=18.5))
+    out.append(text(486, 554, "彻底放松并深呼气", size=17.5, color=ACCENT_TEXT, weight=800))
     out.append(text(486, 580, "解除防御，让骨盆自然下沉", size=16.5, color=INK, weight=600))
 
     return frame("功能性横叉转化（Cossack Squat + PNF Split）", "".join(out), "哥萨克蹲 8–12 kg × 2 组 × 每侧 6 次 → 横叉 PNF【夹地 10 秒 + 放松下沉 20 秒】× 3 轮")
@@ -932,19 +939,19 @@ def boulder():
 
     out.append(rect(68, 168, 210, 106, fill=INK, stroke=INK, sw=0, r=12))
     out.append(text(173, 208, "单条线路 15–40 秒", size=21, color="#fff", weight=800, anchor="middle"))
-    out.append(text(173, 238, "短平快极限难度突破", size=17.5, color="#cfd3ff", weight=700, anchor="middle"))
-    out.append(text(173, 262, "契合 ATP-CP 高爆发基因", size=15.5, color="#9ea8ff", weight=600, anchor="middle"))
+    out.append(text(173, 238, "短平快极限难度突破", size=17.5, color=ACCENT_TINT, weight=700, anchor="middle"))
+    out.append(text(173, 262, "契合 ATP-CP 高爆发基因", size=15.5, color=ACCENT_LIGHT, weight=600, anchor="middle"))
 
     rx, ry = 510, 146
     out.append(rect(rx, ry, 250, 576, fill="#fff", stroke=INK, sw=3.5, r=14))
     out.append(badge(rx + 18, ry + 20, 214, 34, "脱落/完攀后铁律", bg=DANGER, size=18))
     tc = (rx + 125, ry + 138)
-    out.append(circle(tc, 54, ACCENT, fill="#eef1ff", w=5))
+    out.append(circle(tc, 54, ACCENT, fill=ACCENT_WASH, w=5))
     out.append(line([(tc[0] - 14, tc[1] - 62), (tc[0] + 14, tc[1] - 62)], INK, 6))
     out.append(line([tc, (tc[0], tc[1] - 34)], INK, 5))
     out.append(line([tc, (tc[0] + 26, tc[1] + 12)], ACCENT, 5))
     out.append(text(rx + 125, ry + 226, "强制看表休息", size=22, color=INK, weight=900, anchor="middle"))
-    out.append(text(rx + 125, ry + 260, "满 3 – 5 分钟", size=28, color=ACCENT, weight=900, anchor="middle"))
+    out.append(text(rx + 125, ry + 260, "满 3 – 5 分钟", size=28, color=ACCENT_TEXT, weight=900, anchor="middle"))
 
     out.append(line([(rx + 22, ry + 286), (rx + 228, ry + 286)], LINE, 2.5))
     out.append(note(rx + 28, ry + 324, "严禁呼吸急促时连上", color=DANGER, size=18.5))
@@ -964,7 +971,7 @@ def boulder():
 def tabata():
     out = []
     out.append(rect(56, 126, 688, 44, fill="#fff", stroke=ACCENT, sw=3, r=10))
-    out.append(text(400, 155, "攀岩彻底结束后：脱下攀岩鞋 → 换上平底运动鞋（彻底解放脚趾与手指）", size=18.5, color=ACCENT, weight=800, anchor="middle"))
+    out.append(text(400, 155, "攀岩彻底结束后：脱下攀岩鞋 → 换上平底运动鞋（彻底解放脚趾与手指）", size=18.5, color=ACCENT_TEXT, weight=800, anchor="middle"))
 
     def round_row(yy, title_str):
         o = [text(56, yy - 114, title_str, size=20.5, weight=900)]
@@ -988,7 +995,7 @@ def tabata():
 
     out.append(rect(56, 568, 686, 154, fill="#fff", stroke=INK, sw=3, r=12))
     out.append(note(82, 602, "动作四选一：风阻单车 (Assault Bike) / 划船机 / 徒手深蹲跳 / 不贴地波比跳", color=INK, size=17.5))
-    out.append(note(82, 640, "生理目标：突破「低心率反应」，拉升 VO2 Max 与 HDL（好胆固醇）脉冲、清理 LDL", color=ACCENT, size=17))
+    out.append(note(82, 640, "生理目标：突破「低心率反应」，拉升 VO2 Max 与 HDL（好胆固醇）脉冲、清理 LDL", color=ACCENT_TEXT, size=17))
     out.append(note(82, 678, "安全铁律：冲刺全程保持节奏呼吸，严禁憋气；若胸闷头晕立即停止", color=DANGER, size=17.5))
 
     return frame("周日阶段 3：Double Tabata 血管清理", "".join(out), "耗时 10 分钟 · 4 分钟冲刺轮 + 2 分钟直立慢走 + 4 分钟冲刺轮 · 换平底鞋执行")
