@@ -282,7 +282,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
         {showSave ? (
           <label className="flex items-center gap-2 py-1 text-[14px] text-[#003054]">
             <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={save} onChange={(e) => setSaveChoice(e.target.checked)} />
-            {t(editingSaved ? '更新本机已保存的命例' : '记住在本机浏览器（不上传服务器）')}
+            {t(editingSaved ? '更新本机已保存的命例' : '记住在本机浏览器')}
           </label>
         ) : (
           <span />
