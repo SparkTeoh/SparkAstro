@@ -282,7 +282,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
         {showSave ? (
           <label className="flex items-center gap-2 py-1 text-[14px] text-[#003054]">
             <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={save} onChange={(e) => setSaveChoice(e.target.checked)} />
-            {t(editingSaved ? '更新已保存的命例' : '保存到我的命例')}
+            {t(editingSaved ? '更新本机已保存的命例' : '记住在本机浏览器（不上传服务器）')}
           </label>
         ) : (
           <span />
@@ -302,6 +302,10 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
           </button>
         </div>
       </div>
+
+      <p className="rounded-md border border-[#003054]/10 bg-[#F8FAFC] px-3 py-2 text-[12px] leading-[1.6] text-[#4A6072]">
+        🔒 {t('隐私安心承诺：排盘纯在你的手机/电脑本地运行，本站无后台数据库、绝不上传或收集任何生辰资料；姓名栏可留空或填代号（如 A 先生），完全不影响排盘准确度。')}
+      </p>
     </form>
   )
 }

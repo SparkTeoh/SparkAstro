@@ -107,7 +107,7 @@ export function EntryPage({ cases, lastInput, onCasesChange, onStart, onOpen }: 
             onChange={changeCases}
             onLoad={(c) => onOpen(c.input)}
             onEdit={startEdit}
-            emptyText="还没有保存的命例。排盘时勾选「保存到我的命例」，下次点名字就能直接打开。"
+            emptyText="还没有保存的命例。排盘时勾选「记住在本机浏览器」，下次点名字就能直接打开。"
           />
         </div>
       </section>
