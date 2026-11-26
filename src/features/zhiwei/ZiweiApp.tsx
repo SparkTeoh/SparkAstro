@@ -16,7 +16,9 @@ import { BirthInputModal } from './components/BirthInputModal/BirthInputModal'
 import { CaseListDrawer } from './components/CaseListDrawer/CaseListDrawer'
 import { EntryPage } from './components/EntryPage/EntryPage'
 import { ExportPromptModal } from './components/ExportPromptModal/ExportPromptModal'
+import { FaqModal } from './components/FaqSection/FaqSection'
 import { HourCompareBar } from './components/HourCompareBar/HourCompareBar'
+import type { ExportMode } from './core/exporter'
 import { ghostBtnCls, primaryBtnCls } from './components/theme'
 
 const LANG_KEY = 'ziwei-c5vuc-lang'
@@ -73,7 +75,8 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
   /** 「修改资料」弹窗：caseId 非空表示正在修改一条已保存命例，提交时同步更新命例库 */
   const [edit, setEdit] = useState<{ input: BirthInput; caseId: string | null } | null>(null)
   const [showCases, setShowCases] = useState(false)
-  const [showExport, setShowExport] = useState(false)
+  const [exportMode, setExportMode] = useState<ExportMode | null>(null)
+  const [showFaq, setShowFaq] = useState(false)
   const [bannerClosed, setBannerClosed] = useState(false)
   const t = (s: string) => toLang(s, lang)
 
@@ -146,7 +149,8 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
   /** 回到排盘入口首页 */
   const backToEntry = () => {
     setShowCases(false)
-    setShowExport(false)
+    setExportMode(null)
+    setShowFaq(false)
     setEdit(null)
     setView('entry')
     window.scrollTo(0, 0)
@@ -154,6 +158,12 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
 
   /** 中宫 日↑/日↓/时↑/时↓：在当前生效生辰上直接偏移并固化 */
   const shiftClock = (minutes: number) => applyInput(shiftInput(input, minutes))
+
+  const faqBtn = (
+    <button className={navBtn} onClick={() => setShowFaq(true)} title={t('排盘须知与常见问题')} aria-label={t('排盘须知与常见问题')}>
+      ❓ <span className="hidden min-[380px]:inline">{t('须知')}</span>
+    </button>
+  )
 
   const langBtn = (
     <button className={navBtn} onClick={() => setLang(lang === 'zh-Hans' ? 'zh-Hant' : 'zh-Hans')} title="简体 / 繁體" aria-label="简体 / 繁體">
@@ -178,7 +188,7 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 <h1 className={titleCls + ' text-[17px]'}>{t(PAGE_TITLE)}</h1>
                 <span className={badge}>C5VUC</span>
               </div>
-              <div className="flex justify-end">{langBtn}</div>
+              <div className="flex items-center justify-end gap-1">{faqBtn}{langBtn}</div>
             </header>
             <EntryPage
               cases={cases}
@@ -215,8 +225,9 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 <span className={badge}>C5VUC</span>
               </div>
               <div className="ml-auto flex items-center gap-1.5 pb-[3px] pr-[3px]">
+                {faqBtn}
                 {langBtn}
-                <button className={primaryBtnCls + ' px-2.5 py-1.5 text-[13px]'} onClick={() => setShowExport(true)}>
+                <button className={primaryBtnCls + ' px-2.5 py-1.5 text-[13px]'} onClick={() => setExportMode('career')}>
                   ✨ {t('AI 详批')}
                   <span className="hidden sm:inline">{t('提示词')}</span>
                 </button>
@@ -247,6 +258,7 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 onNext={() => shiftHour({ type: 'next' })}
                 onReset={() => shiftHour({ type: 'reset' })}
                 onCommit={commitHour}
+                onAiVerify={() => setExportMode('rectify')}
               />
 
               <ChartGrid
@@ -309,8 +321,29 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 onClose={() => setShowCases(false)}
               />
             )}
-            {showExport && <ExportPromptModal birth={birth} chart={chart} overlap={overlap} onClose={() => setShowExport(false)} />}
+            {exportMode && (
+              <ExportPromptModal
+                birth={birth}
+                chart={chart}
+                overlap={overlap}
+                initialMode={exportMode}
+                onClose={() => setExportMode(null)}
+              />
+            )}
           </>
+        )}
+        {showFaq && (
+          <FaqModal
+            onClose={() => setShowFaq(false)}
+            onStartRectify={
+              view === 'chart'
+                ? () => {
+                    setShowFaq(false)
+                    setExportMode('rectify')
+                  }
+                : undefined
+            }
+          />
         )}
       </div>
     </LangContext.Provider>

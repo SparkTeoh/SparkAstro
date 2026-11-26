@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import type { ResolvedBirth } from '../../core/calendar'
+import { BRANCHES, mod12 } from '../../core/constants/base'
 import {
   FOCUS_CHIPS, KIDS_CHIPS, MARITAL_CHIPS, STATUS_CHIPS, YEAR_SPAN_LIMIT, buildPrompt, chipLabel, clampYear,
-  type ExportMode, type FocusKey, type KidsKey, type MaritalKey, type StatusKey,
+  type ExportMode, type FocusKey, type KidsKey, type MaritalKey, type RectifyScope, type StatusKey,
 } from '../../core/exporter'
 import type { Chart } from '../../core/ziwei'
 import { downloadText } from '../../state/cases'
@@ -16,23 +17,27 @@ interface Props {
   chart: Chart
   /** 各宫限流叠宫全称（当前界面选中的运限） */
   overlap?: string[][]
+  /** 初始选中的模式（顶栏「AI 帮我定盘」传入 'rectify'，默认 'career'） */
+  initialMode?: ExportMode
   onClose: () => void
 }
 
 const chipCls = (on: boolean) => `rounded-full border-[1.5px] px-3 py-1.5 text-left text-[13px] leading-[18px] transition-colors ${segCls(on)}`
 const segBtn = (on: boolean) => `rounded-md border-[1.5px] px-3 py-1.5 text-[13px] ${segCls(on)}`
 
-export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
+export function ExportPromptModal({ birth, chart, overlap, initialMode = 'career', onClose }: Props) {
   const t = useT()
   const lang = useLang()
   const birthYear = birth.ziwei.lunarYear
   const [thisYear] = useState(() => clampYear(birthYear, new Date().getFullYear()))
   const yearOpts = useMemo(() => Array.from({ length: YEAR_SPAN_LIMIT + 1 }, (_, i) => birthYear + i), [birthYear])
 
-  const [mode, setMode] = useState<ExportMode>('career')
+  const [mode, setMode] = useState<ExportMode>(initialMode)
   const [startYear, setStartYear] = useState(thisYear)
   const [span, setSpan] = useState<3 | 5>(5)
   const [targetYear, setTargetYear] = useState(thisYear)
+  const [rectifyScope, setRectifyScope] = useState<RectifyScope>('three')
+  const [pastEvents, setPastEvents] = useState('')
   const [status, setStatus] = useState<StatusKey | null>(null)
   const [marital, setMarital] = useState<MaritalKey | null>(null)
   const [kids, setKids] = useState<KidsKey | null>(null)
@@ -44,13 +49,22 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
   const [note, setNote] = useState('')
   const [copied, setCopied] = useState('')
 
+  const curHour = BRANCHES[birth.ziwei.hour] + '时'
+  const prevHour = BRANCHES[mod12(birth.ziwei.hour - 1)] + '时'
+  const nextHour = BRANCHES[mod12(birth.ziwei.hour + 1)] + '时'
+
   const text = useMemo(
     () =>
       buildPrompt(birth, chart, {
         mode, lang, note, overlap, startYear, span, targetYear,
+        rectifyScope, pastEvents,
         status, marital, kids, occupation, pastContext, focus, question, withIntro,
       }),
-    [birth, chart, mode, lang, note, overlap, startYear, span, targetYear, status, marital, kids, occupation, pastContext, focus, question, withIntro],
+    [
+      birth, chart, mode, lang, note, overlap, startYear, span, targetYear,
+      rectifyScope, pastEvents,
+      status, marital, kids, occupation, pastContext, focus, question, withIntro,
+    ],
   )
 
   const toggleFocus = (k: FocusKey) => setFocus((f) => (f.includes(k) ? f.filter((x) => x !== k) : [...f, k]))
@@ -191,7 +205,7 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
               role="radio"
               aria-checked={mode === m.key}
               onClick={() => setMode(m.key)}
-              className={`rounded-lg border-[1.5px] p-2.5 text-left transition-colors ${
+              className={`rounded-lg border-[1.5px] p-2.5 text-left transition-colors ${m.key === 'natal' ? 'sm:col-span-2 ' : ''}${
                 mode === m.key ? 'border-[#003054] bg-[#FFFBEB] shadow-[3px_3px_0_#003054]' : 'border-[#003054]/30 bg-white hover:bg-[#F8FAFC]'
               }`}
             >
@@ -252,6 +266,39 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
               {profileSection}
               {questionField}
               {noteField}
+            </>
+          )}
+          {mode === 'rectify' && (
+            <>
+              <div className="rounded-md border border-[#003054]/15 bg-[#FFFBEB] px-2.5 py-1.5 text-[12px] leading-[18px] text-[#003054]">
+                {t(EXPORT_UI_TEXT.rectifyHint)}
+              </div>
+              <div>
+                <span className={labelCls}>{t(EXPORT_UI_TEXT.rectifyScope)}</span>
+                <div className="flex flex-wrap gap-1.5" role="group" aria-label={t(EXPORT_UI_TEXT.rectifyScope)}>
+                  {(
+                    [
+                      ['three', `前后三时辰对比（${prevHour} / ${curHour} / ${nextHour}，推荐）`],
+                      ['prev', `与上一时辰二选一（${prevHour} vs ${curHour}）`],
+                      ['next', `与下一时辰二选一（${curHour} vs ${nextHour}）`],
+                    ] as const
+                  ).map(([k, label]) => (
+                    <button key={k} aria-pressed={rectifyScope === k} className={segBtn(rectifyScope === k)} onClick={() => setRectifyScope(k)}>
+                      {t(label)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <label>
+                <span className={labelCls}>{t(EXPORT_UI_TEXT.pastEvents)}</span>
+                <textarea
+                  className={inputCls + ' min-h-[68px] resize-y py-1.5 leading-5'}
+                  rows={2}
+                  value={pastEvents}
+                  placeholder={t(EXPORT_UI_TEXT.pastEventsPlaceholder)}
+                  onChange={(e) => setPastEvents(e.target.value)}
+                />
+              </label>
             </>
           )}
           {mode === 'natal' && (

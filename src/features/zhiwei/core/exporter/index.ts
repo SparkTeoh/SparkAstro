@@ -1,17 +1,20 @@
 import { BRANCHES, STEMS, mod12, tenGod } from '../constants/base'
 import { PALACE_NAMES, PALACE_SHORT, PALACE_TWO } from '../constants/stars'
-import { fmtClock, type ResolvedBirth } from '../calendar'
-import { starLabel, type Chart, type Palace, type Star } from '../ziwei'
+import { addMinutes, fmtClock, fmtHM, resolveBirth, type ResolvedBirth } from '../calendar'
+import { computeChart, starLabel, type Chart, type Palace, type Star } from '../ziwei'
 import {
   childLimitBranch, decades, flowStars, monthPalace, monthStem, mutagenHits, relativeNameIndex, yearInfo,
   type Decade,
 } from '../horoscopes'
 import { toLang, type Lang } from '../i18n'
 
-/** AI 详批提示词的四大场景模式 */
-export type ExportMode = 'career' | 'annual' | 'life' | 'natal'
+/** AI 详批提示词的五大场景模式 */
+export type ExportMode = 'career' | 'annual' | 'life' | 'rectify' | 'natal'
 
-export const EXPORT_MODES: ExportMode[] = ['career', 'annual', 'life', 'natal']
+export const EXPORT_MODES: ExportMode[] = ['career', 'annual', 'life', 'rectify', 'natal']
+
+/** 时辰定盘印证的候选范围：前后三时辰 / 与上一时辰二选一 / 与下一时辰二选一 */
+export type RectifyScope = 'three' | 'prev' | 'next'
 
 /** 起始 / 目标年份可选范围：出生年 ~ 出生年 + 95 */
 export const YEAR_SPAN_LIMIT = 95
@@ -89,6 +92,19 @@ const annualIntro = (year: number) =>
 const LIFE_INTRO =
   `${PERSONA_LEAD}下面是一份紫微斗数命盘，以及由程序精确预计算好的前八个十年大限的叠宫、坐星与宫干四化数据（请直接引用这些预计算数据，不要自行重新数宫位或心算四化）。这是命主第一次找你通盘看一生格局与十年大周期。请像当面交底那样，先聊透命主的性格底色、天生优势、适合的事业赛道与财富累积方式、感情相处模式与身心盲区，再顺着八个十年大限把人生不同阶段的主旋律与关键换挡期梳理清楚（若命主提了具体问题也请一并回应）；本次只看命格底色与十年大周期，不需要逐一展开碎流年，第一次先把人生全局的底子交透，结尾顺势邀请命主针对当下大限或某个具体课题继续深聊。`
 
+const rectifyIntro = (count: number, hasEvents: boolean) =>
+  `${PERSONA_LEAD}命主的出生时间存在时辰不确定（或刚好落在时辰交界处），普通人自己看不懂盘面差异，需要你帮忙做「时辰定盘印证」。下面已由程序按 C5VUC 标准精确排出了 ${count} 张候选时辰的命盘核心结构与过往关键流年核验数据（请直接引用这些预计算数据，不要自行重新排盘或心算四化）。\n\n` +
+  '【定盘对比铁律（请严格执行）】\n' +
+  '· 严禁说两头讨好、放之四海皆准的模糊套话（拒绝巴纳姆效应）！你必须把这几张候选盘并排放在一起，只抓它们之间「反差最强烈、最非黑即白」的 5 个硬特征，用大白话写成一份让命主一眼就能对号入座的核对清单：\n' +
+  '  1. 内在性格与遇事本能（看命宫、身宫、福德宫：遇事是风风火火先冲再说，还是反复权衡容易内耗？抗压模式有何本质反差？）\n' +
+  '  2. 原生家庭与早年印记（看父母宫、田宅宫与首限：与父母谁更投缘或更有距离感？早年家风管教与成长环境有何不同？）\n' +
+  '  3. 赚钱直觉与花钱习惯（看财帛宫、官禄宫、田宅宫：手松重体验还是极重存钱安全感？偏稳健受薪还是偏折腾博弈？）\n' +
+  '  4. 感情与人际互动模式（看夫妻宫、交友宫：在亲密关系里习惯照顾主导还是需要独立空间？容易卡在什么互动痛点？）\n' +
+  '  5. 过往关键流年体感盲测（结合下方预计算的过往流年叠宫与四化冲照，直接点明：“如果你是 A 盘，在 20XX 年大概率经历了……；如果你是 B 盘，反而在 20XX 年经历了……”）。\n' +
+  (hasEvents
+    ? '· 命主已在下方提供了几件过往真实发生的大事：请严禁为了圆场而强行附会！务必逐一诚实比对这些年份事件与哪一张候选盘的流年叠宫、四化冲照真正咬合，明确给出各候选盘的匹配度排序与你的定盘倾向；若还差一两个细节才能百分百拍板，结尾请再追问 1～2 个一锤定音的核对问题。'
+    : '· 命主尚未填写过往事件（纯盲测模式）：请在对比完上述 5 大反差后，在结尾像经验老道的命理师当面定盘一样，向命主列出 4～5 道简短直白的核对选择题（并请命主顺手补充一两件过去真实发生过的年份大事），约定下一轮直接帮命主拍板锁定真实时辰。')
+
 const gz = (s: number, b: number) => STEMS[s] + BRANCHES[b]
 const PLATE_NAME = { heaven: '天盘', earth: '地盘', human: '人盘' } as const
 const opp = (b: number) => mod12(b + 6)
@@ -152,8 +168,14 @@ export interface ExportOptions {
   focus?: FocusKey[]
   /** career / annual / life：命主具体想问的问题 / 补充背景（留空不输出） */
   question?: string
+  /** rectify：候选时辰对比范围（默认 three：上一时辰 + 当前 + 下一时辰） */
+  rectifyScope?: RectifyScope
+  /** rectify：过往关键年份大事记（选填，用于验盘校准；留空走纯盲测模式） */
+  pastEvents?: string
   /** natal：是否附带通用大师解盘导语（默认不附带） */
   withIntro?: boolean
+  /** 测试或外部指定当前公历年（默认当年） */
+  nowYear?: number
 }
 
 /** 把年份夹到「出生年 ~ 出生年 + 95」范围内 */
@@ -587,10 +609,150 @@ const buildLife = (c: Ctx, opts: ExportOptions) => {
   return L
 }
 
+// ───────────────────────── 时辰定盘印证（多盘对比 + 过往流年核验） ─────────────────────────
+
+/** 定盘按重要性排列十二宫：命 / 福 / 官 / 财 / 夫 / 父 / 田 / 迁 / 疾 / 子 / 兄 / 友 */
+const RECTIFY_PALACE_ORDER = [0, 10, 8, 4, 2, 11, 9, 6, 5, 3, 1, 7]
+/** 过往流年核验聚焦六大高体感宫位：命 / 官 / 财 / 夫 / 田 / 疾 */
+const RECTIFY_YEAR_PALACES: [number, string][] = [
+  [0, '命宫'], [8, '官禄'], [4, '财帛'], [2, '夫妻'], [9, '田宅'], [5, '疾厄'],
+]
+const RECTIFY_FLY: FlyRow[] = [...FLY_BASE, FLY_LOVE]
+
+const shiftedCandidate = (baseBirth: ResolvedBirth, baseChart: Chart, offsetHours: number) => {
+  if (offsetHours === 0) return { birth: baseBirth, chart: baseChart }
+  const c = addMinutes(baseBirth.clock, offsetHours * 120)
+  const birth = resolveBirth({
+    ...baseBirth.input,
+    calendar: 'solar',
+    isLeapMonth: false,
+    year: c.y,
+    month: c.m,
+    day: c.d,
+    hour: c.h,
+    minute: c.mi,
+  })
+  const chart = computeChart({ ...birth.ziwei, gender: baseBirth.input.gender, plate: baseChart.params.plate })
+  return { birth, chart }
+}
+
+/** 提取过往核验年份：最近 5 个已过完整年份 + 用户在过往大事记里提到的具体年份（最多取 8 个） */
+export const pickVerifyYears = (birthYear: number, nowYear: number, pastEvents?: string): number[] => {
+  const set = new Set<number>()
+  for (let y = nowYear - 5; y <= nowYear - 1; y++) {
+    if (y >= birthYear) set.add(y)
+  }
+  if (pastEvents) {
+    for (const m of pastEvents.matchAll(/\b(19\d{2}|20\d{2})\b/g)) {
+      const y = Number(m[1])
+      if (y >= birthYear && y <= nowYear) set.add(y)
+    }
+  }
+  if (!set.size) set.add(Math.max(birthYear, nowYear))
+  return [...set].sort((a, b) => a - b).slice(-8)
+}
+
+const candidateBlock = (label: string, tag: string, cand: { birth: ResolvedBirth; chart: Chart }, nowYear: number, pastEvents?: string) => {
+  const { birth, chart } = cand
+  const birthYear = birth.ziwei.lunarYear
+  const c: Ctx = { birth, chart, ds: decades(chart, birthYear), birthYear }
+  const pal = chart.palaces
+  const lifeP = pal[chart.lifeIndex]
+  const bodyP = pal[chart.bodyIndex]
+  const laiyinP = chart.laiyin !== null ? pal[chart.laiyin] : pal.find((x) => x.isLaiyin) ?? null
+  const laiyinTag = laiyinP ? ` | 来因[${gz(laiyinP.stem, laiyinP.branch)}·${PALACE_TWO[laiyinP.nameIndex]}]` : ''
+  const curAge = Math.max(1, nowYear - birthYear + 1)
+  const curPeriod = periodOfAge(c, curAge)
+  const years = pickVerifyYears(birthYear, nowYear, pastEvents)
+
+  const out: string[] = [
+    `【${label}｜${BRANCHES[birth.ziwei.hour]}时盘（${tag} · 真太阳时 ${fmtHM(birth.trueSolar)}）】`,
+    `├时间换算 : 钟表 ${fmtClock(birth.clock)} -> 真太阳时 ${fmtClock(birth.trueSolar)} | 农历 : ${birth.lunarText}`,
+    `├盘局锚点 : 节气四柱[${birth.jieqiPillars.join(' ')}] | ${chart.bureau.name} | 命宫[${gz(lifeP.stem, lifeP.branch)}] | 身宫[${gz(bodyP.stem, bodyP.branch)}·${PALACE_TWO[bodyP.nameIndex]}]${laiyinTag} | 命主:${chart.lifeMaster} 身主:${chart.bodyMaster}`,
+    `├八字大运 : ${dayunLine(birth)}`,
+    '├本命十二宫主辅星与四化结构（按定盘关键度排序）',
+  ]
+  const palaceRows = RECTIFY_PALACE_ORDER.map((nameIdx) => {
+    const p = pal.find((x) => x.nameIndex === nameIdx)!
+    const marks = `${p.isBody ? '[身宫]' : ''}${p.isLaiyin ? '[来因]' : ''}`
+    return `${PALACE_NAMES[nameIdx]}[${gz(p.stem, p.branch)}]${marks} : 主辅星[${mainStars(p)}] | 对宫[${gz(pal[opp(p.branch)].stem, opp(p.branch))} ${mainStars(pal[opp(p.branch)])}]`
+  })
+  out.push(...branchOut('│ ', palaceRows))
+
+  if (curPeriod.decade) {
+    const d = curPeriod.decade
+    out.push(
+      `├当前所处大限 : 第${d.index + 1}大限[${gz(d.stem, d.branch)}]（${d.ageStart}~${d.ageEnd}虚岁，${d.yearStart}~${d.yearEnd}年）叠本命${PALACE_TWO[pal[d.branch].nameIndex]} | 大限四化 : ${mutagenInline(c, d.stem, [{ prefix: '大', base: d.branch }])}`,
+    )
+  } else {
+    out.push(`├当前所处运限 : 童限（${curAge}虚岁）`)
+  }
+
+  out.push(`└过往关键流年核验轨迹（${years[0]}~${years[years.length - 1]}年，已预计算）`)
+  years.forEach((yr, i) => {
+    const last = i === years.length - 1
+    const pre = last ? '    ' : '  │ '
+    const { yc } = yearCtx(c, yr, '流')
+    out.push(`  ${last ? '└' : '├'}${yearHead(c, yr)}`)
+    out.push(`${pre}├流年四化 : ${mutagenInline(c, yc.yStem, yc.frames)}`)
+    out.push(`${pre}├重点叠宫 : ${RECTIFY_YEAR_PALACES.map(([idx, nm]) => yearPalaceRow(c, yc, idx, nm)).join(' ； ')}`)
+    out.push(`${pre}└关键飞化 : ${RECTIFY_FLY.map(([idx, s, h]) => flyRow(c, yc, idx, s, h)).join(' ； ')}`)
+  })
+  return out
+}
+
+const buildRectify = (c: Ctx, opts: ExportOptions, nowYear: number) => {
+  const scope: RectifyScope = opts.rectifyScope ?? 'three'
+  const offsets: { offset: number; tag: string }[] =
+    scope === 'prev'
+      ? [
+          { offset: -1, tag: '上一时辰候选' },
+          { offset: 0, tag: '当前所填时辰候选' },
+        ]
+      : scope === 'next'
+        ? [
+            { offset: 0, tag: '当前所填时辰候选' },
+            { offset: 1, tag: '下一时辰候选' },
+          ]
+        : [
+            { offset: -1, tag: '上一时辰候选' },
+            { offset: 0, tag: '当前所填时辰候选' },
+            { offset: 1, tag: '下一时辰候选' },
+          ]
+  const letters = ['A', 'B', 'C']
+  const events = opts.pastEvents?.trim()
+  const L: string[] = [rectifyIntro(offsets.length, !!events), '', PROMPT_PRINCIPLES, '']
+  L.push(...backgroundBlock(opts, false))
+  if (events) {
+    L.push('【命主提供的过往真实大事记（请据此严格核验各候选盘，切勿强行附会）】', events, '')
+  }
+  L.push(
+    '紫微斗数命盘数据',
+    '│',
+    '├排盘标准 : 三合钦天四化通用盘',
+    '├安星参数 : C5VUC',
+    '├符号定义',
+    '│ ├(↓:离心自化)',
+    '│ ├(↑:向心自化，从对宫化入)',
+    '│ ├(┏ : 生日前小限)',
+    '│ └( ┓: 生日后小限)',
+    `└定盘模式 : 共 ${offsets.length} 张候选时辰命盘并排核验（性别:${c.birth.input.gender === 'male' ? '男' : '女'} | 出生地经度:${c.birth.input.longitude}）`,
+    '',
+    ...READING_GUIDE('流'),
+    '',
+  )
+  offsets.forEach(({ offset, tag }, idx) => {
+    if (idx > 0) L.push('')
+    const cand = shiftedCandidate(c.birth, c.chart, offset)
+    L.push(...candidateBlock(`候选盘 ${letters[idx]}`, tag, cand, nowYear, events))
+  })
+  return L
+}
+
 export const buildPrompt = (birth: ResolvedBirth, chart: Chart, opts: ExportOptions): string => {
   const birthYear = birth.ziwei.lunarYear
   const c: Ctx = { birth, chart, ds: decades(chart, birthYear), birthYear }
-  const nowYear = new Date().getFullYear()
+  const nowYear = opts.nowYear ?? new Date().getFullYear()
   let L: string[]
   switch (opts.mode) {
     case 'career':
@@ -601,6 +763,9 @@ export const buildPrompt = (birth: ResolvedBirth, chart: Chart, opts: ExportOpti
       break
     case 'life':
       L = buildLife(c, opts)
+      break
+    case 'rectify':
+      L = buildRectify(c, opts, nowYear)
       break
     default:
       L = [...(opts.withIntro ? [PROMPT_INTRO, '', PROMPT_PRINCIPLES, ''] : []), ...natalTree(c, opts, false)]

@@ -5,6 +5,7 @@ import { BLANK_INPUT, type SavedCase } from '../../state/cases'
 import { useT } from '../../state/lang'
 import { BirthForm } from '../BirthForm/BirthForm'
 import { CaseList } from '../CaseList/CaseList'
+import { FaqAccordion } from '../FaqSection/FaqSection'
 import { cardCls } from '../theme'
 
 interface Props {
@@ -110,6 +111,8 @@ export function EntryPage({ cases, lastInput, onCasesChange, onStart, onOpen }: 
           />
         </div>
       </section>
+
+      <FaqAccordion />
 
       <footer className="pb-4 text-center text-[11px] text-[#4A6072]">{t('资料只保存在本机浏览器 · 仅供传统文化研究与个人规划参考')}</footer>
     </main>
