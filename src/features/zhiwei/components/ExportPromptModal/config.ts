@@ -10,7 +10,13 @@ export const EXPORT_MODE_CARDS: { key: ExportMode; icon: string; title: string; 
 
 /** 弹窗内的固定文案（简体，显示时再转换；测试据此检查繁体无残留） */
 export const EXPORT_UI_TEXT = {
+  profileHint: '💡 命理师问诊卡（选填）：同盘不同命，告诉 AI 你的真实工作、婚育与近况，分析会精准贴合现实而非空泛套话',
   status: '当前状态（单选，可点选也可再次点击取消，不选亦正常生成）',
+  family: '婚姻与子女状态（选填，点选后可避免感情与家庭宫位误判）',
+  occupation: '💼 具体工作 / 行业角色（选填）',
+  occupationPlaceholder: '例：经营两家餐饮店 / 科技公司主管 / 房产经纪 / 全职妈妈兼做电商',
+  pastContext: '📊 过去 1～3 年经营或生活近况（选填，供验盘校准与定调）',
+  pastContextPlaceholder: '例：前两年生意稳步增长，今年成本上升现金流偏紧；刚换工作半年还在适应期…',
   focus: '重点关注方向（可多选，不选则默认全面综合分析）',
   question: '✍️ 我具体想问的问题 / 补充背景（选填）',
   questionPlaceholder: '如果有具体纠结的事，直接用大白话写在这里（例：未来两年适合结婚买房吗？想换跑道可行吗？）',

@@ -18,6 +18,10 @@ export const YEAR_SPAN_LIMIT = 95
 
 /** 当前状态（单选，可不选） */
 export type StatusKey = 'employee' | 'business' | 'invest' | 'study'
+/** 婚姻感情状态（单选，可不选） */
+export type MaritalKey = 'single' | 'dating' | 'married' | 'divorced'
+/** 子女状态（单选，可不选） */
+export type KidsKey = 'hasKids' | 'noKids'
 /** 重点关注方向（多选，不选 = 全面综合分析） */
 export type FocusKey = 'wealth' | 'jobchange' | 'partner' | 'love' | 'health'
 
@@ -35,6 +39,18 @@ export const STATUS_CHIPS: Chip<StatusKey>[] = [
   { key: 'study', icon: '🌱', text: '求学进修 / 转型探索' },
 ]
 
+export const MARITAL_CHIPS: Chip<MaritalKey>[] = [
+  { key: 'single', icon: '🙂', text: '单身' },
+  { key: 'dating', icon: '💑', text: '恋爱 / 有伴侣' },
+  { key: 'married', icon: '💍', text: '已婚' },
+  { key: 'divorced', icon: '🕊️', text: '离异 / 单亲' },
+]
+
+export const KIDS_CHIPS: Chip<KidsKey>[] = [
+  { key: 'hasKids', icon: '👶', text: '有孩子' },
+  { key: 'noKids', icon: '🌿', text: '暂无孩子' },
+]
+
 export const FOCUS_CHIPS: Chip<FocusKey>[] = [
   { key: 'wealth', icon: '💰', text: '事业突破与财运规划' },
   { key: 'jobchange', icon: '🔀', text: '转职跳槽 / 新机会评估' },
@@ -48,12 +64,13 @@ export const chipLabel = (c: Chip<string>) => `${c.icon} ${c.text}`
 
 const DISCLAIMER = '最后，请提醒命主：上述分析仅供传统文化研究与个人规划参考。'
 
-/** 导师级分析准则：客观不迎合，但积极正向、顺势赋能（所有带导语的模式统一植入） */
+/** 导师级分析准则：客观不迎合，但积极正向、顺势赋能，并紧扣现实背景校准（所有带导语的模式统一植入） */
 export const PROMPT_PRINCIPLES = [
   '【分析原则与沟通基调（请严格遵守）】',
   '1. 客观真诚，拒绝迎合拍马屁：请以专业、理性、实事求是的态度分析，不要使用空洞的讨好、吹捧或放之四海皆准的套话；每一项判断请结合下方预计算的星曜、四化与叠宫指出依据（如：依据某宫某星化禄/化忌）。',
   '2. 正面积极，顺势赋能（拒绝宿命论与制造焦虑）：紫微斗数的价值在于“知天时以顺势而为”，绝非宿命悲观的判决。遇到吉星汇聚的顺风期，请明确指出优势所在，鼓励命主自信把握、果断行动；遇到化忌冲照或煞星同度的波动期，切勿危言耸听或渲染悲观，请将其客观视为“提醒放慢节奏、留意外部形势、调整策略与修内功的信号”，并务必配上一条积极、具体、可执行的化解与应对方法，让命主读完后心里踏实、有底气、有清晰方向。',
   '3. 语言通俗，建议落地：请把晦涩的术数术语翻译成现代生活、职场、财务或感情中的具体场景，多给可操作的行动参考。',
+  '4. 同盘不同命，紧扣现实背景校准：同一张命盘在不同行业、婚育阶段与经营底子下，星曜象义的现实落点截然不同。若下方提供了命主的职业工作、婚姻子女状态或过往近况，请先结合过往近况核验盘势节奏，再将各宫位解读对齐现实锚点（例如：已婚有孩者看夫妻与子女宫，应聚焦伴侣相处、家庭协同或外部合作，切勿套用单身寻正缘模板；评估事业扩张与财务动作时，须贴合其真实工作属性与过往经营底子）。',
 ].join('\n')
 
 /** 通用全盘导语（natal 模式勾选「附带通用大师解盘导语」时使用） */
@@ -119,11 +136,19 @@ export interface ExportOptions {
   span?: 3 | 5
   /** annual：目标年份（默认当前公历年） */
   targetYear?: number
-  /** career / annual：当前状态芯片（单选，可不选） */
+  /** career / annual / life：当前状态芯片（单选，可不选） */
   status?: StatusKey | null
+  /** career / annual / life：婚姻感情状态芯片（单选，可不选） */
+  marital?: MaritalKey | null
+  /** career / annual / life：子女状态芯片（单选，可不选） */
+  kids?: KidsKey | null
+  /** career / annual / life：具体工作 / 行业与角色（选填） */
+  occupation?: string
+  /** career / annual / life：过去 1～3 年经营 / 发展与生活近况（选填） */
+  pastContext?: string
   /** career / annual：重点关注方向芯片（多选；不选 = 全面综合分析，核心宫位全部展开） */
   focus?: FocusKey[]
-  /** career / annual：命主具体想问的问题 / 补充背景（留空不输出） */
+  /** career / annual / life：命主具体想问的问题 / 补充背景（留空不输出） */
   question?: string
   /** natal：是否附带通用大师解盘导语（默认不附带） */
   withIntro?: boolean
@@ -457,15 +482,25 @@ const CN_NUM = ['一', '二', '三', '四', '五', '六', '七', '八']
 /** 给各节自动编号：一、二、三… */
 const numbered = (rows: string[]) => rows.map((r, i) => `${CN_NUM[i]}、${r}`)
 
-/** 【命主背景与核心关注问题】：三项都没填时整块不输出 */
-const backgroundBlock = (opts: ExportOptions) => {
+/** 【命主背景与核心关注问题】：全部未填时整块不输出 */
+const backgroundBlock = (opts: ExportOptions, showDefaultFocus = true) => {
   const st = STATUS_CHIPS.find((s) => s.key === opts.status)
+  const ma = MARITAL_CHIPS.find((m) => m.key === opts.marital)
+  const kd = KIDS_CHIPS.find((k) => k.key === opts.kids)
+  const occ = opts.occupation?.trim()
+  const past = opts.pastContext?.trim()
   const fs = FOCUS_CHIPS.filter((f) => opts.focus?.includes(f.key))
   const q = opts.question?.trim()
-  if (!st && !fs.length && !q) return []
+  if (!st && !ma && !kd && !occ && !past && !fs.length && !q) return []
   const rows = ['【命主背景与核心关注问题】']
   if (st) rows.push(`· 当前状态：${st.text}`)
-  rows.push(`· 重点关注方向：${fs.length ? fs.map((f) => f.text).join('；') : '未特别指定，请做全面综合分析'}`)
+  if (occ) rows.push(`· 具体工作与行业角色：${occ}`)
+  const family = [ma?.text, kd?.text].filter(Boolean).join('，')
+  if (family) rows.push(`· 婚姻与家庭状态：${family}`)
+  if (past) rows.push(`· 过去 1～3 年经营与生活近况：${past}`)
+  if (showDefaultFocus || fs.length) {
+    rows.push(`· 重点关注方向：${fs.length ? fs.map((f) => f.text).join('；') : '未特别指定，请做全面综合分析'}`)
+  }
   if (q) rows.push(`· 命主具体想问的问题 / 补充背景：${q}`)
   return [...rows, '']
 }
@@ -593,7 +628,9 @@ const buildAnnual = (c: Ctx, opts: ExportOptions, nowYear: number) => {
 }
 
 const buildLife = (c: Ctx, opts: ExportOptions) => {
+  const q = opts.question?.trim()
   const L: string[] = [LIFE_INTRO, '', PROMPT_PRINCIPLES, '']
+  L.push(...backgroundBlock(opts, false))
   L.push('【本命盘完整信息】', ...natalTree(c, opts, true), '')
   L.push(...READING_GUIDE(null), '')
   L.push('【前八个十年大限全景（已预计算）】')
@@ -610,6 +647,7 @@ const buildLife = (c: Ctx, opts: ExportOptions) => {
       '命格总论：格局特点、性格底色与天赋所在。',
       '分项详批：学业、事业赛道、财富层级、婚姻感情、六亲人际、健康保养重点各成一节。',
       '八大十年大运全景：逐个大限说明人生阶段主题、起伏走势与关键转折，并给出每个大限的攻守评分（1~10 分）与一条顺势而为的建议。',
+      ...(q ? [`针对命主具体问题的专门答复：请单独设一小节直接回应「${q}」，给出有倾向性的明确结论、理由（引用预计算数据）与两三条可执行的下一步。`] : []),
       '一生最关键的三个转折期与给命主的总建议，并以一句积极、踏实的寄语收尾。',
     ]),
   )

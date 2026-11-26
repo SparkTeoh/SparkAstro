@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react'
 import type { ResolvedBirth } from '../../core/calendar'
 import {
-  FOCUS_CHIPS, STATUS_CHIPS, YEAR_SPAN_LIMIT, buildPrompt, chipLabel, clampYear,
-  type ExportMode, type FocusKey, type StatusKey,
+  FOCUS_CHIPS, KIDS_CHIPS, MARITAL_CHIPS, STATUS_CHIPS, YEAR_SPAN_LIMIT, buildPrompt, chipLabel, clampYear,
+  type ExportMode, type FocusKey, type KidsKey, type MaritalKey, type StatusKey,
 } from '../../core/exporter'
 import type { Chart } from '../../core/ziwei'
 import { downloadText } from '../../state/cases'
@@ -34,6 +34,10 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
   const [span, setSpan] = useState<3 | 5>(5)
   const [targetYear, setTargetYear] = useState(thisYear)
   const [status, setStatus] = useState<StatusKey | null>(null)
+  const [marital, setMarital] = useState<MaritalKey | null>(null)
+  const [kids, setKids] = useState<KidsKey | null>(null)
+  const [occupation, setOccupation] = useState('')
+  const [pastContext, setPastContext] = useState('')
   const [focus, setFocus] = useState<FocusKey[]>([])
   const [question, setQuestion] = useState('')
   const [withIntro, setWithIntro] = useState(false)
@@ -41,8 +45,12 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
   const [copied, setCopied] = useState('')
 
   const text = useMemo(
-    () => buildPrompt(birth, chart, { mode, lang, note, overlap, startYear, span, targetYear, status, focus, question, withIntro }),
-    [birth, chart, mode, lang, note, overlap, startYear, span, targetYear, status, focus, question, withIntro],
+    () =>
+      buildPrompt(birth, chart, {
+        mode, lang, note, overlap, startYear, span, targetYear,
+        status, marital, kids, occupation, pastContext, focus, question, withIntro,
+      }),
+    [birth, chart, mode, lang, note, overlap, startYear, span, targetYear, status, marital, kids, occupation, pastContext, focus, question, withIntro],
   )
 
   const toggleFocus = (k: FocusKey) => setFocus((f) => (f.includes(k) ? f.filter((x) => x !== k) : [...f, k]))
@@ -80,9 +88,12 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
     </select>
   )
 
-  /** 点选芯片 + 万能提问框（career / annual 共用） */
-  const chips = (
+  /** 现实背景问诊卡（career / annual / life 共用） */
+  const profileSection = (
     <>
+      <div className="rounded-md border border-[#003054]/15 bg-[#FFFBEB] px-2.5 py-1.5 text-[12px] leading-[18px] text-[#003054]">
+        {t(EXPORT_UI_TEXT.profileHint)}
+      </div>
       <div>
         <span className={labelCls}>{t(EXPORT_UI_TEXT.status)}</span>
         <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('当前状态')}>
@@ -94,6 +105,62 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
         </div>
       </div>
       <div>
+        <span className={labelCls}>{t(EXPORT_UI_TEXT.family)}</span>
+        <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={t('婚姻与子女状态')}>
+          {MARITAL_CHIPS.map((c) => (
+            <button key={c.key} aria-pressed={marital === c.key} className={chipCls(marital === c.key)} onClick={() => setMarital(marital === c.key ? null : c.key)}>
+              {t(chipLabel(c))}
+            </button>
+          ))}
+          <span className="mx-0.5 text-[#94A3B8]" aria-hidden="true">|</span>
+          {KIDS_CHIPS.map((c) => (
+            <button key={c.key} aria-pressed={kids === c.key} className={chipCls(kids === c.key)} onClick={() => setKids(kids === c.key ? null : c.key)}>
+              {t(chipLabel(c))}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="grid gap-2.5 sm:grid-cols-2">
+        <label>
+          <span className={labelCls}>{t(EXPORT_UI_TEXT.occupation)}</span>
+          <input
+            className={inputCls + ' h-9'}
+            value={occupation}
+            placeholder={t(EXPORT_UI_TEXT.occupationPlaceholder)}
+            onChange={(e) => setOccupation(e.target.value)}
+          />
+        </label>
+        <label>
+          <span className={labelCls}>{t(EXPORT_UI_TEXT.pastContext)}</span>
+          <input
+            className={inputCls + ' h-9'}
+            value={pastContext}
+            placeholder={t(EXPORT_UI_TEXT.pastContextPlaceholder)}
+            onChange={(e) => setPastContext(e.target.value)}
+          />
+        </label>
+      </div>
+    </>
+  )
+
+  const questionField = (
+    <label>
+      <span className={labelCls}>{t(EXPORT_UI_TEXT.question)}</span>
+      <textarea
+        className={inputCls + ' min-h-[60px] resize-y py-1.5 leading-5'}
+        rows={2}
+        value={question}
+        placeholder={t(EXPORT_UI_TEXT.questionPlaceholder)}
+        onChange={(e) => setQuestion(e.target.value)}
+      />
+    </label>
+  )
+
+  /** 点选芯片 + 万能提问框（career / annual 共用） */
+  const chips = (
+    <>
+      {profileSection}
+      <div>
         <span className={labelCls}>{t(EXPORT_UI_TEXT.focus)}</span>
         <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('重点关注方向')}>
           {FOCUS_CHIPS.map((c) => (
@@ -103,16 +170,7 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
           ))}
         </div>
       </div>
-      <label>
-        <span className={labelCls}>{t(EXPORT_UI_TEXT.question)}</span>
-        <textarea
-          className={inputCls + ' min-h-[60px] resize-y py-1.5 leading-5'}
-          rows={2}
-          value={question}
-          placeholder={t(EXPORT_UI_TEXT.questionPlaceholder)}
-          onChange={(e) => setQuestion(e.target.value)}
-        />
-      </label>
+      {questionField}
     </>
   )
 
@@ -189,14 +247,23 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
               {chips}
             </>
           )}
-          {mode === 'natal' && (
-            <label className="flex items-center gap-2">
-              <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={withIntro} onChange={(e) => setWithIntro(e.target.checked)} />
-              {t('附带通用大师解盘导语')}
-              <span className="text-[12px] text-[#4A6072]">{t('（不勾选则只输出纯净的命盘数据）')}</span>
-            </label>
+          {mode === 'life' && (
+            <>
+              {profileSection}
+              {questionField}
+              {noteField}
+            </>
           )}
-          {(mode === 'life' || mode === 'natal') && noteField}
+          {mode === 'natal' && (
+            <>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={withIntro} onChange={(e) => setWithIntro(e.target.checked)} />
+                {t('附带通用大师解盘导语')}
+                <span className="text-[12px] text-[#4A6072]">{t('（不勾选则只输出纯净的命盘数据）')}</span>
+              </label>
+              {noteField}
+            </>
+          )}
         </div>
 
         <textarea
