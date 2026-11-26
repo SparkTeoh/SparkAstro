@@ -56,3 +56,8 @@
   from = "/coffee"
   to = "/stack/coffee"
   status = 301
+
+[[redirects]]
+  from = "/ziwei"
+  to = "/zhiwei"
+  status = 301
