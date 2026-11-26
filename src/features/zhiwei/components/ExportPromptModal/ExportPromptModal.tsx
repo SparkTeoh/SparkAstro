@@ -258,7 +258,7 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
             <>
               <label className="flex items-center gap-2">
                 <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={withIntro} onChange={(e) => setWithIntro(e.target.checked)} />
-                {t('附带通用大师解盘导语')}
+                {t('附带实战派命理顾问导语')}
                 <span className="text-[12px] text-[#4A6072]">{t('（不勾选则只输出纯净的命盘数据）')}</span>
               </label>
               {noteField}
