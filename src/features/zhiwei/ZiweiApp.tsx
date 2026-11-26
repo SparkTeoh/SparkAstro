@@ -18,7 +18,7 @@ import { EntryPage } from './components/EntryPage/EntryPage'
 import { ExportPromptModal } from './components/ExportPromptModal/ExportPromptModal'
 import { FaqModal } from './components/FaqSection/FaqSection'
 import { HourCompareBar } from './components/HourCompareBar/HourCompareBar'
-import type { ExportMode } from './core/exporter'
+import { RectifyPromptModal } from './components/RectifyPromptModal/RectifyPromptModal'
 import { ghostBtnCls, primaryBtnCls } from './components/theme'
 
 const LANG_KEY = 'ziwei-c5vuc-lang'
@@ -75,7 +75,8 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
   /** 「修改资料」弹窗：caseId 非空表示正在修改一条已保存命例，提交时同步更新命例库 */
   const [edit, setEdit] = useState<{ input: BirthInput; caseId: string | null } | null>(null)
   const [showCases, setShowCases] = useState(false)
-  const [exportMode, setExportMode] = useState<ExportMode | null>(null)
+  const [showExport, setShowExport] = useState(false)
+  const [showRectify, setShowRectify] = useState(false)
   const [showFaq, setShowFaq] = useState(false)
   const [bannerClosed, setBannerClosed] = useState(false)
   const t = (s: string) => toLang(s, lang)
@@ -149,7 +150,8 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
   /** 回到排盘入口首页 */
   const backToEntry = () => {
     setShowCases(false)
-    setExportMode(null)
+    setShowExport(false)
+    setShowRectify(false)
     setShowFaq(false)
     setEdit(null)
     setView('entry')
@@ -227,7 +229,7 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
               <div className="ml-auto flex items-center gap-1.5 pb-[3px] pr-[3px]">
                 {faqBtn}
                 {langBtn}
-                <button className={primaryBtnCls + ' px-2.5 py-1.5 text-[13px]'} onClick={() => setExportMode('career')}>
+                <button className={primaryBtnCls + ' px-2.5 py-1.5 text-[13px]'} onClick={() => setShowExport(true)}>
                   ✨ {t('AI 详批')}
                   <span className="hidden sm:inline">{t('提示词')}</span>
                 </button>
@@ -240,12 +242,21 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 <span className={badge}>C5VUC</span>
               </div>
               {!bannerClosed && birth.alerts.length > 0 && (
-                <div className="relative flex flex-col gap-1 rounded-lg border-[1.5px] border-[#C62828] bg-[#FEF2F2] px-3 py-2 pr-8 text-[12.5px] font-medium leading-5 text-[#C62828]">
+                <div className="relative flex flex-col gap-1.5 rounded-lg border-[1.5px] border-[#C62828] bg-[#FEF2F2] px-3 py-2 pr-8 text-[12.5px] font-medium leading-5 text-[#C62828]">
                   {birth.alerts.map((a, i) => (
                     <div key={i} className={a.type === 'boundary' ? 'text-[#A85600]' : ''}>
                       {t(formatAlert(a, input.placeName, input.longitude))}
                     </div>
                   ))}
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setShowRectify(true)}
+                      className="rounded border-[1.5px] border-[#003054] bg-[#FFFBEB] px-2 py-0.5 text-[12px] font-bold text-[#003054] hover:bg-[#F8961D]"
+                    >
+                      🔍 {t('用 AI 印证定盘 →')}
+                    </button>
+                  </div>
                   <button className="absolute right-2 top-1 text-lg text-[#C62828]/60 hover:text-[#C62828]" aria-label="close" onClick={() => setBannerClosed(true)}>
                     ×
                   </button>
@@ -258,7 +269,7 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 onNext={() => shiftHour({ type: 'next' })}
                 onReset={() => shiftHour({ type: 'reset' })}
                 onCommit={commitHour}
-                onAiVerify={() => setExportMode('rectify')}
+                onAiVerify={() => setShowRectify(true)}
               />
 
               <ChartGrid
@@ -321,15 +332,19 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 onClose={() => setShowCases(false)}
               />
             )}
-            {exportMode && (
+            {showExport && (
               <ExportPromptModal
                 birth={birth}
                 chart={chart}
                 overlap={overlap}
-                initialMode={exportMode}
-                onClose={() => setExportMode(null)}
+                onSwitchToRectify={() => {
+                  setShowExport(false)
+                  setShowRectify(true)
+                }}
+                onClose={() => setShowExport(false)}
               />
             )}
+            {showRectify && <RectifyPromptModal birth={birth} chart={chart} onClose={() => setShowRectify(false)} />}
           </>
         )}
         {showFaq && (
@@ -339,7 +354,7 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
               view === 'chart'
                 ? () => {
                     setShowFaq(false)
-                    setExportMode('rectify')
+                    setShowRectify(true)
                   }
                 : undefined
             }

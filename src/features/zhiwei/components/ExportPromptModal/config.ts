@@ -1,18 +1,43 @@
-import type { ExportMode } from '../../core/exporter'
+import type { PromptMode } from '../../core/exporter'
 
-/** 五大模式卡片（简体，显示时再转换） */
-export const EXPORT_MODE_CARDS: { key: ExportMode; icon: string; title: string; desc: string; file: string }[] = [
-  { key: 'career', icon: '🎯', title: '未来 3～5 年运势与规划', desc: '事业财运、转职创业、感情置产等核心课题逐年推演（预计算零误差）', file: '未来运势规划' },
-  { key: 'annual', icon: '📅', title: '年度精批 + 12 流月节奏', desc: '聚焦今年或明年，梳理一整年 1～12 月顺逆节奏与发力时机', file: '年度精批' },
-  { key: 'life', icon: '🧭', title: '一生总格局 + 八大十年大运', desc: '全面摸清天生优势、适合赛道与每十年大运起伏', file: '一生总格局' },
-  { key: 'rectify', icon: '🔍', title: '时辰定盘印证（不确定时辰必试）', desc: '自动并排相邻时辰盘与过往 5 年轨迹，让 AI 抓反差出题帮你定盘', file: '时辰定盘印证' },
-  { key: 'natal', icon: '📄', title: '纯净命盘数据', desc: '仅导出结构化排盘数据，方便自由向 AI 提问', file: '命盘数据' },
+/** 四大详批模式卡片（2×2 对称排布，讲清每个模式的使用时机；简体基准，显示时再转换） */
+export const EXPORT_MODE_CARDS: { key: PromptMode; icon: string; title: string; desc: string; file: string }[] = [
+  {
+    key: 'life',
+    icon: '🧭',
+    title: '一生总格局 + 八大十年大运',
+    desc: '首次排盘必看：先摸清天生适合什么赛道、怎么搞钱最顺、感情相处模式，以及每十年大运的高低起伏',
+    file: '一生总格局',
+  },
+  {
+    key: 'annual',
+    icon: '📅',
+    title: '年度精批 + 12 流月节奏',
+    desc: '看今年或明年：聚焦最近一整年的事业、财运、感情与健康重点，理清农历 1～12 月哪几个月适合发力、哪几个月宜稳守',
+    file: '年度精批',
+  },
+  {
+    key: 'career',
+    icon: '🎯',
+    title: '未来 3～5 年运势与规划',
+    desc: '做关键决策与布局：正在考虑转职跳槽、创业扩张、买房置产或结婚生子时用，逐年对比哪一年该冲、哪一年该蓄力',
+    file: '未来运势规划',
+  },
+  {
+    key: 'natal',
+    icon: '📄',
+    title: '纯净命盘数据',
+    desc: '双人合盘 / 自由提问：适合导出两份命盘发给 AI 做夫妻感情合盘、合伙人合盘，或搭配你自己的提示词自由提问',
+    file: '命盘数据',
+  },
 ]
 
 /** 弹窗内的固定文案（简体，显示时再转换；测试据此检查繁体无残留） */
 export const EXPORT_UI_TEXT = {
+  rectifyJumpPrefix: '不确定出生时间，或刚因真太阳时跨了时辰？',
+  rectifyJumpBtn: '🔍 先去 AI 时辰定盘印证 →',
   profileHint: '💡 命理师问诊卡（选填）：同盘不同命，告诉 AI 你的真实工作、婚育与近况，分析会精准贴合现实而非空泛套话',
-  rectifyHint: '💡 看不懂星曜没关系！系统会自动打包相邻候选时辰的盘面与过去 5 年流年轨迹，让 AI 用大白话列出性格、原生家庭与过往经历的鲜明反差，帮你对号入座锁定真实时辰。',
+  rectifyHint: '💡 看不懂星曜没关系！因真太阳时常把钟表时间往回退一个时辰，默认优先对比「当前时辰 vs 下一时辰（原手表时辰）」；若父母记忆时间较模糊，也可切换其他范围。',
   rectifyScope: '候选时辰对比范围',
   pastEvents: '📝 过往关键年份大事记（选填，用于铁证验盘；留空则由 AI 盲测出题考你）',
   pastEventsPlaceholder: '可留空直接复制！若想一步到位验盘，可填 2～3 件过去真实发生过的年份大事（例：2020年换工作搬家，2022年创业亏了一笔钱，2024年结婚生子）',

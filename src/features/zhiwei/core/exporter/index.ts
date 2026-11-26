@@ -8,10 +8,13 @@ import {
 } from '../horoscopes'
 import { toLang, type Lang } from '../i18n'
 
-/** AI 详批提示词的五大场景模式 */
-export type ExportMode = 'career' | 'annual' | 'life' | 'rectify' | 'natal'
+/** 四大运势详批模式（弹窗 2×2 卡片） */
+export type PromptMode = 'life' | 'annual' | 'career' | 'natal'
+/** 全部导出模式（四大运势详批 + 独立的前置时辰定盘印证） */
+export type ExportMode = PromptMode | 'rectify'
 
-export const EXPORT_MODES: ExportMode[] = ['career', 'annual', 'life', 'rectify', 'natal']
+export const PROMPT_MODES: PromptMode[] = ['life', 'annual', 'career', 'natal']
+export const EXPORT_MODES: ExportMode[] = ['life', 'annual', 'career', 'natal', 'rectify']
 
 /** 时辰定盘印证的候选范围：前后三时辰 / 与上一时辰二选一 / 与下一时辰二选一 */
 export type RectifyScope = 'three' | 'prev' | 'next'
@@ -36,9 +39,9 @@ export interface Chip<K extends string> {
 }
 
 export const STATUS_CHIPS: Chip<StatusKey>[] = [
-  { key: 'employee', icon: '🏢', text: '职场发展（受薪 / 管理）' },
-  { key: 'business', icon: '🚀', text: '创业经商（生意 / 自雇）' },
-  { key: 'invest', icon: '📈', text: '投资理财 / 资产规划' },
+  { key: 'employee', icon: '🏢', text: '上班受薪' },
+  { key: 'business', icon: '🚀', text: '做生意 / 自由执业' },
+  { key: 'invest', icon: '📈', text: '关注财务与资产' },
   { key: 'study', icon: '🌱', text: '求学进修 / 转型探索' },
 ]
 
@@ -65,32 +68,31 @@ export const FOCUS_CHIPS: Chip<FocusKey>[] = [
 /** 芯片在界面上的完整文案（图标 + 文字） */
 export const chipLabel = (c: Chip<string>) => `${c.icon} ${c.text}`
 
-/** 方案 A 核心身份：术数做骨，商业 / 职场 / 两性 / 教练式换框阅历做肉 */
+/** 百业中立的现代命理师人设：去金融商学院暗示词，留足读盘空间 */
 const PERSONA_LEAD =
-  '你现在是一位深谙紫微斗数（三合星情、钦天四化、飞星同参）与子平八字的实战派人生与命理顾问。不同于照本宣科的传统算命先生，你既有扎实的术数真功夫，又在现代商业经营、职场发展规划、亲密关系心理与高阶教练式换框引导上有深厚的实战阅历——你能看懂现金流、赛道杠杆与组织合作边界，也懂现代两性相处、情绪价值与家庭协同，更擅长把盘里的星曜四化自然融进平实通透的大白话里（请把这些跨界洞察自然内化在解盘中，切勿生硬掉书袋或堆砌理论名词）。'
+  '你现在是一位深谙紫微斗数（三合、钦天四化、飞星）与子平八字的资深现代命理师，阅人无数，熟悉社会百业的真实运作与现代两性家庭关系，擅长把盘面象义化作平实通透的大白话。下方命盘与运限叠宫、四化冲照均已由程序精确算好，请直接据此解盘，无需自行重排。'
 
-/** 实战派顾问沟通基调：客观不迎合、正向换框赋能、同盘不同命校准、首轮交底留话头（所有带导语的模式统一植入） */
+/** 少即是多的四条核心准则：零行业诱导、零固定台词、不捆绑发挥 */
 export const PROMPT_PRINCIPLES = [
-  '【分析原则与沟通基调（请严格遵守）】',
-  '1. 客观真诚，拒绝迎合拍马屁：请以专业、坦诚、实事求是的态度交流，不要使用空洞的讨好、吹捧或放之四海皆准的江湖套话；关键判断请结合下方预计算的星曜、四化与叠宫自然点明依据（如：某宫某星化禄/化忌）。',
-  '2. 正面积极，高阶换框赋能（拒绝宿命论与制造焦虑）：算命的真正价值在于“知天时以顺势而为”，绝非宿命悲观的判决。遇到吉星汇聚的顺风期，请明确指出优势与杠杆所在，鼓励命主自信把握、果断行动；遇到化忌冲照或煞星同度的波动期，切勿危言耸听或渲染悲观，请将其换框解读为“性格里容易用力过猛的地方”或“外部形势提醒放慢节奏、换打法、修内功的路标”，并配上积极、具体、可落地的应对建议，让命主读完心里踏实、有底气、有清晰方向。',
-  '3. 跨界洞察融于大白话，不套公文模板：请把晦涩的术数术语自然翻译成现代商业经营、职场发展、财务规划或两性家庭中的真实场景，像一位阅历丰富的命理顾问面对面聊天一样娓娓道来，不必套用死板的报告表格或生硬罗列。',
-  '4. 同盘不同命，紧扣现实背景校准：同一张命盘在不同行业、婚育阶段与经营底子下，星曜象义的现实落点截然不同。若下方提供了命主的职业工作、婚姻子女状态或过往近况，请先结合过往近况核验盘势节奏，再将各宫位解读对齐现实锚点（例如：已婚有孩者看夫妻与子女宫，应聚焦伴侣相处、家庭协同或外部合作，切勿套用单身寻正缘模板；评估事业扩张与财务动作时，须贴合其真实工作属性与过往经营底子）。',
-  '5. 首轮先给底，自然留话头开启深聊：本次是第一次坐下来交底，请先把盘格底色、核心大势以及命主重点关心的方向或问题聊透即可，不必面面俱到硬塞细节；结尾请像真人顾问一样，顺势点出一两个盘里值得继续深挖的关键切入点，邀请命主接着往下追问。',
+  '【解盘准则】',
+  '1. 客观坦诚，忠于盘格：实事求是，不迎合拍马屁，不说谁都适用的模糊套话；关键判断自然点明星曜四化依据。看事业与求财方向时，忠于本盘星曜独特的刚柔、动静、虚实特质推导适合的做事方式与领域，切勿对不同命盘套用同质化的万金油职业标签。',
+  '2. 顺势赋能，不造焦虑：重在“知天时以顺势而为”。顺风期点明优势鼓励把握；逢化忌冲照或煞星波动期，客观讲清卡点并给出具体可行的应对建议，让人听完心里踏实、有方向。',
+  '3. 同盘不同命，紧扣现实：若下方提供了命主的工作、婚育或过往近况，须结合现实底子校准各宫位象义，切勿脱离实际生搬硬套。',
+  '4. 像当面聊天一样先交个底：不必套公文模板或生硬表格，第一轮先把核心底子与命主关心的事聊透即可；结尾自然点出一两个盘里值得深挖的细节，方便命主接着追问。',
 ].join('\n')
 
-/** 通用全盘导语（natal 模式勾选「附带实战派命理顾问导语」时使用） */
+/** 通用全盘导语（natal 模式勾选「附带现代命理师解盘导语」时使用） */
 export const PROMPT_INTRO =
-  `${PERSONA_LEAD}下面是一份紫微斗数命盘。这是命主第一次找你做全盘咨询，请综合三合星情、飞宫四化与限流叠宫，像面对面交底那样自然、通透地帮命主摸清性格天赋、适合的事业与搞钱方式、感情婚姻相处模式与身心保养重点，点出人生几个关键阶段的顺逆节奏与应对思路；第一次先把全盘大底子给足，结尾顺势留下一两个切入点，方便命主继续深聊。`
+  `${PERSONA_LEAD}本次命主想请你通盘看看性格天赋、事业财运、感情婚姻与人生关键阶段的顺逆节奏。`
 
 const careerIntro = (n: number) =>
-  `${PERSONA_LEAD}下面是一份紫微斗数命盘，以及由程序精确预计算好的「本命 / 大限 / 流年」三盘叠宫、核心宫位、对宫冲照与宫干飞化数据（请直接引用这些预计算数据，不要自行重新数宫位或心算四化）。这是命主第一次找你咨询未来 ${n} 年的运势与规划。请结合命主的现实背景、命盘底色、当前十年大限气候与未来 ${n} 年逐年叠宫飞化数据，像当面交底那样帮命主把这 ${n} 年的大势脉络、哪年适合进取发力、哪年适合稳扎蓄力，以及命主重点关心的方向或具体问题聊透；第一次先把大底子与核心判断给足，结尾顺势留下一两个值得深挖的细节，方便命主接着追问。`
+  `${PERSONA_LEAD}本次命主想看未来 ${n} 年的运势起伏、进退节奏与关键转折。`
 
 const annualIntro = (year: number) =>
-  `${PERSONA_LEAD}下面是一份紫微斗数命盘，以及由程序精确预计算好的 ${year} 年流年十二宫叠宫、流年四化冲照、关键宫干飞化与农历正月至腊月十二个流月的逐月明细（请直接引用这些预计算数据，不要自行重新数宫位或心算四化）。这是命主第一次找你细看 ${year} 年这一整年的运势节奏。请先定调这一年在大限里的整体气候，再结合命主的现实背景把事业财运、感情家庭与身心状态的关键起伏、哪几个月顺风好发力、哪几个月宜稳扎稳打聊清楚，并直接回应命主重点关心的方向或问题；第一次先把全年大底子交透，结尾顺势留下一两个切入点，方便命主继续追问具体月份或决策。`
+  `${PERSONA_LEAD}本次命主想细看 ${year} 年这一整年及农历十二个流月的顺逆节奏与发力时机。`
 
 const LIFE_INTRO =
-  `${PERSONA_LEAD}下面是一份紫微斗数命盘，以及由程序精确预计算好的前八个十年大限的叠宫、坐星与宫干四化数据（请直接引用这些预计算数据，不要自行重新数宫位或心算四化）。这是命主第一次找你通盘看一生格局与十年大周期。请像当面交底那样，先聊透命主的性格底色、天生优势、适合的事业赛道与财富累积方式、感情相处模式与身心盲区，再顺着八个十年大限把人生不同阶段的主旋律与关键换挡期梳理清楚（若命主提了具体问题也请一并回应）；本次只看命格底色与十年大周期，不需要逐一展开碎流年，第一次先把人生全局的底子交透，结尾顺势邀请命主针对当下大限或某个具体课题继续深聊。`
+  `${PERSONA_LEAD}本次命主想通盘了解自己的一生总格局与前八个十年大运的起伏脉络（无需展开逐年流年）。`
 
 const rectifyIntro = (count: number, hasEvents: boolean) =>
   `${PERSONA_LEAD}命主的出生时间存在时辰不确定（或刚好落在时辰交界处），普通人自己看不懂盘面差异，需要你帮忙做「时辰定盘印证」。下面已由程序按 C5VUC 标准精确排出了 ${count} 张候选时辰的命盘核心结构与过往关键流年核验数据（请直接引用这些预计算数据，不要自行重新排盘或心算四化）。\n\n` +
@@ -168,7 +170,7 @@ export interface ExportOptions {
   focus?: FocusKey[]
   /** career / annual / life：命主具体想问的问题 / 补充背景（留空不输出） */
   question?: string
-  /** rectify：候选时辰对比范围（默认 three：上一时辰 + 当前 + 下一时辰） */
+  /** rectify：候选时辰对比范围（默认 next：当前真太阳时辰 vs 下一时辰/原钟表时辰） */
   rectifyScope?: RectifyScope
   /** rectify：过往关键年份大事记（选填，用于验盘校准；留空走纯盲测模式） */
   pastEvents?: string
@@ -262,22 +264,12 @@ const dayunLine = (birth: ResolvedBirth) =>
   `${birth.qiyun.text}(${birth.qiyun.forward ? '顺行' : '逆行'}) | ` +
   birth.dayun.map((d) => `${gz(d.stem, d.branch)}(${d.tenGod},${d.startAge}虚岁,${d.startYear}起)`).join(' → ')
 
-/** 大限 / 流年核心宫位标签（按人事宫序号：命兄夫子财疾迁友官田福父） */
-const DECADE_LABEL = [
-  '命宫', '兄弟(现金池/合作)', '夫妻(感情婚姻)', '子女(桃花/子女/合伙)', '财帛(现金流)', '疾厄(身心健康)',
-  '迁移(外部市场)', '交友(客户/团队/贵人)', '官禄(事业)', '田宅(总财库)', '福德(感情福气/心态)', '父母(长辈/文书)',
-]
-const YEAR_LABEL = [
-  '命宫', '兄弟(现金池/合作)', '夫妻(感情婚姻)', '子女(桃花/子女/合伙)', '财帛', '疾厄(身心健康)',
-  '迁移', '交友(客户/团队/贵人)', '官禄', '田宅(财库)', '福德(感情福气/心态)', '父母(长辈/文书)',
-]
-
 const focusHas = (focus: FocusKey[] | undefined, k: FocusKey) => !focus?.length || focus.includes(k)
 
 /**
  * 按勾选的关注方向动态扩展核心宫位（人事宫序号）。
  * 基础：命 / 官 / 财 / 迁 / 田；合作 +兄 / 友；感情 +夫 / 福 / 子；健康家庭 +疾 / 父。
- * 未勾选任何方向 = 全面综合分析，全部展开。
+ * 未勾选任何方向 = 全面综合分析，全部展开。使用原生中性宫名，不加商业/金融括号暗示。
  */
 export const corePalaceIndexes = (focus?: FocusKey[]) => {
   const idx = [0, 8, 4, 6, 9]
@@ -286,8 +278,8 @@ export const corePalaceIndexes = (focus?: FocusKey[]) => {
   if (focusHas(focus, 'health')) idx.push(5, 11)
   return idx
 }
-const corePalaces = (focus: FocusKey[] | undefined, labels: string[]): [number, string][] =>
-  corePalaceIndexes(focus).map((i) => [i, labels[i]])
+const corePalaces = (focus?: FocusKey[]): [number, string][] =>
+  corePalaceIndexes(focus).map((i) => [i, PALACE_TWO[i]])
 
 const ALL12: [number, string][] = PALACE_TWO.map((n, i) => [i, n])
 /** life 模式重点宫位：命 / 官 / 财 / 夫 / 田 / 福 / 疾 */
@@ -529,8 +521,7 @@ const buildCareer = (c: Ctx, opts: ExportOptions, nowYear: number) => {
   const span = opts.span === 3 ? 3 : 5
   const start = clampYear(c.birthYear, opts.startYear ?? nowYear)
   const years = Array.from({ length: span }, (_, i) => start + i)
-  const dPalaces = corePalaces(opts.focus, DECADE_LABEL)
-  const yPalaces = corePalaces(opts.focus, YEAR_LABEL)
+  const palaces = corePalaces(opts.focus)
   const fly = flyRows(opts.focus)
   const L: string[] = [careerIntro(span), '', PROMPT_PRINCIPLES, '']
   L.push(...backgroundBlock(opts))
@@ -558,7 +549,7 @@ const buildCareer = (c: Ctx, opts: ExportOptions, nowYear: number) => {
   else L.push('交运检测 : 区间内未发生大限切换，全程处于同一个十年大限气候之中。')
   for (const p of periods) {
     L.push('', periodLabel(p))
-    L.push(...(p.decade ? decadeBlock(c, p.decade, dPalaces, `大限核心宫位映射（${dPalaces.length} 宫）`) : childBlock(c)))
+    L.push(...(p.decade ? decadeBlock(c, p.decade, palaces, `大限核心宫位映射（${palaces.length} 宫）`) : childBlock(c)))
   }
   L.push('')
 
@@ -566,7 +557,7 @@ const buildCareer = (c: Ctx, opts: ExportOptions, nowYear: number) => {
   years.forEach((yr, i) => {
     if (i > 0) L.push('')
     L.push(yearHead(c, yr))
-    L.push(...yearSubtree(c, yr, yPalaces, `流年核心宫位透视（${yPalaces.length} 宫）`, fly, '流'))
+    L.push(...yearSubtree(c, yr, palaces, `流年核心宫位透视（${palaces.length} 宫）`, fly, '流'))
   })
   return L
 }
@@ -574,7 +565,7 @@ const buildCareer = (c: Ctx, opts: ExportOptions, nowYear: number) => {
 const buildAnnual = (c: Ctx, opts: ExportOptions, nowYear: number) => {
   const year = clampYear(c.birthYear, opts.targetYear ?? nowYear)
   const { yc } = yearCtx(c, year, '年')
-  const dPalaces = corePalaces(opts.focus, DECADE_LABEL)
+  const dPalaces = corePalaces(opts.focus)
   const L: string[] = [annualIntro(year), '', PROMPT_PRINCIPLES, '']
   L.push(...backgroundBlock(opts))
   L.push('【本命盘完整信息】', ...natalTree(c, opts, true), '')
@@ -702,21 +693,21 @@ const candidateBlock = (label: string, tag: string, cand: { birth: ResolvedBirth
 }
 
 const buildRectify = (c: Ctx, opts: ExportOptions, nowYear: number) => {
-  const scope: RectifyScope = opts.rectifyScope ?? 'three'
+  const scope: RectifyScope = opts.rectifyScope ?? 'next'
   const offsets: { offset: number; tag: string }[] =
-    scope === 'prev'
+    scope === 'next'
       ? [
-          { offset: -1, tag: '上一时辰候选' },
-          { offset: 0, tag: '当前所填时辰候选' },
+          { offset: 0, tag: '当前真太阳时辰候选' },
+          { offset: 1, tag: '下一时辰 / 原钟表时辰候选' },
         ]
-      : scope === 'next'
+      : scope === 'prev'
         ? [
-            { offset: 0, tag: '当前所填时辰候选' },
-            { offset: 1, tag: '下一时辰候选' },
+            { offset: -1, tag: '上一时辰候选' },
+            { offset: 0, tag: '当前真太阳时辰候选' },
           ]
         : [
             { offset: -1, tag: '上一时辰候选' },
-            { offset: 0, tag: '当前所填时辰候选' },
+            { offset: 0, tag: '当前真太阳时辰候选' },
             { offset: 1, tag: '下一时辰候选' },
           ]
   const letters = ['A', 'B', 'C']
