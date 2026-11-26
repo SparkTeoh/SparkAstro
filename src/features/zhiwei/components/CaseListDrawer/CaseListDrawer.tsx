@@ -22,11 +22,11 @@ export function CaseListDrawer({ cases, current, onChange, onLoad, onEdit, onClo
   }
 
   return (
-    <div className="fixed inset-0 z-40 flex bg-black/30" onClick={onClose}>
-      <div className="flex h-full w-full max-w-sm flex-col bg-[#fffdf8] shadow-xl" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between border-b border-stone-200 px-4 py-2">
-          <h2 className="text-[15px] font-bold text-stone-800">{t('命例列表')}</h2>
-          <button onClick={onClose} className="px-2 text-xl leading-none text-stone-500" aria-label="close">
+    <div className="fixed inset-0 z-40 flex bg-[#003054]/45" onClick={onClose}>
+      <div className="flex h-full w-full max-w-sm flex-col border-r-[1.5px] border-[#003054] bg-white" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between border-b-[1.5px] border-[#003054] px-4 py-2.5">
+          <h2 className="text-[15px] font-bold text-[#003054]">{t('命例列表')}</h2>
+          <button onClick={onClose} className="px-2 text-xl leading-none text-[#4A6072]" aria-label="close">
             ×
           </button>
         </div>

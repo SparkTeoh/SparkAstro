@@ -46,7 +46,11 @@ export function ChartGrid({ chart, mode, overlay, activePalace, onSelectPalace, 
           className="absolute left-0 top-0 origin-top-left"
           style={{ width: CANVAS_W, height: CANVAS_H, transform: `scale(${scale})` }}
         >
-          <div className="absolute inset-0 rounded-md" style={{ background: '#f5efe2' }} />
+          {/* 十二宫格整体外框：1.5px 深海蓝实线 */}
+          <div
+            className="absolute"
+            style={{ left: GRID.x - 1.5, top: GRID.y - 1.5, width: GRID.w + 3, height: GRID.h + 3, border: '1.5px solid #003054', background: '#FFFFFF' }}
+          />
           {chart.palaces.map((p) => {
             const r = cellRect(p.branch)
             return (
@@ -66,7 +70,7 @@ export function ChartGrid({ chart, mode, overlay, activePalace, onSelectPalace, 
             className="absolute overflow-hidden"
             style={{
               left: CENTER.x0, top: CENTER.y0, width: CENTER.x1 - CENTER.x0, height: CENTER.y1 - CENTER.y0,
-              border: '1px solid #b9a78a', background: '#fffdf8',
+              border: '1px solid #CBD5E1', background: '#FFFFFF',
             }}
           >
             {center}
@@ -78,7 +82,7 @@ export function ChartGrid({ chart, mode, overlay, activePalace, onSelectPalace, 
             return (
               <div
                 key={d.text}
-                className={`pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 text-[10px] leading-[11px] text-stone-400 ${
+                className={`pointer-events-none absolute flex -translate-x-1/2 -translate-y-1/2 text-[10px] leading-[11px] text-[#94A3B8] ${
                   d.vertical ? 'flex-col items-center' : 'whitespace-nowrap'
                 }`}
                 style={{ left: d.x + (d.vertical ? 0 : shift), top: d.y + (d.vertical ? shift : 0) }}
@@ -92,6 +96,9 @@ export function ChartGrid({ chart, mode, overlay, activePalace, onSelectPalace, 
     </div>
   )
 }
+
+/** 十二宫格整体范围（画布坐标） */
+const GRID = { x: cellRect(5).x, y: cellRect(5).y, w: CANVAS_W - cellRect(5).x * 2, h: CANVAS_H - cellRect(5).y * 2 }
 
 /** 四角宫：巳、申、寅、亥（离心箭头从外角射出，不占外边中点） */
 const CORNER_BRANCHES = new Set([5, 8, 2, 11])

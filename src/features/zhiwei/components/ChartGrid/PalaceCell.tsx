@@ -19,7 +19,7 @@ const visibleStars = (p: Palace, mode: ViewMode) =>
   })
 
 const starColor = (s: Star) => {
-  if (s.kind === 'major') return '#7c2d12'
+  if (s.kind === 'major') return '#7C2D12'
   if (s.kind === 'aux') {
     if (['擎羊', '陀罗', '火星', '铃星', '地空', '地劫'].includes(s.name)) return '#334155'
     return '#1e3a8a'
@@ -49,7 +49,7 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
   const horo = overlay.layers.length > 0
   const yearLabel = overlay.decadeYearLabels[p.branch]
   const vtags = [
-    p.isBody && mode !== 'flying' ? { text: '身宫', color: '#dc2626' } : null,
+    p.isBody && mode !== 'flying' ? { text: '身宫', color: '#C62828' } : null,
     p.isLaiyin && mode !== 'sanhe' ? { text: '来因', color: '#9333ea' } : null,
     isXiao ? { text: '小限', color: overlay.xiaoxian!.color } : null,
   ].filter((x) => x !== null)
@@ -61,9 +61,10 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
       style={{
         width: CELL_W,
         height: CELL_H,
-        border: '1px solid #b9a78a',
-        background: active ? '#faf5e8' : inTriad ? '#fffcf5' : '#fffdf8',
-        boxShadow: active ? 'inset 0 0 0 1px #d6c3a0' : undefined,
+        border: '1px solid #CBD5E1',
+        // 焦点宫极淡暖米、三方四正纯白、其余宫极淡灰白
+        background: active ? '#FFFBEB' : inTriad ? '#FFFFFF' : '#F8FAFC',
+        boxShadow: active ? 'inset 0 0 0 1.5px #F8961D' : undefined,
       }}
     >
       {/* 上半区：星曜竖排列 */}
@@ -85,7 +86,7 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
               {s.birthMutagen && (
                 <span
                   className="rounded-sm text-white"
-                  style={{ fontSize: 10, lineHeight: '13px', padding: '0 1px', background: '#dc2626', marginTop: 1 }}
+                  style={{ fontSize: 10, lineHeight: '13px', padding: '0 1px', background: '#C62828', marginTop: 1 }}
                 >
                   {t(s.birthMutagen)}
                 </span>
@@ -113,7 +114,7 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
 
       {/* 中部：本命流年 / 小限年龄序列（仅三合模式、未进入限流时） */}
       {mode === 'sanhe' && !horo && (
-        <div className="absolute left-[4px] text-[9.5px] leading-[12px] text-stone-500" style={{ top: 112 }}>
+        <div className="absolute left-[4px] text-[9.5px] leading-[12px] text-[#4A6072]" style={{ top: 112 }}>
           <div>
             {t('流年')}: {p.liunianAges.join(' ')}
           </div>
@@ -154,7 +155,7 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
       <div className="absolute bottom-[3px] flex flex-col items-center" style={{ left: 50, width: 70 }}>
         {horo ? (
           <>
-            {yearLabel && <div className="mb-[2px] whitespace-nowrap text-[10.5px] leading-[13px] text-stone-600">{t(yearLabel)}</div>}
+            {yearLabel && <div className="mb-[2px] whitespace-nowrap text-[10.5px] leading-[13px] text-[#4A6072]">{t(yearLabel)}</div>}
             <div className="flex flex-wrap justify-center gap-x-[3px] text-[10.5px] font-bold leading-[13px]">
               {tags.map((tg, i) => (
                 <span key={i} style={{ color: tg.color }}>
@@ -164,7 +165,7 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
             </div>
           </>
         ) : (
-          <div className="text-[11px] leading-[14px] text-stone-600">
+          <div className="text-[11px] leading-[14px] text-[#4A6072]">
             {p.decade[0]}~{p.decade[1]}
           </div>
         )}
@@ -172,15 +173,15 @@ export function PalaceCell({ palace: p, mode, overlay, active, inTriad, onClick 
 
       {/* 下半区右：长生 + 宫名 + 宫干支 */}
       <div className="absolute bottom-[3px] right-[3px] flex items-end gap-[2px]">
-        <div className="flex flex-col items-center text-[10px] leading-[11px] text-stone-500">
+        <div className="flex flex-col items-center text-[10px] leading-[11px] text-[#4A6072]">
           {[...t(p.changsheng)].map((ch, i) => (
             <span key={i}>{ch}</span>
           ))}
         </div>
-        <div className="text-[12px] font-bold leading-[14px]" style={{ color: '#dc2626' }}>
+        <div className="text-[12px] font-bold leading-[14px]" style={{ color: '#C62828' }}>
           {t(p.name.replace('宫', ''))}
         </div>
-        <div className="flex flex-col items-center text-[15px] font-bold leading-[16px] text-stone-800">
+        <div className="flex flex-col items-center text-[15px] font-bold leading-[16px] text-[#003054]">
           <span>{t(STEMS[p.stem])}</span>
           <span>{t(BRANCHES[p.branch])}</span>
         </div>

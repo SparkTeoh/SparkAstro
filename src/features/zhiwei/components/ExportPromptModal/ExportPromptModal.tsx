@@ -1,10 +1,15 @@
 import { useMemo, useState } from 'react'
 import type { ResolvedBirth } from '../../core/calendar'
-import { YEAR_SPAN_LIMIT, buildPrompt, clampYear, type ExportMode } from '../../core/exporter'
+import {
+  FOCUS_CHIPS, STATUS_CHIPS, YEAR_SPAN_LIMIT, buildPrompt, chipLabel, clampYear,
+  type ExportMode, type FocusKey, type StatusKey,
+} from '../../core/exporter'
 import type { Chart } from '../../core/ziwei'
 import { downloadText } from '../../state/cases'
 import { useLang, useT } from '../../state/lang'
-import { Modal, btnCls, inputCls, primaryCls } from '../Modal'
+import { Modal } from '../Modal'
+import { btnCls, inputCls, labelCls, primaryBtnCls, segCls } from '../theme'
+import { EXPORT_MODE_CARDS, EXPORT_UI_TEXT } from './config'
 
 interface Props {
   birth: ResolvedBirth
@@ -14,16 +19,8 @@ interface Props {
   onClose: () => void
 }
 
-const MODES: { key: ExportMode; icon: string; title: string; desc: string; file: string }[] = [
-  { key: 'career', icon: '💼', title: '未来 3～5 年事业与财富战略规划', desc: '三盘叠宫、七大财官宫位、冲忌与飞化全部预计算（推荐）', file: '事业财富战略' },
-  { key: 'annual', icon: '📅', title: '年度精批 + 12 流月节奏日历', desc: '单一年份深度规划，逐月红绿灯行动表', file: '年度精批' },
-  { key: 'life', icon: '🧭', title: '一生总格局 + 八大十年大运全景', desc: '命格底色与人生大周期，不含逐年流年', file: '一生总格局' },
-  { key: 'natal', icon: '📄', title: '纯净本命盘数据', desc: '文墨原版格式，方便自己写提问词（合盘、单项提问等）', file: '本命盘' },
-]
-
-const fieldLabel = 'mb-1 block text-[12px] text-stone-500'
-const segCls = (on: boolean) =>
-  `rounded border px-3 py-1.5 text-[13px] ${on ? 'border-amber-700 bg-amber-700 font-medium text-white' : 'border-stone-300 bg-white text-stone-700 hover:bg-stone-100'}`
+const chipCls = (on: boolean) => `rounded-full border-[1.5px] px-3 py-1.5 text-left text-[13px] leading-[18px] transition-colors ${segCls(on)}`
+const segBtn = (on: boolean) => `rounded-md border-[1.5px] px-3 py-1.5 text-[13px] ${segCls(on)}`
 
 export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
   const t = useT()
@@ -36,21 +33,24 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
   const [startYear, setStartYear] = useState(thisYear)
   const [span, setSpan] = useState<3 | 5>(5)
   const [targetYear, setTargetYear] = useState(thisYear)
-  const [occupation, setOccupation] = useState('')
+  const [status, setStatus] = useState<StatusKey | null>(null)
+  const [focus, setFocus] = useState<FocusKey[]>([])
   const [question, setQuestion] = useState('')
   const [withIntro, setWithIntro] = useState(false)
   const [note, setNote] = useState('')
   const [copied, setCopied] = useState('')
 
   const text = useMemo(
-    () => buildPrompt(birth, chart, { mode, lang, note, overlap, startYear, span, targetYear, occupation, question, withIntro }),
-    [birth, chart, mode, lang, note, overlap, startYear, span, targetYear, occupation, question, withIntro],
+    () => buildPrompt(birth, chart, { mode, lang, note, overlap, startYear, span, targetYear, status, focus, question, withIntro }),
+    [birth, chart, mode, lang, note, overlap, startYear, span, targetYear, status, focus, question, withIntro],
   )
+
+  const toggleFocus = (k: FocusKey) => setFocus((f) => (f.includes(k) ? f.filter((x) => x !== k) : [...f, k]))
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(text)
-      setCopied('已复制到剪贴板')
+      setCopied(EXPORT_UI_TEXT.copied)
     } catch {
       const ta = document.createElement('textarea')
       ta.value = text
@@ -60,12 +60,12 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
       const legacy = document as unknown as { execCommand: (cmd: string) => boolean }
       const ok = legacy.execCommand('copy')
       ta.remove()
-      setCopied(ok ? '已复制到剪贴板' : '复制失败，请在下方文本框内手动全选复制')
+      setCopied(ok ? EXPORT_UI_TEXT.copied : EXPORT_UI_TEXT.copyFailed)
     }
     setTimeout(() => setCopied(''), 2500)
   }
 
-  const current = MODES.find((m) => m.key === mode)!
+  const current = EXPORT_MODE_CARDS.find((m) => m.key === mode)!
   const download = () => downloadText(`${birth.input.name || 'ziwei'}-${t(current.file)}-AI提示词.txt`, text, 'text/plain;charset=utf-8')
 
   const yearSelect = (value: number, onChange: (y: number) => void) => (
@@ -80,102 +80,120 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
     </select>
   )
 
-  const anchors = (l1: string, p1: string, l2: string, p2: string) => (
-    <div className="grid gap-2 sm:grid-cols-2">
+  /** 点选芯片 + 万能提问框（career / annual 共用） */
+  const chips = (
+    <>
+      <div>
+        <span className={labelCls}>{t(EXPORT_UI_TEXT.status)}</span>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('当前状态')}>
+          {STATUS_CHIPS.map((c) => (
+            <button key={c.key} aria-pressed={status === c.key} className={chipCls(status === c.key)} onClick={() => setStatus(status === c.key ? null : c.key)}>
+              {t(chipLabel(c))}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div>
+        <span className={labelCls}>{t(EXPORT_UI_TEXT.focus)}</span>
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('重点关注方向')}>
+          {FOCUS_CHIPS.map((c) => (
+            <button key={c.key} aria-pressed={focus.includes(c.key)} className={chipCls(focus.includes(c.key))} onClick={() => toggleFocus(c.key)}>
+              {t(chipLabel(c))}
+            </button>
+          ))}
+        </div>
+      </div>
       <label>
-        <span className={fieldLabel}>{t(l1)}</span>
-        <input className={inputCls + ' h-9'} value={occupation} placeholder={t(p1)} onChange={(e) => setOccupation(e.target.value)} />
+        <span className={labelCls}>{t(EXPORT_UI_TEXT.question)}</span>
+        <textarea
+          className={inputCls + ' min-h-[60px] resize-y py-1.5 leading-5'}
+          rows={2}
+          value={question}
+          placeholder={t(EXPORT_UI_TEXT.questionPlaceholder)}
+          onChange={(e) => setQuestion(e.target.value)}
+        />
       </label>
-      <label>
-        <span className={fieldLabel}>{t(l2)}</span>
-        <input className={inputCls + ' h-9'} value={question} placeholder={t(p2)} onChange={(e) => setQuestion(e.target.value)} />
-      </label>
-    </div>
+    </>
   )
 
   const noteField = (
     <label>
-      <span className={fieldLabel}>{t('备注（选填，写入命盘末尾 [备注]）')}</span>
+      <span className={labelCls}>{t('备注（选填，写入命盘末尾 [备注]）')}</span>
       <input className={inputCls + ' h-9'} value={note} onChange={(e) => setNote(e.target.value)} />
     </label>
   )
 
   return (
     <Modal title={t('✨ AI 详批提示词')} onClose={onClose} wide>
-      <div className="flex flex-col gap-3 text-[13px] text-stone-700">
+      <div className="flex flex-col gap-3 text-[13px] text-[#003054]">
         <div className="grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label={t('提示词模式')}>
-          {MODES.map((m) => (
+          {EXPORT_MODE_CARDS.map((m) => (
             <button
               key={m.key}
               role="radio"
               aria-checked={mode === m.key}
               onClick={() => setMode(m.key)}
-              className={`rounded-lg border p-2.5 text-left transition-colors ${
-                mode === m.key ? 'border-amber-700 bg-amber-50 ring-1 ring-amber-700' : 'border-stone-300 bg-white hover:bg-stone-50'
+              className={`rounded-lg border-[1.5px] p-2.5 text-left transition-colors ${
+                mode === m.key ? 'border-[#003054] bg-[#FFFBEB] shadow-[3px_3px_0_#003054]' : 'border-[#003054]/30 bg-white hover:bg-[#F8FAFC]'
               }`}
             >
-              <div className="text-[13.5px] font-bold text-stone-800">
+              <div className="text-[13.5px] font-bold text-[#003054]">
                 {m.icon} {t(m.title)}
-                {m.key === 'career' && <span className="ml-1 text-amber-600">⭐</span>}
+                {m.key === 'career' && <span className="ml-1">⭐</span>}
               </div>
-              <div className="mt-0.5 text-[12px] leading-[17px] text-stone-500">{t(m.desc)}</div>
+              <div className="mt-0.5 text-[12px] leading-[17px] text-[#4A6072]">{t(m.desc)}</div>
             </button>
           ))}
         </div>
 
-        <div className="flex flex-col gap-2.5 rounded-lg border border-stone-200 bg-stone-50 p-3">
+        <div className="flex flex-col gap-3 rounded-lg border border-[#CBD5E1] bg-[#F8FAFC] p-3">
           {mode === 'career' && (
             <>
               <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
                 <label>
-                  <span className={fieldLabel}>{t('起始年份')}</span>
+                  <span className={labelCls}>{t('起始年份')}</span>
                   {yearSelect(startYear, setStartYear)}
                 </label>
                 <div>
-                  <span className={fieldLabel}>{t('规划跨度')}</span>
+                  <span className={labelCls}>{t('规划跨度')}</span>
                   <div className="flex gap-1">
                     {([3, 5] as const).map((n) => (
-                      <button key={n} aria-pressed={span === n} className={segCls(span === n)} onClick={() => setSpan(n)}>
+                      <button key={n} aria-pressed={span === n} className={segBtn(span === n)} onClick={() => setSpan(n)}>
                         {t(`未来 ${n} 年`)}
                       </button>
                     ))}
                   </div>
                 </div>
               </div>
-              {anchors(
-                '当前职业 / 商业模式（选填）',
-                '例：自媒体 IP 与课程创业 / 企业高管 / 自由职业',
-                '近期核心决策问题（选填）',
-                '例：未来3年适合扩团队做新业务，还是稳守现金流买资产？',
-              )}
+              {chips}
             </>
           )}
           {mode === 'annual' && (
             <>
               <div>
-                <span className={fieldLabel}>{t('目标年份')}</span>
+                <span className={labelCls}>{t('目标年份')}</span>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {yearSelect(targetYear, setTargetYear)}
-                  <button aria-pressed={targetYear === thisYear} className={segCls(targetYear === thisYear)} onClick={() => setTargetYear(thisYear)}>
+                  <button aria-pressed={targetYear === thisYear} className={segBtn(targetYear === thisYear)} onClick={() => setTargetYear(thisYear)}>
                     {t('今年')}
                   </button>
                   <button
                     aria-pressed={targetYear === clampYear(birthYear, thisYear + 1)}
-                    className={segCls(targetYear === clampYear(birthYear, thisYear + 1) && targetYear !== thisYear)}
+                    className={segBtn(targetYear === clampYear(birthYear, thisYear + 1) && targetYear !== thisYear)}
                     onClick={() => setTargetYear(clampYear(birthYear, thisYear + 1))}
                   >
                     {t('明年')}
                   </button>
                 </div>
               </div>
-              {anchors('当前职业 / 状态（选填）', '例：创业第三年 / 准备换工作 / 在读', '今年重点关注事项（选填）', '例：要不要换城市发展 / 感情能否稳定')}
+              {chips}
             </>
           )}
           {mode === 'natal' && (
             <label className="flex items-center gap-2">
-              <input type="checkbox" className="h-4 w-4" checked={withIntro} onChange={(e) => setWithIntro(e.target.checked)} />
+              <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={withIntro} onChange={(e) => setWithIntro(e.target.checked)} />
               {t('附带通用大师解盘导语')}
-              <span className="text-[12px] text-stone-500">{t('（不勾选则只输出干净的命盘数据）')}</span>
+              <span className="text-[12px] text-[#4A6072]">{t('（不勾选则只输出纯净的命盘数据）')}</span>
             </label>
           )}
           {(mode === 'life' || mode === 'natal') && noteField}
@@ -185,18 +203,18 @@ export function ExportPromptModal({ birth, chart, overlap, onClose }: Props) {
           readOnly
           value={text}
           aria-label={t('提示词预览')}
-          className="h-[38vh] w-full rounded border border-stone-300 bg-white p-2 font-mono text-[12px] leading-[17px] text-stone-800"
+          className="h-[34vh] w-full rounded-md border border-[#94A3B8] bg-white p-2 font-mono text-[12px] leading-[17px] text-[#003054]"
         />
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-[12px] text-stone-500" role="status">
-            {text.length.toLocaleString()} {t('字')} {copied && <b className="ml-2 text-emerald-700">{t(copied)}</b>}
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-[3px] pr-[3px]">
+          <span className="text-[12px] text-[#4A6072]" role="status">
+            {text.length.toLocaleString()} {t('字')} {copied && <b className="ml-2 text-[#15803D]">{t(copied)}</b>}
           </span>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2.5">
             <button className={btnCls + ' py-1.5'} onClick={download}>
-              {t('下载 .txt')}
+              {t(EXPORT_UI_TEXT.download)}
             </button>
-            <button className={primaryCls + ' px-4 py-1.5'} onClick={copy}>
-              {t('一键复制')}
+            <button className={primaryBtnCls + ' px-5 py-1.5 text-[14px]'} onClick={copy}>
+              {t(EXPORT_UI_TEXT.copy)}
             </button>
           </div>
         </div>

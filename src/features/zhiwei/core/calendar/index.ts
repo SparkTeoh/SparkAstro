@@ -39,8 +39,8 @@ const fromMs = (ms: number): DateTime => {
 export const addMinutes = (t: DateTime, minutes: number) => fromMs(toMs(t) + minutes * 60000)
 
 const pad2 = (n: number) => String(n).padStart(2, '0')
-/** 文墨格式：日期不补零，分钟补零，如 1995-6-16 21:10 */
-export const fmtWenmo = (t: DateTime) => `${t.y}-${t.m}-${t.d} ${t.h}:${pad2(t.mi)}`
+/** 导出格式：日期不补零，分钟补零，如 1995-6-16 21:10 */
+export const fmtClock = (t: DateTime) => `${t.y}-${t.m}-${t.d} ${t.h}:${pad2(t.mi)}`
 export const fmtHM = (t: DateTime) => `${pad2(t.h)}:${pad2(t.mi)}`
 
 const isLeapYear = (y: number) => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0
@@ -193,7 +193,7 @@ export const resolveBirth = (input: BirthInput): ResolvedBirth => {
     }
   }
 
-  // 文墨天机按折算后的排盘月（月中分界后）输出月份名，不带「闰」字
+  // 按折算后的排盘月（月中分界后）输出月份名，不带「闰」字
   const monthName = LUNAR_MONTH_NAMES[zwMonth - 1] + '月'
   const lunarText = `${gz(yStem, yBranch)}年${monthName}${lunarDayName(lunarDay)}日${BRANCHES[hourBranch]}时`
 

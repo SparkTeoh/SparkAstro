@@ -1,10 +1,11 @@
 import { useMemo, useRef, useState } from 'react'
-import { fmtWenmo, resolveBirth, type BirthInput } from '../../core/calendar'
+import { fmtClock, resolveBirth, type BirthInput } from '../../core/calendar'
 import { isYangStem } from '../../core/constants/base'
 import { BLANK_INPUT, type SavedCase } from '../../state/cases'
 import { useT } from '../../state/lang'
 import { BirthForm } from '../BirthForm/BirthForm'
 import { CaseList } from '../CaseList/CaseList'
+import { cardCls } from '../theme'
 
 interface Props {
   cases: SavedCase[]
@@ -25,7 +26,7 @@ const lastSummary = (i: BirthInput) => {
     const b = resolveBirth(i)
     const yin = isYangStem(b.ziwei.yearStem) ? '阳' : '阴'
     const c = b.clock
-    return `${yin}${i.gender === 'male' ? '男' : '女'} · 公历 ${c.y}-${pad(c.m)}-${pad(c.d)} ${pad(c.h)}:${pad(c.mi)} · 真太阳时 ${fmtWenmo(b.trueSolar).split(' ')[1]} · ${i.placeName}`
+    return `${yin}${i.gender === 'male' ? '男' : '女'} · 公历 ${c.y}-${pad(c.m)}-${pad(c.d)} ${pad(c.h)}:${pad(c.mi)} · 真太阳时 ${fmtClock(b.trueSolar).split(' ')[1]} · ${i.placeName}`
   } catch {
     return null
   }
@@ -53,12 +54,12 @@ export function EntryPage({ cases, lastInput, onCasesChange, onStart, onOpen }: 
   return (
     <main className="mx-auto flex w-full max-w-[560px] flex-col gap-4 px-3 py-5 sm:py-8">
       <div className="text-center">
-        <p className="text-[13px] leading-6 text-stone-500">{t('输入出生资料，按真太阳时排出文墨天机 C5VUC 紫微命盘')}</p>
+        <p className="text-[13px] leading-6 text-[#4A6072]">{t('输入出生资料，按真太阳时排出 C5VUC 钦天三合标准紫微命盘')}</p>
       </div>
 
-      <section ref={cardRef} className="scroll-mt-16 rounded-xl border border-amber-900/15 bg-[#fffdf8] p-4 shadow-sm sm:p-6" aria-label={t('出生资料')}>
+      <section ref={cardRef} className={cardCls + ' scroll-mt-16 p-4 sm:p-6'} aria-label={t('出生资料')}>
         {editing && (
-          <div className="mb-3 flex items-center justify-between gap-2 rounded-md bg-amber-50 px-3 py-2 text-[13px] text-amber-900">
+          <div className="mb-3 flex items-center justify-between gap-2 rounded-md border border-[#F8961D] bg-[#FFFBEB] px-3 py-2 text-[13px] text-[#003054]">
             <span className="min-w-0 truncate">
               {t('正在修改命例：')}
               <b>{editing.input.name || t('未命名')}</b>
@@ -80,26 +81,26 @@ export function EntryPage({ cases, lastInput, onCasesChange, onStart, onOpen }: 
 
       {lastInput && summary && (
         <section aria-label={t('上次排盘')}>
-          <h2 className="mb-1.5 px-1 text-[12px] font-medium text-stone-500">{t('上次排盘')}</h2>
+          <h2 className="mb-1.5 px-1 text-[12px] font-bold text-[#4A6072]">{t('上次排盘')}</h2>
           <button
-            className="flex w-full items-center gap-3 rounded-xl border border-amber-900/15 bg-[#fffdf8] px-4 py-3 text-left shadow-sm hover:border-amber-700/50 hover:bg-amber-50"
+            className="flex w-full items-center gap-3 rounded-xl border-[1.5px] border-[#003054] bg-white px-4 py-3 text-left shadow-[3px_3px_0_#003054] hover:bg-[#FFFBEB]"
             onClick={() => onOpen(lastInput)}
           >
             <span className="min-w-0 flex-1">
-              <span className="block truncate text-[15px] font-bold text-stone-800">{lastInput.name || t('未命名')}</span>
-              <span className="block truncate text-[12px] text-stone-500">{t(summary)}</span>
+              <span className="block truncate text-[15px] font-bold text-[#003054]">{lastInput.name || t('未命名')}</span>
+              <span className="block truncate text-[12px] text-[#4A6072]">{t(summary)}</span>
             </span>
-            <span className="shrink-0 text-[13px] font-medium text-amber-800">{t('打开 →')}</span>
+            <span className="shrink-0 text-[13px] font-bold text-[#A85600]">{t('打开 →')}</span>
           </button>
         </section>
       )}
 
       <section aria-label={t('已保存命例')}>
-        <h2 className="mb-1.5 px-1 text-[12px] font-medium text-stone-500">
+        <h2 className="mb-1.5 px-1 text-[12px] font-bold text-[#4A6072]">
           {t('已保存命例')}
           {cases.length > 0 && `（${cases.length}）`}
         </h2>
-        <div className="flex max-h-[420px] flex-col overflow-hidden rounded-xl border border-amber-900/15 bg-[#fffdf8] shadow-sm">
+        <div className="flex max-h-[420px] flex-col overflow-hidden rounded-xl border-[1.5px] border-[#003054] bg-white">
           <CaseList
             cases={cases}
             onChange={changeCases}
@@ -110,7 +111,7 @@ export function EntryPage({ cases, lastInput, onCasesChange, onStart, onOpen }: 
         </div>
       </section>
 
-      <footer className="pb-4 text-center text-[11px] text-stone-500">{t('资料只保存在本机浏览器 · 仅供研究与娱乐参考')}</footer>
+      <footer className="pb-4 text-center text-[11px] text-[#4A6072]">{t('资料只保存在本机浏览器 · 仅供传统文化研究与个人规划参考')}</footer>
     </main>
   )
 }

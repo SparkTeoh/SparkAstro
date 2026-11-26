@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
-import { fmtWenmo, resolveBirth, type BirthInput } from '../../core/calendar'
+import { fmtClock, resolveBirth, type BirthInput } from '../../core/calendar'
 import { PLACES, findPlace, nearestPlace } from '../../core/constants/locations'
 import { formatAlert } from '../../state/alerts'
 import { useT } from '../../state/lang'
+import { ghostBtnCls, labelCls, primaryBtnCls, segCls as segTone } from '../theme'
 
 interface Props {
   initial: BirthInput
@@ -25,12 +26,9 @@ const YEAR_MAX = 2100
 
 // 16px 字号避免 iOS 聚焦时自动放大页面；44px 高度方便触控
 const fieldCls =
-  'h-11 w-full rounded-md border border-stone-300 bg-white px-2 text-[16px] text-stone-800 focus:border-amber-600 focus:outline-none sm:h-10 sm:text-[14px]'
+  'h-11 w-full rounded-md border border-[#94A3B8] bg-white px-2 text-[16px] text-[#003054] placeholder:text-[#94A3B8] focus:border-[#003054] focus:outline-none focus:ring-1 focus:ring-[#003054] sm:h-10 sm:text-[14px]'
 const segCls = (on: boolean) =>
-  `h-11 flex-1 whitespace-nowrap rounded-md border px-4 text-[15px] font-medium transition-colors sm:h-10 sm:text-[14px] ${
-    on ? 'border-amber-700 bg-amber-700 text-white' : 'border-stone-300 bg-white text-stone-600 hover:bg-stone-100'
-  }`
-const labelCls = 'mb-1 block text-[12px] text-stone-500'
+  `h-11 flex-1 whitespace-nowrap rounded-md border-[1.5px] px-4 text-[15px] font-medium transition-colors sm:h-10 sm:text-[14px] ${segTone(on)}`
 
 /** 快速输入：1995-06-16 22:30 / 1995/6/16 22:30 / 199506162230 */
 const parseQuickDate = (raw: string) => {
@@ -124,7 +122,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
 
   return (
     <form
-      className="flex flex-col gap-4 text-[13px] text-stone-700"
+      className="flex flex-col gap-4 text-[13px] text-[#003054]"
       onSubmit={(e) => {
         e.preventDefault()
         if (preview) onSubmit({ ...f, name: f.name.trim() }, !!showSave && save)
@@ -164,7 +162,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
           </div>
           {f.calendar === 'lunar' && (
             <label className="flex h-11 items-center gap-1.5 text-[14px] sm:h-10">
-              <input type="checkbox" className="h-4 w-4" checked={f.isLeapMonth} onChange={(e) => set('isLeapMonth', e.target.checked)} />
+              <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={f.isLeapMonth} onChange={(e) => set('isLeapMonth', e.target.checked)} />
               {t('闰月')}
             </label>
           )}
@@ -177,7 +175,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
           <Sel label={t('分')} value={f.minute} opts={range(0, 59)} onChange={(v) => set('minute', v)} />
         </div>
         <input
-          className={`${fieldCls} mt-2 ${quickBad ? 'border-rose-400' : ''}`}
+          className={`${fieldCls} mt-2 ${quickBad ? 'border-[#C62828]' : ''}`}
           inputMode="numeric"
           value={quick}
           aria-label={t('快速输入出生日期时间')}
@@ -203,22 +201,22 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
           </select>
           <button
             type="button"
-            className="h-11 shrink-0 whitespace-nowrap rounded-md border border-stone-300 bg-white px-3 text-[14px] text-stone-700 hover:bg-stone-100 sm:h-10 sm:text-[13px]"
+            className={ghostBtnCls + ' h-11 shrink-0 px-3 text-[14px] sm:h-10 sm:text-[13px]'}
             onClick={useGeo}
           >
             📍 {t('使用当前位置')}
           </button>
         </div>
-        {geoMsg && <div className="mt-1 text-[12px] text-stone-500">{t(geoMsg)}</div>}
+        {geoMsg && <div className="mt-1 text-[12px] text-[#4A6072]">{t(geoMsg)}</div>}
 
         {showWestMy && (
-          <label className="mt-2 flex items-start gap-2 rounded-md border border-amber-300 bg-amber-50 p-2 text-[12px] leading-5 text-amber-900">
-            <input type="checkbox" className="mt-[3px] h-4 w-4 shrink-0" checked={f.tz === 7.5} onChange={(e) => set('tz', e.target.checked ? 7.5 : 8)} />
+          <label className="mt-2 flex items-start gap-2 rounded-md border border-[#F8961D] bg-[#FFFBEB] p-2 text-[12px] leading-5 text-[#003054]">
+            <input type="checkbox" className="mt-[3px] h-4 w-4 shrink-0 accent-[#003054]" checked={f.tz === 7.5} onChange={(e) => set('tz', e.target.checked ? 7.5 : 8)} />
             <span>{t('1982年以前西马标准钟表时间为 UTC+7:30（标准经线 112.5°）。勾选则按 UTC+7:30 换算。')}</span>
           </label>
         )}
 
-        <button type="button" className="mt-2 py-1 text-[12px] text-amber-800 underline" aria-expanded={advanced} onClick={() => setAdvanced((a) => !a)}>
+        <button type="button" className="mt-2 py-1 text-[12px] text-[#A85600] underline" aria-expanded={advanced} onClick={() => setAdvanced((a) => !a)}>
           {t(advanced ? '收起高级选项' : '高级选项（经度 / 时区 / 夏令时）')}
         </button>
         {advanced && (
@@ -244,7 +242,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
               </select>
             </label>
             <label className="col-span-2 flex items-center gap-1.5 sm:col-span-1 sm:items-end sm:pb-2.5">
-              <input type="checkbox" className="h-4 w-4" checked={f.dst} onChange={(e) => set('dst', e.target.checked)} />
+              <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={f.dst} onChange={(e) => set('dst', e.target.checked)} />
               {t('夏令时（-60分钟）')}
             </label>
           </div>
@@ -252,11 +250,11 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
       </div>
 
       {preview ? (
-        <div className="rounded-md border border-stone-200 bg-stone-50 p-3 text-[12.5px] leading-6" aria-live="polite">
+        <div className="rounded-md border border-[#CBD5E1] bg-[#F8FAFC] p-3 text-[12.5px] leading-6" aria-live="polite">
           <div>
-            {t('真太阳时')}：<b className="text-[14px] text-amber-900">{fmtWenmo(preview.trueSolar)}</b>
-            <span className="ml-2 text-stone-500">
-              （{t('钟表时间')} {fmtWenmo(preview.clock)}）
+            {t('真太阳时')}：<b className="text-[14px] text-[#003054]">{fmtClock(preview.trueSolar)}</b>
+            <span className="ml-2 text-[#4A6072]">
+              （{t('钟表时间')} {fmtClock(preview.clock)}）
             </span>
           </div>
           <div>
@@ -268,37 +266,37 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
           {preview.alerts.map((a, i) => (
             <div
               key={i}
-              className={`mt-1.5 rounded border p-2 leading-5 ${a.type === 'cross' ? 'border-rose-300 bg-rose-50 text-rose-700' : 'border-amber-300 bg-amber-50 text-amber-800'}`}
+              className={`mt-1.5 rounded border p-2 leading-5 ${a.type === 'cross' ? 'border-[#C62828] bg-[#FEF2F2] font-medium text-[#C62828]' : 'border-[#F8961D] bg-[#FFFBEB] text-[#A85600]'}`}
             >
               {t(formatAlert(a, f.placeName, f.longitude))}
             </div>
           ))}
         </div>
       ) : (
-        <div className="rounded-md border border-rose-300 bg-rose-50 p-3 text-[12.5px] text-rose-700" role="alert">
+        <div className="rounded-md border border-[#C62828] bg-[#FEF2F2] p-3 text-[12.5px] text-[#C62828]" role="alert">
           {t('这个日期不存在，请检查年月日（例如农历小月没有三十日、该年没有这个闰月）。')}
         </div>
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         {showSave ? (
-          <label className="flex items-center gap-2 py-1 text-[14px] text-stone-700">
-            <input type="checkbox" className="h-4 w-4" checked={save} onChange={(e) => setSaveChoice(e.target.checked)} />
+          <label className="flex items-center gap-2 py-1 text-[14px] text-[#003054]">
+            <input type="checkbox" className="h-4 w-4 accent-[#003054]" checked={save} onChange={(e) => setSaveChoice(e.target.checked)} />
             {t(editingSaved ? '更新已保存的命例' : '保存到我的命例')}
           </label>
         ) : (
           <span />
         )}
-        <div className="ml-auto flex gap-2">
+        <div className="ml-auto flex gap-2.5 pb-[3px] pr-[3px]">
           {onCancel && (
-            <button type="button" className="h-11 rounded-md border border-stone-300 bg-white px-4 text-[14px] text-stone-700 hover:bg-stone-100" onClick={onCancel}>
+            <button type="button" className={ghostBtnCls + ' h-11 px-4 text-[14px]'} onClick={onCancel}>
               {t('取消')}
             </button>
           )}
           <button
             type="submit"
             disabled={!preview}
-            className="h-11 whitespace-nowrap rounded-md bg-amber-700 px-6 text-[16px] font-bold text-white shadow-sm hover:bg-amber-800 disabled:cursor-not-allowed disabled:bg-stone-300"
+            className={primaryBtnCls + ' h-11 px-6 text-[16px]'}
           >
             {t(submitLabel)}
           </button>
@@ -311,7 +309,7 @@ export function BirthForm({ initial, submitLabel, onSubmit, onCancel, showSave, 
 function Sel({ label, value, opts, onChange }: { label: string; value: number; opts: number[]; onChange: (v: number) => void }) {
   return (
     <label>
-      <span className="mb-0.5 block text-center text-[11px] text-stone-400">{label}</span>
+      <span className="mb-0.5 block text-center text-[11px] text-[#94A3B8]">{label}</span>
       <select className={fieldCls + ' px-1'} value={value} onChange={(e) => onChange(Number(e.target.value))}>
         {opts.map((o) => (
           <option key={o} value={o}>

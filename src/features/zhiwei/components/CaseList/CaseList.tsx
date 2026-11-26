@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { caseDesc, casesToJson, downloadText, mergeImportedCases, type SavedCase } from '../../state/cases'
 import { useT } from '../../state/lang'
-import { btnCls, inputCls } from '../Modal'
+import { btnCls, inputCls, primaryBtnCls } from '../theme'
 
 interface Props {
   cases: SavedCase[]
@@ -42,14 +42,14 @@ export function CaseList({ cases, onChange, onLoad, onEdit, extraAction, emptyTe
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <div className="flex flex-col gap-2 border-b border-stone-200 p-3">
+      <div className="flex flex-col gap-2 border-b border-[#CBD5E1] p-3">
         {cases.length > 5 && (
           <input className={inputCls + ' h-9'} placeholder={t('搜索姓名 / 日期 / 地区')} value={q} onChange={(e) => setQ(e.target.value)} />
         )}
         <div className="flex flex-wrap gap-1.5">
           {extraAction && (
             <button
-              className="rounded bg-amber-700 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-amber-800"
+              className={primaryBtnCls + ' mb-[3px] mr-[3px] px-3 py-1.5 text-[13px]'}
               onClick={() => {
                 const m = extraAction.onClick()
                 if (m) setMsg(m)
@@ -81,23 +81,23 @@ export function CaseList({ cases, onChange, onLoad, onEdit, extraAction, emptyTe
           />
         </div>
         {msg && (
-          <div className="text-[12px] text-stone-600" role="status">
+          <div className="text-[12px] text-[#4A6072]" role="status">
             {t(msg)}
           </div>
         )}
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
-        {list.length === 0 && <div className="p-4 text-center text-[13px] text-stone-400">{t(q ? '没有匹配的命例' : emptyText)}</div>}
+        {list.length === 0 && <div className="p-4 text-center text-[13px] text-[#94A3B8]">{t(q ? '没有匹配的命例' : emptyText)}</div>}
         {list.map((c) => (
-          <div key={c.id} className="flex items-center gap-1 border-b border-stone-100 pr-2 last:border-b-0 hover:bg-amber-50">
+          <div key={c.id} className="flex items-center gap-1 border-b border-[#E2E8F0] pr-2 last:border-b-0 hover:bg-[#FFFBEB]">
             <button className="min-w-0 flex-1 px-3 py-2.5 text-left" onClick={() => onLoad(c)}>
-              <div className="truncate text-[15px] font-medium text-stone-800">{c.input.name || t('未命名')}</div>
-              <div className="truncate text-[12px] text-stone-500">{t(caseDesc(c.input))}</div>
+              <div className="truncate text-[15px] font-bold text-[#003054]">{c.input.name || t('未命名')}</div>
+              <div className="truncate text-[12px] text-[#4A6072]">{t(caseDesc(c.input))}</div>
             </button>
-            <button className="shrink-0 rounded px-2 py-2 text-[13px] text-amber-800 hover:bg-amber-100" onClick={() => onEdit(c)}>
+            <button className="shrink-0 rounded px-2 py-2 text-[13px] text-[#A85600] hover:bg-[#FFFBEB]" onClick={() => onEdit(c)}>
               {t('修改')}
             </button>
-            <button className="shrink-0 rounded px-2 py-2 text-[13px] text-rose-600 hover:bg-rose-100" onClick={() => remove(c)}>
+            <button className="shrink-0 rounded px-2 py-2 text-[13px] text-[#C62828] hover:bg-[#FEF2F2]" onClick={() => remove(c)}>
               {t('删除')}
             </button>
           </div>

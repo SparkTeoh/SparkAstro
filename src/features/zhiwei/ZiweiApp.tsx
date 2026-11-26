@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
-import { addMinutes, resolveBirth, type BirthInput } from './core/calendar'
+import { resolveBirth, type BirthInput } from './core/calendar'
 import { computeChart, type PlateType } from './core/ziwei'
 import type { Lang } from './core/i18n'
 import { LangContext } from './state/lang'
 import { toLang } from './core/i18n'
 import { EMPTY_SELECTION, buildOverlay, overlapNames, type HoroSelection } from './state/overlay'
-import { DEFAULT_INPUT, loadCases, loadLastInput, saveCases, saveLastInput, upsertCase, type SavedCase } from './state/cases'
+import { DEFAULT_INPUT, findSameCase, loadCases, loadLastInput, saveCases, saveLastInput, upsertCase, type SavedCase } from './state/cases'
+import { effectiveInput, hourBarInfo, hourShiftReducer, shiftInput, type HourShiftAction, type HourShiftState } from './state/hourShift'
 import { formatAlert } from './state/alerts'
 import { ChartGrid } from './components/ChartGrid/ChartGrid'
 import type { ViewMode } from './components/ChartGrid/PalaceCell'
@@ -15,6 +16,8 @@ import { BirthInputModal } from './components/BirthInputModal/BirthInputModal'
 import { CaseListDrawer } from './components/CaseListDrawer/CaseListDrawer'
 import { EntryPage } from './components/EntryPage/EntryPage'
 import { ExportPromptModal } from './components/ExportPromptModal/ExportPromptModal'
+import { HourCompareBar } from './components/HourCompareBar/HourCompareBar'
+import { ghostBtnCls, primaryBtnCls } from './components/theme'
 
 const LANG_KEY = 'ziwei-c5vuc-lang'
 const initialLang = (): Lang => {
@@ -40,14 +43,28 @@ const ROOT_STYLE = {
   WebkitTextSizeAdjust: '100%',
 } as const
 
-const navBtn = 'whitespace-nowrap rounded border border-stone-300 bg-white px-2 py-1.5 text-[13px] text-stone-700 hover:bg-stone-100'
-const badge = 'rounded bg-amber-800 px-1.5 py-[1px] font-mono text-[11px] text-white'
+const navBtn = ghostBtnCls + ' px-2 py-1.5 text-[13px]'
+const badge = 'rounded bg-[#003054] px-1.5 py-[1px] font-mono text-[11px] font-bold text-white'
+const headerCls = 'sticky top-0 z-30 border-b-[1.5px] border-[#003054] bg-[#F1EFE9]/95 backdrop-blur'
+const titleCls = 'truncate font-bold text-[#003054]'
+const backLink = 'whitespace-nowrap text-[12px] text-[#4A6072] no-underline hover:text-[#003054]'
+const PAGE_TITLE = '紫微斗数排盘'
 
 export default function App({ backHref }: ZiweiAppProps = {}) {
   const [lang, setLang] = useState<Lang>(initialLang)
   const [view, setView] = useState<View>('entry')
   const [lastInput, setLastInput] = useState<BirthInput | null>(loadLastInput)
-  const [input, setInput] = useState<BirthInput>(() => loadLastInput() ?? DEFAULT_INPUT)
+  /** baseInput：正式设定的原始生辰；hourOffset：时辰对比栏的临时偏移 */
+  const [shift, setShift] = useState<HourShiftState>(() => ({ baseInput: loadLastInput() ?? DEFAULT_INPUT, hourOffset: 0 }))
+  const { baseInput, hourOffset } = shift
+  /** 当前实际用于排盘的生辰（effectiveInput） */
+  const input = useMemo(() => {
+    try {
+      return effectiveInput(shift)
+    } catch {
+      return shift.baseInput
+    }
+  }, [shift])
   const [plate, setPlate] = useState<PlateType>('heaven')
   const [mode, setMode] = useState<ViewMode>('sanhe')
   const [sel, setSel] = useState<HoroSelection>(EMPTY_SELECTION)
@@ -73,6 +90,7 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
   const activePalace = active ?? overlay.layers[overlay.layers.length - 1]?.base ?? chart.lifeIndex
   const horoActive = sel.decade !== null || sel.year !== null
   const overlap = useMemo(() => (overlay.layers.length ? overlapNames(overlay.layers) : undefined), [overlay])
+  const hourInfo = useMemo(() => hourBarInfo(shift), [shift])
   const changeSel = (s: HoroSelection) => {
     setSel(s)
     setActive(null)
@@ -87,16 +105,33 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
     // 嵌入宿主站点时不改写宿主的 <html lang> 与页面标题
     if (backHref) return
     document.documentElement.lang = lang
-    document.title = toLang('文墨天机 C5VUC 紫微斗数排盘', lang)
+    document.title = toLang(`${PAGE_TITLE} · C5VUC`, lang)
   }, [lang, backHref])
 
-  const applyInput = (i: BirthInput) => {
-    setInput(i)
-    setLastInput(i)
-    saveLastInput(i)
+  /** 换盘后重置限流选择、焦点宫位与提醒横幅 */
+  const resetChartView = () => {
     setSel(EMPTY_SELECTION)
     setActive(null)
     setBannerClosed(false)
+  }
+  /** 正式设定一份生辰：同步重置 baseInput 与 hourOffset = 0 */
+  const applyInput = (i: BirthInput) => {
+    setShift({ baseInput: i, hourOffset: 0 })
+    setLastInput(i)
+    saveLastInput(i)
+    resetChartView()
+  }
+  /** 时辰对比栏：上一时辰 / 下一时辰 / 回原时辰（只改临时偏移，不动原始生辰） */
+  const shiftHour = (a: HourShiftAction) => {
+    setShift((s) => hourShiftReducer(s, a))
+    resetChartView()
+  }
+  /** ✓ 设为真实时辰：把偏移后的生辰固化为原始生辰；若原生辰是已保存命例则同步更新该命例 */
+  const commitHour = () => {
+    if (hourOffset === 0) return
+    const linked = findSameCase(cases, baseInput)
+    if (linked) updateCases(upsertCase(cases, input, linked.id))
+    applyInput(input)
   }
   const updateCases = (c: SavedCase[]) => {
     setCases(c)
@@ -117,10 +152,8 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
     window.scrollTo(0, 0)
   }
 
-  const shiftClock = (minutes: number) => {
-    const c = addMinutes(birth.clock, minutes)
-    applyInput({ ...input, calendar: 'solar', isLeapMonth: false, year: c.y, month: c.m, day: c.d, hour: c.h, minute: c.mi })
-  }
+  /** 中宫 日↑/日↓/时↑/时↓：在当前生效生辰上直接偏移并固化 */
+  const shiftClock = (minutes: number) => applyInput(shiftInput(input, minutes))
 
   const langBtn = (
     <button className={navBtn} onClick={() => setLang(lang === 'zh-Hans' ? 'zh-Hant' : 'zh-Hans')} title="简体 / 繁體" aria-label="简体 / 繁體">
@@ -130,19 +163,19 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
 
   return (
     <LangContext.Provider value={lang}>
-      <div className="zw-app-root min-h-screen bg-[#efe8d8] text-stone-800" style={ROOT_STYLE}>
+      <div className="zw-app-root min-h-screen bg-[#F1EFE9] text-[#003054]" style={ROOT_STYLE}>
         {view === 'entry' ? (
           <>
-            <header className="sticky top-0 z-30 grid grid-cols-[1fr_auto_1fr] items-center gap-2 border-b border-amber-900/20 bg-[#fbf6ea]/95 px-3 py-2 backdrop-blur">
+            <header className={headerCls + ' grid grid-cols-[1fr_auto_1fr] items-center gap-2 px-3 py-2'}>
               <div className="min-w-0">
                 {backHref && (
-                  <a href={backHref} className="whitespace-nowrap text-[12px] text-stone-500 no-underline hover:text-stone-800">
+                  <a href={backHref} className={backLink}>
                     ← <span className="hidden min-[400px]:inline">sparkliang.com</span>
                   </a>
                 )}
               </div>
               <div className="flex min-w-0 items-center gap-2">
-                <h1 className="truncate text-[17px] font-bold text-amber-950">{t('紫微斗数排盘')}</h1>
+                <h1 className={titleCls + ' text-[17px]'}>{t(PAGE_TITLE)}</h1>
                 <span className={badge}>C5VUC</span>
               </div>
               <div className="flex justify-end">{langBtn}</div>
@@ -160,17 +193,17 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
           </>
         ) : (
           <>
-            <header className="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-amber-900/20 bg-[#fbf6ea]/95 px-2 py-2 backdrop-blur sm:px-3">
+            <header className={headerCls + ' flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5 px-2 py-2 sm:px-3'}>
               <div className="flex items-center gap-1">
                 {backHref && (
-                  <a href={backHref} className="whitespace-nowrap px-1 text-[12px] text-stone-500 no-underline hover:text-stone-800" title={t('返回主站')}>
+                  <a href={backHref} className={backLink + ' px-1'} title={t('返回主站')}>
                     ← {t('主站')}
                   </a>
                 )}
-                <button className={navBtn + ' font-medium'} onClick={backToEntry}>
+                <button className={navBtn} onClick={backToEntry}>
                   ← {t('重新排盘')}
                 </button>
-                <button className={navBtn} onClick={() => setEdit({ input, caseId: null })}>
+                <button className={navBtn} onClick={() => setEdit({ input: baseInput, caseId: null })}>
                   {t('修改资料')}
                 </button>
                 <button className={navBtn} onClick={() => setShowCases(true)}>
@@ -178,15 +211,12 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 </button>
               </div>
               <div className="hidden min-w-0 flex-1 items-center justify-center gap-2 md:flex">
-                <h1 className="truncate text-[17px] font-bold text-amber-950">{input.name || t('紫微命盘')}</h1>
+                <h1 className={titleCls + ' text-[17px]'}>{input.name || t(PAGE_TITLE)}</h1>
                 <span className={badge}>C5VUC</span>
               </div>
-              <div className="ml-auto flex gap-1">
+              <div className="ml-auto flex items-center gap-1.5 pb-[3px] pr-[3px]">
                 {langBtn}
-                <button
-                  className="whitespace-nowrap rounded bg-amber-700 px-2.5 py-1.5 text-[13px] font-bold text-white shadow-sm hover:bg-amber-800"
-                  onClick={() => setShowExport(true)}
-                >
+                <button className={primaryBtnCls + ' px-2.5 py-1.5 text-[13px]'} onClick={() => setShowExport(true)}>
                   ✨ {t('AI 详批')}
                   <span className="hidden sm:inline">{t('提示词')}</span>
                 </button>
@@ -195,21 +225,29 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
 
             <main className="mx-auto flex max-w-[1000px] flex-col gap-3 px-2 py-3 sm:px-4">
               <div className="flex items-center justify-center gap-2 md:hidden">
-                <h1 className="truncate text-[15px] font-bold text-amber-950">{input.name || t('紫微命盘')}</h1>
+                <h1 className={titleCls + ' text-[15px]'}>{input.name || t(PAGE_TITLE)}</h1>
                 <span className={badge}>C5VUC</span>
               </div>
               {!bannerClosed && birth.alerts.length > 0 && (
-                <div className="relative flex flex-col gap-1 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 pr-8 text-[12.5px] leading-5 text-rose-800">
+                <div className="relative flex flex-col gap-1 rounded-lg border-[1.5px] border-[#C62828] bg-[#FEF2F2] px-3 py-2 pr-8 text-[12.5px] font-medium leading-5 text-[#C62828]">
                   {birth.alerts.map((a, i) => (
-                    <div key={i} className={a.type === 'boundary' ? 'text-amber-800' : ''}>
+                    <div key={i} className={a.type === 'boundary' ? 'text-[#A85600]' : ''}>
                       {t(formatAlert(a, input.placeName, input.longitude))}
                     </div>
                   ))}
-                  <button className="absolute right-2 top-1 text-lg text-rose-400 hover:text-rose-700" aria-label="close" onClick={() => setBannerClosed(true)}>
+                  <button className="absolute right-2 top-1 text-lg text-[#C62828]/60 hover:text-[#C62828]" aria-label="close" onClick={() => setBannerClosed(true)}>
                     ×
                   </button>
                 </div>
               )}
+
+              <HourCompareBar
+                info={hourInfo}
+                onPrev={() => shiftHour({ type: 'prev' })}
+                onNext={() => shiftHour({ type: 'next' })}
+                onReset={() => shiftHour({ type: 'reset' })}
+                onCommit={commitHour}
+              />
 
               <ChartGrid
                 chart={chart}
@@ -239,8 +277,8 @@ export default function App({ backHref }: ZiweiAppProps = {}) {
                 mode={mode}
                 onMode={setMode}
               />
-              <footer className="pb-4 text-center text-[11px] text-stone-500">
-                {t('API 1.1.5 · App 2.5.29 · 安星码 C5VUC · 仅供研究与娱乐参考')}
+              <footer className="pb-4 text-center text-[11px] text-[#4A6072]">
+                {t('紫微斗数排盘 · C5VUC 钦天三合标准 · 仅供传统文化研究与个人规划参考')}
               </footer>
             </main>
 

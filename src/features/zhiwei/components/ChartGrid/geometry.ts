@@ -70,7 +70,7 @@ export const OUTER_ARROW_LEN = 16
 export const DIRECTION_LABEL_SHIFT = 46
 
 type Side = 'top' | 'bottom' | 'left' | 'right'
-/** 外圈十二地理方位（文墨罗盘：午正南、子正北、卯正东、酉正西） */
+/** 外圈十二地理方位（罗盘：午正南、子正北、卯正东、酉正西） */
 const DIRECTIONS: [number, Side, string][] = [
   [6, 'top', '正南方'],
   [7, 'top', '南偏西'],

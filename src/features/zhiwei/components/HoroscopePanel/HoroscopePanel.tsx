@@ -101,7 +101,7 @@ export function HoroscopePanel({ chart, birthLunarYear, sel, onChange, mode, onM
   }))
 
   return (
-    <div className="flex flex-col gap-[6px] rounded-md border border-stone-300 bg-[#fffdf8] p-2 text-[12px]">
+    <div className="flex flex-col gap-[6px] rounded-lg border-[1.5px] border-[#003054] bg-white p-2 text-[12px]">
       <Row label={t('大限')} color={LAYER_STYLE.decade.color}>
         <Grid
           cols={10}
@@ -138,7 +138,7 @@ export function HoroscopePanel({ chart, birthLunarYear, sel, onChange, mode, onM
         <Grid cols={12} color={LAYER_STYLE.hour.color} cells={hourCells} slots={12} small />
       </Row>
 
-      <div className="mt-1 flex items-center justify-center gap-0 self-center overflow-hidden rounded-full border border-amber-700/50">
+      <div className="mt-1 flex items-center justify-center gap-0 self-center overflow-hidden rounded-full border-[1.5px] border-[#003054]">
         {(
           [
             ['flying', '飞星'],
@@ -149,7 +149,7 @@ export function HoroscopePanel({ chart, birthLunarYear, sel, onChange, mode, onM
           <button
             key={k}
             onClick={() => onMode(k)}
-            className={`px-5 py-1 text-[13px] ${mode === k ? 'bg-amber-700 text-white' : 'bg-amber-50 text-amber-900 hover:bg-amber-100'}`}
+            className={`px-5 py-1 text-[13px] ${mode === k ? 'bg-[#003054] font-bold text-white' : 'bg-white text-[#003054] hover:bg-[#FFFBEB]'}`}
           >
             {t(label)}
           </button>
@@ -215,7 +215,7 @@ function Grid({
               key="pager"
               onClick={pager!.onClick}
               className={`rounded border text-[12px] ${
-                disabled ? 'border-stone-200 bg-stone-100 text-stone-400' : 'border-stone-300 bg-white text-stone-600 hover:bg-stone-100'
+                disabled ? 'border-[#CBD5E1] bg-[#F1F5F9] text-[#94A3B8]' : 'border-[#94A3B8] bg-white text-[#4A6072] hover:bg-[#FFFBEB]'
               }`}
             >
               {pager!.text}
@@ -226,7 +226,7 @@ function Grid({
           return (
             <div
               key={'blank' + i}
-              className={`${h} rounded border ${disabled ? 'border-stone-200 bg-stone-100' : 'border-transparent'}`}
+              className={`${h} rounded border ${disabled ? 'border-[#CBD5E1] bg-[#F1F5F9]' : 'border-transparent'}`}
               aria-disabled={disabled || undefined}
             />
           )
@@ -235,7 +235,7 @@ function Grid({
             <button
               key={c.key}
               disabled
-              className={`${h} min-w-0 cursor-not-allowed overflow-hidden whitespace-nowrap rounded border border-stone-200 bg-stone-100 px-0 text-center text-[10px] leading-[13px] text-stone-400 sm:text-[12px] sm:leading-[14px]`}
+              className={`${h} min-w-0 cursor-not-allowed overflow-hidden whitespace-nowrap rounded border border-[#CBD5E1] bg-[#F1F5F9] px-0 text-center text-[10px] leading-[13px] text-[#94A3B8] sm:text-[12px] sm:leading-[14px]`}
             >
               {c.top}
             </button>
@@ -246,9 +246,9 @@ function Grid({
             onClick={c.onClick}
             className={`${h} min-w-0 overflow-hidden whitespace-nowrap rounded border px-0 text-center text-[10px] leading-[13px] sm:text-[12px] sm:leading-[14px]`}
             style={{
-              borderColor: c.active ? color : '#d6d3d1',
+              borderColor: c.active ? color : '#CBD5E1',
               background: c.active ? color : '#fff',
-              color: c.active ? '#fff' : '#44403c',
+              color: c.active ? '#fff' : '#003054',
             }}
           >
             <div>{c.top}</div>
